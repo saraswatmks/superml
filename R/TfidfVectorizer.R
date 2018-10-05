@@ -29,7 +29,10 @@
 #'  }
 #' @export
 #' @examples
-#' df <- data.table(sents = c('i am alone in dark.','mother_mary a lot','alone in the dark?', 'many mothers in the lot....'))
+#' df <- data.table(sents = c('i am alone in dark.',
+#'                            'mother_mary a lot',
+#'                            'alone in the dark?',
+#'                            'many mothers in the lot....'))
 #' tf <- TfIdfVectorizer$new(smooth_idf = T, min_df = 0.3)
 #' tf_features <- tf$fit_transform(df$sents)
 

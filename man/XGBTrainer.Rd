@@ -73,12 +73,24 @@ tfidf$predict(X_test)
 \examples{
 library(data.table)
 df <- copy(iris)
+
+# convert characters/factors to numeric
 df$Species <- as.numeric(as.factor(df$Species))-1
-xgb <- XGBTrainer$new(objective = 'multi:softmax', maximize = F, eval_metric = 'merror', num_class=3, n_estimators = 500)
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = F,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 500)
 xgb$fit(df, 'Species')
+
+# do cross validation to find optimal value for n_estimators
 xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = T, early_stopping = 20)
 best_iter <- xgb$cv_model$best_iteration
 xgb$show_importance()
+
+# make predictions
 preds <- xgb$predict_model(as.matrix(iris[,1:4]))
 preds
 }

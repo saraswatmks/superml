@@ -51,8 +51,12 @@ prediction <- bst$predict(X_test)
 
 \examples{
 data("iris")
-bst <- RandomForestClassifier$new(n_estimators=100, max_depth=4, classification=1, seed=42, verbose=TRUE)
+bst <- RandomForestClassifier$new(n_estimators=100,
+                                  max_depth=4,
+                                  classification=1,
+                                  seed=42,
+                                  verbose=TRUE)
 bst$fit(iris, 'Species')
-pred <- bst$predict(iris)
+predictions <- bst$predict(iris)
 }
 \keyword{datasets}

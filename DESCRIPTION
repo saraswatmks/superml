@@ -4,10 +4,10 @@ Title: Various handy wrappers functions like scikit-learn to speed up machine le
 Version: 0.1.0
 Author: Manish Saraswat
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
-Description: This package provides a python sklearn library's structure in R. 
+Description: This package intends to ease the process of training machine learning models in R. 
     The idea is to provide a standard interface to users who use both R and Python since they often struggle in remembering the code syntax in R.
     This package will help users switch quickly and do their day to day work.    
-License: GPL-2
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -19,7 +19,9 @@ Imports:
     data.table(>= 1.10.4.3),
     caret(>= 6.0.78),
     parallel(>= 3.4.3),
-    glmnet(>= 2.0.16)
+    glmnet(>= 2.0.16),
+    R6(>= 2.2.2),
+    assertthat(>= 0.2.0)
 Suggests:
     knitr,
     rlang,

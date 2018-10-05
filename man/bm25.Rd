@@ -39,7 +39,9 @@ bm25$most_similar(input_document, topn)
 }
 
 \examples{
-example <- c('white audi 2.5 car','black shoes from office','new mobile iphone 7','audi tyres audi a3','nice audi bmw toyota corolla')
+example <- c('white audi 2.5 car','black shoes from office',
+             'new mobile iphone 7','audi tyres audi a3',
+             'nice audi bmw toyota corolla')
 get_bm <- bm25$new(example)
 input_document <- c('white toyota corolla')
 get_bm$most_similar(document = input_document, topn = 2)
