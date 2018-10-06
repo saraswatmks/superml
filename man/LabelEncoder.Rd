@@ -11,7 +11,7 @@ LabelEncoder
 \description{
 Encodes and decodes categorical variables into integer values and vice versa.
 This is a commonly performed task in data preparation during model training, because all machine learning models require
-the data to be encoded into numerical format.
+the data to be encoded into numerical format. It takes a vector of character or factor values and encodes them into numeric.
 }
 \section{Usage}{
 
@@ -28,9 +28,10 @@ lbl$transform(x)
 
 \describe{
   \item{\code{$new()}}{Initialise the instance of the encoder}
-  \item{\code{$fit(data)}}{creates a memory of encodings but doesn't return anything}
-  \item{\code{$transform(data)}}{based on encodings learned in \code{fit} method is applies the transformation}
-  \item{\code{$fit_transform(data)}}{encodes the data and keep a memory of encodings simultaneously}
+  \item{\code{$fit(vector)}}{creates a memory of encodings but doesn't return anything}
+  \item{\code{$transform(vector)}}{based on encodings learned in \code{fit} method is applies the transformation}
+  \item{\code{$fit_transform(vector)}}{encodes the data and keep a memory of encodings simultaneously}
+  \item{\code{$inverse_transform(vector)}}{encodes the data and keep a memory of encodings simultaneously}
 }
 }
 
@@ -46,5 +47,6 @@ lbl$transform(x)
 data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
 lbl <- LabelEncoder$new()
 data_ex$Name <- lbl$fit_transform(data_ex$Name)
+decode_names <- lbl$inverse_transform(data_ex$Name)
 }
 \keyword{datasets}

@@ -8,7 +8,7 @@ test_that("calculate bm25 ranking", {
                  "audi tyres audi a3",
                  "nice audi bmw toyota corolla")
 
-    get_bm <- bm25$new(example)
+    get_bm <- bm25$new(example,n_cores = 2)
     input_document <- c("white toyota corolla")
     result <- get_bm$most_similar(document = input_document, topn = 4)
     expect_equal(result, c("nice audi bmw toyota corolla",
@@ -18,8 +18,8 @@ test_that("calculate bm25 ranking", {
 })
 
 
-test_that("create word count dictionary"){
+test_that("create word count dictionary", {
     d <- list(c("i","am","bad"),c("you","are","also","bad"))
     counts <- Counter(d, sort=T, decreasing=T)
     expect_equal(counts, list(bad=2, also=1, am=1, are=1, i=1, you=1))
-}
+})

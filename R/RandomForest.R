@@ -33,9 +33,13 @@
 #' @export
 #' @examples
 #' data("iris")
-#' bst <- RandomForestClassifier$new(n_estimators=100, max_depth=4, classification=1, seed=42, verbose=TRUE)
+#' bst <- RandomForestClassifier$new(n_estimators=100,
+#'                                   max_depth=4,
+#'                                   classification=1,
+#'                                   seed=42,
+#'                                   verbose=TRUE)
 #' bst$fit(iris, 'Species')
-#' pred <- bst$predict(iris)
+#' predictions <- bst$predict(iris)
 
 RFTrainer <- R6Class("RandomForestTrainer",
       public = list(
@@ -104,8 +108,8 @@ RFTrainer <- R6Class("RandomForestTrainer",
 
       private = list(
 
-          iid_names <- NA,
-          trained_model <- NA,
+          iid_names = NA,
+          trained_model = NA,
 
           check_data = function(X, y) {
               if (!(inherits(X, c("data.table", "data.frame"))))
@@ -116,5 +120,6 @@ RFTrainer <- R6Class("RandomForestTrainer",
 
               iid_names <- setdiff(colnames(X), y)
           }
-    )
+      )
 )
+

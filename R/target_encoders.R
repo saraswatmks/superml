@@ -2,32 +2,60 @@
 #' @title kFoldMean Calculator
 #' @description Calculates out-of-fold mean features (also known as target encoding) for train and test data. Make sure to rbind both train and test into one data frame.
 #' This strategy is widely used to avoid overfitting or causing leakage while creating features using the target variable.
-#' @param df should be a data frame or data.table
-#' @param cat_var the categorical variable name for which we should calculate the mean, should be a string.
+#' @param train_df train dataset
+#' @param test_df test dataset
+#' @param colname name of categorical column
 #' @param target the target or dependent variable, should be a string.
-#' @param n_fold the number of folds to use for doing calculation
+#' @param n_fold the number of folds to use for doing calculation, default=5
+#' @param seed the seed value, to ensure reproducibility,
+#'             it could be any positive value, default=42
 #'
-#' @return a data table with out-of-fold mean value of the target for the given categorical variable
+#' @return a train and test data table with out-of-fold mean value
+#'         of the target for the given categorical variable
 #' @export
 #' @examples
-#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'), win = c(0,1,1,0,0,0,0,1))
+#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+#'                     win = c(0,1,1,0,0,0,0,1))
 #' test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
-#' train_result=kFoldMean(train_df = train, test_df = test, colname = 'region',target = 'win', seed = 1220)$train
-#' test_result=kFoldMean(train_df = train, test_df = test, colname = 'region',target = 'win', seed = 1220)$test
-#' df <- data.table(cat_one = rep(c('A','B','C','D','E'), 10), target = sample.int(100, 50))
-#' mean_values <- kFoldMean(df = df, cat_var = 'cat_one',target = 'target',n_fold = 5)
-kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed){
+#' train_result <- kFoldMean(train_df = train,
+#'                           test_df = test,
+#'                           colname = 'region',
+#'                           target = 'win',
+#'                           seed = 1220)$train
+#'
+#' test_result <- kFoldMean(train_df = train,
+#'                          test_df = test,
+#'                          colname = 'region',
+#'                          target = 'win',
+#'                          seed = 1220)$test
+#'
+#' df <- data.table(cat_one = rep(c('A','B','C','D','E'), 10),
+#'                  target = sample.int(100, 50))
+#'
+#' mean_values <- kFoldMean(df = df,
+#'                          cat_var = 'cat_one',
+#'                          target = 'target',
+#'                          n_fold = 5)
+kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 
     # check if its data frame
-    if(!(is.data.frame(df) | is.data.table(df)))
-      stop("Please check the format of your data.
+    if(!(is.data.frame(train_df) | is.data.table(train_df)))
+      stop("Please check the format of your train data.
            It should be a data.table or data.frame")
+
+    if(!(is.data.frame(test_df) | is.data.table(test_df)))
+        stop("Please check the format of your train data.
+             It should be a data.table or data.frame")
 
     assert_that(all(c(colname, target) %in% names(train_df)))
     assert_that(all(c(colname) %in% names(test_df)))
 
     if(any(is.na(train_df[[target]])))
         stop("The target column contains NA values. Halting computation.")
+
+    # just to be sure, convert the table to data table
+    setDT(train_df)
+    setDT(test_df)
 
     # calculate global mean
     globalmean <- mean(train_df[[target]])
@@ -94,13 +122,24 @@ kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed){
 #' @param smoothing smoothing effect to balance categorical average vs prior
 #' @param noise_level random noise to add, optional
 #'
-#' @return a list of train and test column encodings
+#' @return a train and test data table with mean encodings
+#'         of the target for the given categorical variable
 #' @export
 #' @examples
-#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'), win = c(0,1,1,0,0,1,0,1))
+#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+#'                     win = c(0,1,1,0,0,1,0,1))
 #' test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
-#' train_mean <- target_encode(train_df = train, test_df = test, colname = 'region', target = 'win')$train
-#' test_mean <- target_encode(train_df = train, test_df = test, colname = 'region', target = 'win')$test
+#'
+#' # calculate encodings
+#' train_mean <- target_encode(train_df = train,
+#'                             test_df = test,
+#'                             colname = 'region',
+#'                             target = 'win')$train
+#'
+#' test_mean <- target_encode(train_df = train,
+#'                            test_df = test,
+#'                            colname = 'region',
+#'                            target = 'win')$test
 smoothMean <- function(train_df, test_df, colname, target, min_samples_leaf=1, smoothing=1, noise_level=0){
 
     # check if column exists
@@ -136,7 +175,7 @@ smoothMean <- function(train_df, test_df, colname, target, min_samples_leaf=1, s
     tst_df <- averages[test_df[, ..colname], on = colname][is.na(get(target)), (target) := prior]
 
     add_noise <- function(vec, noise_level=0){
-        return(vec * (1 + noise_level * rnorm(length(vec))))
+        return(vec * (1 + noise_level * stats::rnorm(length(vec))))
     }
 
     trn_df[[target]] <- add_noise(trn_df[[target]], noise_level = noise_level)

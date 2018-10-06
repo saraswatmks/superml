@@ -29,16 +29,20 @@
 #' }
 #' @export
 #' @examples
-#' housing = read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data")
-#' names = c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS","RAD","TAX","PTRATIO","B","LSTAT","MEDV")
-#' names(housing)  =  names
-#' single model
+#' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
+#' housing <- read.table(LINK)
+#' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
+#'            "RAD","TAX","PTRATIO","B","LSTAT","MEDV")
+#' names(housing)  <-  names
+#'
+#' # single model
 #' lf <- LMTrainer$new(family = 'gaussian')
 #' lf$fit(X = housing, y = 'MEDV')
-#' lf$predict(df = housing)
-#' cross validation model
+#' predictions <- lf$predict(df = housing)
+#'
+#' # cross validation model
 #' lf$cv_model(X = housing, y = 'MEDV', nfolds = 5, parallel = T)
-#' lf$cv_predict(df = housing)
+#' predictions <- lf$cv_predict(df = housing)
 LMTrainer <- R6Class("LMTrainer", public = list(
 
     family = NULL,
