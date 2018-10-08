@@ -14,12 +14,16 @@
 #'   \item{\code{$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)}}{Initialises an instance of random forest model}
 #'   \item{\code{$fit(X_train, y_train)}}{fit model to an input train data and trains the model.}
 #'   \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
+#'   \item{\code{$get_importance()}}{Get feature importance from the model}
 #' }
 #' @section Arguments:
 #' \describe{
 #'  \item{n_estimators}{the number of trees in the forest, default= 100}
 #'  \item{max_features}{the number of features to consider when looking for the best split
-#'      Possible values are \code{auto(default)},\code{sqrt},\code{log},\code{None}}
+#'      Possible values are \code{auto(default)} takes sqrt(num_of_features),
+#'                          \code{sqrt} same as auto,
+#'                          \code{log} takes log(num_of_features),
+#'                          \code{none} takes all features}
 #'  \item{max_depth}{the maximum depth of each tree}
 #'  \item{min_node_size}{the minumum number of samples required to split an internal node}
 #'  \item{criterion}{the function to measure the quality of split. For classification, \code{gini} is used which
@@ -29,18 +33,19 @@
 #'  \item{verbose}{show computation status and estimated runtime}
 #'  \item{always_split}{vector of feature names to be always used for splitting}
 #'  \item{seed}{set seed}
+#'  \item{importance}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
 #' }
 #' @export
 #' @examples
 #' data("iris")
-#' bst <- RandomForestClassifier$new(n_estimators=100,
-#'                                   max_depth=4,
-#'                                   classification=1,
-#'                                   seed=42,
-#'                                   verbose=TRUE)
+#' bst <- RFTrainer$new(n_estimators=50,
+#'                      max_depth=4,
+#'                      classification=1,
+#'                      seed=42,
+#'                      verbose=TRUE)
 #' bst$fit(iris, 'Species')
 #' predictions <- bst$predict(iris)
-
+#' bst$get_importance()
 RFTrainer <- R6Class("RandomForestTrainer",
       public = list(
           n_estimators = 100,
@@ -49,10 +54,11 @@ RFTrainer <- R6Class("RandomForestTrainer",
           min_node_size = 1,
           criterion = NULL,
           classification = 1,
-          verbose = NULL,
+          verbose = TRUE,
           seed = 42,
           class_weights = NULL,
           always_split = NULL,
+          importance = "impurity",
 
           initialize = function(n_estimators,
                                 max_depth,
@@ -63,17 +69,18 @@ RFTrainer <- R6Class("RandomForestTrainer",
                                 always_split,
                                 verbose,
                                 save_model,
-                                seed){
+                                seed,
+                                importance){
 
               if(!(missing(n_estimators))) self$n_estimators <- n_estimators
               if (!(missing(max_features))) self$max_features <- max_features
               if (!(missing(max_depth)))    self$max_depth <- max_depth
               if (!(missing(min_node_size))) self$min_node_size <- min_node_size
               if (!(missing(classification))) self$classification <- classification
-              if (!(missing(max_features))) self$max_features <- max_features
-              else  self$max_features <- round(sqrt(length(private$iid_names)))
+
               if (self$classification == 1) self$criterion <- "gini"
               else if(self$classification == 0) self$criterion <- "variance"
+
               if(!(missing(seed))) self$seed <- seed
               if(!(missing(class_weights)))  self$class_weights <- class_weights
               if(!(missing(always_split))) self$always_split <- always_split
@@ -83,26 +90,48 @@ RFTrainer <- R6Class("RandomForestTrainer",
           fit = function(X, y) {
               private$check_data(X, y)
 
+              # set max_features parameter
+              if(self$max_features %in% c('auto','sqrt')) {
+                  self$max_features <- round(sqrt(ncol(X)))
+              } else if(self$max_features == 'log'){
+                  self$max_features <- round(log(ncol(X)))
+              } else if(self$max_features == 'none'){
+                  self$max_features <- ncol(X)
+              }
+
+              # check for crazy values in max_features
+              if(self$max_features < 1)
+                  assert_that('max_features value should be > 1.')
+
+              if(self$max_features == 1)
+                  message('You are training this model with 1 feature.
+                          Just so you know.')
+
               private$trained_model <- ranger::ranger(
                   dependent.variable.name = y,
                   data = X,
                   mtry = self$max_features,
-                  min.node.size = self$min_samples_split,
                   num.trees = self$n_estimators,
+                  min.node.size = self$min_node_size,
                   splitrule = self$criterion,
                   case.weights = self$class_weights,
                   always.split.variables = self$always_split,
                   verbose = self$verbose,
-                  seed = self$seed
+                  seed = self$seed,
+                  importance = self$importance
               )
 
           },
 
           predict = function(df) {
 
-              p <- ranger::predictions(private$trained_model,
-                                      df[, c(private$iid_names)])
-              return(p)
+              return (ranger::predictions(private$trained_model,
+                                      df[, c(private$iid_names)]))
+          },
+
+          get_importance = function(){
+
+              return(ranger::importance(private$trained_model))
           }
       ),
 
@@ -122,4 +151,3 @@ RFTrainer <- R6Class("RandomForestTrainer",
           }
       )
 )
-

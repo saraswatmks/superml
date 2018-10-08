@@ -10,8 +10,8 @@
 #'
 #' @examples
 #' d <- list(c('i','am','bad'),c('you','are','also','bad'))
-#' counts <- Counter(d, sort=T, decreasing=T)
-Counter <- function(data, sort=T, decreasing=F){
+#' counts <- Counter(d, sort=TRUE, decreasing=TRUE)
+Counter <- function(data, sort=TRUE, decreasing=FALSE){
 
     if(is.null(data)) stop("Please provide input data values")
     if(is.data.frame(data) | is.matrix(data))

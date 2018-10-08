@@ -25,7 +25,7 @@ bm25$most_similar(input_document, topn)
 
 \describe{
   \item{\code{$new()}}{Initialise the instance of the class. Here you pass the complete corpus of the documents}
-  \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus}
+  \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus, given a sentence}
   \item{\code{$most_similar(data)}}{it returns the topn most similar documents from the corpus}
 }
 }
@@ -34,7 +34,7 @@ bm25$most_similar(input_document, topn)
 
 \describe{
  \item{corpus}{a list containing sentences}
- \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses all the cores}
+ \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses N - 2 cores}
 }
 }
 

@@ -31,18 +31,15 @@ Calculates target encodings using a smoothing parameter and count of categorical
 This approach is more robust to possibility of leakage and avoid overfitting.
 }
 \examples{
-train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
                     win = c(0,1,1,0,0,1,0,1))
-test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
 
 # calculate encodings
-train_mean <- target_encode(train_df = train,
-                            test_df = test,
-                            colname = 'region',
-                            target = 'win')$train
-
-test_mean <- target_encode(train_df = train,
-                           test_df = test,
-                           colname = 'region',
-                           target = 'win')$test
+all_means <- smoothMean(train_df = train,
+                         test_df = test,
+                         colname = 'region',
+                         target = 'win')
+train_mean <- all_means$train
+test_mean <- all_means$test
 }

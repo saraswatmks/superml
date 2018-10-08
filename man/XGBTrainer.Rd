@@ -79,14 +79,14 @@ df$Species <- as.numeric(as.factor(df$Species))-1
 
 # initialise model
 xgb <- XGBTrainer$new(objective = 'multi:softmax',
-                      maximize = F,
+                      maximize = FALSE,
                       eval_metric = 'merror',
                       num_class=3,
                       n_estimators = 500)
 xgb$fit(df, 'Species')
 
 # do cross validation to find optimal value for n_estimators
-xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = T, early_stopping = 20)
+xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE, early_stopping = 20)
 best_iter <- xgb$cv_model$best_iteration
 xgb$show_importance()
 

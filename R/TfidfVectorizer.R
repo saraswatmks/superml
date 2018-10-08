@@ -1,8 +1,7 @@
-
 #' TfIDF(Term Frequency Inverse Document Frequency) Vectorizer
 #'
 #' @description  It aims to provide a standardized way of creating TF-IDF features just like python's sklearn library.
-#'     It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.
+#'               It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
@@ -21,7 +20,7 @@
 #' }
 #' @section Arguments:
 #' \describe{
-#'     \item{sentences}{input vector/list consisting of text}
+#'     \item{sentences}{input vector or list consisting of text}
 #'     \item{min_df}{consider tokens which occur in atleast this % documents, value lies between 0 and 1}
 #'     \item{max_df}{consider tokens which occur in maximum this % documents, value lies between 0 and 1}
 #'     \item{max_features}{use top features sorted by count to be used in creating tf-idf features}
@@ -29,11 +28,11 @@
 #'  }
 #' @export
 #' @examples
-#' df <- data.table(sents = c('i am alone in dark.',
+#' df <- data.table::data.table(sents = c('i am alone in dark.',
 #'                            'mother_mary a lot',
 #'                            'alone in the dark?',
 #'                            'many mothers in the lot....'))
-#' tf <- TfIdfVectorizer$new(smooth_idf = T, min_df = 0.3)
+#' tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
 #' tf_features <- tf$fit_transform(df$sents)
 
 TfIdfVectorizer <- R6Class("TfIdfVectorizer",

@@ -10,7 +10,7 @@ TfIdfVectorizer
 }
 \description{
 It aims to provide a standardized way of creating TF-IDF features just like python's sklearn library.
-    It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.
+              It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.
 }
 \section{Usage}{
 
@@ -34,11 +34,11 @@ tf_matrix = tf_object$fit_transform(sentences) ## alternate
 }
 
 \examples{
-df <- data.table(sents = c('i am alone in dark.',
+df <- data.table::data.table(sents = c('i am alone in dark.',
                            'mother_mary a lot',
                            'alone in the dark?',
                            'many mothers in the lot....'))
-tf <- TfIdfVectorizer$new(smooth_idf = T, min_df = 0.3)
+tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
 tf_features <- tf$fit_transform(df$sents)
 }
 \keyword{datasets}

@@ -5,4 +5,3 @@
 # 2. devtools::use_testthat() to setup unit test structure
 # 3. devtools::check() to run unit test locally
 
-
