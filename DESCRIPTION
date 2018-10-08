@@ -23,7 +23,8 @@ Imports:
     caret(>= 6.0.78),
     glmnet(>= 2.0.16),
     R6(>= 2.2.2),
-    assertthat(>= 0.2.0)
+    assertthat(>= 0.2.0),
+    tm(>= 0.7.3)
 Suggests:
     knitr,
     rlang,

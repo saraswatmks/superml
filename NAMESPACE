@@ -12,3 +12,4 @@ importFrom(xgboost, xgb.train, xgb.cv, xgb.importance, xgb.plot.importance, xgb.
 importFrom(R6, R6Class)
 importFrom(assertthat, assert_that)
 import(data.table)
+importFrom(tm, Boost_tokenizer)
