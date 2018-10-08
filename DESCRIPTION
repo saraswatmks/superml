@@ -30,5 +30,7 @@ Imports:
 Suggests:
     knitr,
     rlang,
-    testthat
+    testthat,
+    rmarkdown
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr

@@ -4,3 +4,4 @@
 .Ruserdata
 packrat/lib*/
 .DS_Store
+inst/doc
