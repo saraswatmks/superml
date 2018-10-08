@@ -18,25 +18,32 @@
 #' @section Arguments:
 #' \describe{
 #'  \item{corpus}{a list containing sentences}
-#'  \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses N - 2 cores}
+#'  \item{use_parallel}{boolean value used to activate parallel computation, defaults to FALSE}
 #' }
 #' @export
 #' @examples
 #' example <- c('white audi 2.5 car','black shoes from office',
 #'              'new mobile iphone 7','audi tyres audi a3',
 #'              'nice audi bmw toyota corolla')
-#' get_bm <- bm25$new(example)
+#' get_bm <- bm25$new(example, use_parallel=FALSE)
 #' input_document <- c('white toyota corolla')
 #' get_bm$most_similar(document = input_document, topn = 2)
 bm25 <- R6::R6Class("bm25", public = list(
 
     ## corpus should be a list of sentences
     corpus = NA,
-    n_cores = "auto",
+    use_parallel = FALSE,
 
-    initialize = function(corpus, n_cores="auto"){
+    initialize = function(corpus, use_parallel){
         if(!(missing(corpus))) self$corpus <- self$transform(corpus)
-        if(!(missing(n_cores))) self$n_cores <- n_cores
+        if(!(missing(use_parallel))) self$use_parallel <- use_parallel
+
+        if(isTRUE(self$use_parallel)){
+            message('Computation will be done parallel using all CPU cores.')
+        } else {
+            message('to activate parallel computation, set use_parallel=TRUE')
+        }
+
     },
 
     # tokenize the input
@@ -78,10 +85,17 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     compute = function(document, corpus = self$corpus, cores=self$n_cores){
 
-        if(self$n_cores == "auto") cores <- parallel::detectCores()-2
-        else cores <- self$n_cores
+        if(isTRUE(self$use_parallel)){
+            # devtools uses 2 cores max. to check parallel processes
+            # but here removed parameters to set cores.
+            if(self$n_cores == "auto") cores <- parallel::detectCores()
+            else cores <- self$n_cores
 
-        message('using ', cores, ' cores')
+            message('using ', cores, ' cores for computation')
+        }
+
+        # for non parallel computation, use 1 core.
+        cores <- 1
 
         # document = your document should be a tokenized vector
         document <- unlist(strsplit(document, split = " "))
@@ -101,5 +115,4 @@ bm25 <- R6::R6Class("bm25", public = list(
         return(names(aa[order(unlist(aa), decreasing = T)][seq(topn)]))
     }
 ))
-
 

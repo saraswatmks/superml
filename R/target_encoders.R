@@ -56,7 +56,11 @@ kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
     globalmean <- mean(train_df[[target]])
 
     # set target col name
-    target_col <- "mean_var"
+    target_col <- c("mean_var")
+
+    # this step is a hack to pass R CMD CHECK
+    # taken from data.table matt's SO post
+    mean_var <- i.mean_var <- i.temp_count <- NULL
 
     # this creates a new column with global mean
     temp_count  <- NULL
@@ -155,7 +159,7 @@ smoothMean <- function(train_df,
 
     # combine data - class of target changes - becomes char from numeric >:(
     # compute target mean
-    averages <- train_df[, .(count = .N, mean = mean(get(target))), colname]
+    averages <- train_df[, list(count = .N, mean = mean(get(target))), colname]
 
     # compute smoothing
     smoothing <- 1 / (1 + exp(-(averages[["count"]] -

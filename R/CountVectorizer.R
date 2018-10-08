@@ -99,7 +99,7 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
         private_doc_tokens = NA,
 
         word_split = function(sentences){
-            return (tm::Boost_tokenizer(sentences))
+            return (Boost_tokenizer(sentences))
         },
 
         tokens_limiter = function(sentences, max_df=1, min_df=1){
