@@ -34,7 +34,7 @@ bm25$most_similar(input_document, topn)
 
 \describe{
  \item{corpus}{a list containing sentences}
- \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses N - 2 cores}
+ \item{use_parallel}{boolean value used to activate parallel computation, defaults to FALSE}
 }
 }
 
@@ -42,7 +42,7 @@ bm25$most_similar(input_document, topn)
 example <- c('white audi 2.5 car','black shoes from office',
              'new mobile iphone 7','audi tyres audi a3',
              'nice audi bmw toyota corolla')
-get_bm <- bm25$new(example)
+get_bm <- bm25$new(example, use_parallel=FALSE)
 input_document <- c('white toyota corolla')
 get_bm$most_similar(document = input_document, topn = 2)
 }

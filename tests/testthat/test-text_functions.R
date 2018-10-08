@@ -8,7 +8,7 @@ test_that("calculate bm25 ranking", {
                  "audi tyres audi a3",
                  "nice audi bmw toyota corolla")
 
-    get_bm <- bm25$new(example,n_cores = 2)
+    get_bm <- bm25$new(example,use_parallel=FALSE)
     input_document <- c("white toyota corolla")
     result <- get_bm$most_similar(document = input_document, topn = 4)
     expect_equal(result, c("nice audi bmw toyota corolla",
