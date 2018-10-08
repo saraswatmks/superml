@@ -62,14 +62,14 @@
 #'
 #' # initialise model
 #' xgb <- XGBTrainer$new(objective = 'multi:softmax',
-#'                       maximize = F,
+#'                       maximize = FALSE,
 #'                       eval_metric = 'merror',
 #'                       num_class=3,
 #'                       n_estimators = 500)
 #' xgb$fit(df, 'Species')
 #'
 #' # do cross validation to find optimal value for n_estimators
-#' xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = T, early_stopping = 20)
+#' xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE, early_stopping = 20)
 #' best_iter <- xgb$cv_model$best_iteration
 #' xgb$show_importance()
 #'
@@ -174,7 +174,7 @@ XGBTrainer <- R6Class(
         cross_val = function(X,
                              y,
                              nfolds=5,
-                             stratified=T,
+                             stratified=TRUE,
                              folds=NULL,
                              early_stopping=50){
 
@@ -262,7 +262,8 @@ XGBTrainer <- R6Class(
 
         show_importance = function(type="plot", topn=10){
 
-            mat <- xgb.importance(feature_names = self$feature_names, model = private$trained_model)
+            mat <- xgb.importance(feature_names = self$feature_names,
+                                  model = private$trained_model)
             if(type == "plot"){
                 xgb.plot.importance(importance_matrix = mat, top_n = topn)
             } else if (type == "table"){
@@ -282,9 +283,10 @@ XGBTrainer <- R6Class(
                 stop("Your data format should be a data.table or data.frame.")
 
             if (!(y %in% names(X)))
-                stop("The dependent variable y is not available in the data set.")
+                stop("The dependent variable y is not available
+                     in the data set.")
 
-            if(any(!(sapply(X, is.numeric))))
+            if(any(!(vapply(X, is.numeric, FUN.VALUE = logical(1)))))
                 stop("The data contains character or categorical variable.
                      Please convert it to numeric or integer")
 
@@ -294,22 +296,27 @@ XGBTrainer <- R6Class(
             if(!(is.null(valid))){
 
                 if(ncol(valid) != ncol(X))
-                    stop("The validation and train data set have unequal number of columns.")
+                    stop("The validation and train data set have
+                         unequal number of columns.")
 
                 if(!all(colnames(X) %in% colnames(valid)))
-                    stop("Train and validation data has some issue in column names.
-                         Make sure they are same.")
+                    stop("Train and validation data has some issue
+                         in column names.Make sure they are same.")
             }
 
             message("now converting the data into xgboost format..")
 
             if(!(is.null(valid))){
-                dtrain <- xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]), label = X[[y]])
-                dvalid <- xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y)]), label = valid[[y]])
-                return (list(train = dtrain, val = dvalid))
+                dtrain <- xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]),
+                                      label = X[[y]])
+                dvalid <- xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y)]),
+                                      label = valid[[y]])
+                return (list(train = dtrain,
+                             val = dvalid))
 
             } else {
-                dtrain <-xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]), label = X[[y]])
+                dtrain <-xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]),
+                                     label = X[[y]])
                 return (list(train = dtrain))
             }
 

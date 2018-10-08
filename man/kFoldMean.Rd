@@ -15,7 +15,7 @@ kFoldMean(train_df, test_df, colname, target, n_fold = 5, seed = 42)
 
 \item{target}{the target or dependent variable, should be a string.}
 
-\item{n_fold}{the number of folds to use for doing calculation, default=5}
+\item{n_fold}{the number of folds to use for doing kfold computation, default=5}
 
 \item{seed}{the seed value, to ensure reproducibility,
 it could be any positive value, default=42}
@@ -29,9 +29,9 @@ Calculates out-of-fold mean features (also known as target encoding) for train a
 This strategy is widely used to avoid overfitting or causing leakage while creating features using the target variable.
 }
 \examples{
-train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
                     win = c(0,1,1,0,0,0,0,1))
-test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
 train_result <- kFoldMean(train_df = train,
                           test_df = test,
                           colname = 'region',
@@ -43,12 +43,4 @@ test_result <- kFoldMean(train_df = train,
                          colname = 'region',
                          target = 'win',
                          seed = 1220)$test
-
-df <- data.table(cat_one = rep(c('A','B','C','D','E'), 10),
-                 target = sample.int(100, 50))
-
-mean_values <- kFoldMean(df = df,
-                         cat_var = 'cat_one',
-                         target = 'target',
-                         n_fold = 5)
 }

@@ -6,7 +6,7 @@
 #' @param test_df test dataset
 #' @param colname name of categorical column
 #' @param target the target or dependent variable, should be a string.
-#' @param n_fold the number of folds to use for doing calculation, default=5
+#' @param n_fold the number of folds to use for doing kfold computation, default=5
 #' @param seed the seed value, to ensure reproducibility,
 #'             it could be any positive value, default=42
 #'
@@ -14,9 +14,9 @@
 #'         of the target for the given categorical variable
 #' @export
 #' @examples
-#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+#' train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
 #'                     win = c(0,1,1,0,0,0,0,1))
-#' test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+#' test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
 #' train_result <- kFoldMean(train_df = train,
 #'                           test_df = test,
 #'                           colname = 'region',
@@ -28,23 +28,18 @@
 #'                          colname = 'region',
 #'                          target = 'win',
 #'                          seed = 1220)$test
-#'
-#' df <- data.table(cat_one = rep(c('A','B','C','D','E'), 10),
-#'                  target = sample.int(100, 50))
-#'
-#' mean_values <- kFoldMean(df = df,
-#'                          cat_var = 'cat_one',
-#'                          target = 'target',
-#'                          n_fold = 5)
 kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 
+    warning('This method is still experimental. If the results you get are
+            unexpected, please report them in github issues.')
+
     # check if its data frame
-    if(!(is.data.frame(train_df) | is.data.table(train_df)))
-      stop("Please check the format of your train data.
+    if (!(inherits(train_df, c("data.table", "data.frame"))))
+        stop("Please check the format of your train data.
            It should be a data.table or data.frame")
 
-    if(!(is.data.frame(test_df) | is.data.table(test_df)))
-        stop("Please check the format of your train data.
+    if (!(inherits(test_df, c("data.table", "data.frame"))))
+        stop("Please check the format of your test data.
              It should be a data.table or data.frame")
 
     assert_that(all(c(colname, target) %in% names(train_df)))
@@ -85,7 +80,7 @@ kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
         setnames(means, "V1", target_col)
 
         ## map out of fold mean values to categories in validation data
-        x_valid <- means[x_valid[, ..colname], on = colname]
+        x_valid <- means[x_valid[,colname,with=F], on = colname]
         x_valid[is.na(get(target_col)), (target_col) := globalmean]
 
         train_df[f, (target_col) := x_valid[[target_col]]]
@@ -126,25 +121,30 @@ kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 #'         of the target for the given categorical variable
 #' @export
 #' @examples
-#' train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+#' train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
 #'                     win = c(0,1,1,0,0,1,0,1))
-#' test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+#' test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
 #'
 #' # calculate encodings
-#' train_mean <- target_encode(train_df = train,
-#'                             test_df = test,
-#'                             colname = 'region',
-#'                             target = 'win')$train
-#'
-#' test_mean <- target_encode(train_df = train,
-#'                            test_df = test,
-#'                            colname = 'region',
-#'                            target = 'win')$test
-smoothMean <- function(train_df, test_df, colname, target, min_samples_leaf=1, smoothing=1, noise_level=0){
+#' all_means <- smoothMean(train_df = train,
+#'                          test_df = test,
+#'                          colname = 'region',
+#'                          target = 'win')
+#' train_mean <- all_means$train
+#' test_mean <- all_means$test
+smoothMean <- function(train_df,
+                       test_df,
+                       colname,
+                       target,
+                       min_samples_leaf=1,
+                       smoothing=1,
+                       noise_level=0){
 
     # check if column exists
     assert_that(all(c(colname, target) %in% names(train_df)))
     assert_that(all(c(colname) %in% names(test_df)))
+
+
 
     if(any(is.na(train_df[[target]])))
         stop("The target column contains NA values. Halting computation.")
@@ -165,21 +165,33 @@ smoothMean <- function(train_df, test_df, colname, target, min_samples_leaf=1, s
     prior <- mean(train_df[[target]])
 
     # smooth target
-    averages[["target"]] <- prior * (1 - smoothing) +
+    new_col <- paste0(target, "_feat", collapse = "")
+    averages[[new_col]] <- prior * (1 - smoothing) +
                                     averages[["mean"]] * smoothing
+
 
     # drop columns
     averages[, c("mean", "count") := NULL]
 
-    trn_df <- averages[train_df[, ..colname], on = colname][is.na(get(target)), (target) := prior]
-    tst_df <- averages[test_df[, ..colname], on = colname][is.na(get(target)), (target) := prior]
+    trn_df <- averages[train_df[, colname, with=F], on = colname]
+    tst_df <- averages[test_df[, colname, with=F], on = colname]
+
+    # check for missing values and impute them by prior
+    if(colSums(is.na(trn_df))[[new_col]] > 1){
+        trn_df[is.na(get(new_col)), (new_col) := prior]
+        print('success')
+    }
+
+    if(colSums(is.na(tst_df))[[new_col]] >= 1){
+        tst_df[is.na(get(new_col)), (new_col) := prior]
+    }
 
     add_noise <- function(vec, noise_level=0){
         return(vec * (1 + noise_level * stats::rnorm(length(vec))))
     }
 
-    trn_df[[target]] <- add_noise(trn_df[[target]], noise_level = noise_level)
-    tst_df[[target]] <- add_noise(tst_df[[target]], noise_level = noise_level)
+    trn_df[[new_col]] <- add_noise(trn_df[[new_col]], noise_level = noise_level)
+    tst_df[[new_col]] <- add_noise(tst_df[[new_col]], noise_level = noise_level)
 
 
     return(list(train = trn_df, test = tst_df))

@@ -4,7 +4,7 @@
 \alias{Counter}
 \title{Calculate count of values in a list}
 \usage{
-Counter(data, sort = T, decreasing = F)
+Counter(data, sort = TRUE, decreasing = FALSE)
 }
 \arguments{
 \item{data}{should be a vector or list of input values}
@@ -21,5 +21,5 @@ Handy to calculate count of values in a sorted order
 }
 \examples{
 d <- list(c('i','am','bad'),c('you','are','also','bad'))
-counts <- Counter(d, sort=T, decreasing=T)
+counts <- Counter(d, sort=TRUE, decreasing=TRUE)
 }
