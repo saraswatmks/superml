@@ -25,7 +25,7 @@ bm25$most_similar(input_document, topn)
 
 \describe{
   \item{\code{$new()}}{Initialise the instance of the class. Here you pass the complete corpus of the documents}
-  \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus}
+  \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus, given a sentence}
   \item{\code{$most_similar(data)}}{it returns the topn most similar documents from the corpus}
 }
 }
@@ -34,12 +34,14 @@ bm25$most_similar(input_document, topn)
 
 \describe{
  \item{corpus}{a list containing sentences}
- \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses all the cores}
+ \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses N - 2 cores}
 }
 }
 
 \examples{
-example <- c('white audi 2.5 car','black shoes from office','new mobile iphone 7','audi tyres audi a3','nice audi bmw toyota corolla')
+example <- c('white audi 2.5 car','black shoes from office',
+             'new mobile iphone 7','audi tyres audi a3',
+             'nice audi bmw toyota corolla')
 get_bm <- bm25$new(example)
 input_document <- c('white toyota corolla')
 get_bm$most_similar(document = input_document, topn = 2)

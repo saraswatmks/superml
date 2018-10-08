@@ -4,29 +4,43 @@
 \alias{kFoldMean}
 \title{kFoldMean Calculator}
 \usage{
-kFoldMean(train_df, test_df, colname, target, n_fold = 5, seed)
+kFoldMean(train_df, test_df, colname, target, n_fold = 5, seed = 42)
 }
 \arguments{
+\item{train_df}{train dataset}
+
+\item{test_df}{test dataset}
+
+\item{colname}{name of categorical column}
+
 \item{target}{the target or dependent variable, should be a string.}
 
-\item{n_fold}{the number of folds to use for doing calculation}
+\item{n_fold}{the number of folds to use for doing kfold computation, default=5}
 
-\item{df}{should be a data frame or data.table}
-
-\item{cat_var}{the categorical variable name for which we should calculate the mean, should be a string.}
+\item{seed}{the seed value, to ensure reproducibility,
+it could be any positive value, default=42}
 }
 \value{
-a data table with out-of-fold mean value of the target for the given categorical variable
+a train and test data table with out-of-fold mean value
+        of the target for the given categorical variable
 }
 \description{
 Calculates out-of-fold mean features (also known as target encoding) for train and test data. Make sure to rbind both train and test into one data frame.
 This strategy is widely used to avoid overfitting or causing leakage while creating features using the target variable.
 }
 \examples{
-train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'), win = c(0,1,1,0,0,0,0,1))
-test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
-train_result=kFoldMean(train_df = train, test_df = test, colname = 'region',target = 'win', seed = 1220)$train
-test_result=kFoldMean(train_df = train, test_df = test, colname = 'region',target = 'win', seed = 1220)$test
-df <- data.table(cat_one = rep(c('A','B','C','D','E'), 10), target = sample.int(100, 50))
-mean_values <- kFoldMean(df = df, cat_var = 'cat_one',target = 'target',n_fold = 5)
+train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+                    win = c(0,1,1,0,0,0,0,1))
+test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+train_result <- kFoldMean(train_df = train,
+                          test_df = test,
+                          colname = 'region',
+                          target = 'win',
+                          seed = 1220)$train
+
+test_result <- kFoldMean(train_df = train,
+                         test_df = test,
+                         colname = 'region',
+                         target = 'win',
+                         seed = 1220)$test
 }

@@ -12,17 +12,19 @@
 #' @section Methods:
 #' \describe{
 #'   \item{\code{$new()}}{Initialise the instance of the class. Here you pass the complete corpus of the documents}
-#'   \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus}
+#'   \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus, given a sentence}
 #'   \item{\code{$most_similar(data)}}{it returns the topn most similar documents from the corpus}
 #' }
 #' @section Arguments:
 #' \describe{
 #'  \item{corpus}{a list containing sentences}
-#'  \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses all the cores}
+#'  \item{n_cores}{number of cores to be used for computation, by default 'auto' it uses N - 2 cores}
 #' }
 #' @export
 #' @examples
-#' example <- c('white audi 2.5 car','black shoes from office','new mobile iphone 7','audi tyres audi a3','nice audi bmw toyota corolla')
+#' example <- c('white audi 2.5 car','black shoes from office',
+#'              'new mobile iphone 7','audi tyres audi a3',
+#'              'nice audi bmw toyota corolla')
 #' get_bm <- bm25$new(example)
 #' input_document <- c('white toyota corolla')
 #' get_bm$most_similar(document = input_document, topn = 2)
@@ -39,13 +41,17 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     # tokenize the input
     transform = function(corpus){
-        return (vapply(corpus, function(x) strsplit(x, split = " "), FUN.VALUE = list(1)))
+        return (vapply(corpus,
+                       function(x) strsplit(x, split = " "),
+                       FUN.VALUE = list(1)))
     },
 
     calculate_idf = function(q, corpus=self$corpus){
 
         # check the token exists in how many documents
-        q_in_ns <- sum(vapply(corpus, function(x) q %in% x, FUN.VALUE = logical(1)))
+        q_in_ns <- sum(vapply(corpus,
+                              function(x) q %in% x,
+                              FUN.VALUE = logical(1)))
 
         # check token length
         corpus_len <- length(corpus)
@@ -72,8 +78,10 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     compute = function(document, corpus = self$corpus, cores=self$n_cores){
 
-        if(self$n_cores == "auto") cores <- parallel::detectCores()
+        if(self$n_cores == "auto") cores <- parallel::detectCores()-2
         else cores <- self$n_cores
+
+        message('using ', cores, ' cores')
 
         # document = your document should be a tokenized vector
         document <- unlist(strsplit(document, split = " "))
@@ -93,4 +101,5 @@ bm25 <- R6::R6Class("bm25", public = list(
         return(names(aa[order(unlist(aa), decreasing = T)][seq(topn)]))
     }
 ))
+
 

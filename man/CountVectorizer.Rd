@@ -20,7 +20,6 @@ bst = CountVectorizer$new(min_df, max_df, max_features)
 bst$fit(sentences)
 bst$fit_transform(sentences)
 bst$transform(sentences)
-
 }
 }
 
@@ -35,13 +34,17 @@ bst$transform(sentences)
 }
 
 \examples{
-df <- data.table(sents = c('i am alone in dark.','mother_mary a lot','alone in the dark?', 'many mothers in the lot....'))
-bw <- CountVectorizer$new(min_df = 0.3)
-tf_features <- tf$fit_transform(df$sents)
+df <- data.table::data.table(sents = c('i am alone in dark.','mother_mary a lot',
+                           'alone in the dark?',
+                           'many mothers in the lot....'))
 
-df <- data.table(sents = c('i am alone in dark.','mother_mary a lot','alone in the dark?', 'many mothers in the lot....'))
+# fits and transforms on the entire data in one go
+bw <- CountVectorizer$new(min_df = 0.3)
+tf_features <- bw$fit_transform(df$sents)
+
+# fit on entire data and do transformation in train and test
 bw <- CountVectorizer$new()
-bw$fit(df$sents) # this should be train data
-tf_features <- bw$transform(df$sents) # this should be test data
+bw$fit(df$sents)
+tf_features <- bw$transform(df$sents)
 }
 \keyword{datasets}

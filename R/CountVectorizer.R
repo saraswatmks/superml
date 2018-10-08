@@ -9,7 +9,6 @@
 #' bst$fit(sentences)
 #' bst$fit_transform(sentences)
 #' bst$transform(sentences)
-#'
 #' }
 #' @section Methods:
 #' \describe{
@@ -20,21 +19,25 @@
 #' }
 #' @section Arguments:
 #' \describe{
-#'     \item{sentences}{input vector/list consisting of text}
+#'     \item{sentences}{input vector or list consisting of text}
 #'     \item{min_df}{consider tokens which occur in atleast this % documents, value lies between 0 and 1}
 #'     \item{max_df}{consider tokens which occur in maximum this % documents, value lies between 0 and 1}
 #'     \item{max_features}{use top features sorted by count to be used in bag of words matrix}
 #' }
 #' @export
 #' @examples
-#' df <- data.table(sents = c('i am alone in dark.','mother_mary a lot','alone in the dark?', 'many mothers in the lot....'))
-#' bw <- CountVectorizer$new(min_df = 0.3)
-#' tf_features <- tf$fit_transform(df$sents)
+#' df <- data.table::data.table(sents = c('i am alone in dark.','mother_mary a lot',
+#'                            'alone in the dark?',
+#'                            'many mothers in the lot....'))
 #'
-#' df <- data.table(sents = c('i am alone in dark.','mother_mary a lot','alone in the dark?', 'many mothers in the lot....'))
+#' # fits and transforms on the entire data in one go
+#' bw <- CountVectorizer$new(min_df = 0.3)
+#' tf_features <- bw$fit_transform(df$sents)
+#'
+#' # fit on entire data and do transformation in train and test
 #' bw <- CountVectorizer$new()
-#' bw$fit(df$sents) # this should be train data
-#' tf_features <- bw$transform(df$sents) # this should be test data
+#' bw$fit(df$sents)
+#' tf_features <- bw$transform(df$sents)
 
 CountVectorizer <- R6Class("CountVectorizer", public = list(
 
@@ -137,10 +140,15 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
             lower_limit <- round(temp_len * min_df) # percentage
             upper_limit <- round(temp_len * max_df)
 
-            if(min_df > max_df) stop("min_df cannot be greater than max_df.
-                                     Please use another value.")
-            else if(min_df == 1 & max_df == 1) filtered_tokens <- names(doc_tokens)
-            else filtered_tokens <- names(doc_tokens[doc_tokens > lower_limit & doc_tokens < upper_limit])
+            if(min_df > max_df) {
+                stop("min_df cannot be greater than max_df.
+                     Please use another value.")
+            } else if(min_df == 1 & max_df == 1) {
+                filtered_tokens <- names(doc_tokens)
+            } else {
+                filtered_tokens <- names(doc_tokens[doc_tokens > lower_limit &
+                                                    doc_tokens < upper_limit])
+            }
 
             private$private_doc_tokens <- doc_tokens[order(unlist(doc_tokens),
                                                            decreasing = T)]

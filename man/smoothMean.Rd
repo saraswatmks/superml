@@ -23,15 +23,23 @@ smoothMean(train_df, test_df, colname, target, min_samples_leaf = 1,
 \item{noise_level}{random noise to add, optional}
 }
 \value{
-a list of train and test column encodings
+a train and test data table with mean encodings
+        of the target for the given categorical variable
 }
 \description{
 Calculates target encodings using a smoothing parameter and count of categorical variables.
 This approach is more robust to possibility of leakage and avoid overfitting.
 }
 \examples{
-train <- data.table(region=c('del','csk','rcb','del','csk','pune','guj','del'), win = c(0,1,1,0,0,1,0,1))
-test <- data.table(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
-train_mean <- target_encode(train_df = train, test_df = test, colname = 'region', target = 'win')$train
-test_mean <- target_encode(train_df = train, test_df = test, colname = 'region', target = 'win')$test
+train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),
+                    win = c(0,1,1,0,0,1,0,1))
+test <- data.frame(region=c('rcb','csk','rcb','del','guj','pune','csk','kol'))
+
+# calculate encodings
+all_means <- smoothMean(train_df = train,
+                         test_df = test,
+                         colname = 'region',
+                         target = 'win')
+train_mean <- all_means$train
+test_mean <- all_means$test
 }

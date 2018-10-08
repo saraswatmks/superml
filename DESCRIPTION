@@ -2,24 +2,28 @@ Package: superml
 Type: Package
 Title: Various handy wrappers functions like scikit-learn to speed up machine learning tasks in R
 Version: 0.1.0
-Author: Manish Saraswat
+Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
+          role = c("aut", "cre"))
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
-Description: This package provides a python sklearn library's structure in R. 
-    The idea is to provide a standard interface to users who use both R and Python since they often struggle in remembering the code syntax in R.
-    This package will help users switch quickly and do their day to day work.    
-License: GPL-2
+Description: This package intends to ease the process of training 
+             machine learning models in R. The idea is to provide a standard interface 
+             to users who use both R and Python since they often struggle in remembering
+             the code syntax in R or Python. This package will help users switch quickly
+             and do their day to day work.    
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/saraswatmks/superml
+BugReports: https://github.com/saraswatmks/superml/issues
 Depends:
     R(>= 3.4)
 Imports:
-    tm(>= 0.7),
-    ranger(>= 0.9),
     xgboost(>= 0.6),
     data.table(>= 1.10.4.3),
     caret(>= 6.0.78),
-    parallel(>= 3.4.3),
-    glmnet(>= 2.0.16)
+    glmnet(>= 2.0.16),
+    R6(>= 2.2.2),
+    assertthat(>= 0.2.0)
 Suggests:
     knitr,
     rlang,
