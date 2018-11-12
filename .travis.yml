@@ -2,4 +2,8 @@
 
 language: r
 cache: packages
-
+sudo: false
+warnings_are_errors: true
+r: bioc-devel
+bioc_required: true
+bioc_use_devel: true
