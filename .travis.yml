@@ -4,6 +4,7 @@ language: r
 cache: packages
 sudo: false
 warnings_are_errors: true
+use_bioc: true
 latex: false
 r_build_args: '--no-build-vignettes'
 r_check_args: '--ignore-vignettes --no-examples'
