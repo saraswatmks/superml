@@ -1,6 +1,6 @@
 Package: superml
 Type: Package
-Title: Various handy wrappers functions like scikit-learn to speed up machine learning tasks in R
+Title: Build machine learning models like python's scikit-learn library in R
 Version: 0.1.0
 Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
           role = c("aut", "cre"))
@@ -21,16 +21,14 @@ Imports:
     xgboost(>= 0.6),
     data.table(>= 1.10.4.3),
     caret(>= 6.0.78),
-    glmnet(>= 2.0.16),
     R6(>= 2.2.2),
     assertthat(>= 0.2.0),
-    tm(>= 0.7.3),
-    ranger(>= 0.10.1),
-    parallel(>= 3.4.3)
+    tm(>= 0.7.3)
 Suggests:
     knitr,
     rlang,
     testthat,
-    rmarkdown
+    rmarkdown,
+    glmnet
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr

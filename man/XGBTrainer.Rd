@@ -16,7 +16,7 @@ Trains a Extreme Gradient Boosting Model. It is a wrapper around xgboost R packa
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
 bst = XGBTrainer$new(n_estimators, max_features, max_depth, min_samples_split, criterion,classification, class_weights, verbose, seed,always_split)
-bst$fit(X_train, y_train)
+bst$fit(X_train, y_train, valid=NULL)
 tfidf$predict(X_test)
 }
 }
@@ -25,7 +25,7 @@ tfidf$predict(X_test)
 
 \describe{
   \item{\code{$new(booster,objective,nthread,silent,n_estimators,learning_rate,gamma,max_depth,min_child_weight,subsample,colsample_bytree,lambda,alpha,eval_metric,print_every,feval,early_stopping,maximize,custom_objective,save_period,save_name,xgb_model,callbacks,verbose,num_class,weight,na_missing)}}{Initialises an instance of xgboost model}
-  \item{\code{$fit(X_train, y_train)}}{fits model to an input train data using given parametes.}
+  \item{\code{$fit(X_train, y_train, valid)}}{fits model to an input train data using given parametes.}
   \item{\code{$cross_val(X_train, y_train, nfolds, stratified, folds, early_stopping)}}{performs cross validation on train data}
   \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
 }
@@ -36,6 +36,7 @@ tfidf$predict(X_test)
 \describe{
  \item{params}{the detailed version of these arguments can found in xgboost documentation \url{http://xgboost.readthedocs.io/en/latest/parameter.html}}
  \item{booster}{the trainer type, the values are \code{gbtree(default)}, \code{gblinear}, \code{dart:gbtree}}
+ \item{objective}{specify the learning task. Check the link above for all possible values.}
  \item{max_features}{the number of features to consider when looking for the best split
      Possible values are \code{auto},\code{sqrt},\code{log},\code{None}}
  \item{n_thread}{number of parallel threads used to run, default is to run using all threads available}
@@ -91,7 +92,7 @@ best_iter <- xgb$cv_model$best_iteration
 xgb$show_importance()
 
 # make predictions
-preds <- xgb$predict_model(as.matrix(iris[,1:4]))
+preds <- xgb$predict(as.matrix(iris[,1:4]))
 preds
 }
 \keyword{datasets}

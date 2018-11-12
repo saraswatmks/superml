@@ -1,0 +1,276 @@
+---
+title: "Introduction to superml"
+author: "Manish Saraswat"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to superml}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+SuperML R package is designed to unify the model training process in R like Python. Generally, it's seen that people spend lot of time in searching for packages, figuring out the syntax for training machine learning models in R. This behaviour is highly apparent in users who frequently switch between R and Python. This package provides a
+python´s scikit-learn interface (`fit`, `predict`) to train models faster. 
+
+In addition to building machine learning models, there are handy functionalities to do feature engineering
+
+This ambitious package is my ongoing effort to help the r-community build ML models easily and faster in R.
+
+## Install 
+
+This package is still not on cran. Currently, you can install using:
+
+`devtools::install_github("saraswatmks/superml")`
+
+
+## Examples - Machine Learning Models
+
+This package uses existing r-packages to build machine learning model. In this tutorial, we'll use 
+data.table R package to do all tasks related to data manipulation. 
+
+### Regression Data
+
+We'll quickly prepare the data set to be ready to served for model training. 
+
+```{r}
+load("../data/reg_train.rda")
+
+library(data.table)
+library(caret)
+library(superml)
+library(kableExtra)
+library(Metrics)
+
+kable(head(reg_train, 10)) %>%
+  scroll_box(width = "100%", height = "300px")
+
+split <- createDataPartition(y = reg_train$SalePrice, p = 0.7)
+xtrain <- reg_train[split$Resample1]
+xtest <- reg_train[!split$Resample1]
+```
+
+```{r}
+# remove features with 90% or more missing values
+# we will also remove the Id column because it doesn't contain
+# any useful information
+na_cols <- colSums(is.na(xtrain)) / nrow(xtrain)
+na_cols <- names(na_cols[which(na_cols > 0.9)])
+
+xtrain[, c(na_cols, "Id") := NULL]
+xtest[, c(na_cols, "Id") := NULL]
+
+# encode categorical variables
+cat_cols <- names(xtrain)[sapply(xtrain, is.character)]
+
+for(c in cat_cols){
+    lbl <- LabelEncoder$new()
+    lbl$fit(c(xtrain[[c]], xtest[[c]]))
+    xtrain[[c]] <- lbl$transform(xtrain[[c]])
+    xtest[[c]] <- lbl$transform(xtest[[c]])
+}
+
+# removing noise column
+noise <- c('GrLivArea','TotalBsmtSF')
+
+xtrain[, c(noise) := NULL]
+xtest[, c(noise) := NULL]
+
+# fill missing value with  -1
+xtrain[is.na(xtrain)] <- -1
+xtest[is.na(xtest)] <- -1
+```
+
+```{r}
+# Simple Regression
+lf <- LMTrainer$new(family="gaussian")
+lf$fit(X = xtrain, y = "SalePrice")
+summary(lf$model)
+predictions <- lf$predict(df = xtest)
+rmse(actual = xtest$SalePrice, predicted = predictions)
+```
+```{r}
+# Lasso Regression
+lf <- LMTrainer$new(family = "gaussian", alpha=1, lambda = 1000)
+lf$fit(X = xtrain, y = "SalePrice")
+predictions <- lf$predict(df = xtest)
+rmse(actual = xtest$SalePrice, predicted = predictions)
+```
+```{r}
+# Ridge Regression
+lf <- LMTrainer$new(family = "gaussian", alpha=0)
+lf$fit(X = xtrain, y = "SalePrice")
+predictions <- lf$predict(df = xtest)
+rmse(actual = xtest$SalePrice, predicted = predictions)
+```
+```{r}
+# cross validation logistic
+lf <- LMTrainer$new(family = "gaussian")
+lf$cv_model(X = xtrain, y = 'SalePrice', nfolds = 5, parallel = FALSE)
+predictions <- lf$cv_predict(df = xtest)
+coefs <- lf$get_importance()
+rmse(actual = xtest$SalePrice, predicted = predictions)
+```
+```{r}
+# Random Forest
+rf <- RFTrainer$new(n_estimators = 500,classification = 0)
+rf$fit(X = xtrain, y = "SalePrice")
+pred <- rf$predict(df = xtest)
+rf$get_importance()
+rmse(actual = xtest$SalePrice, predicted = pred)
+```
+```{r}
+# XGBoost
+xgb <- XGBTrainer$new(objective = "reg:linear"
+                      , n_estimators = 500
+                      , eval_metric = "rmse"
+                      , maximize = F
+                      , learning_rate = 0.1
+                      ,max_depth = 6)
+xgb$fit(X = xtrain, y = "SalePrice", valid = xtest)
+pred <- xgb$predict(xtest)
+rmse(actual = xtest$SalePrice, predicted = pred)
+```
+
+
+
+### Binary Classification Data
+
+Here, we will solve a simple binary classification problem (predict people who survived on titanic ship).
+The idea here is to demonstrate how to use this package to solve classification problems.
+
+**Data Preparation**
+```{r}
+# load class
+load('../data/cla_train.rda')
+
+kable(head(cla_train, 10)) %>%
+  scroll_box(width = "100%", height = "300px")
+
+# split the data
+split <- createDataPartition(y = cla_train$Survived,p = 0.7)
+xtrain <- cla_train[split$Resample1]
+xtest <- cla_train[!split$Resample1]
+
+# encode categorical variables - longer way
+lbl <- LabelEncoder$new()
+
+lbl$fit(c(xtrain$Embarked, xtest$Embarked))
+xtrain[, Embarked := lbl$transform(Embarked)]
+xtest[, Embarked := lbl$transform(Embarked)]
+
+lbl1 <- LabelEncoder$new()
+
+lbl1$fit(c(xtrain$Sex, xtest$Sex))
+xtrain[, Sex := lbl1$transform(Sex)]
+xtest[, Sex := lbl1$transform(Sex)]
+
+lbl2 <- LabelEncoder$new()
+
+lbl2$fit(c(xtrain$Cabin, xtest$Cabin))
+xtrain[, Cabin := lbl2$transform(Cabin)]
+xtest[, Cabin := lbl2$transform(Cabin)]
+
+# encode categorical variables - shorter way
+# for(c in c('Embarked','Sex','Cabin')){
+#     lbl <- LabelEncoder$new()
+#     lbl$fit(c(xtrain[[c]], xtest[[c]]))
+#     xtrain[[c]] <- lbl$transform(xtrain[[c]])
+#     xtest[[c]] <- lbl$transform(xtest[[c]])
+# }
+
+# impute missing values
+xtrain[, Age := replace(Age, is.na(Age), median(Age, na.rm = T))]
+xtest[, Age := replace(Age, is.na(Age), median(Age, na.rm = T))]
+
+# drop these features
+to_drop <- c('PassengerId','Ticket','Name')
+
+xtrain <- xtrain[,-c(to_drop), with=F]
+xtest <- xtest[,-c(to_drop), with=F]
+```
+ 
+Now, our data is ready to be served for model training. Let's do it.
+
+**Logistic Regression**
+```{r}
+lf <- LMTrainer$new(family="binomial")
+lf$fit(X = xtrain, y = "Survived")
+summary(lf$model)
+predictions <- lf$predict(df = xtest)
+auc(actual = xtest$Survived, predicted = predictions)
+
+```
+
+**Lasso Logistic Regression**
+```{r}
+lf <- LMTrainer$new(family="binomial", alpha=1)
+lf$cv_model(X = xtrain, y = "Survived", nfolds = 5, parallel = FALSE)
+pred <- lf$cv_predict(df = xtest)
+auc(actual = xtest$Survived, predicted = pred)
+
+```
+
+**Ridge Logistic Regression**
+```{r}
+lf <- LMTrainer$new(family="binomial", alpha=0)
+lf$cv_model(X = xtrain, y = "Survived", nfolds = 5, parallel = FALSE)
+pred <- lf$cv_predict(df = xtest)
+auc(actual = xtest$Survived, predicted = pred)
+```
+
+**Random Forest**
+```{r}
+rf <- RFTrainer$new(n_estimators = 500,classification = 1, max_features = 3)
+rf$fit(X = xtrain, y = "Survived")
+
+pred <- rf$predict(df = xtest)
+rf$get_importance()
+
+auc(actual = xtest$Survived, predicted = pred)
+```
+
+**XGBOOST**
+```{r}
+xgb <- XGBTrainer$new(objective = "binary:logistic"
+                      , n_estimators = 500
+                      , eval_metric = "auc"
+                      , maximize = T
+                      , learning_rate = 0.1
+                      ,max_depth = 6)
+xgb$fit(X = xtrain, y = "Survived", valid = xtest)
+
+pred <- xgb$predict(xtest)
+auc(actual = xtest$Survived, predicted = pred)
+```
+
+Let's create some new feature based on target variable using target encoding and test a model.
+
+```{r}
+# add target encoding features
+xtrain[, feat_01 := smoothMean(train_df = xtrain,
+                        test_df = xtest,
+                        colname = "Embarked",
+                        target = "Survived")$train[[2]]]
+xtest[, feat_01 := smoothMean(train_df = xtrain,
+                               test_df = xtest,
+                               colname = "Embarked",
+                               target = "Survived")$test[[2]]]
+
+# train a random forest
+# Random Forest
+rf <- RFTrainer$new(n_estimators = 500,classification = 1, max_features = 4)
+rf$fit(X = xtrain, y = "Survived")
+pred <- rf$predict(df = xtest)
+rf$get_importance()
+
+auc(actual = xtest$Survived, predicted = pred)
+```
+
+
