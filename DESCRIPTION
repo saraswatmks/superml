@@ -21,7 +21,6 @@ Imports:
     xgboost(>= 0.6),
     data.table(>= 1.10.4.3),
     caret(>= 6.0.78),
-    glmnet(>= 2.0.16),
     R6(>= 2.2.2),
     assertthat(>= 0.2.0),
     tm(>= 0.7.3)
@@ -29,6 +28,7 @@ Suggests:
     knitr,
     rlang,
     testthat,
-    rmarkdown
+    rmarkdown,
+    glmnet
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
