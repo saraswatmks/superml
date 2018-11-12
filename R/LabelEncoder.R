@@ -26,7 +26,7 @@
 #' }
 #' @export
 #' @examples
-#' data_ex <- data.table::data.table(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+#' data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
 #' lbl <- LabelEncoder$new()
 #' data_ex$Name <- lbl$fit_transform(data_ex$Name)
 #' decode_names <- lbl$inverse_transform(data_ex$Name)
@@ -36,38 +36,75 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
     input_data = NA,
     encodings = NA,
     decodings = NA,
+    fit_model = FALSE,
 
-    initialize = function(data){
-        if(!(missing(data))) self$input_data <- data
-    },
-
-
+    # nothing to initialise in this class
     fit = function(data_col){
 
-        self$input_data <- data_col
+        self$input_data <- private$check_data(data_col)
         self$encodings <- private$encoder(self$input_data)
         self$decodings <- private$decoder(self$encodings)
+        self$fit_model <- TRUE
 
     },
 
     fit_transform = function(data_col){
+
+        data_col <- private$check_data(data_col)
         self$fit(data_col)
-        return (self$encodings)
+
+        vals <- private$mapper(data_col,
+                               self$encodings,
+                               convert_type = NULL,
+                               output_type = numeric(1))
+        return (vals)
 
     },
 
     transform = function(data_col){
-        return (self$encodings)
+
+        if(!(isTRUE(self$fit_model)))
+            stop("Please run fit before using transform.")
+
+        data_col <- private$check_data(data_col)
+
+        # all values in the new vector should be in encodings
+        if(!(all(data_col %in% names(self$encodings)))){
+            message(strwrap("There are new values in this vector which weren't
+                 available during fit. Replacing those values with 'NA'"))
+
+            # replace new values with 'NA'
+            val_index <- which(!(data_col %in% names(self$encodings)))
+            data_col[val_index] <- "NA"
+
+        }
+
+        vals <- private$mapper(data_col,
+                               self$encodings,
+                               convert_type = NULL,
+                               output_type = numeric(1))
+        return (vals)
     },
 
     inverse_transform = function(coded_col){
-        return (self$decodings)
+
+        #check if all values exist in decode
+        if(!(all(coded_col %in% self$encodings))){
+            stop(strwrap("There are new values in this data which weren't
+                    available during fit. Please fix the issue."))
+        }
+
+        # write here
+        vals <- private$mapper(coded_col,
+                               self$decodings,
+                               convert_type = as.character,
+                               output_type= character(1))
+        return (vals)
+
     }
 
 ),
     private = list(
-
-    mapper = NA,
 
     encoder = function(data_col){
 
@@ -77,22 +114,59 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
         all_values <- unique(data_col)
         maps <- list()
 
-        for(i in seq(all_values))  maps[all_values[i]] <- i
-        private$mapper <- maps
-
-        mapper <- vapply(data_col, function(x) maps[[x]],
-                         FUN.VALUE = numeric(1), USE.NAMES = F)
-        return (mapper)
+        # because the encoding should start with zero (i - 1)
+        for(i in seq(all_values))  maps[all_values[i]] <- i-1
+        return (maps)
 
     },
 
-    decoder = function(coded_col){
-        return (vapply(coded_col,
-                       function(x)
-                           names(which(private$mapper == x)),
-                       FUN.VALUE = character(1), USE.NAMES = F))
-    }
+    decoder = function(en_output){
 
+        # reverse the encoded list - make values as names and vice versa
+        f <- as.list(names(en_output))
+        names(f) <- en_output
+        return(f)
+
+    },
+
+    mapper = function(input_vec, coded_list, convert_type ,output_type){
+
+        if(is.null(convert_type)){
+            # this is to avoid using convert_type argument for
+            # transform, fit_transform
+            return (vapply(input_vec,
+                           function(x) coded_list[[x]],
+                           FUN.VALUE = output_type,
+                           USE.NAMES = F))
+        }
+
+        return(vapply(input_vec,
+                      function(x) coded_list[[convert_type(x)]],
+                      FUN.VALUE = output_type,
+                      USE.NAMES = F))
+    },
+
+
+    check_data = function(data_col){
+
+        # fix data issues here
+        if(any(is.na(data_col))){
+            message("The data contains NA values. Imputing NA with 'NA' ")
+            data_col <- replace(data_col, which(is.na(data_col)), "NA")
+        }
+
+        if(any((data_col == ""))){
+            message("The data contains blank values. Imputing them with 'NA' ")
+            data_col <- replace(data_col, which(data_col == ""), "NA")
+        }
+
+        if(any((data_col == " "))){
+            message("The data contains blank values. Imputing them with 'NA' ")
+            data_col <- replace(data_col, which(data_col == " "), "NA")
+        }
+
+        return(data_col)
+
+    }
     )
 )
-

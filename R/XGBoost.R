@@ -5,14 +5,14 @@
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
 #' bst = XGBTrainer$new(n_estimators, max_features, max_depth, min_samples_split, criterion,classification, class_weights, verbose, seed,always_split)
-#' bst$fit(X_train, y_train)
+#' bst$fit(X_train, y_train, valid=NULL)
 #' tfidf$predict(X_test)
 #' }
 #'
 #' @section Methods:
 #' \describe{
 #'   \item{\code{$new(booster,objective,nthread,silent,n_estimators,learning_rate,gamma,max_depth,min_child_weight,subsample,colsample_bytree,lambda,alpha,eval_metric,print_every,feval,early_stopping,maximize,custom_objective,save_period,save_name,xgb_model,callbacks,verbose,num_class,weight,na_missing)}}{Initialises an instance of xgboost model}
-#'   \item{\code{$fit(X_train, y_train)}}{fits model to an input train data using given parametes.}
+#'   \item{\code{$fit(X_train, y_train, valid)}}{fits model to an input train data using given parametes.}
 #'   \item{\code{$cross_val(X_train, y_train, nfolds, stratified, folds, early_stopping)}}{performs cross validation on train data}
 #'   \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
 #' }
@@ -20,6 +20,7 @@
 #' \describe{
 #'  \item{params}{the detailed version of these arguments can found in xgboost documentation \url{http://xgboost.readthedocs.io/en/latest/parameter.html}}
 #'  \item{booster}{the trainer type, the values are \code{gbtree(default)}, \code{gblinear}, \code{dart:gbtree}}
+#'  \item{objective}{specify the learning task. Check the link above for all possible values.}
 #'  \item{max_features}{the number of features to consider when looking for the best split
 #'      Possible values are \code{auto},\code{sqrt},\code{log},\code{None}}
 #'  \item{n_thread}{number of parallel threads used to run, default is to run using all threads available}
@@ -74,7 +75,7 @@
 #' xgb$show_importance()
 #'
 #' # make predictions
-#' preds <- xgb$predict_model(as.matrix(iris[,1:4]))
+#' preds <- xgb$predict(as.matrix(iris[,1:4]))
 #' preds
 
 XGBTrainer <- R6Class(
@@ -236,8 +237,21 @@ XGBTrainer <- R6Class(
                                eval_metric = self$eval_metric,
                                num_class = self$num_class)
 
+            # remove null parameters from the param_list
+            null_params <- names(which(vapply(params_list,
+                                              is.null,
+                                              FUN.VALUE = logical(1))))
+
+            if (length(null_params) > 0){
+                for(x in null_params){
+                    params_list[[x]] <- NULL
+                }
+            }
+
+
             # generate data for training
             all_data <- private$prepare_data_train(X, y, valid)
+
 
             message("starting with training...")
             private$trained_model <- xgb.train(params = params_list
@@ -256,8 +270,17 @@ XGBTrainer <- R6Class(
 
         },
 
-        predict_model = function(df) {
-            return(stats::predict(private$trained_model, df))
+        predict = function(df) {
+
+            # pretty important for subset data here
+            # must subset data using features on which model was trained
+            # if we don't do it, the prediction changes completely and gets
+            # worse.
+
+            df <- as.data.table(df)
+            dtest <- xgb.DMatrix(data = as.matrix(df[, self$feature_names, with=FALSE]))
+
+            return(stats::predict(private$trained_model, dtest))
         },
 
         show_importance = function(type="plot", topn=10){
@@ -283,12 +306,12 @@ XGBTrainer <- R6Class(
                 stop("Your data format should be a data.table or data.frame.")
 
             if (!(y %in% names(X)))
-                stop("The dependent variable y is not available
-                     in the data set.")
+                stop(strwrap("The dependent variable y is not available
+                     in the data set."))
 
             if(any(!(vapply(X, is.numeric, FUN.VALUE = logical(1)))))
-                stop("The data contains character or categorical variable.
-                     Please convert it to numeric or integer")
+                stop(strwrap("The data contains character or categorical variable.
+                     Please convert it to numeric or integer"))
 
             if(!(is.numeric(X[[y]])))
                 stop("The dependent variable is not numeric.")
@@ -300,23 +323,25 @@ XGBTrainer <- R6Class(
                          unequal number of columns.")
 
                 if(!all(colnames(X) %in% colnames(valid)))
-                    stop("Train and validation data has some issue
-                         in column names.Make sure they are same.")
+                    stop(strwrap("Train and validation data has some issue
+                         in column names.Make sure they are same."))
             }
 
-            message("now converting the data into xgboost format..")
+            message("converting the data into xgboost format..")
 
+            X <- as.data.table(X)
             if(!(is.null(valid))){
-                dtrain <- xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]),
+                valid <- as.data.table(valid)
+                dtrain <- xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y), with=FALSE]),
                                       label = X[[y]])
-                dvalid <- xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y)]),
+                dvalid <- xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y), with=FALSE]),
                                       label = valid[[y]])
                 return (list(train = dtrain,
                              val = dvalid))
 
             } else {
-                dtrain <-xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y)]),
-                                     label = X[[y]])
+                dtrain <-xgb.DMatrix(data = as.matrix(
+                    X[, setdiff(names(X), y), with=FALSE]), label = X[[y]])
                 return (list(train = dtrain))
             }
 

@@ -39,7 +39,7 @@ bm25 <- R6::R6Class("bm25", public = list(
         if(!(missing(use_parallel))) self$use_parallel <- use_parallel
 
         if(isTRUE(self$use_parallel)){
-            message('Computation will be done parallel using all CPU cores.')
+            message('Computation will be done parallelly using all CPU cores.')
         } else {
             message('to activate parallel computation, set use_parallel=TRUE')
         }

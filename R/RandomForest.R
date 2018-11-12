@@ -90,6 +90,10 @@ RFTrainer <- R6Class("RandomForestTrainer",
           fit = function(X, y) {
               private$check_data(X, y)
 
+
+              # dependent variable should be passed as factor if classification
+              if(self$classification == 1) X[[y]] <- as.factor(X[[y]])
+
               # set max_features parameter
               if(self$max_features %in% c('auto','sqrt')) {
                   self$max_features <- round(sqrt(ncol(X)))
@@ -105,7 +109,7 @@ RFTrainer <- R6Class("RandomForestTrainer",
 
               if(self$max_features == 1)
                   message('You are training this model with 1 feature.
-                          Just so you know.')
+                          Please check.')
 
               private$trained_model <- ranger::ranger(
                   dependent.variable.name = y,
@@ -125,13 +129,13 @@ RFTrainer <- R6Class("RandomForestTrainer",
 
           predict = function(df) {
 
-              return (ranger::predictions(private$trained_model,
-                                      df[, c(private$iid_names)]))
+              return (stats::predict(private$trained_model, df)$predictions)
           },
 
           get_importance = function(){
 
-              return(ranger::importance(private$trained_model))
+              tmp <- ranger::importance(private$trained_model)
+              return(data.frame(tmp[order(tmp, decreasing = TRUE)]))
           }
       ),
 

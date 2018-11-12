@@ -30,8 +30,8 @@
 #'                          seed = 1220)$test
 kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 
-    warning('This method is still experimental. If the results you get are
-            unexpected, please report them in github issues.')
+    warning(strwrap('This method is still experimental. If the results you get
+                    are unexpected, please report them in github issues.'))
 
     # check if its data frame
     if (!(inherits(train_df, c("data.table", "data.frame"))))
@@ -147,8 +147,6 @@ smoothMean <- function(train_df,
     # check if column exists
     assert_that(all(c(colname, target) %in% names(train_df)))
     assert_that(all(c(colname) %in% names(test_df)))
-
-
 
     if(any(is.na(train_df[[target]])))
         stop("The target column contains NA values. Halting computation.")
