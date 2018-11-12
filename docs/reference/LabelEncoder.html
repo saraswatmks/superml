@@ -86,7 +86,7 @@ the data to be encoded into numerical format. It takes a vector of character or 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/superml_vignette.html">Introduction to superml</a>
+      <a href="../articles/superml_tutorial.html">Introduction to superml</a>
     </li>
   </ul>
 </li>
@@ -164,7 +164,7 @@ lbl$transform(x)
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+    <pre class="examples"><div class='input'><span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
 <span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
 <span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>fit_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
 <span class='no'>decode_names</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>inverse_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)</div></pre>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • superml</title>
+<title>cla_train — cla_train • superml</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,11 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="cla_train — cla_train" />
+
+<meta property="og:description" content="Training Dataset used for classification examples. This is classic titanic dataset used to predict
+if a passenger will survive or not in titanic ship disaster." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -46,7 +50,7 @@
   </head>
 
   <body>
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -109,28 +113,48 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/saraswatmks/superml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>cla_train</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>cla_train.Rd</code></div>
     </div>
 
-    <div id="superml-0-1-0" class="section level1">
-<h1 class="page-header">
-<a href="#superml-0-1-0" class="anchor"></a>superml 0.1.0</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    
+    <p>Training Dataset used for classification examples. This is classic titanic dataset used to predict
+if a passenger will survive or not in titanic ship disaster.</p>
+    
+    </div>
 
+    <pre class="usage"><span class='no'>cla_train</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 12 variables:</p><dl class='dl-horizontal'>
+<dt><code>PassengerId</code></dt><dd><p>unique ID of the passenger</p></dd>
+<dt><code>Survived</code></dt><dd><p>survival of the passenger</p></dd>
+<dt><code>Pclass</code></dt><dd><p>ticket class</p></dd>
+<dt><code>Name</code></dt><dd><p>name of the passenger</p></dd>
+<dt><code>Sex</code></dt><dd><p>sex of the passenger</p></dd>
+<dt><code>Age</code></dt><dd><p>Age of the passenger</p></dd>
+<dt><code>SibSp</code></dt><dd><p>number of siblings/spouse aboard the titanic</p></dd>
+<dt><code>Parch</code></dt><dd><p>number of parents / child aboard the titanic</p></dd>
+<dt><code>Ticket</code></dt><dd><p>ticket number</p></dd>
+<dt><code>Fare</code></dt><dd><p>passenger fare</p></dd>
+<dt><code>Cabin</code></dt><dd><p>cabin number</p></dd>
+<dt><code>Embarked</code></dt><dd><p>port of embarkation</p></dd>
+</dl>
+    <p>For further details, see <a href='https://www.kaggle.com/c/titanic/data'>https://www.kaggle.com/c/titanic/data</a></p>
+    
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#superml-0-1-0">0.1.0</a></li>
-      </ul>
-    </div>
-  </div>
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#format">Format</a></li>
+          </ul>
 
+  </div>
 </div>
 
       <footer>

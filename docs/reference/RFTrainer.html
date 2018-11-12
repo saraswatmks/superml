@@ -85,7 +85,7 @@ This implementation uses ranger R package which provides faster model training."
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/superml_vignette.html">Introduction to superml</a>
+      <a href="../articles/superml_tutorial.html">Introduction to superml</a>
     </li>
   </ul>
 </li>
@@ -182,8 +182,11 @@ prediction &lt;- bst$predict(X_test)
                      <span class='kw'>verbose</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 <span class='no'>bst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>'Species'</span>)
 <span class='no'>predictions</span> <span class='kw'>&lt;-</span> <span class='no'>bst</span>$<span class='fu'>predict</span>(<span class='no'>iris</span>)
-<span class='no'>bst</span>$<span class='fu'>get_importance</span>()</div><div class='output co'>#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-#&gt;     7.850913     2.474873    39.462297    49.401250 </div></pre>
+<span class='no'>bst</span>$<span class='fu'>get_importance</span>()</div><div class='output co'>#&gt;              tmp.order.tmp..decreasing...TRUE..
+#&gt; Petal.Width                           49.401250
+#&gt; Petal.Length                          39.462297
+#&gt; Sepal.Length                           7.850913
+#&gt; Sepal.Width                            2.474873</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
