@@ -84,7 +84,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/superml_vignette.html">Introduction to superml</a>
+      <a href="../articles/superml_tutorial.html">Introduction to superml</a>
     </li>
   </ul>
 </li>
@@ -134,7 +134,7 @@
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
 bst = XGBTrainer$new(n_estimators, max_features, max_depth, min_samples_split, criterion,classification, class_weights, verbose, seed,always_split)
-bst$fit(X_train, y_train)
+bst$fit(X_train, y_train, valid=NULL)
 tfidf$predict(X_test)
 </pre>
     
@@ -143,7 +143,7 @@ tfidf$predict(X_test)
     
     <dl class='dl-horizontal'>
   <dt><code>$new(booster,objective,nthread,silent,n_estimators,learning_rate,gamma,max_depth,min_child_weight,subsample,colsample_bytree,lambda,alpha,eval_metric,print_every,feval,early_stopping,maximize,custom_objective,save_period,save_name,xgb_model,callbacks,verbose,num_class,weight,na_missing)</code></dt><dd><p>Initialises an instance of xgboost model</p></dd>
-  <dt><code>$fit(X_train, y_train)</code></dt><dd><p>fits model to an input train data using given parametes.</p></dd>
+  <dt><code>$fit(X_train, y_train, valid)</code></dt><dd><p>fits model to an input train data using given parametes.</p></dd>
   <dt><code>$cross_val(X_train, y_train, nfolds, stratified, folds, early_stopping)</code></dt><dd><p>performs cross validation on train data</p></dd>
   <dt><code>$predict(X_test)</code></dt><dd><p>returns predictions by fitting the trained model on test data.</p></dd>
 </dl>
@@ -154,6 +154,7 @@ tfidf$predict(X_test)
     <dl class='dl-horizontal'>
  <dt>params</dt><dd><p>the detailed version of these arguments can found in xgboost documentation <a href='http://xgboost.readthedocs.io/en/latest/parameter.html'>http://xgboost.readthedocs.io/en/latest/parameter.html</a></p></dd>
  <dt>booster</dt><dd><p>the trainer type, the values are <code>gbtree(default)</code>, <code>gblinear</code>, <code>dart:gbtree</code></p></dd>
+ <dt>objective</dt><dd><p>specify the learning task. Check the link above for all possible values.</p></dd>
  <dt>max_features</dt><dd><p>the number of features to consider when looking for the best split
      Possible values are <code>auto</code>,<code>sqrt</code>,<code>log</code>,<code>None</code></p></dd>
  <dt>n_thread</dt><dd><p>number of parallel threads used to run, default is to run using all threads available</p></dd>
@@ -201,7 +202,7 @@ tfidf$predict(X_test)
                       <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
                       <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
                       <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>500</span>)
-<span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>now converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
+<span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
 #&gt; [51]	train-merror:0.000000 
 #&gt; [101]	train-merror:0.000000 
 #&gt; [151]	train-merror:0.000000 
@@ -213,16 +214,16 @@ tfidf$predict(X_test)
 #&gt; [451]	train-merror:0.000000 
 #&gt; [500]	train-merror:0.000000 </div><div class='input'>
 <span class='co'># do cross validation to find optimal value for n_estimators</span>
-<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; <span class='message'>now converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.016667+0.004714	test-merror:0.033333+0.009428 
+<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.013333+0.004714	test-merror:0.046667+0.024944 
 #&gt; Multiple eval metrics are present. Will use test_merror for early stopping.
 #&gt; Will train until test_merror hasn't improved in 20 rounds.
 #&gt; 
 #&gt; Stopping. Best iteration:
-#&gt; [1]	train-merror:0.016667+0.004714	test-merror:0.033333+0.009428
+#&gt; [1]	train-merror:0.013333+0.004714	test-merror:0.046667+0.024944
 #&gt; </div><div class='input'><span class='no'>best_iter</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='no'>cv_model</span>$<span class='no'>best_iteration</span>
 <span class='no'>xgb</span>$<span class='fu'>show_importance</span>()</div><div class='img'><img src='XGBTrainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># make predictions</span>
-<span class='no'>preds</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='fu'>predict_model</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]))
+<span class='no'>preds</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='fu'>predict</span>(<span class='fu'>as.matrix</span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]))
 <span class='no'>preds</span></div><div class='output co'>#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 #&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 #&gt;  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
