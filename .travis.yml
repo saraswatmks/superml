@@ -5,7 +5,7 @@ cache: packages
 sudo: false
 
 r:
-  - devel
+  - release
 
 warnings_are_errors: true
 latex: false
