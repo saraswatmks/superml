@@ -3,4 +3,7 @@ pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   superml_tutorial: superml_tutorial.html
+urls:
+  reference: https://saraswatmks.github.io/superml//reference
+  article: https://saraswatmks.github.io/superml//articles
 

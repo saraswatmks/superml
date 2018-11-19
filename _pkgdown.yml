@@ -1,0 +1,63 @@
+title: SuperML
+url: https://saraswatmks.github.io/superml/
+template:
+  params:
+    bootswatch: flatly
+
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - articles
+    - reference
+    - tutorials
+    - news
+    right:
+    - github
+    - linkedin
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Tutorials
+      menu:
+      - text: Introduction to superml
+        href: articles/superml_tutorial.html
+    news:
+      text: News
+      href: news/index.html
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/saraswatmks/superml
+    linkedin:
+      icon: fa-linkedin fa-lg
+      href: https://www.linkedin.com/in/saraswatmanish/
+
+reference:
+- title: Datasets
+  desc: ~
+  contents:
+  - '`cla_train`'
+  - '`reg_train`'
+
+- title: All functions
+  desc: ~
+  contents:
+  - '`CountVectorizer`'
+  - '`Counter`'
+  - '`LMTrainer`'
+  - '`LabelEncoder`'
+  - '`RFTrainer`'
+  - '`TfIdfVectorizer`'
+  - '`XGBTrainer`'
+  - '`bm25`'
+  - '`kFoldMean`'
+  - '`smoothMean`'
+
+
+
