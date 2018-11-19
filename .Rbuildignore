@@ -8,3 +8,7 @@
 ^data-raw$
 ^_pkgdown\.yml$
 ^docs$
+^appveyor\.yml$
+^cran-comments\.md$
+^README\.Rmd$
+^README-.*\.png$
