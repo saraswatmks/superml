@@ -87,46 +87,60 @@ xtrain[is.na(xtrain)] <- -1
 xtest[is.na(xtest)] <- -1
 ```
 
+**KNN Regression**
 ```{r}
-# Simple Regression
+knn <- KNNTrainer$new(k = 2,prob = T,type = 'reg')
+knn$fit_predict(train = xtrain, test = xtest, y = 'SalePrice')
+probs <- knn$get_predictions(type = 'prob')
+labels <- knn$get_predictions(type='raw')
+auc(actual = xtest$Survived, predicted=labels)
+```
+
+**Simple Regresison**
+```{r}
 lf <- LMTrainer$new(family="gaussian")
 lf$fit(X = xtrain, y = "SalePrice")
 summary(lf$model)
 predictions <- lf$predict(df = xtest)
 rmse(actual = xtest$SalePrice, predicted = predictions)
 ```
+
+**Lasso Regression**
 ```{r}
-# Lasso Regression
 lf <- LMTrainer$new(family = "gaussian", alpha=1, lambda = 1000)
 lf$fit(X = xtrain, y = "SalePrice")
 predictions <- lf$predict(df = xtest)
 rmse(actual = xtest$SalePrice, predicted = predictions)
 ```
+
+**Ridge Regression**
 ```{r}
-# Ridge Regression
 lf <- LMTrainer$new(family = "gaussian", alpha=0)
 lf$fit(X = xtrain, y = "SalePrice")
 predictions <- lf$predict(df = xtest)
 rmse(actual = xtest$SalePrice, predicted = predictions)
 ```
+
+**Logistic Regression with CV**
 ```{r}
-# cross validation logistic
 lf <- LMTrainer$new(family = "gaussian")
 lf$cv_model(X = xtrain, y = 'SalePrice', nfolds = 5, parallel = FALSE)
 predictions <- lf$cv_predict(df = xtest)
 coefs <- lf$get_importance()
 rmse(actual = xtest$SalePrice, predicted = predictions)
 ```
+
+**Random Forest**
 ```{r}
-# Random Forest
 rf <- RFTrainer$new(n_estimators = 500,classification = 0)
 rf$fit(X = xtrain, y = "SalePrice")
 pred <- rf$predict(df = xtest)
 rf$get_importance()
 rmse(actual = xtest$SalePrice, predicted = pred)
 ```
+
+**Xgboost**
 ```{r}
-# XGBoost
 xgb <- XGBTrainer$new(objective = "reg:linear"
                       , n_estimators = 500
                       , eval_metric = "rmse"
@@ -136,6 +150,30 @@ xgb <- XGBTrainer$new(objective = "reg:linear"
 xgb$fit(X = xtrain, y = "SalePrice", valid = xtest)
 pred <- xgb$predict(xtest)
 rmse(actual = xtest$SalePrice, predicted = pred)
+```
+
+**Grid Search**
+```{r}
+xgb <- XGBTrainer$new(objective="reg:linear")
+gst <-GridSearchTrainer$new(trainer = xgb,
+                             parameters = list(n_estimators = c(10,50),
+                             max_depth = c(5,2)),
+                             n_folds = 3,
+                             scoring = c('accuracy','auc'))
+gst$fit(xtrain, "SalePrice")
+gst$best_iteration()
+```
+
+**Random Search**
+```{r}
+rf <- RFTrainer$new()
+rst <-RandomSearchTrainer$new(trainer = rf,
+                             parameters = list(n_estimators = c(10,50),
+                             max_depth = c(5,2)),
+                             n_folds = 3,
+                             scoring = c('accuracy','auc'))
+rst$fit(xtrain, "SalePrice")
+rst$best_iteration()
 ```
 
 
@@ -158,32 +196,13 @@ split <- createDataPartition(y = cla_train$Survived,p = 0.7)
 xtrain <- cla_train[split$Resample1]
 xtest <- cla_train[!split$Resample1]
 
-# encode categorical variables - longer way
-lbl <- LabelEncoder$new()
-
-lbl$fit(c(xtrain$Embarked, xtest$Embarked))
-xtrain[, Embarked := lbl$transform(Embarked)]
-xtest[, Embarked := lbl$transform(Embarked)]
-
-lbl1 <- LabelEncoder$new()
-
-lbl1$fit(c(xtrain$Sex, xtest$Sex))
-xtrain[, Sex := lbl1$transform(Sex)]
-xtest[, Sex := lbl1$transform(Sex)]
-
-lbl2 <- LabelEncoder$new()
-
-lbl2$fit(c(xtrain$Cabin, xtest$Cabin))
-xtrain[, Cabin := lbl2$transform(Cabin)]
-xtest[, Cabin := lbl2$transform(Cabin)]
-
 # encode categorical variables - shorter way
-# for(c in c('Embarked','Sex','Cabin')){
-#     lbl <- LabelEncoder$new()
-#     lbl$fit(c(xtrain[[c]], xtest[[c]]))
-#     xtrain[[c]] <- lbl$transform(xtrain[[c]])
-#     xtest[[c]] <- lbl$transform(xtest[[c]])
-# }
+for(c in c('Embarked','Sex','Cabin')){
+    lbl <- LabelEncoder$new()
+    lbl$fit(c(xtrain[[c]], xtest[[c]]))
+    xtrain[[c]] <- lbl$transform(xtrain[[c]])
+    xtest[[c]] <- lbl$transform(xtest[[c]])
+}
 
 # impute missing values
 xtrain[, Age := replace(Age, is.na(Age), median(Age, na.rm = T))]
@@ -197,6 +216,15 @@ xtest <- xtest[,-c(to_drop), with=F]
 ```
  
 Now, our data is ready to be served for model training. Let's do it.
+
+**KNN Classification**
+```{r}
+knn <- KNNTrainer$new(k = 2,prob = T,type = 'class')
+knn$fit_predict(train = xtrain, test = xtest, y = 'Survived')
+probs <- knn$get_predictions(type = 'prob')
+labels <- knn$get_predictions(type='raw')
+auc(actual = xtest$Survived, predicted=labels)
+```
 
 **Logistic Regression**
 ```{r}
@@ -236,7 +264,7 @@ rf$get_importance()
 auc(actual = xtest$Survived, predicted = pred)
 ```
 
-**XGBOOST**
+**Xgboost**
 ```{r}
 xgb <- XGBTrainer$new(objective = "binary:logistic"
                       , n_estimators = 500
@@ -249,6 +277,31 @@ xgb$fit(X = xtrain, y = "Survived", valid = xtest)
 pred <- xgb$predict(xtest)
 auc(actual = xtest$Survived, predicted = pred)
 ```
+
+**Grid Search**
+```{r}
+xgb <- XGBTrainer$new(objective="binary:logistic")
+gst <-GridSearchTrainer$new(trainer = xgb,
+                             parameters = list(n_estimators = c(10,50),
+                             max_depth = c(5,2)),
+                             n_folds = 3,
+                             scoring = c('accuracy','auc'))
+gst$fit(xtrain, "Survived")
+gst$best_iteration()
+```
+
+**Random Search**
+```{r}
+rf <- RFTrainer$new()
+rst <-RandomSearchTrainer$new(trainer = rf,
+                             parameters = list(n_estimators = c(10,50),
+                             max_depth = c(5,2)),
+                             n_folds = 3,
+                             scoring = c('accuracy','auc'))
+rst$fit(xtrain, "Survived")
+rst$best_iteration()
+```
+
 
 Let's create some new feature based on target variable using target encoding and test a model.
 

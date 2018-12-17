@@ -25,9 +25,9 @@ prediction <- bst$predict(X_test)
 \section{Methods}{
 
 \describe{
-  \item{\code{$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)}}{Initialises an instance of random forest model}
-  \item{\code{$fit(X_train, y_train)}}{fit model to an input train data and trains the model.}
-  \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
+  \item{\code{$new()}}{Initialises an instance of random forest model}
+  \item{\code{$fit()}}{fit model to an input train data and trains the model.}
+  \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
   \item{\code{$get_importance()}}{Get feature importance from the model}
 }
 }

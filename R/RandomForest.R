@@ -11,9 +11,9 @@
 #' }
 #' @section Methods:
 #' \describe{
-#'   \item{\code{$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)}}{Initialises an instance of random forest model}
-#'   \item{\code{$fit(X_train, y_train)}}{fit model to an input train data and trains the model.}
-#'   \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
+#'   \item{\code{$new()}}{Initialises an instance of random forest model}
+#'   \item{\code{$fit()}}{fit model to an input train data and trains the model.}
+#'   \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
 #'   \item{\code{$get_importance()}}{Get feature importance from the model}
 #' }
 #' @section Arguments:
@@ -46,7 +46,7 @@
 #' bst$fit(iris, 'Species')
 #' predictions <- bst$predict(iris)
 #' bst$get_importance()
-RFTrainer <- R6Class("RandomForestTrainer",
+RFTrainer <- R6Class("RFTrainer",
       public = list(
           n_estimators = 100,
           max_features = "auto",
@@ -70,7 +70,8 @@ RFTrainer <- R6Class("RandomForestTrainer",
                                 verbose,
                                 save_model,
                                 seed,
-                                importance){
+                                importance
+                                ){
 
               if(!(missing(n_estimators))) self$n_estimators <- n_estimators
               if (!(missing(max_features))) self$max_features <- max_features

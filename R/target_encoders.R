@@ -30,7 +30,7 @@
 #'                          seed = 1220)$test
 kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 
-    warning(strwrap('This method is still experimental. If the results you get
+    warning(strwrap('This method is experimental. If the results you get
                     are unexpected, please report them in github issues.'))
 
     # check if its data frame
@@ -198,3 +198,14 @@ smoothMean <- function(train_df,
 
     return(list(train = trn_df, test = tst_df))
 }
+
+
+
+
+
+
+
+
+
+
+

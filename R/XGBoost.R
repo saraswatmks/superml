@@ -11,10 +11,10 @@
 #'
 #' @section Methods:
 #' \describe{
-#'   \item{\code{$new(booster,objective,nthread,silent,n_estimators,learning_rate,gamma,max_depth,min_child_weight,subsample,colsample_bytree,lambda,alpha,eval_metric,print_every,feval,early_stopping,maximize,custom_objective,save_period,save_name,xgb_model,callbacks,verbose,num_class,weight,na_missing)}}{Initialises an instance of xgboost model}
-#'   \item{\code{$fit(X_train, y_train, valid)}}{fits model to an input train data using given parametes.}
-#'   \item{\code{$cross_val(X_train, y_train, nfolds, stratified, folds, early_stopping)}}{performs cross validation on train data}
-#'   \item{\code{$predict(X_test)}}{returns predictions by fitting the trained model on test data.}
+#'   \item{\code{$new()}}{Initialises an instance of xgboost model}
+#'   \item{\code{$fit()}}{fits model to an input train data using given parametes.}
+#'   \item{\code{$cross_val()}}{performs cross validation on train data}
+#'   \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
 #' }
 #' @section Arguments:
 #' \describe{
@@ -140,7 +140,8 @@ XGBTrainer <- R6Class(
                               verbose,
                               num_class,
                               weight,
-                              na_missing) {
+                              na_missing
+                              ) {
 
             if(!(missing(booster))) self$booster <- booster
             if(!(missing(objective))) self$objective <- objective

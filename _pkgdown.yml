@@ -8,7 +8,6 @@ navbar:
   structure:
     left:
     - home
-    - intro
     - articles
     - reference
     - tutorials
@@ -48,16 +47,19 @@ reference:
 - title: All functions
   desc: ~
   contents:
-  - '`CountVectorizer`'
+  - '`bm25`'
   - '`Counter`'
+  - '`CountVectorizer`'
+  - '`GridSearchTrainer`'
   - '`LMTrainer`'
   - '`LabelEncoder`'
+  - '`kFoldMean`'
+  - '`KMeansTrainer`'
+  - '`KNNTrainer`'
+  - '`RandomSearchTrainer`'
   - '`RFTrainer`'
+  - '`smoothMean`'
   - '`TfIdfVectorizer`'
   - '`XGBTrainer`'
-  - '`bm25`'
-  - '`kFoldMean`'
-  - '`smoothMean`'
-
 
 

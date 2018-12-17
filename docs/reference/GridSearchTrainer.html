@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Best Matching(BM25) — bm25 • SuperML</title>
+<title>Grid Search Trainer — GridSearchTrainer • SuperML</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,11 @@
 
 
 
-<meta property="og:title" content="Best Matching(BM25) — bm25" />
+<meta property="og:title" content="Grid Search Trainer — GridSearchTrainer" />
 
-<meta property="og:description" content="BM25 stands for Best Matching 25. It is widely using for ranking documents and a prefered method than TF*IDF scores.
-It is used to find the similar documents from a corpus, given a new document. It is populary used in information retrieval systems.
-This implementation ses multiple cores for faster and parallel computation." />
+<meta property="og:description" content="Grid search trainer is used to train a machine learning model with multiple combinations
+of training hyper parameters and finds the best combination of parameters. It creates an exhaustive set of hyperparameter
+combinations and train model on each combination." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,20 +122,20 @@ This implementation ses multiple cores for faster and parallel computation." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Best Matching(BM25)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/bm25.R'><code>R/bm25.R</code></a></small>
-    <div class="hidden name"><code>bm25.Rd</code></div>
+    <h1>Grid Search Trainer</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/GridSearch.R'><code>R/GridSearch.R</code></a></small>
+    <div class="hidden name"><code>GridSearchTrainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>BM25 stands for Best Matching 25. It is widely using for ranking documents and a prefered method than TF*IDF scores.
-It is used to find the similar documents from a corpus, given a new document. It is populary used in information retrieval systems.
-This implementation ses multiple cores for faster and parallel computation.</p>
+    <p>Grid search trainer is used to train a machine learning model with multiple combinations
+of training hyper parameters and finds the best combination of parameters. It creates an exhaustive set of hyperparameter
+combinations and train model on each combination.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>bm25</span></pre>
+    <pre class="usage"><span class='no'>GridSearchTrainer</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
@@ -145,35 +145,59 @@ This implementation ses multiple cores for faster and parallel computation.</p>
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bm25 = bm25$new(corpus, n_cores)
-bm25$most_similar(input_document, topn)
-bm25$compute(input_document)
+gst = GridSearchTrainer$new(trainer, parameters, n_folds, scoring)
+gst$fit(X, y)
+gst$best_iteration(metric)
 </pre>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
     <dl class='dl-horizontal'>
-  <dt><code>$new()</code></dt><dd><p>Initialise the instance of the class. Here you pass the complete corpus of the documents</p></dd>
-  <dt><code>$most_similar()</code></dt><dd><p>it returns the topn most similar documents from the corpus</p></dd>
-  <dt><code>$compute()</code></dt><dd><p>it returns a similarity score for all the documents in the corpus, given a sentence</p></dd>
+  <dt><code>$new()</code></dt><dd><p>Initialises an instance of grid search trainer</p></dd>
+  <dt><code>$fit()</code></dt><dd><p>fit model to an input train data and trains the model.</p></dd>
+  <dt><code>$best_iteration()</code></dt><dd><p>returns best iteration based on a given metric. By default, uses the first scoring metric</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
 
     
     <dl class='dl-horizontal'>
- <dt>corpus</dt><dd><p>a list containing sentences</p></dd>
- <dt>use_parallel</dt><dd><p>boolean value used to activate parallel computation, defaults to FALSE</p></dd>
+ <dt>trainer</dt><dd><p>superml trainer object, must be either XGBTrainer, LMTrainer, RFTrainer, GBMTrainer</p></dd>
+ <dt>parameters</dt><dd><p>list containing parameters</p></dd>
+ <dt>n_folds</dt><dd><p>number of folds to use to split the train data</p></dd>
+ <dt>scoring</dt><dd><p>scoring metric used to evaluate the best model, multiple values can be provided.
+               currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall</p></dd>
 </dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>example</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'white audi 2.5 car'</span>,<span class='st'>'black shoes from office'</span>,
-             <span class='st'>'new mobile iphone 7'</span>,<span class='st'>'audi tyres audi a3'</span>,
-             <span class='st'>'nice audi bmw toyota corolla'</span>)
-<span class='no'>get_bm</span> <span class='kw'>&lt;-</span> <span class='no'>bm25</span>$<span class='fu'>new</span>(<span class='no'>example</span>, <span class='kw'>use_parallel</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>to activate parallel computation, set use_parallel=TRUE</span></div><div class='input'><span class='no'>input_document</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'white toyota corolla'</span>)
-<span class='no'>get_bm</span>$<span class='fu'>most_similar</span>(<span class='kw'>document</span> <span class='kw'>=</span> <span class='no'>input_document</span>, <span class='kw'>topn</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; [1] "nice audi bmw toyota corolla" "white audi 2.5 car"          </div></pre>
+    <pre class="examples"><div class='input'><span class='no'>rf</span> <span class='kw'>&lt;-</span> <span class='no'>RFTrainer</span>$<span class='fu'>new</span>()
+<span class='no'>gst</span> <span class='kw'>&lt;-</span><span class='no'>GridSearchTrainer</span>$<span class='fu'>new</span>(<span class='kw'>trainer</span> <span class='kw'>=</span> <span class='no'>rf</span>,
+                            <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>),
+                            <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>10</span>)),
+                            <span class='kw'>n_folds</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+                            <span class='kw'>scoring</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'accuracy'</span>,<span class='st'>'auc'</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
+<span class='no'>gst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; [1] "entering grid search"
+#&gt; [1] "In total, 3 models will be trained"</div><div class='input'><span class='no'>gst</span>$<span class='fu'>best_iteration</span>()</div><div class='output co'>#&gt; $n_estimators
+#&gt; [1] 100
+#&gt; 
+#&gt; $max_depth
+#&gt; [1] 5
+#&gt; 
+#&gt; $accuracy_avg
+#&gt; [1] 0.9533227
+#&gt; 
+#&gt; $accuracy_sd
+#&gt; [1] 0.01156549
+#&gt; 
+#&gt; $auc_avg
+#&gt; [1] 0.5332709
+#&gt; 
+#&gt; $auc_sd
+#&gt; [1] 0.03170169
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

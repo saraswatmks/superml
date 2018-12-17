@@ -29,12 +29,12 @@ bst$transform(sentences)
     \item{\code{$new()}}{Initialise the instance of the vectorizer}
     \item{\code{$fit()}}{creates a memory of count vectorizers and does computations required for transformation task}
     \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return a bag of words matrix }
-    \item{\code{$fit_transform(data)}}{simultaneouly fits and transform in one step and returns bag of words of matrix}
+    \item{\code{$fit_transform()}}{simultaneouly fits and transform in one step and returns bag of words of matrix}
 }
 }
 
 \examples{
-df <- data.table::data.table(sents = c('i am alone in dark.','mother_mary a lot',
+df <- data.frame(sents = c('i am alone in dark.','mother_mary a lot',
                            'alone in the dark?',
                            'many mothers in the lot....'))
 

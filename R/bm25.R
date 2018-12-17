@@ -1,19 +1,21 @@
 #' Best Matching(BM25)
 #'
-#' @description BM25 is used to find the similar documents from a corpus, given a new document.
-#' It is a ranking function populary used in information retrieval systems. It uses multiple cores for faster and parallel computation.
+#' @description BM25 stands for Best Matching 25. It is widely using for ranking documents and a prefered method than TF*IDF scores.
+#' It is used to find the similar documents from a corpus, given a new document. It is populary used in information retrieval systems.
+#' This implementation ses multiple cores for faster and parallel computation.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
 #' bm25 = bm25$new(corpus, n_cores)
 #' bm25$most_similar(input_document, topn)
+#' bm25$compute(input_document)
 #' }
 #' @section Methods:
 #' \describe{
 #'   \item{\code{$new()}}{Initialise the instance of the class. Here you pass the complete corpus of the documents}
-#'   \item{\code{$compute(input_document)}}{it returns a similarity score for all the documents in the corpus, given a sentence}
-#'   \item{\code{$most_similar(data)}}{it returns the topn most similar documents from the corpus}
+#'   \item{\code{$most_similar()}}{it returns the topn most similar documents from the corpus}
+#'   \item{\code{$compute()}}{it returns a similarity score for all the documents in the corpus, given a sentence}
 #' }
 #' @section Arguments:
 #' \describe{

@@ -25,12 +25,14 @@ Imports:
     tm(>= 0.7.3),
     ranger(>= 0.10.1),
     Metrics(>= 0.1.3),
-    kableExtra(>= 0.9.0)
+    kableExtra(>= 0.9.0),
+    ClusterR(>= 1.1.6)
 Suggests:
     knitr,
     rlang,
     testthat,
     rmarkdown,
-    glmnet
-RoxygenNote: 6.0.1
+    glmnet,
+    FNN
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr

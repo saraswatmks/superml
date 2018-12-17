@@ -10,6 +10,15 @@
     <loc>https://saraswatmks.github.io/superml//reference/Counter.html</loc>
   </url>
   <url>
+    <loc>https://saraswatmks.github.io/superml//reference/GridSearchTrainer.html</loc>
+  </url>
+  <url>
+    <loc>https://saraswatmks.github.io/superml//reference/KMeansTrainer.html</loc>
+  </url>
+  <url>
+    <loc>https://saraswatmks.github.io/superml//reference/KNNTrainer.html</loc>
+  </url>
+  <url>
     <loc>https://saraswatmks.github.io/superml//reference/LMTrainer.html</loc>
   </url>
   <url>
@@ -17,6 +26,9 @@
   </url>
   <url>
     <loc>https://saraswatmks.github.io/superml//reference/RFTrainer.html</loc>
+  </url>
+  <url>
+    <loc>https://saraswatmks.github.io/superml//reference/RandomSearchTrainer.html</loc>
   </url>
   <url>
     <loc>https://saraswatmks.github.io/superml//reference/TfIdfVectorizer.html</loc>
@@ -40,6 +52,6 @@
     <loc>https://saraswatmks.github.io/superml//reference/smoothMean.html</loc>
   </url>
   <url>
-    <loc>https://saraswatmks.github.io/superml//articles/superml_tutorial.html</loc>
+    <loc>https://saraswatmks.github.io/superml//articles/introduction.html</loc>
   </url>
 </urlset>
