@@ -2,7 +2,7 @@
 % Please edit documentation in R/super_utils.R
 \name{Counter}
 \alias{Counter}
-\title{Calculate count of values in a list}
+\title{Calculate count of values in a list or vector}
 \usage{
 Counter(data, sort = TRUE, decreasing = FALSE)
 }
@@ -14,10 +14,10 @@ Counter(data, sort = TRUE, decreasing = FALSE)
 \item{decreasing}{a logical value, the order of sorting to be followed}
 }
 \value{
-list of values in a sorted order
+count of values in a list
 }
 \description{
-Handy to calculate count of values in a sorted order
+Handy function to calculate count of values given in a list or vector
 }
 \examples{
 d <- list(c('i','am','bad'),c('you','are','also','bad'))

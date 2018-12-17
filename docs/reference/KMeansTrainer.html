@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>reg_train — reg_train • SuperML</title>
+<title>K-Means Trainer — KMeansTrainer • SuperML</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="reg_train — reg_train" />
+<meta property="og:title" content="K-Means Trainer — KMeansTrainer" />
 
-<meta property="og:description" content="Training Dataset used for regression examples. In this data set, we have to predict
-the sale price of the houses." />
+<meta property="og:description" content="Trains am unsupervised K-Means algorithm. It borrows mini-batch k-means function from
+ClusterR r package which is written in c++, hence it is quite fast." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,32 +121,72 @@ the sale price of the houses." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>reg_train</h1>
-    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>reg_train.Rd</code></div>
+    <h1>K-Means Trainer</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/KMeans.R'><code>R/KMeans.R</code></a></small>
+    <div class="hidden name"><code>KMeansTrainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Training Dataset used for regression examples. In this data set, we have to predict
-the sale price of the houses.</p>
+    <p>Trains am unsupervised K-Means algorithm. It borrows mini-batch k-means function from
+ClusterR r package which is written in c++, hence it is quite fast.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>reg_train</span></pre>
+    <pre class="usage"><span class='no'>KMeansTrainer</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>data.table</code> (inherits from <code>data.frame</code>) with 1460 rows and 81 columns.</p>
+    <p><code>R6Class</code> object.</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    
+    <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
+kmt = KMeansTrainer$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)
+bst$fit(X_train, y_train)
+prediction &lt;- bst$predict(X_test)
+</pre>
+    
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+    <dl class='dl-horizontal'>
+  <dt><code>$new()</code></dt><dd><p>Initialises an instance of k-means model</p></dd>
+  <dt><code>$fit()</code></dt><dd><p>fit model to an input train data</p></dd>
+  <dt><code>$predict()</code></dt><dd><p>returns cluster predictions for each row of given data</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+
+    
+    <dl class='dl-horizontal'>
+ <dt>params</dt><dd><p>for explanation on parameters, please refer to the documentation of MiniBatchKMeans function in clusterR package <a href='https://cran.r-project.org/web/packages/ClusterR/ClusterR.pdf'>https://cran.r-project.org/web/packages/ClusterR/ClusterR.pdf</a></p></dd>
+ <dt>find_optimal</dt><dd><p>Used to find the optimal number of cluster during <code>fit</code> method. To use this, make sure the value for /codemax_cluster &gt; 0.</p></dd>
+</dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>rbind</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>20</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1e5</span>, <span class='fl'>2</span>)),
+             <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>20</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1e5</span>, -<span class='fl'>1</span>)),
+             <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(<span class='fl'>20</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fl'>1e5</span>, <span class='fl'>5</span>)))
+<span class='no'>km_model</span> <span class='kw'>&lt;-</span> <span class='no'>KMeansTrainer</span>$<span class='fu'>new</span>(<span class='kw'>clusters</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>batch_size</span><span class='kw'>=</span><span class='fl'>30</span>, <span class='kw'>max_clusters</span><span class='kw'>=</span><span class='fl'>6</span>)
+<span class='no'>km_model</span>$<span class='fu'>fit</span>(<span class='no'>data</span>, <span class='kw'>find_optimal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='message'>Using 2 clusters to learn from data</span></div><div class='input'><span class='no'>predictions</span> <span class='kw'>&lt;-</span> <span class='no'>km_model</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='no'>data</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-          </ul>
+
+      <li><a href="#usage">Usage</a></li>
+
+      <li><a href="#methods">Methods</a></li>
+
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

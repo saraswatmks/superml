@@ -1,11 +1,11 @@
 #' @name Counter
-#' @title Calculate count of values in a list
-#' @description Handy to calculate count of values in a sorted order
+#' @title Calculate count of values in a list or vector
+#' @description Handy function to calculate count of values given in a list or vector
 #' @param data should be a vector or list of input values
 #' @param sort a logical value, to sort the result or not
 #' @param decreasing a logical value, the order of sorting to be followed
 #'
-#' @return list of values in a sorted order
+#' @return count of values in a list
 #' @export
 #'
 #' @examples
@@ -33,3 +33,7 @@ Counter <- function(data, sort=TRUE, decreasing=FALSE){
     else return (output)
 
 }
+
+
+
+

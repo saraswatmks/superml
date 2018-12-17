@@ -29,7 +29,7 @@ tf_matrix = tf_object$fit_transform(sentences) ## alternate
     \item{\code{$new()}}{Initialise the instance of the vectorizer}
     \item{\code{$fit()}}{creates a memory of count vectorizers but doesn't return anything}
     \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return the tf-idf matrix }
-    \item{\code{$fit_transform(data)}}{returns tf-idf matrix}
+    \item{\code{$fit_transform()}}{returns tf-idf matrix}
 }
 }
 

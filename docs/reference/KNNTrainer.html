@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>reg_train — reg_train • SuperML</title>
+<title>K Nearest Neighbours Trainer — KNNTrainer • SuperML</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="reg_train — reg_train" />
+<meta property="og:title" content="K Nearest Neighbours Trainer — KNNTrainer" />
 
-<meta property="og:description" content="Training Dataset used for regression examples. In this data set, we have to predict
-the sale price of the houses." />
+<meta property="og:description" content="Trains a k nearest neighbour model using fast search algorithms
+KNN is a supervised learning algorithm which is used for both regression and classification problems." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,32 +121,79 @@ the sale price of the houses." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>reg_train</h1>
-    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>reg_train.Rd</code></div>
+    <h1>K Nearest Neighbours Trainer</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/KNN.R'><code>R/KNN.R</code></a></small>
+    <div class="hidden name"><code>KNNTrainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Training Dataset used for regression examples. In this data set, we have to predict
-the sale price of the houses.</p>
+    <p>Trains a k nearest neighbour model using fast search algorithms
+KNN is a supervised learning algorithm which is used for both regression and classification problems.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>reg_train</span></pre>
+    <pre class="usage"><span class='no'>KNNTrainer</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>data.table</code> (inherits from <code>data.frame</code>) with 1460 rows and 81 columns.</p>
+    <p><code>R6Class</code> object.</p>
+    
+    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
+
+    
+    <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
+bst = KNNTrainer$new(k, prob, algorithm, type)
+bst$fit_predict(train, test, y)
+bst$get_predictions(type)
+</pre>
+    
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
+    
+    <dl class='dl-horizontal'>
+    <dt><code>$new()</code></dt><dd><p>Initialise the instance of the vectorizer</p></dd>
+    <dt><code>$fit_predict()</code></dt><dd><p>trains the knn model and stores the test prediction</p></dd>
+    <dt><code>$get_predictions()</code></dt><dd><p>returns predictions</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+
+    
+    <dl class='dl-horizontal'>
+    <dt>k</dt><dd><p>number of neighbours to predict</p></dd>
+    <dt>prob</dt><dd><p>if probablity should be computed</p></dd>
+    <dt>algorithm</dt><dd><p>algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'</p></dd>
+    <dt>type</dt><dd><p>type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'</p></dd>
+</dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
+
+<span class='no'>iris</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/integer'>as.integer</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='no'>iris</span>$<span class='no'>Species</span>))
+
+<span class='no'>xtrain</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>1</span>:<span class='fl'>100</span>,]
+<span class='no'>xtest</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>101</span>:<span class='fl'>150</span>,]
+
+<span class='no'>bst</span> <span class='kw'>&lt;-</span> <span class='no'>KNNTrainer</span>$<span class='fu'>new</span>(<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>prob</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"class"</span>)
+<span class='no'>bst</span>$<span class='fu'>fit_predict</span>(<span class='no'>xtrain</span>, <span class='no'>xtest</span>, <span class='st'>'Species'</span>)
+<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>bst</span>$<span class='fu'>get_predictions</span>(<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"raw"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       
       <li><a href="#format">Format</a></li>
-          </ul>
+
+      <li><a href="#usage">Usage</a></li>
+
+      <li><a href="#methods">Methods</a></li>
+
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

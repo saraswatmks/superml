@@ -28,10 +28,10 @@ lbl$transform(x)
 
 \describe{
   \item{\code{$new()}}{Initialise the instance of the encoder}
-  \item{\code{$fit(vector)}}{creates a memory of encodings but doesn't return anything}
-  \item{\code{$transform(vector)}}{based on encodings learned in \code{fit} method is applies the transformation}
-  \item{\code{$fit_transform(vector)}}{encodes the data and keep a memory of encodings simultaneously}
-  \item{\code{$inverse_transform(vector)}}{encodes the data and keep a memory of encodings simultaneously}
+  \item{\code{$fit()}}{creates a memory of encodings but doesn't return anything}
+  \item{\code{$transform()}}{based on encodings learned in \code{fit} method is applies the transformation}
+  \item{\code{$fit_transform()}}{encodes the data and keep a memory of encodings simultaneously}
+  \item{\code{$inverse_transform()}}{encodes the data and keep a memory of encodings simultaneously}
 }
 }
 
