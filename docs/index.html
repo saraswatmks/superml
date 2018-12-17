@@ -96,7 +96,7 @@
 <div id="superml" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#superml" class="anchor"></a>superml</h1></div>
-<p>The goal of superml is to provide sckit-learn’s <code>fit</code>,<code>predict</code>,<code>transform</code> standard way of building machine learning models in R. It will provide data scientists a standard interface to build models in R, just like they do in python.</p>
+<p>The goal of superml is to provide sckit-learn’s <code>fit</code>,<code>predict</code>,<code>transform</code> standard way of building machine learning models in R. It is build on top of latest r-packages which provides optimized way of training machine learning models.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -104,13 +104,21 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"saraswatmks/superml"</span>)</code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="description" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## basic example code
-
-<span class="co"># put examples here -- this is pending</span></code></pre></div>
+<a href="#description" class="anchor"></a>Description</h2>
+<p>In superml, every machine learning algorithm is called as a <code>trainer</code>. Following is the list of trainers available as of today: * LMTrainer: used to train linear, logistic, ridge, lasso models) * RFTrainer: Random Forest Model * KNNTrainer: K-Nearest Neighbour Model * KMeansTrainer: KMeans Model * XGBTrainer: XGBoost Model</p>
+<p>In addition, there are other useful functions to support modeling tasks such as: * CountVectorizer: Create Bag of Words model * TfidfVectorizer: Create TF-IDF feature model * LabelEncoder: Convert categorical features to numeric * GridSearch: For hyperparameter optimization * RandomSearch: For hyperparameter optimization * kFoldMean: Target encoding * smoothMean: Target encoding</p>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<p>Any machine learning model can be trained using the following steps:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(iris)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(superml)
+rf &lt;-<span class="st"> </span>RFTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">n_estimators =</span> <span class="dv">100</span>)
+rf<span class="op">$</span><span class="kw">fit</span>(iris, <span class="st">"Species"</span>)
+pred &lt;-<span class="st"> </span>rf<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(iris)</code></pre></div>
 </div>
 </div>
   </div>
