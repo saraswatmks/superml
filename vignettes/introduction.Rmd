@@ -155,9 +155,9 @@ rmse(actual = xtest$SalePrice, predicted = pred)
 **Grid Search**
 ```{r}
 xgb <- XGBTrainer$new(objective="reg:linear")
+
 gst <-GridSearchTrainer$new(trainer = xgb,
-                             parameters = list(n_estimators = c(10,50),
-                             max_depth = c(5,2)),
+                             parameters = list(n_estimators = c(10,50), max_depth = c(5,2)),
                              n_folds = 3,
                              scoring = c('accuracy','auc'))
 gst$fit(xtrain, "SalePrice")
@@ -171,7 +171,8 @@ rst <-RandomSearchTrainer$new(trainer = rf,
                              parameters = list(n_estimators = c(10,50),
                              max_depth = c(5,2)),
                              n_folds = 3,
-                             scoring = c('accuracy','auc'))
+                             scoring = c('accuracy','auc'),
+                             n_iter=3)
 rst$fit(xtrain, "SalePrice")
 rst$best_iteration()
 ```
@@ -297,7 +298,8 @@ rst <-RandomSearchTrainer$new(trainer = rf,
                              parameters = list(n_estimators = c(10,50),
                              max_depth = c(5,2)),
                              n_folds = 3,
-                             scoring = c('accuracy','auc'))
+                             scoring = c('accuracy','auc'),
+                             n_iter = 3)
 rst$fit(xtrain, "Survived")
 rst$best_iteration()
 ```
