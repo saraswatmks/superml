@@ -28,11 +28,11 @@ devtools::install_github("saraswatmks/superml")
 
 ## Description
 
-In superml, every machine learning algorithm is called as a `trainer`. Following is the list of trainers available as of today:
+In superml, every machine learning algorithm is called as a `trainer`. Following is the list of trainers available as of today:<br/>
 
- * LMTrainer: used to train linear, logistic, ridge, lasso models)
+ * LMTrainer: used to train linear, logistic, ridge, lasso models
  * RFTrainer: Random Forest Model
- * KNNTrainer: K-Nearest Neighbour Model
+ * KNNTrainer: K-Nearest Neighbour Models
  * KMeansTrainer: KMeans Model
  * XGBTrainer: XGBoost Model
  
