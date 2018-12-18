@@ -34,7 +34,7 @@ prediction <- bst$predict(X_test)
 \section{Arguments}{
 
 \describe{
- \item{params}{for explanation on parameters, please refer to the documentation of MiniBatchKMeans function in clusterR package \url{https://cran.r-project.org/web/packages/package=ClusterR}}
+ \item{params}{for explanation on parameters, please refer to the documentation of MiniBatchKMeans function in clusterR package \url{https://CRAN.R-project.org/package=ClusterR}}
  \item{find_optimal}{Used to find the optimal number of cluster during \code{fit} method. To use this, make sure the value for /code{max_cluster} > 0.}
 }
 }
