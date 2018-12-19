@@ -66,11 +66,12 @@
 #'                       maximize = FALSE,
 #'                       eval_metric = 'merror',
 #'                       num_class=3,
-#'                       n_estimators = 500)
+#'                       n_estimators = 10)
 #' xgb$fit(df, 'Species')
 #'
 #' # do cross validation to find optimal value for n_estimators
-#' xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE, early_stopping = 20)
+#' xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE,
+#'               early_stopping = 1)
 #' best_iter <- xgb$cv_model$best_iteration
 #' xgb$show_importance()
 #'

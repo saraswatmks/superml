@@ -35,7 +35,7 @@ bst$get_predictions(type)
 
 \describe{
     \item{k}{number of neighbours to predict}
-    \item{prob}{if probablity should be computed}
+    \item{prob}{if probability should be computed}
     \item{algorithm}{algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'}
     \item{type}{type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'}
 }
