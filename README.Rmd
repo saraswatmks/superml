@@ -2,8 +2,6 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -12,9 +10,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# superml
+# SuperML
 
-The goal of superml is to provide sckit-learn's `fit`,`predict`,`transform` standard way of building
+The goal of SuperML is to provide sckit-learn's `fit`,`predict`,`transform` standard way of building
 machine learning models in R. It is build on top of latest r-packages which provides optimized way of training machine learning models. 
 
 ## Installation
