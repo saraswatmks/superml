@@ -1,10 +1,10 @@
 ---
-title: "Introduction to superml"
+title: "Introduction to SuperML"
 author: "Manish Saraswat"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to superml}
+  %\VignetteIndexEntry{Introduction to SuperML}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

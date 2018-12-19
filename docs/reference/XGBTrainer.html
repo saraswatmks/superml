@@ -83,7 +83,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/introduction.html">Introduction to superml</a>
+      <a href="../articles/introduction.html">Introduction to SuperML</a>
     </li>
   </ul>
 </li>
@@ -209,32 +209,24 @@ tfidf$predict(X_test)
                       <span class='kw'>maximize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                       <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
                       <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
-                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>500</span>)
+                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
-#&gt; [51]	train-merror:0.000000 
-#&gt; [101]	train-merror:0.000000 
-#&gt; [151]	train-merror:0.000000 
-#&gt; [201]	train-merror:0.000000 
-#&gt; [251]	train-merror:0.000000 
-#&gt; [301]	train-merror:0.000000 
-#&gt; [351]	train-merror:0.000000 
-#&gt; [401]	train-merror:0.000000 
-#&gt; [451]	train-merror:0.000000 
-#&gt; [500]	train-merror:0.000000 </div><div class='input'>
+#&gt; [10]	train-merror:0.013333 </div><div class='input'>
 <span class='co'># do cross validation to find optimal value for n_estimators</span>
-<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000+0.008165	test-merror:0.026667+0.018856 
+<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+              <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.023333+0.004714	test-merror:0.040000+0.032660 
 #&gt; Multiple eval metrics are present. Will use test_merror for early stopping.
-#&gt; Will train until test_merror hasn't improved in 20 rounds.
+#&gt; Will train until test_merror hasn't improved in 1 rounds.
 #&gt; 
 #&gt; Stopping. Best iteration:
-#&gt; [1]	train-merror:0.020000+0.008165	test-merror:0.026667+0.018856
+#&gt; [2]	train-merror:0.020000+0.014142	test-merror:0.033333+0.024944
 #&gt; </div><div class='input'><span class='no'>best_iter</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='no'>cv_model</span>$<span class='no'>best_iteration</span>
 <span class='no'>xgb</span>$<span class='fu'>show_importance</span>()</div><div class='img'><img src='XGBTrainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># make predictions</span>
 <span class='no'>preds</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/data.table/topics/as.matrix'>as.matrix</a></span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]))
 <span class='no'>preds</span></div><div class='output co'>#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-#&gt;  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1
+#&gt;  [75] 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
 #&gt; [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
 #&gt; [149] 2 2</div></pre>
   </div>
