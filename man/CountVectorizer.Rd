@@ -16,7 +16,7 @@ Given a list of text, it generates a bag of words model and returns a data frame
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-bst = CountVectorizer$new(min_df, max_df, max_features)
+bst = CountVectorizer$new(min_df=1, max_df=1, max_features=1)
 bst$fit(sentences)
 bst$fit_transform(sentences)
 bst$transform(sentences)
@@ -27,9 +27,9 @@ bst$transform(sentences)
 
 \describe{
     \item{\code{$new()}}{Initialise the instance of the vectorizer}
-    \item{\code{$fit()}}{creates a memory of count vectorizers and does computations required for transformation task}
+    \item{\code{$fit()}}{creates a memory of bag of words}
     \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return a bag of words matrix }
-    \item{\code{$fit_transform()}}{simultaneouly fits and transform in one step and returns bag of words of matrix}
+    \item{\code{$fit_transform()}}{simultaneouly fits and transform words and returns bag of words of matrix}
 }
 }
 

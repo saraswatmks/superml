@@ -9,15 +9,17 @@
 KMeansTrainer
 }
 \description{
-Trains am unsupervised K-Means algorithm. It borrows mini-batch k-means function from
-ClusterR r package which is written in c++, hence it is quite fast.
+Trains a unsupervised K-Means clustering algorithm. It borrows mini-batch k-means function from
+ClusterR package written in c++, hence it is quite fast.
 }
 \section{Usage}{
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-kmt = KMeansTrainer$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)
-bst$fit(X_train, y_train)
+kmt = KMeansTrainer$new(clusters, batch_size = 10, num_init=1, max_iters=100, init_fraction=1,
+                        initializer = "kmeans++", early_stop_iter = 10, verbose=FALSE, centroids=NULL,
+                        tol = 1e-04, tol_optimal_init=0.3, seed=1, max_clusters=NA)
+bst$fit(X_train, y_train=NULL)
 prediction <- bst$predict(X_test)
 }
 }
@@ -35,7 +37,7 @@ prediction <- bst$predict(X_test)
 
 \describe{
  \item{params}{for explanation on parameters, please refer to the documentation of MiniBatchKMeans function in clusterR package \url{https://CRAN.R-project.org/package=ClusterR}}
- \item{find_optimal}{Used to find the optimal number of cluster during \code{fit} method. To use this, make sure the value for /code{max_cluster} > 0.}
+ \item{find_optimal}{Used to find the optimal number of cluster during \code{fit} method. To use this, make sure the value for max_clusters > 0.}
 }
 }
 

@@ -1,9 +1,8 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-superml
+SuperML
 =======
 
-The goal of superml is to provide sckit-learn's `fit`,`predict`,`transform` standard way of building machine learning models in R. It is build on top of latest r-packages which provides optimized way of training machine learning models.
+The goal of SuperML is to provide sckit-learn's `fit`,`predict`,`transform` standard way of building machine learning models in R. It is build on top of latest r-packages which provides optimized way of training machine learning models.
 
 Installation
 ------------
@@ -18,11 +17,11 @@ devtools::install_github("saraswatmks/superml")
 Description
 -----------
 
-In superml, every machine learning algorithm is called as a `trainer`. Following is the list of trainers available as of today:
+In superml, every machine learning algorithm is called as a `trainer`. Following is the list of trainers available as of today:<br/>
 
--   LMTrainer: used to train linear, logistic, ridge, lasso models)
+-   LMTrainer: used to train linear, logistic, ridge, lasso models
 -   RFTrainer: Random Forest Model
--   KNNTrainer: K-Nearest Neighbour Model
+-   KNNTrainer: K-Nearest Neighbour Models
 -   KMeansTrainer: KMeans Model
 -   XGBTrainer: XGBoost Model
 
@@ -48,3 +47,8 @@ rf <- RFTrainer$new(n_estimators = 100)
 rf$fit(iris, "Species")
 pred <- rf$predict(iris)
 ```
+
+Documentation
+-------------
+
+The documentation can be found here: [SuperML Documentation](https://saraswatmks.github.io/superml/)

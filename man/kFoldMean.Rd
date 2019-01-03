@@ -25,8 +25,10 @@ a train and test data table with out-of-fold mean value
         of the target for the given categorical variable
 }
 \description{
-Calculates out-of-fold mean features (also known as target encoding) for train and test data. Make sure to rbind both train and test into one data frame.
-This strategy is widely used to avoid overfitting or causing leakage while creating features using the target variable.
+Calculates out-of-fold mean features (also known as target encoding) for train and test data.
+             This strategy is widely used to avoid overfitting or causing leakage while creating features
+             using the target variable. This method is experimental. If the results you get are unexpected,
+             please report them in github issues.
 }
 \examples{
 train <- data.frame(region=c('del','csk','rcb','del','csk','pune','guj','del'),

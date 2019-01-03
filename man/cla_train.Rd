@@ -18,9 +18,10 @@
 \item{\code{Fare}}{passenger fare}
 \item{\code{Cabin}}{cabin number}
 \item{\code{Embarked}}{port of embarkation}
+}}
+\source{
+\url{https://www.kaggle.com/c/titanic/data}
 }
-
-For further details, see \url{https://www.kaggle.com/c/titanic/data}}
 \usage{
 cla_train
 }

@@ -21,7 +21,6 @@
 #' }
 #' @section Arguments:
 #' \describe{
-#'  \item{LabelEncoder}{A \code{LabelEncoder} object}
 #'  \item{data}{a vector or list containing the character / factor values}
 #' }
 #' @export
@@ -170,3 +169,6 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
     }
     )
 )
+
+
+

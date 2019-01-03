@@ -35,5 +35,34 @@ Counter <- function(data, sort=TRUE, decreasing=FALSE){
 }
 
 
+#' @name testdata
+#' @title Internal function
+#' @description Used to check the input data format
+#' @param X should be a data frame or data.table
+#' @param y should be a string specifying the dependent variable
+#'
+#' @return null
+#' @keywords internal
+#' @export
+testdata <- function(X, y, model=NA){
 
+    # X should be a matrix
+    if (!(inherits(X, c("data.table", "data.frame"))))
+        stop("Your data format should be a data.table or data.frame.")
+
+    if(!(y %in% names(X)))
+        stop(sprintf("%s not available in training data", y))
+
+    # check in case target variable contains float values or NA values
+    if(any(is.na(X[[y]])))
+        stop("The target variable contains NA values.")
+
+    if(model %in% c('lmtrainer')){
+        if(any(vapply(X, class, FUN.VALUE = character(1))
+               %in% c("factor", "character")))
+            stop(strwrap("There are factor or character values in the data set.
+                         Please convert to numeric."))
+    }
+
+}
 

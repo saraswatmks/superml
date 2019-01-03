@@ -1,7 +1,9 @@
 #' @name kFoldMean
 #' @title kFoldMean Calculator
-#' @description Calculates out-of-fold mean features (also known as target encoding) for train and test data. Make sure to rbind both train and test into one data frame.
-#' This strategy is widely used to avoid overfitting or causing leakage while creating features using the target variable.
+#' @description Calculates out-of-fold mean features (also known as target encoding) for train and test data.
+#'              This strategy is widely used to avoid overfitting or causing leakage while creating features
+#'              using the target variable. This method is experimental. If the results you get are unexpected,
+#'              please report them in github issues.
 #' @param train_df train dataset
 #' @param test_df test dataset
 #' @param colname name of categorical column

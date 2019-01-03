@@ -89,7 +89,7 @@
       <h1>Introduction to SuperML</h1>
                         <h4 class="author">Manish Saraswat</h4>
             
-            <h4 class="date">2018-12-19</h4>
+            <h4 class="date">2019-01-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -104,7 +104,9 @@
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<p>This package is still not on cran. Currently, you can install using:</p>
+<p>You can install latest cran version using:</p>
+<p><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("superml")</a></code></p>
+<p>You can install the developmemt version directly from github using:</p>
 <p><code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("saraswatmks/superml")</a></code></p>
 </div>
 <div id="examples---machine-learning-models" class="section level2">
@@ -116,6 +118,7 @@
 <a href="#regression-data" class="anchor"></a>Regression Data</h3>
 <p>We’ll quickly prepare the data set to be ready to served for model training.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="st">"../data/reg_train.rda"</span>)
+<span class="co"># if the above doesn't work, you can try: load("reg_train.rda")</span>
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(data.table)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(caret)
@@ -2905,13 +2908,19 @@ xtrain[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/to
 xtest[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/NA">is.na</a></span>(xtest)] &lt;-<span class="st"> </span><span class="op">-</span><span class="dv">1</span></code></pre></div>
 <p><strong>KNN Regression</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knn &lt;-<span class="st"> </span>KNNTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">k =</span> <span class="dv">2</span>,<span class="dt">prob =</span> T,<span class="dt">type =</span> <span class="st">'reg'</span>)
-knn<span class="op">$</span><span class="kw">fit_predict</span>(<span class="dt">train =</span> xtrain, <span class="dt">test =</span> xtest, <span class="dt">y =</span> <span class="st">'SalePrice'</span>)
-probs &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw">get_predictions</span>(<span class="dt">type =</span> <span class="st">'prob'</span>)
-labels &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw">get_predictions</span>(<span class="dt">type=</span><span class="st">'raw'</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted=</span>labels)
-<span class="co">#&gt; Warning in auc(actual = xtest$Survived, predicted = labels): longer object</span>
-<span class="co">#&gt; length is not a multiple of shorter object length</span>
-<span class="co">#&gt; [1] NaN</span></code></pre></div>
+knn<span class="op">$</span><span class="kw">fit</span>(<span class="dt">train =</span> xtrain, <span class="dt">test =</span> xtest, <span class="dt">y =</span> <span class="st">'SalePrice'</span>)
+probs &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">type =</span> <span class="st">'prob'</span>)
+labels &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">type=</span><span class="st">'raw'</span>)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted=</span>labels)
+<span class="co">#&gt; [1] 4211.643</span></code></pre></div>
+<p><strong>SVM Regression</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#predicts probabilities - must specify mc_type ("OvA_hinge", "AvA_hinge")</span>
+svm &lt;-<span class="st"> </span>SVMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">type=</span><span class="st">"ls"</span>)
+svm<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">'SalePrice'</span>)
+<span class="co">#&gt; Removing invalid columns.  The names should not start with anumber: 1stFlrSF,2ndFlrSF,3SsnPorch</span>
+pred &lt;-<span class="st"> </span>svm<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(xtest)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)
+<span class="co">#&gt; [1] 44357.84</span></code></pre></div>
 <p><strong>Simple Regresison</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family=</span><span class="st">"gaussian"</span>)
 lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)
@@ -2922,110 +2931,110 @@ lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</spa
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Deviance Residuals: </span>
 <span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span>
-<span class="co">#&gt; -377736   -15436     -988    12929   251799  </span>
+<span class="co">#&gt; -102797   -13532      710    12341   163664  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)   -3.639e+04  1.594e+06  -0.023 0.981794    </span>
-<span class="co">#&gt; MSSubClass    -1.877e+02  6.738e+01  -2.785 0.005454 ** </span>
-<span class="co">#&gt; MSZoning      -2.402e+03  1.499e+03  -1.602 0.109384    </span>
-<span class="co">#&gt; LotFrontage    4.269e-01  3.353e+01   0.013 0.989842    </span>
-<span class="co">#&gt; LotArea        3.833e-01  1.241e-01   3.090 0.002060 ** </span>
-<span class="co">#&gt; Street        -4.143e+04  1.443e+04  -2.871 0.004187 ** </span>
-<span class="co">#&gt; LotShape      -6.366e+02  2.109e+03  -0.302 0.762773    </span>
-<span class="co">#&gt; LandContour    2.398e+03  1.816e+03   1.321 0.186932    </span>
-<span class="co">#&gt; Utilities     -6.480e+04  3.413e+04  -1.899 0.057883 .  </span>
-<span class="co">#&gt; LotConfig      2.409e+03  1.303e+03   1.849 0.064719 .  </span>
-<span class="co">#&gt; LandSlope      5.484e+03  4.823e+03   1.137 0.255793    </span>
-<span class="co">#&gt; Neighborhood  -4.874e+02  1.991e+02  -2.449 0.014512 *  </span>
-<span class="co">#&gt; Condition1    -3.121e+03  7.291e+02  -4.281 2.05e-05 ***</span>
-<span class="co">#&gt; Condition2    -2.855e+03  4.045e+03  -0.706 0.480439    </span>
-<span class="co">#&gt; BldgType       1.538e+03  2.882e+03   0.534 0.593604    </span>
-<span class="co">#&gt; HouseStyle    -9.082e+02  9.554e+02  -0.951 0.342071    </span>
-<span class="co">#&gt; OverallQual    1.407e+04  1.389e+03  10.131  &lt; 2e-16 ***</span>
-<span class="co">#&gt; OverallCond    6.324e+03  1.285e+03   4.921 1.01e-06 ***</span>
-<span class="co">#&gt; YearBuilt      3.980e+02  7.979e+01   4.988 7.24e-07 ***</span>
-<span class="co">#&gt; YearRemodAdd   8.446e+01  8.320e+01   1.015 0.310245    </span>
-<span class="co">#&gt; RoofStyle      7.877e+03  2.025e+03   3.890 0.000107 ***</span>
-<span class="co">#&gt; RoofMatl      -2.000e+04  2.180e+03  -9.177  &lt; 2e-16 ***</span>
-<span class="co">#&gt; Exterior1st   -1.842e+02  5.877e+02  -0.313 0.754009    </span>
-<span class="co">#&gt; Exterior2nd    1.072e+03  5.875e+02   1.825 0.068313 .  </span>
-<span class="co">#&gt; MasVnrType     5.219e+03  1.649e+03   3.165 0.001599 ** </span>
-<span class="co">#&gt; MasVnrArea     3.484e+01  7.125e+00   4.889 1.19e-06 ***</span>
-<span class="co">#&gt; ExterQual      2.853e+03  2.445e+03   1.167 0.243576    </span>
-<span class="co">#&gt; ExterCond      5.975e+02  2.691e+03   0.222 0.824309    </span>
-<span class="co">#&gt; Foundation    -2.805e+03  1.592e+03  -1.762 0.078363 .  </span>
-<span class="co">#&gt; BsmtQual       5.591e+03  1.491e+03   3.750 0.000187 ***</span>
-<span class="co">#&gt; BsmtCond      -2.761e+03  1.831e+03  -1.508 0.131891    </span>
-<span class="co">#&gt; BsmtExposure   6.216e+03  1.012e+03   6.139 1.22e-09 ***</span>
-<span class="co">#&gt; BsmtFinType1  -1.223e+03  8.003e+02  -1.528 0.126911    </span>
-<span class="co">#&gt; BsmtFinSF1     2.175e+01  5.596e+00   3.886 0.000109 ***</span>
-<span class="co">#&gt; BsmtFinType2  -9.477e+02  1.215e+03  -0.780 0.435696    </span>
-<span class="co">#&gt; BsmtFinSF2     2.961e+01  1.023e+01   2.894 0.003885 ** </span>
-<span class="co">#&gt; BsmtUnfSF      1.330e+01  5.366e+00   2.479 0.013336 *  </span>
-<span class="co">#&gt; Heating       -1.381e+03  3.304e+03  -0.418 0.675962    </span>
-<span class="co">#&gt; HeatingQC     -2.487e+03  1.416e+03  -1.756 0.079337 .  </span>
-<span class="co">#&gt; CentralAir     4.328e+02  5.302e+03   0.082 0.934966    </span>
-<span class="co">#&gt; Electrical     4.427e+03  2.188e+03   2.023 0.043350 *  </span>
-<span class="co">#&gt; `1stFlrSF`     5.041e+01  6.871e+00   7.336 4.72e-13 ***</span>
-<span class="co">#&gt; `2ndFlrSF`     5.846e+01  5.895e+00   9.917  &lt; 2e-16 ***</span>
-<span class="co">#&gt; LowQualFinSF   5.892e-02  2.489e+01   0.002 0.998112    </span>
-<span class="co">#&gt; BsmtFullBath   7.223e+03  3.003e+03   2.406 0.016335 *  </span>
-<span class="co">#&gt; BsmtHalfBath   2.958e+03  4.499e+03   0.658 0.510973    </span>
-<span class="co">#&gt; FullBath       7.812e+03  3.191e+03   2.448 0.014544 *  </span>
-<span class="co">#&gt; HalfBath      -1.070e+03  3.057e+03  -0.350 0.726320    </span>
-<span class="co">#&gt; BedroomAbvGr  -9.133e+03  1.928e+03  -4.736 2.51e-06 ***</span>
-<span class="co">#&gt; KitchenAbvGr  -2.138e+04  6.186e+03  -3.456 0.000573 ***</span>
-<span class="co">#&gt; KitchenQual    7.396e+03  1.832e+03   4.038 5.82e-05 ***</span>
-<span class="co">#&gt; TotRmsAbvGrd   3.647e+03  1.399e+03   2.607 0.009283 ** </span>
-<span class="co">#&gt; Functional    -3.722e+03  1.438e+03  -2.587 0.009819 ** </span>
-<span class="co">#&gt; Fireplaces    -2.887e+03  2.612e+03  -1.105 0.269308    </span>
-<span class="co">#&gt; FireplaceQu    4.109e+03  1.344e+03   3.056 0.002303 ** </span>
-<span class="co">#&gt; GarageType     3.241e+03  1.359e+03   2.384 0.017330 *  </span>
-<span class="co">#&gt; GarageYrBlt   -1.749e-01  5.763e+00  -0.030 0.975793    </span>
-<span class="co">#&gt; GarageFinish   1.082e+03  1.476e+03   0.733 0.463679    </span>
-<span class="co">#&gt; GarageCars     1.417e+04  3.563e+03   3.977 7.50e-05 ***</span>
-<span class="co">#&gt; GarageArea    -1.225e+01  1.152e+01  -1.064 0.287808    </span>
-<span class="co">#&gt; GarageQual    -1.670e+03  3.297e+03  -0.507 0.612524    </span>
-<span class="co">#&gt; GarageCond     2.792e+03  3.696e+03   0.755 0.450196    </span>
-<span class="co">#&gt; PavedDrive    -2.721e+03  3.074e+03  -0.885 0.376205    </span>
-<span class="co">#&gt; WoodDeckSF     1.671e+01  8.726e+00   1.915 0.055793 .  </span>
-<span class="co">#&gt; OpenPorchSF   -2.512e+00  1.787e+01  -0.141 0.888250    </span>
-<span class="co">#&gt; EnclosedPorch -1.515e+00  1.825e+01  -0.083 0.933863    </span>
-<span class="co">#&gt; `3SsnPorch`    2.202e+01  3.964e+01   0.555 0.578741    </span>
-<span class="co">#&gt; ScreenPorch    4.086e+01  1.984e+01   2.060 0.039701 *  </span>
-<span class="co">#&gt; PoolArea      -3.660e+01  2.654e+01  -1.379 0.168292    </span>
-<span class="co">#&gt; Fence         -1.003e+03  1.280e+03  -0.784 0.433270    </span>
-<span class="co">#&gt; MiscVal       -2.868e+00  3.925e+00  -0.731 0.465187    </span>
-<span class="co">#&gt; MoSold        -2.269e-01  3.838e+02  -0.001 0.999528    </span>
-<span class="co">#&gt; YrSold        -4.870e+02  7.919e+02  -0.615 0.538710    </span>
-<span class="co">#&gt; SaleType       2.082e+03  1.378e+03   1.511 0.131105    </span>
-<span class="co">#&gt; SaleCondition  9.403e+02  1.378e+03   0.683 0.495024    </span>
+<span class="co">#&gt; (Intercept)   -1.621e+06  1.201e+06  -1.349 0.177534    </span>
+<span class="co">#&gt; MSSubClass    -1.109e+02  4.019e+01  -2.760 0.005893 ** </span>
+<span class="co">#&gt; MSZoning      -1.145e+02  1.380e+03  -0.083 0.933882    </span>
+<span class="co">#&gt; LotFrontage    6.304e+01  2.491e+01   2.530 0.011556 *  </span>
+<span class="co">#&gt; LotArea        5.665e-01  9.879e-02   5.734 1.32e-08 ***</span>
+<span class="co">#&gt; Street        -5.443e+04  1.372e+04  -3.968 7.81e-05 ***</span>
+<span class="co">#&gt; LotShape       1.641e+03  1.546e+03   1.062 0.288660    </span>
+<span class="co">#&gt; LandContour    1.592e+03  1.419e+03   1.122 0.262007    </span>
+<span class="co">#&gt; Utilities     -2.555e+04  2.596e+04  -0.984 0.325248    </span>
+<span class="co">#&gt; LotConfig      1.073e+03  1.069e+03   1.004 0.315585    </span>
+<span class="co">#&gt; LandSlope     -3.231e+03  3.619e+03  -0.893 0.372249    </span>
+<span class="co">#&gt; Neighborhood   1.251e+02  1.440e+02   0.869 0.385084    </span>
+<span class="co">#&gt; Condition1    -1.820e+03  5.120e+02  -3.555 0.000397 ***</span>
+<span class="co">#&gt; Condition2    -1.598e+03  3.575e+03  -0.447 0.654955    </span>
+<span class="co">#&gt; BldgType      -7.559e+02  1.544e+03  -0.490 0.624483    </span>
+<span class="co">#&gt; HouseStyle    -1.906e+02  8.597e+02  -0.222 0.824597    </span>
+<span class="co">#&gt; OverallQual    1.116e+04  1.107e+03  10.081  &lt; 2e-16 ***</span>
+<span class="co">#&gt; OverallCond    6.496e+03  9.493e+02   6.844 1.38e-11 ***</span>
+<span class="co">#&gt; YearBuilt      4.229e+02  6.256e+01   6.760 2.41e-11 ***</span>
+<span class="co">#&gt; YearRemodAdd   1.584e+02  6.126e+01   2.585 0.009877 ** </span>
+<span class="co">#&gt; RoofStyle      2.137e+03  1.606e+03   1.330 0.183766    </span>
+<span class="co">#&gt; RoofMatl      -4.347e+03  1.838e+03  -2.365 0.018207 *  </span>
+<span class="co">#&gt; Exterior1st   -3.838e+02  4.915e+02  -0.781 0.435119    </span>
+<span class="co">#&gt; Exterior2nd    5.620e+02  4.877e+02   1.152 0.249431    </span>
+<span class="co">#&gt; MasVnrType     3.864e+03  1.279e+03   3.022 0.002577 ** </span>
+<span class="co">#&gt; MasVnrArea     2.606e+01  5.448e+00   4.783 2.00e-06 ***</span>
+<span class="co">#&gt; ExterQual      2.918e+03  1.911e+03   1.527 0.127077    </span>
+<span class="co">#&gt; ExterCond      1.183e+03  1.932e+03   0.612 0.540410    </span>
+<span class="co">#&gt; Foundation    -1.914e+03  7.783e+02  -2.459 0.014118 *  </span>
+<span class="co">#&gt; BsmtQual       6.389e+03  1.141e+03   5.598 2.84e-08 ***</span>
+<span class="co">#&gt; BsmtCond      -8.583e+02  1.488e+03  -0.577 0.564211    </span>
+<span class="co">#&gt; BsmtExposure   4.529e+03  7.735e+02   5.854 6.59e-09 ***</span>
+<span class="co">#&gt; BsmtFinType1  -1.121e+03  5.467e+02  -2.051 0.040530 *  </span>
+<span class="co">#&gt; BsmtFinSF1     5.100e+01  4.519e+00  11.284  &lt; 2e-16 ***</span>
+<span class="co">#&gt; BsmtFinType2   1.288e+03  1.124e+03   1.146 0.252200    </span>
+<span class="co">#&gt; BsmtFinSF2     2.871e+01  8.441e+00   3.402 0.000698 ***</span>
+<span class="co">#&gt; BsmtUnfSF      3.058e+01  4.153e+00   7.362 3.92e-13 ***</span>
+<span class="co">#&gt; Heating        4.313e+03  3.353e+03   1.286 0.198682    </span>
+<span class="co">#&gt; HeatingQC     -2.547e+03  1.081e+03  -2.357 0.018604 *  </span>
+<span class="co">#&gt; CentralAir     9.256e+02  4.228e+03   0.219 0.826735    </span>
+<span class="co">#&gt; Electrical     1.109e+03  1.759e+03   0.631 0.528441    </span>
+<span class="co">#&gt; `1stFlrSF`     5.824e+01  5.382e+00  10.822  &lt; 2e-16 ***</span>
+<span class="co">#&gt; `2ndFlrSF`     7.603e+01  4.962e+00  15.320  &lt; 2e-16 ***</span>
+<span class="co">#&gt; LowQualFinSF   3.399e+01  2.025e+01   1.679 0.093533 .  </span>
+<span class="co">#&gt; BsmtFullBath  -1.355e+03  2.322e+03  -0.584 0.559656    </span>
+<span class="co">#&gt; BsmtHalfBath  -5.999e+03  3.520e+03  -1.704 0.088697 .  </span>
+<span class="co">#&gt; FullBath      -1.317e+03  2.478e+03  -0.532 0.595086    </span>
+<span class="co">#&gt; HalfBath      -1.899e+03  2.280e+03  -0.833 0.405090    </span>
+<span class="co">#&gt; BedroomAbvGr  -1.154e+04  1.526e+03  -7.560 9.46e-14 ***</span>
+<span class="co">#&gt; KitchenAbvGr  -1.911e+04  4.552e+03  -4.197 2.96e-05 ***</span>
+<span class="co">#&gt; KitchenQual    5.793e+03  1.420e+03   4.080 4.89e-05 ***</span>
+<span class="co">#&gt; TotRmsAbvGrd   1.278e+03  1.095e+03   1.168 0.243235    </span>
+<span class="co">#&gt; Functional    -4.613e+03  1.251e+03  -3.689 0.000238 ***</span>
+<span class="co">#&gt; Fireplaces     1.664e+03  2.073e+03   0.803 0.422294    </span>
+<span class="co">#&gt; FireplaceQu    1.165e+03  1.146e+03   1.016 0.309774    </span>
+<span class="co">#&gt; GarageType     7.915e+01  9.374e+02   0.084 0.932726    </span>
+<span class="co">#&gt; GarageYrBlt   -6.497e+00  4.314e+00  -1.506 0.132379    </span>
+<span class="co">#&gt; GarageFinish   1.730e+03  1.144e+03   1.512 0.130876    </span>
+<span class="co">#&gt; GarageCars     3.598e+03  2.640e+03   1.363 0.173235    </span>
+<span class="co">#&gt; GarageArea     2.313e+01  8.553e+00   2.704 0.006972 ** </span>
+<span class="co">#&gt; GarageQual    -6.588e+02  2.652e+03  -0.248 0.803875    </span>
+<span class="co">#&gt; GarageCond     2.623e+02  1.846e+03   0.142 0.887058    </span>
+<span class="co">#&gt; PavedDrive    -8.839e+01  2.573e+03  -0.034 0.972599    </span>
+<span class="co">#&gt; WoodDeckSF     6.011e+00  6.907e+00   0.870 0.384341    </span>
+<span class="co">#&gt; OpenPorchSF    9.701e+00  1.305e+01   0.744 0.457270    </span>
+<span class="co">#&gt; EnclosedPorch  9.194e+00  1.467e+01   0.627 0.530892    </span>
+<span class="co">#&gt; `3SsnPorch`   -2.154e+00  2.505e+01  -0.086 0.931485    </span>
+<span class="co">#&gt; ScreenPorch    2.602e+01  1.432e+01   1.817 0.069473 .  </span>
+<span class="co">#&gt; PoolArea       1.094e+02  2.101e+01   5.210 2.32e-07 ***</span>
+<span class="co">#&gt; Fence         -1.310e+03  1.054e+03  -1.243 0.214042    </span>
+<span class="co">#&gt; MiscVal       -9.972e-01  1.387e+00  -0.719 0.472324    </span>
+<span class="co">#&gt; MoSold         5.962e+01  2.896e+02   0.206 0.836913    </span>
+<span class="co">#&gt; YrSold         2.161e+02  5.980e+02   0.361 0.717890    </span>
+<span class="co">#&gt; SaleType       5.985e+02  9.414e+02   0.636 0.525051    </span>
+<span class="co">#&gt; SaleCondition  1.992e+03  1.083e+03   1.840 0.066039 .  </span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 987781866)</span>
+<span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 584622461)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;     Null deviance: 6.7826e+12  on 1023  degrees of freedom</span>
-<span class="co">#&gt; Residual deviance: 9.3740e+11  on  949  degrees of freedom</span>
-<span class="co">#&gt; AIC: 24188</span>
+<span class="co">#&gt;     Null deviance: 6.0710e+12  on 1023  degrees of freedom</span>
+<span class="co">#&gt; Residual deviance: 5.5481e+11  on  949  degrees of freedom</span>
+<span class="co">#&gt; AIC: 23651</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Number of Fisher Scoring iterations: 2</span>
 predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">df =</span> xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)
-<span class="co">#&gt; [1] 34409.94</span></code></pre></div>
+<span class="co">#&gt; [1] 52091.09</span></code></pre></div>
 <p><strong>Lasso Regression</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">alpha=</span><span class="dv">1</span>, <span class="dt">lambda =</span> <span class="dv">1000</span>)
 lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)
 predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">df =</span> xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)
-<span class="co">#&gt; [1] 38239.51</span></code></pre></div>
+<span class="co">#&gt; [1] 56756.04</span></code></pre></div>
 <p><strong>Ridge Regression</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">alpha=</span><span class="dv">0</span>)
 lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)
 predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">df =</span> xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)
-<span class="co">#&gt; [1] 38494.99</span></code></pre></div>
+<span class="co">#&gt; [1] 57321.31</span></code></pre></div>
 <p><strong>Logistic Regression with CV</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>)
 lf<span class="op">$</span><span class="kw">cv_model</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">'SalePrice'</span>, <span class="dt">nfolds =</span> <span class="dv">5</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)
@@ -3033,89 +3042,89 @@ lf<span class="op">$</span><span class="kw">cv_model</span>(<span class="dt">X =
 predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw">cv_predict</span>(<span class="dt">df =</span> xtest)
 coefs &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw">get_importance</span>()
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)
-<span class="co">#&gt; [1] 36380.9</span></code></pre></div>
+<span class="co">#&gt; [1] 49380.1</span></code></pre></div>
 <p><strong>Random Forest</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf &lt;-<span class="st"> </span>RFTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">n_estimators =</span> <span class="dv">500</span>,<span class="dt">classification =</span> <span class="dv">0</span>)
 rf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)
 pred &lt;-<span class="st"> </span>rf<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">df =</span> xtest)
 rf<span class="op">$</span><span class="kw">get_importance</span>()
 <span class="co">#&gt;               tmp.order.tmp..decreasing...TRUE..</span>
-<span class="co">#&gt; OverallQual                         845449699920</span>
-<span class="co">#&gt; GarageCars                          557817648990</span>
-<span class="co">#&gt; 1stFlrSF                            500466011159</span>
-<span class="co">#&gt; GarageArea                          442569801158</span>
-<span class="co">#&gt; YearBuilt                           401955574599</span>
-<span class="co">#&gt; BsmtFinSF1                          328000806520</span>
-<span class="co">#&gt; GarageYrBlt                         307100272538</span>
-<span class="co">#&gt; FullBath                            293376329327</span>
-<span class="co">#&gt; 2ndFlrSF                            211858751096</span>
-<span class="co">#&gt; ExterQual                           202463877042</span>
-<span class="co">#&gt; TotRmsAbvGrd                        201749783985</span>
-<span class="co">#&gt; YearRemodAdd                        178361420002</span>
-<span class="co">#&gt; LotArea                             171934099856</span>
-<span class="co">#&gt; MasVnrArea                          170545799030</span>
-<span class="co">#&gt; Fireplaces                          139253728657</span>
-<span class="co">#&gt; KitchenQual                         131631417710</span>
-<span class="co">#&gt; FireplaceQu                         116275216378</span>
-<span class="co">#&gt; BsmtQual                            111249167035</span>
-<span class="co">#&gt; Foundation                          109268119700</span>
-<span class="co">#&gt; OpenPorchSF                          97046676185</span>
-<span class="co">#&gt; LotFrontage                          82625654308</span>
-<span class="co">#&gt; BsmtFinType1                         82351273675</span>
-<span class="co">#&gt; BsmtUnfSF                            70233377545</span>
-<span class="co">#&gt; Neighborhood                         60630335711</span>
-<span class="co">#&gt; HeatingQC                            59604879762</span>
-<span class="co">#&gt; WoodDeckSF                           59298149863</span>
-<span class="co">#&gt; BsmtExposure                         52071994524</span>
-<span class="co">#&gt; GarageType                           47135251781</span>
-<span class="co">#&gt; Exterior2nd                          44561422876</span>
-<span class="co">#&gt; BedroomAbvGr                         43227128804</span>
-<span class="co">#&gt; MSSubClass                           39764445170</span>
-<span class="co">#&gt; MoSold                               37157046355</span>
-<span class="co">#&gt; OverallCond                          35754759699</span>
-<span class="co">#&gt; RoofStyle                            31963990217</span>
-<span class="co">#&gt; HouseStyle                           31629431290</span>
-<span class="co">#&gt; Exterior1st                          28664133787</span>
-<span class="co">#&gt; GarageFinish                         28024843989</span>
-<span class="co">#&gt; BsmtFullBath                         25820971309</span>
-<span class="co">#&gt; LotShape                             24875490349</span>
-<span class="co">#&gt; YrSold                               23118060196</span>
-<span class="co">#&gt; HalfBath                             22359560406</span>
-<span class="co">#&gt; LandSlope                            17955690323</span>
-<span class="co">#&gt; SaleCondition                        17880787542</span>
-<span class="co">#&gt; LandContour                          17327265873</span>
-<span class="co">#&gt; MasVnrType                           15379757744</span>
-<span class="co">#&gt; MSZoning                             15026735889</span>
-<span class="co">#&gt; SaleType                             14711437103</span>
-<span class="co">#&gt; LotConfig                            13640725647</span>
-<span class="co">#&gt; ScreenPorch                          13574202505</span>
-<span class="co">#&gt; CentralAir                           12231045464</span>
-<span class="co">#&gt; BldgType                             12040083584</span>
-<span class="co">#&gt; RoofMatl                             10340967184</span>
-<span class="co">#&gt; BsmtFinSF2                            9978906774</span>
-<span class="co">#&gt; PoolArea                              9798411044</span>
-<span class="co">#&gt; BsmtCond                              9736042583</span>
-<span class="co">#&gt; Condition1                            9244749997</span>
-<span class="co">#&gt; GarageCond                            8353313778</span>
-<span class="co">#&gt; Fence                                 8347883880</span>
-<span class="co">#&gt; EnclosedPorch                         8021422675</span>
-<span class="co">#&gt; GarageQual                            7927416736</span>
-<span class="co">#&gt; BsmtHalfBath                          7318889285</span>
-<span class="co">#&gt; BsmtFinType2                          6479510933</span>
-<span class="co">#&gt; ExterCond                             6145392840</span>
-<span class="co">#&gt; KitchenAbvGr                          5617505733</span>
-<span class="co">#&gt; Functional                            5013995665</span>
-<span class="co">#&gt; PavedDrive                            3709018710</span>
-<span class="co">#&gt; Heating                               2458639831</span>
-<span class="co">#&gt; Electrical                            2327681158</span>
-<span class="co">#&gt; 3SsnPorch                             2271370506</span>
-<span class="co">#&gt; MiscVal                               1601186046</span>
-<span class="co">#&gt; LowQualFinSF                          1286180228</span>
-<span class="co">#&gt; Street                                1199486997</span>
-<span class="co">#&gt; Condition2                             210624035</span>
-<span class="co">#&gt; Utilities                               49500875</span>
+<span class="co">#&gt; OverallQual                         777077907419</span>
+<span class="co">#&gt; GarageCars                          471379604205</span>
+<span class="co">#&gt; 1stFlrSF                            448940150746</span>
+<span class="co">#&gt; GarageArea                          417550702080</span>
+<span class="co">#&gt; YearBuilt                           343137138960</span>
+<span class="co">#&gt; BsmtFinSF1                          271903316313</span>
+<span class="co">#&gt; FullBath                            240725747399</span>
+<span class="co">#&gt; ExterQual                           221543458690</span>
+<span class="co">#&gt; GarageYrBlt                         217024672640</span>
+<span class="co">#&gt; TotRmsAbvGrd                        206247915621</span>
+<span class="co">#&gt; LotArea                             205721651723</span>
+<span class="co">#&gt; 2ndFlrSF                            202975787562</span>
+<span class="co">#&gt; YearRemodAdd                        146551361279</span>
+<span class="co">#&gt; Fireplaces                          141527377433</span>
+<span class="co">#&gt; FireplaceQu                         140364095087</span>
+<span class="co">#&gt; KitchenQual                         127372024678</span>
+<span class="co">#&gt; Foundation                          100274127133</span>
+<span class="co">#&gt; MasVnrArea                           99598314922</span>
+<span class="co">#&gt; BsmtQual                             94212912973</span>
+<span class="co">#&gt; LotFrontage                          83208983713</span>
+<span class="co">#&gt; OpenPorchSF                          77451327284</span>
+<span class="co">#&gt; BsmtUnfSF                            62435717838</span>
+<span class="co">#&gt; BsmtFinType1                         61752144364</span>
+<span class="co">#&gt; GarageType                           50774979288</span>
+<span class="co">#&gt; Neighborhood                         49707577503</span>
+<span class="co">#&gt; WoodDeckSF                           47409948249</span>
+<span class="co">#&gt; HeatingQC                            41430654581</span>
+<span class="co">#&gt; BedroomAbvGr                         41035382482</span>
+<span class="co">#&gt; Exterior2nd                          40855574502</span>
+<span class="co">#&gt; BsmtExposure                         34385383350</span>
+<span class="co">#&gt; MSSubClass                           34094608471</span>
+<span class="co">#&gt; MoSold                               28070351899</span>
+<span class="co">#&gt; GarageFinish                         27835559876</span>
+<span class="co">#&gt; BsmtFullBath                         27753726778</span>
+<span class="co">#&gt; Exterior1st                          27504608327</span>
+<span class="co">#&gt; OverallCond                          26592481731</span>
+<span class="co">#&gt; RoofStyle                            26383417681</span>
+<span class="co">#&gt; HouseStyle                           24915502636</span>
+<span class="co">#&gt; HalfBath                             23695644351</span>
+<span class="co">#&gt; LotShape                             19116039117</span>
+<span class="co">#&gt; YrSold                               18928080880</span>
+<span class="co">#&gt; PoolArea                             17484916470</span>
+<span class="co">#&gt; MasVnrType                           16409822380</span>
+<span class="co">#&gt; BldgType                             15206914667</span>
+<span class="co">#&gt; SaleCondition                        14830035775</span>
+<span class="co">#&gt; MSZoning                             14490171215</span>
+<span class="co">#&gt; LotConfig                            14476368440</span>
+<span class="co">#&gt; LandContour                          12267205681</span>
+<span class="co">#&gt; CentralAir                           11724329238</span>
+<span class="co">#&gt; Fence                                11492822260</span>
+<span class="co">#&gt; LandSlope                            11325062584</span>
+<span class="co">#&gt; ScreenPorch                          10196005754</span>
+<span class="co">#&gt; SaleType                             10043591177</span>
+<span class="co">#&gt; BsmtFinSF2                            9892040434</span>
+<span class="co">#&gt; KitchenAbvGr                          9710927662</span>
+<span class="co">#&gt; GarageQual                            9396290966</span>
+<span class="co">#&gt; EnclosedPorch                         8705820448</span>
+<span class="co">#&gt; BsmtFinType2                          8344505715</span>
+<span class="co">#&gt; GarageCond                            8073107445</span>
+<span class="co">#&gt; BsmtCond                              7600190126</span>
+<span class="co">#&gt; ExterCond                             7206915674</span>
+<span class="co">#&gt; Functional                            7027963161</span>
+<span class="co">#&gt; Condition1                            5237759867</span>
+<span class="co">#&gt; PavedDrive                            4642551294</span>
+<span class="co">#&gt; RoofMatl                              3773192627</span>
+<span class="co">#&gt; Electrical                            3275897728</span>
+<span class="co">#&gt; Heating                               2272581616</span>
+<span class="co">#&gt; MiscVal                               2234932011</span>
+<span class="co">#&gt; BsmtHalfBath                          1970103616</span>
+<span class="co">#&gt; 3SsnPorch                             1963354748</span>
+<span class="co">#&gt; Condition2                             621878971</span>
+<span class="co">#&gt; Street                                 415269592</span>
+<span class="co">#&gt; LowQualFinSF                           407818278</span>
+<span class="co">#&gt; Utilities                               17778492</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)
-<span class="co">#&gt; [1] 29847.41</span></code></pre></div>
+<span class="co">#&gt; [1] 38076.26</span></code></pre></div>
 <p><strong>Xgboost</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xgb &lt;-<span class="st"> </span>XGBTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">objective =</span> <span class="st">"reg:linear"</span>
                       , <span class="dt">n_estimators =</span> <span class="dv">500</span>
@@ -3126,89 +3135,78 @@ rf<span class="op">$</span><span class="kw">get_importance</span>()
 xgb<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>, <span class="dt">valid =</span> xtest)
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:180036.578125    val-rmse:176147.375000 </span>
-<span class="co">#&gt; [51] train-rmse:8286.686523  val-rmse:32168.287109 </span>
-<span class="co">#&gt; [101]    train-rmse:4702.442383  val-rmse:31700.927734 </span>
-<span class="co">#&gt; [151]    train-rmse:3144.828369  val-rmse:31626.050781 </span>
-<span class="co">#&gt; [201]    train-rmse:2190.021484  val-rmse:31569.419922 </span>
-<span class="co">#&gt; [251]    train-rmse:1472.920532  val-rmse:31532.380859 </span>
-<span class="co">#&gt; [301]    train-rmse:1058.436890  val-rmse:31525.869141 </span>
-<span class="co">#&gt; [351]    train-rmse:771.611450   val-rmse:31516.886719 </span>
-<span class="co">#&gt; [401]    train-rmse:574.520996   val-rmse:31513.158203 </span>
-<span class="co">#&gt; [451]    train-rmse:410.933533   val-rmse:31518.847656 </span>
-<span class="co">#&gt; [500]    train-rmse:283.829773   val-rmse:31513.548828</span>
+<span class="co">#&gt; [1]  train-rmse:176984.671875    val-rmse:183876.062500 </span>
+<span class="co">#&gt; [51] train-rmse:8554.186523  val-rmse:39907.554688 </span>
+<span class="co">#&gt; [101]    train-rmse:5082.486328  val-rmse:40458.679688 </span>
+<span class="co">#&gt; [151]    train-rmse:2977.791992  val-rmse:40486.523438 </span>
+<span class="co">#&gt; [201]    train-rmse:1976.464478  val-rmse:40452.515625 </span>
+<span class="co">#&gt; [251]    train-rmse:1261.031372  val-rmse:40452.898438 </span>
+<span class="co">#&gt; [301]    train-rmse:808.697632   val-rmse:40476.363281 </span>
+<span class="co">#&gt; [351]    train-rmse:535.721191   val-rmse:40487.894531 </span>
+<span class="co">#&gt; [401]    train-rmse:361.522217   val-rmse:40490.667969 </span>
+<span class="co">#&gt; [451]    train-rmse:260.979431   val-rmse:40489.289062 </span>
+<span class="co">#&gt; [500]    train-rmse:179.495941   val-rmse:40488.898438</span>
 pred &lt;-<span class="st"> </span>xgb<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/rmse">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)
-<span class="co">#&gt; [1] 31513.55</span></code></pre></div>
+<span class="co">#&gt; [1] 40488.9</span></code></pre></div>
 <p><strong>Grid Search</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xgb &lt;-<span class="st"> </span>XGBTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">objective=</span><span class="st">"reg:linear"</span>)
 
-gst &lt;-GridSearchTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> xgb,
+gst &lt;-GridSearchCV<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> xgb,
                              <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n_estimators =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>,<span class="dv">50</span>), <span class="dt">max_depth =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>,<span class="dv">2</span>)),
                              <span class="dt">n_folds =</span> <span class="dv">3</span>,
                              <span class="dt">scoring =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'accuracy'</span>,<span class="st">'auc'</span>))
 gst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">"SalePrice"</span>)
+<span class="co">#&gt; [1] "entering grid search"</span>
 <span class="co">#&gt; [1] "In total, 4 models will be trained"</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:141552.984375 </span>
-<span class="co">#&gt; [10] train-rmse:16664.984375</span>
+<span class="co">#&gt; [1]  train-rmse:137696.250000 </span>
+<span class="co">#&gt; [10] train-rmse:15039.261719</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:141745.453125 </span>
-<span class="co">#&gt; [10] train-rmse:16150.928711</span>
+<span class="co">#&gt; [1]  train-rmse:141760.468750 </span>
+<span class="co">#&gt; [10] train-rmse:16764.273438</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:145963.828125 </span>
-<span class="co">#&gt; [10] train-rmse:16339.725586 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
+<span class="co">#&gt; [1]  train-rmse:142160.796875 </span>
+<span class="co">#&gt; [10] train-rmse:15726.110352</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:141552.984375 </span>
-<span class="co">#&gt; [50] train-rmse:4042.118164</span>
+<span class="co">#&gt; [1]  train-rmse:137696.250000 </span>
+<span class="co">#&gt; [50] train-rmse:3582.434814</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:141745.453125 </span>
-<span class="co">#&gt; [50] train-rmse:3997.674072</span>
+<span class="co">#&gt; [1]  train-rmse:141760.468750 </span>
+<span class="co">#&gt; [50] train-rmse:4430.312500</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:145963.828125 </span>
-<span class="co">#&gt; [50] train-rmse:3380.136475 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
+<span class="co">#&gt; [1]  train-rmse:142160.796875 </span>
+<span class="co">#&gt; [50] train-rmse:3917.980957</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:142307.375000 </span>
-<span class="co">#&gt; [10] train-rmse:28500.962891</span>
+<span class="co">#&gt; [1]  train-rmse:138398.671875 </span>
+<span class="co">#&gt; [10] train-rmse:26984.667969</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:142811.343750 </span>
-<span class="co">#&gt; [10] train-rmse:29140.371094</span>
+<span class="co">#&gt; [1]  train-rmse:142718.453125 </span>
+<span class="co">#&gt; [10] train-rmse:29367.515625</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:146886.921875 </span>
-<span class="co">#&gt; [10] train-rmse:30862.601562 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
+<span class="co">#&gt; [1]  train-rmse:143017.375000 </span>
+<span class="co">#&gt; [10] train-rmse:28073.583984</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:142307.375000 </span>
-<span class="co">#&gt; [50] train-rmse:16547.625000</span>
+<span class="co">#&gt; [1]  train-rmse:138398.671875 </span>
+<span class="co">#&gt; [50] train-rmse:15068.557617</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:142811.343750 </span>
-<span class="co">#&gt; [50] train-rmse:15941.553711</span>
+<span class="co">#&gt; [1]  train-rmse:142718.453125 </span>
+<span class="co">#&gt; [50] train-rmse:17017.865234</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [1]  train-rmse:146886.921875 </span>
-<span class="co">#&gt; [50] train-rmse:16923.541016</span>
+<span class="co">#&gt; [1]  train-rmse:143017.375000 </span>
+<span class="co">#&gt; [50] train-rmse:15282.875000</span>
 gst<span class="op">$</span><span class="kw">best_iteration</span>()
 <span class="co">#&gt; $n_estimators</span>
 <span class="co">#&gt; [1] 10</span>
@@ -3229,7 +3227,7 @@ gst<span class="op">$</span><span class="kw">best_iteration</span>()
 <span class="co">#&gt; [1] NA</span></code></pre></div>
 <p><strong>Random Search</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf &lt;-<span class="st"> </span>RFTrainer<span class="op">$</span><span class="kw">new</span>()
-rst &lt;-RandomSearchTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> rf,
+rst &lt;-RandomSearchCV<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> rf,
                              <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n_estimators =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>,<span class="dv">50</span>),
                              <span class="dt">max_depth =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>,<span class="dv">2</span>)),
                              <span class="dt">n_folds =</span> <span class="dv">3</span>,
@@ -3237,27 +3235,18 @@ rst &lt;-RandomSearchTrainer<span class="op">$</span><span class="kw">new</span>
                              <span class="dt">n_iter=</span><span class="dv">3</span>)
 rst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">"SalePrice"</span>)
 <span class="co">#&gt; [1] "In total, 3 models will be trained"</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 1024</span>
 rst<span class="op">$</span><span class="kw">best_iteration</span>()
 <span class="co">#&gt; $n_estimators</span>
-<span class="co">#&gt; [1] 50</span>
+<span class="co">#&gt; [1] 10</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $max_depth</span>
-<span class="co">#&gt; [1] 2</span>
+<span class="co">#&gt; [1] 5</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $accuracy_avg</span>
-<span class="co">#&gt; [1] 0.00585942</span>
+<span class="co">#&gt; [1] 0.006834079</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $accuracy_sd</span>
-<span class="co">#&gt; [1] 1.986069e-05</span>
+<span class="co">#&gt; [1] 0.001678316</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $auc_avg</span>
 <span class="co">#&gt; [1] NaN</span>
@@ -3272,6 +3261,7 @@ rst<span class="op">$</span><span class="kw">best_iteration</span>()
 <p><strong>Data Preparation</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load class</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="st">'../data/cla_train.rda'</span>)
+<span class="co"># if the above doesn't work, you can try: load("cla_train.rda")</span>
 
 <span class="kw"><a href="https://www.rdocumentation.org/packages/kableExtra/topics/reexports">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(cla_train, <span class="dv">10</span>)) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/kableExtra/topics/scroll_box">scroll_box</a></span>(<span class="dt">width =</span> <span class="st">"100%"</span>, <span class="dt">height =</span> <span class="st">"300px"</span>)</code></pre></div>
@@ -3724,11 +3714,31 @@ xtest &lt;-<span class="st"> </span>xtest[,<span class="op">-</span><span class=
 <p>Now, our data is ready to be served for model training. Let’s do it.</p>
 <p><strong>KNN Classification</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knn &lt;-<span class="st"> </span>KNNTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">k =</span> <span class="dv">2</span>,<span class="dt">prob =</span> T,<span class="dt">type =</span> <span class="st">'class'</span>)
-knn<span class="op">$</span><span class="kw">fit_predict</span>(<span class="dt">train =</span> xtrain, <span class="dt">test =</span> xtest, <span class="dt">y =</span> <span class="st">'Survived'</span>)
-probs &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw">get_predictions</span>(<span class="dt">type =</span> <span class="st">'prob'</span>)
-labels &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw">get_predictions</span>(<span class="dt">type=</span><span class="st">'raw'</span>)
+knn<span class="op">$</span><span class="kw">fit</span>(<span class="dt">train =</span> xtrain, <span class="dt">test =</span> xtest, <span class="dt">y =</span> <span class="st">'Survived'</span>)
+probs &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">type =</span> <span class="st">'prob'</span>)
+labels &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(<span class="dt">type=</span><span class="st">'raw'</span>)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted=</span>labels)
 <span class="co">#&gt; [1] 0.6776491</span></code></pre></div>
+<p><strong>Naive Bayes Classification</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nb &lt;-<span class="st"> </span>NBTrainer<span class="op">$</span><span class="kw">new</span>()
+nb<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">'Survived'</span>)
+pred &lt;-<span class="st"> </span>nb<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(xtest)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted=</span>pred)
+<span class="co">#&gt; [1] 0.710828</span></code></pre></div>
+<p><strong>SVM Classification</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#predicts probabilities - must specify mc_type ("OvA_hinge", "AvA_hinge")</span>
+svm &lt;-<span class="st"> </span>SVMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">predict.prob =</span> T, <span class="dt">type=</span><span class="st">"bc"</span>, <span class="dt">mc_type=</span><span class="st">"OvA_hinge"</span>)
+svm<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">'Survived'</span>)
+pred &lt;-<span class="st"> </span>svm<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(xtest)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted=</span>pred[,<span class="dv">2</span>])
+<span class="co">#&gt; [1] 0.784916</span>
+
+<span class="co">#predicts labels</span>
+svm &lt;-<span class="st"> </span>SVMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">predict.prob =</span> F, <span class="dt">type=</span><span class="st">"bc"</span>)
+svm<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">'Survived'</span>)
+pred &lt;-<span class="st"> </span>svm<span class="op">$</span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/predict">predict</a></span>(xtest)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted=</span>pred)
+<span class="co">#&gt; [1] 0.7381008</span></code></pre></div>
 <p><strong>Logistic Regression</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family=</span><span class="st">"binomial"</span>)
 lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"Survived"</span>)
@@ -3771,14 +3781,14 @@ lf<span class="op">$</span><span class="kw">cv_model</span>(<span class="dt">X =
 <span class="co">#&gt; Computation done.</span>
 pred &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw">cv_predict</span>(<span class="dt">df =</span> xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted =</span> pred)
-<span class="co">#&gt; [1] 0.7960625</span></code></pre></div>
+<span class="co">#&gt; [1] 0.7981181</span></code></pre></div>
 <p><strong>Ridge Logistic Regression</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family=</span><span class="st">"binomial"</span>, <span class="dt">alpha=</span><span class="dv">0</span>)
 lf<span class="op">$</span><span class="kw">cv_model</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"Survived"</span>, <span class="dt">nfolds =</span> <span class="dv">5</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)
 <span class="co">#&gt; Computation done.</span>
 pred &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw">cv_predict</span>(<span class="dt">df =</span> xtest)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/Metrics/topics/auc">auc</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>Survived, <span class="dt">predicted =</span> pred)
-<span class="co">#&gt; [1] 0.7948466</span></code></pre></div>
+<span class="co">#&gt; [1] 0.7937464</span></code></pre></div>
 <p><strong>Random Forest</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf &lt;-<span class="st"> </span>RFTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">n_estimators =</span> <span class="dv">500</span>,<span class="dt">classification =</span> <span class="dv">1</span>, <span class="dt">max_features =</span> <span class="dv">3</span>)
 rf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"Survived"</span>)
@@ -3824,16 +3834,14 @@ pred &lt;-<span class="st"> </span>xgb<span class="op">$</span><span class="kw">
 <span class="co">#&gt; [1] 0.8096989</span></code></pre></div>
 <p><strong>Grid Search</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xgb &lt;-<span class="st"> </span>XGBTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">objective=</span><span class="st">"binary:logistic"</span>)
-gst &lt;-GridSearchTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> xgb,
+gst &lt;-GridSearchCV<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> xgb,
                              <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n_estimators =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>,<span class="dv">50</span>),
                              <span class="dt">max_depth =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>,<span class="dv">2</span>)),
                              <span class="dt">n_folds =</span> <span class="dv">3</span>,
                              <span class="dt">scoring =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'accuracy'</span>,<span class="st">'auc'</span>))
 gst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">"Survived"</span>)
+<span class="co">#&gt; [1] "entering grid search"</span>
 <span class="co">#&gt; [1] "In total, 4 models will be trained"</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.129808 </span>
@@ -3845,10 +3853,7 @@ gst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st"
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.098558 </span>
-<span class="co">#&gt; [10] train-error:0.069712 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
+<span class="co">#&gt; [10] train-error:0.069712</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.129808 </span>
@@ -3860,10 +3865,7 @@ gst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st"
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.098558 </span>
-<span class="co">#&gt; [50] train-error:0.036058 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
+<span class="co">#&gt; [50] train-error:0.036058</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.177885 </span>
@@ -3875,10 +3877,7 @@ gst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st"
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.182692 </span>
-<span class="co">#&gt; [10] train-error:0.115385 </span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
+<span class="co">#&gt; [10] train-error:0.115385</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
 <span class="co">#&gt; [1]  train-error:0.177885 </span>
@@ -3911,7 +3910,7 @@ gst<span class="op">$</span><span class="kw">best_iteration</span>()
 <span class="co">#&gt; [1] 0.0242347</span></code></pre></div>
 <p><strong>Random Search</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rf &lt;-<span class="st"> </span>RFTrainer<span class="op">$</span><span class="kw">new</span>()
-rst &lt;-RandomSearchTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> rf,
+rst &lt;-RandomSearchCV<span class="op">$</span><span class="kw">new</span>(<span class="dt">trainer =</span> rf,
                              <span class="dt">parameters =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">n_estimators =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">10</span>,<span class="dv">50</span>),
                              <span class="dt">max_depth =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">5</span>,<span class="dv">2</span>)),
                              <span class="dt">n_folds =</span> <span class="dv">3</span>,
@@ -3919,15 +3918,6 @@ rst &lt;-RandomSearchTrainer<span class="op">$</span><span class="kw">new</span>
                              <span class="dt">n_iter =</span> <span class="dv">3</span>)
 rst<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">"Survived"</span>)
 <span class="co">#&gt; [1] "In total, 3 models will be trained"</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
-<span class="co">#&gt; [1] "hah1"</span>
-<span class="co">#&gt; [1] 3</span>
-<span class="co">#&gt; [1] 624</span>
 rst<span class="op">$</span><span class="kw">best_iteration</span>()
 <span class="co">#&gt; $n_estimators</span>
 <span class="co">#&gt; [1] 50</span>

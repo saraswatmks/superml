@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extreme Gradient Boosting Model — XGBTrainer • SuperML</title>
+<title>Extreme Gradient Boosting Trainer — XGBTrainer • SuperML</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Extreme Gradient Boosting Model — XGBTrainer" />
+<meta property="og:title" content="Extreme Gradient Boosting Trainer — XGBTrainer" />
 
-<meta property="og:description" content="Trains a Extreme Gradient Boosting Model. It is a wrapper around xgboost R package to provide a similar interface to scikit-learn. You simply need to provide a data-frame or data.table to make it work." />
+<meta property="og:description" content="Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
+             that creates an ensemble of weak learner to learn about data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,14 +121,15 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extreme Gradient Boosting Model</h1>
+    <h1>Extreme Gradient Boosting Trainer</h1>
     <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/XGBoost.R'><code>R/XGBoost.R</code></a></small>
     <div class="hidden name"><code>XGBTrainer.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Trains a Extreme Gradient Boosting Model. It is a wrapper around xgboost R package to provide a similar interface to scikit-learn. You simply need to provide a data-frame or data.table to make it work.</p>
+    <p>Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
+             that creates an ensemble of weak learner to learn about data.</p>
     
     </div>
 
@@ -141,8 +143,12 @@
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bst = XGBTrainer$new(n_estimators, max_features, max_depth, min_samples_split, criterion,classification, class_weights, verbose, seed,always_split)
-bst$fit(X_train, y_train, valid=NULL)
+bst = XGBTrainer$new(booster, objective, nthread, silent=0, n_estimators=100, learning_rate=0.3,
+                     gamma=0, max_depth=6, min_child_weight=1, subsample=1, colsample_bytree=1,
+                     lambda=1, alpha = 0, eval_metric, print_every = 50, feval, early_stopping, maximize,
+                     custom_objective, save_period, save_name, xgb_model, callbacks, verbose,
+                     num_class, weight, na_missing)
+bst$fit(X_train, "target", valid=NULL)
 tfidf$predict(X_test)
 </pre>
     
@@ -214,12 +220,12 @@ tfidf$predict(X_test)
 #&gt; [10]	train-merror:0.013333 </div><div class='input'>
 <span class='co'># do cross validation to find optimal value for n_estimators</span>
 <span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-              <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.023333+0.004714	test-merror:0.040000+0.032660 
+              <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000+0.014142	test-merror:0.046667+0.009428 
 #&gt; Multiple eval metrics are present. Will use test_merror for early stopping.
 #&gt; Will train until test_merror hasn't improved in 1 rounds.
 #&gt; 
 #&gt; Stopping. Best iteration:
-#&gt; [2]	train-merror:0.020000+0.014142	test-merror:0.033333+0.024944
+#&gt; [1]	train-merror:0.020000+0.014142	test-merror:0.046667+0.009428
 #&gt; </div><div class='input'><span class='no'>best_iter</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='no'>cv_model</span>$<span class='no'>best_iteration</span>
 <span class='no'>xgb</span>$<span class='fu'>show_importance</span>()</div><div class='img'><img src='XGBTrainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># make predictions</span>

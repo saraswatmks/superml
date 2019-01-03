@@ -38,28 +38,34 @@ navbar:
       href: https://www.linkedin.com/in/saraswatmanish/
 
 reference:
-- title: Datasets
+- title: Machine Learning Algorithms
   desc: ~
   contents:
-  - '`cla_train`'
-  - '`reg_train`'
+  - '`LMTrainer`'
+  - '`KMeansTrainer`'
+  - '`KNNTrainer`'
+  - '`NBTrainer`'
+  - '`RFTrainer`'
+  - '`SVMTrainer`'
+  - '`XGBTrainer`'
 
-- title: All functions
+- title: Helpers
   desc: ~
   contents:
   - '`bm25`'
   - '`Counter`'
   - '`CountVectorizer`'
-  - '`GridSearchTrainer`'
-  - '`LMTrainer`'
-  - '`LabelEncoder`'
+  - '`GridSearchCV`'
   - '`kFoldMean`'
-  - '`KMeansTrainer`'
-  - '`KNNTrainer`'
-  - '`RandomSearchTrainer`'
-  - '`RFTrainer`'
+  - '`LabelEncoder`'
+  - '`RandomSearchCV`'
   - '`smoothMean`'
   - '`TfIdfVectorizer`'
-  - '`XGBTrainer`'
+
+- title: Datasets
+  desc: ~
+  contents:
+  - '`cla_train`'
+  - '`reg_train`'
 
 

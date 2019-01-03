@@ -11,7 +11,7 @@ bm25
 \description{
 BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
 It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
-This implementation ses multiple cores for faster and parallel computation.
+This implementation uses multiple cores for faster and parallel computation.
 }
 \section{Usage}{
 

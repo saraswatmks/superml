@@ -19,7 +19,7 @@
 #' \item{\code{Embarked}}{port of embarkation}
 #' }
 #'
-#' For further details, see \url{https://www.kaggle.com/c/titanic/data}
+#' @source \url{https://www.kaggle.com/c/titanic/data}
 #'
 "cla_train"
 
@@ -33,7 +33,7 @@
 #' \describe{
 #' \item{\code{SalePrice}}{the property's sale price in dollars. This is the target variable that you're trying to predict.}
 #'
-#' For further details, see \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}
+#' @source \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}
 #'
 "reg_train"
 

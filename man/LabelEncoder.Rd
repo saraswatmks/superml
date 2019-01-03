@@ -38,7 +38,6 @@ lbl$transform(x)
 \section{Arguments}{
 
 \describe{
- \item{LabelEncoder}{A \code{LabelEncoder} object}
  \item{data}{a vector or list containing the character / factor values}
 }
 }

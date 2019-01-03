@@ -8,7 +8,7 @@ Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
 Description: The idea is to provide a standard interface 
              to users who use both R and Python for building machine learning models. 
              This package provides a scikit-learn's fit, predict interface to 
-             train machine learning models in R faster.    
+             train machine learning models in R.    
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -28,7 +28,9 @@ Imports:
     kableExtra(>= 0.9.0),
     ClusterR(>= 1.1.6),
     FNN(>= 1.1.2),
-    glmnet(>= 2.0)
+    glmnet(>= 2.0),
+    liquidSVM(>= 1.2),
+    naivebayes(>= 0.9)
 Suggests:
     knitr,
     rlang,

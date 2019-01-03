@@ -9,14 +9,14 @@
 TfIdfVectorizer
 }
 \description{
-It aims to provide a standardized way of creating TF-IDF features just like python's sklearn library.
-              It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.
+Provides an easy way to create tf-idf matrix of features in R. It consists of fit, transform
+              methods (similar to sklearn) to generate tf-idf features.
 }
 \section{Usage}{
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-tf_object = TfIdfVectorizer$new(max_df, min_df, max_features, smooth_idf)
+tf_object = TfIdfVectorizer$new(max_df=1, min_df=1, max_features=1, smooth_idf=TRUE)
 tf_object$fit(sentences)
 tf_matrix = tf_object$transform(sentences)
 tf_matrix = tf_object$fit_transform(sentences) ## alternate
@@ -28,13 +28,13 @@ tf_matrix = tf_object$fit_transform(sentences) ## alternate
 \describe{
     \item{\code{$new()}}{Initialise the instance of the vectorizer}
     \item{\code{$fit()}}{creates a memory of count vectorizers but doesn't return anything}
-    \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return the tf-idf matrix }
+    \item{\code{$transform()}}{based on encodings learned in \code{fit} method, returns the tf-idf matrix }
     \item{\code{$fit_transform()}}{returns tf-idf matrix}
 }
 }
 
 \examples{
-df <- data.table::data.table(sents = c('i am alone in dark.',
+df <- data.frame(sents = c('i am alone in dark.',
                            'mother_mary a lot',
                            'alone in the dark?',
                            'many mothers in the lot....'))

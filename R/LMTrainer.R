@@ -1,11 +1,11 @@
 #' Linear Models Trainer
-#' @description Trains linear models such as Logistic, Lasso or Ridge regression model. It uses glmnet R package in the backend. Lasso regression can be used
-#' as a variable selection method also. This class provides fit, predict, cross valdidation functions.
+#' @description Trains linear models such as Logistic, Lasso or Ridge regression model. It is built on glmnet R package.
+#'              This class provides fit, predict, cross valdidation functions.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = LMTrainer$new(family, weights, alpha, nlambda, standardize.response)
+#' bst = LMTrainer$new(family, weights, alpha, lambda=100, standardize.response=FALSE)
 #' bst$fit(X_train, "target")
 #' prediction <- bst$predict(X_test)
 #' bst$cv_model(X_train, "target", nfolds=4, parallel=TRUE)
@@ -26,7 +26,7 @@
 #'  \item{weights}{observation weights. Can be total counts if responses are proportion matrices. Default is 1 for each observation}
 #'  \item{alpha}{The elasticnet mixing parameter, alpha=1 is the lasso penalty, and alpha=0 the ridge penalty.}
 #'  \item{nlambda}{the number of lambda values - default is 100}
-#'  \item{standardize.response}{This is for the family="mgaussian" family, and allows the user to standardize the response variables}
+#'  \item{standardize.response}{normalise the dependent variable between 0 and 1, default = FALSE}
 #' }
 #' @export
 #' @examples
@@ -79,7 +79,8 @@ LMTrainer <- R6Class("LMTrainer", public = list(
 
     fit = function(X, y){
 
-        self$iid_names <- private$check_data(X = X, y = y)
+        superml::testdata(X, y)
+        self$iid_names <- setdiff(colnames(X), y)
 
         # set default value for weights
         self$weights <- rep(1, nrow(X))
@@ -127,7 +128,8 @@ LMTrainer <- R6Class("LMTrainer", public = list(
 
     cv_model = function(X, y, nfolds, parallel, type.measure="deviance"){
 
-        self$iid_names <- private$check_data(X, y)
+        superml::testdata(X, y)
+        self$iid_names <- setdiff(colnames(X), y)
         if(isTRUE(parallel)){
             cl <- parallel::makeCluster(parallel::detectCores())
             doParallel::registerDoParallel(cl)
@@ -179,29 +181,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
                   Please run the model with alpha=1.")
         }
 
-    }),
+    })
 
-    private = list(
-
-    check_data = function(X, y) {
-        if (!(inherits(X, c("data.table", "data.frame"))))
-            stop(strwrap("Your data format should be a
-                         data.table or data.frame."))
-
-        if(!(y %in% names(X)))
-            stop(strwrap("The dependent variable is not available
-                         in the data."))
-
-        if(any(is.na(X[[y]])))
-            stop(strwrap("The dependent variable contains missing values.
-                 Please remove/impute missing values."))
-
-        if(any(vapply(X, class, FUN.VALUE = character(1)) %in% c("factor", "character")))
-            stop(strwrap("There are factor or character values in the data set.
-                 Please convert to numeric."))
-
-        iid_names <- setdiff(colnames(X), y)
-        return(iid_names)
-    }
-))
+)
 

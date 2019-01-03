@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Grid Search Trainer — GridSearchTrainer • SuperML</title>
+<title>Random Search CV — RandomSearchCV • SuperML</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,10 @@
 
 
 
-<meta property="og:title" content="Grid Search Trainer — GridSearchTrainer" />
+<meta property="og:title" content="Random Search CV — RandomSearchCV" />
 
-<meta property="og:description" content="Grid search trainer is used to train a machine learning model with multiple combinations
-of training hyper parameters and finds the best combination of parameters which optimizes the evaluation metric.
-It creates an exhaustive set of hyperparameter combinations and train model on each combination." />
+<meta property="og:description" content="Given a set of hyper parameters, random search trainer provides a faster way of hyper parameter tuning.
+Here, the number of models to be trained can be defined by the user." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,20 +121,19 @@ It creates an exhaustive set of hyperparameter combinations and train model on e
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Grid Search Trainer</h1>
-    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/GridSearch.R'><code>R/GridSearch.R</code></a></small>
-    <div class="hidden name"><code>GridSearchTrainer.Rd</code></div>
+    <h1>Random Search CV</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/RandomSearch.R'><code>R/RandomSearch.R</code></a></small>
+    <div class="hidden name"><code>RandomSearchCV.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Grid search trainer is used to train a machine learning model with multiple combinations
-of training hyper parameters and finds the best combination of parameters which optimizes the evaluation metric.
-It creates an exhaustive set of hyperparameter combinations and train model on each combination.</p>
+    <p>Given a set of hyper parameters, random search trainer provides a faster way of hyper parameter tuning.
+Here, the number of models to be trained can be defined by the user.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>GridSearchTrainer</span></pre>
+    <pre class="usage"><span class='no'>RandomSearchCV</span></pre>
         
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
@@ -145,16 +143,16 @@ It creates an exhaustive set of hyperparameter combinations and train model on e
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-gst = GridSearchTrainer$new(trainer, parameters, n_folds, scoring)
-gst$fit(X, y)
-gst$best_iteration(metric)
+rst = RandomSearchTrainer$new(trainer, parameters, n_folds, scoring, n_iter)
+rst$fit(X_train, "target")
+rst$best_iteration(metric)
 </pre>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
     <dl class='dl-horizontal'>
-  <dt><code>$new()</code></dt><dd><p>Initialises an instance of grid search trainer</p></dd>
+  <dt><code>$new()</code></dt><dd><p>Initialises an instance of random search cv</p></dd>
   <dt><code>$fit()</code></dt><dd><p>fit model to an input train data and trains the model.</p></dd>
   <dt><code>$best_iteration()</code></dt><dd><p>returns best iteration based on a given metric. By default, uses the first scoring metric</p></dd>
 </dl>
@@ -163,22 +161,42 @@ gst$best_iteration(metric)
 
     
     <dl class='dl-horizontal'>
- <dt>trainer</dt><dd><p>superml trainer object, could be either XGBTrainer, RFTrainer, NBTrainer etc.</p></dd>
+ <dt>trainer</dt><dd><p>superml trainer object, must be either XGBTrainer, LMTrainer, RFTrainer, NBTrainer</p></dd>
  <dt>parameters</dt><dd><p>list containing parameters</p></dd>
  <dt>n_folds</dt><dd><p>number of folds to use to split the train data</p></dd>
  <dt>scoring</dt><dd><p>scoring metric used to evaluate the best model, multiple values can be provided.
                currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall</p></dd>
+ <dt>n_iter</dt><dd><p>number of models to be trained</p></dd>
 </dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rf</span> <span class='kw'>&lt;-</span> <span class='no'>RFTrainer</span>$<span class='fu'>new</span>()
-<span class='no'>gst</span> <span class='kw'>&lt;-</span><span class='no'>GridSearchTrainer</span>$<span class='fu'>new</span>(<span class='kw'>trainer</span> <span class='kw'>=</span> <span class='no'>rf</span>,
-                            <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>),
-                                              <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>10</span>)),
-                                              <span class='kw'>n_folds</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-                                              <span class='kw'>scoring</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'accuracy'</span>,<span class='st'>'auc'</span>))</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'GridSearchTrainer' not found</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
-<span class='no'>gst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'gst' not found</span></div><div class='input'><span class='no'>gst</span>$<span class='fu'>best_iteration</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'gst' not found</span></div></pre>
+<span class='no'>rst</span> <span class='kw'>&lt;-</span><span class='no'>RandomSearchCV</span>$<span class='fu'>new</span>(<span class='kw'>trainer</span> <span class='kw'>=</span> <span class='no'>rf</span>,
+                            <span class='kw'>parameters</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>100</span>,<span class='fl'>500</span>),
+                            <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>10</span>,<span class='fl'>14</span>)),
+                            <span class='kw'>n_folds</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+                            <span class='kw'>scoring</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'accuracy'</span>,<span class='st'>'auc'</span>),
+                            <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
+<span class='no'>rst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; [1] "In total, 4 models will be trained"</div><div class='input'><span class='no'>rst</span>$<span class='fu'>best_iteration</span>()</div><div class='output co'>#&gt; $n_estimators
+#&gt; [1] 500
+#&gt; 
+#&gt; $max_depth
+#&gt; [1] 10
+#&gt; 
+#&gt; $accuracy_avg
+#&gt; [1] 0.9533333
+#&gt; 
+#&gt; $accuracy_sd
+#&gt; [1] 0.01154701
+#&gt; 
+#&gt; $auc_avg
+#&gt; [1] NaN
+#&gt; 
+#&gt; $auc_sd
+#&gt; [1] NA
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

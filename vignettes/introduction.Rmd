@@ -25,7 +25,11 @@ This ambitious package is my ongoing effort to help the r-community build ML mod
 
 ## Install 
 
-This package is still not on cran. Currently, you can install using:
+You can install latest cran version using:
+
+`install.packages("superml")`
+
+You can install the developmemt version directly from github using:
 
 `devtools::install_github("saraswatmks/superml")`
 
@@ -41,6 +45,7 @@ We'll quickly prepare the data set to be ready to served for model training.
 
 ```{r}
 load("../data/reg_train.rda")
+# if the above doesn't work, you can try: load("reg_train.rda")
 
 library(data.table)
 library(caret)
@@ -90,10 +95,19 @@ xtest[is.na(xtest)] <- -1
 **KNN Regression**
 ```{r}
 knn <- KNNTrainer$new(k = 2,prob = T,type = 'reg')
-knn$fit_predict(train = xtrain, test = xtest, y = 'SalePrice')
-probs <- knn$get_predictions(type = 'prob')
-labels <- knn$get_predictions(type='raw')
-auc(actual = xtest$Survived, predicted=labels)
+knn$fit(train = xtrain, test = xtest, y = 'SalePrice')
+probs <- knn$predict(type = 'prob')
+labels <- knn$predict(type='raw')
+rmse(actual = xtest$SalePrice, predicted=labels)
+```
+
+**SVM Regression**
+```{r}
+#predicts probabilities - must specify mc_type ("OvA_hinge", "AvA_hinge")
+svm <- SVMTrainer$new(type="ls")
+svm$fit(xtrain, 'SalePrice')
+pred <- svm$predict(xtest)
+rmse(actual = xtest$SalePrice, predicted = pred)
 ```
 
 **Simple Regresison**
@@ -156,7 +170,7 @@ rmse(actual = xtest$SalePrice, predicted = pred)
 ```{r}
 xgb <- XGBTrainer$new(objective="reg:linear")
 
-gst <-GridSearchTrainer$new(trainer = xgb,
+gst <-GridSearchCV$new(trainer = xgb,
                              parameters = list(n_estimators = c(10,50), max_depth = c(5,2)),
                              n_folds = 3,
                              scoring = c('accuracy','auc'))
@@ -167,7 +181,7 @@ gst$best_iteration()
 **Random Search**
 ```{r}
 rf <- RFTrainer$new()
-rst <-RandomSearchTrainer$new(trainer = rf,
+rst <-RandomSearchCV$new(trainer = rf,
                              parameters = list(n_estimators = c(10,50),
                              max_depth = c(5,2)),
                              n_folds = 3,
@@ -188,6 +202,7 @@ The idea here is to demonstrate how to use this package to solve classification 
 ```{r}
 # load class
 load('../data/cla_train.rda')
+# if the above doesn't work, you can try: load("cla_train.rda")
 
 kable(head(cla_train, 10)) %>%
   scroll_box(width = "100%", height = "300px")
@@ -221,11 +236,35 @@ Now, our data is ready to be served for model training. Let's do it.
 **KNN Classification**
 ```{r}
 knn <- KNNTrainer$new(k = 2,prob = T,type = 'class')
-knn$fit_predict(train = xtrain, test = xtest, y = 'Survived')
-probs <- knn$get_predictions(type = 'prob')
-labels <- knn$get_predictions(type='raw')
+knn$fit(train = xtrain, test = xtest, y = 'Survived')
+probs <- knn$predict(type = 'prob')
+labels <- knn$predict(type='raw')
 auc(actual = xtest$Survived, predicted=labels)
 ```
+
+**Naive Bayes Classification**
+```{r}
+nb <- NBTrainer$new()
+nb$fit(xtrain, 'Survived')
+pred <- nb$predict(xtest)
+auc(actual = xtest$Survived, predicted=pred)
+```
+
+**SVM Classification**
+```{r}
+#predicts probabilities - must specify mc_type ("OvA_hinge", "AvA_hinge")
+svm <- SVMTrainer$new(predict.prob = T, type="bc", mc_type="OvA_hinge")
+svm$fit(xtrain, 'Survived')
+pred <- svm$predict(xtest)
+auc(actual = xtest$Survived, predicted=pred[,2])
+
+#predicts labels
+svm <- SVMTrainer$new(predict.prob = F, type="bc")
+svm$fit(xtrain, 'Survived')
+pred <- svm$predict(xtest)
+auc(actual = xtest$Survived, predicted=pred)
+```
+
 
 **Logistic Regression**
 ```{r}
@@ -282,7 +321,7 @@ auc(actual = xtest$Survived, predicted = pred)
 **Grid Search**
 ```{r}
 xgb <- XGBTrainer$new(objective="binary:logistic")
-gst <-GridSearchTrainer$new(trainer = xgb,
+gst <-GridSearchCV$new(trainer = xgb,
                              parameters = list(n_estimators = c(10,50),
                              max_depth = c(5,2)),
                              n_folds = 3,
@@ -294,7 +333,7 @@ gst$best_iteration()
 **Random Search**
 ```{r}
 rf <- RFTrainer$new()
-rst <-RandomSearchTrainer$new(trainer = rf,
+rst <-RandomSearchCV$new(trainer = rf,
                              parameters = list(n_estimators = c(10,50),
                              max_depth = c(5,2)),
                              n_folds = 3,

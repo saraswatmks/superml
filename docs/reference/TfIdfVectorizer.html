@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="TfIDF(Term Frequency Inverse Document Frequency) Vectorizer — TfIdfVectorizer" />
 
-<meta property="og:description" content="It aims to provide a standardized way of creating TF-IDF features just like python's sklearn library.
-              It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python." />
+<meta property="og:description" content="Provides an easy way to create tf-idf matrix of features in R. It consists of fit, transform
+              methods (similar to sklearn) to generate tf-idf features." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,8 +128,8 @@
 
     <div class="ref-description">
     
-    <p>It aims to provide a standardized way of creating TF-IDF features just like python's sklearn library.
-              It also consists of fit, transform methods (similar to sklearn) to make it easier for you switch between R and Python.</p>
+    <p>Provides an easy way to create tf-idf matrix of features in R. It consists of fit, transform
+              methods (similar to sklearn) to generate tf-idf features.</p>
     
     </div>
 
@@ -143,7 +143,7 @@
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-tf_object = TfIdfVectorizer$new(max_df, min_df, max_features, smooth_idf)
+tf_object = TfIdfVectorizer$new(max_df=1, min_df=1, max_features=1, smooth_idf=TRUE)
 tf_object$fit(sentences)
 tf_matrix = tf_object$transform(sentences)
 tf_matrix = tf_object$fit_transform(sentences) ## alternate
@@ -155,13 +155,13 @@ tf_matrix = tf_object$fit_transform(sentences) ## alternate
     <dl class='dl-horizontal'>
     <dt><code>$new()</code></dt><dd><p>Initialise the instance of the vectorizer</p></dd>
     <dt><code>$fit()</code></dt><dd><p>creates a memory of count vectorizers but doesn't return anything</p></dd>
-    <dt><code>$transform()</code></dt><dd><p>based on encodings learned in <code>fit</code> method, return the tf-idf matrix</p></dd>
+    <dt><code>$transform()</code></dt><dd><p>based on encodings learned in <code>fit</code> method, returns the tf-idf matrix</p></dd>
     <dt><code>$fit_transform()</code></dt><dd><p>returns tf-idf matrix</p></dd>
 </dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>data.table</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/data.table/topics/data.table'>data.table</a></span>(<span class='kw'>sents</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'i am alone in dark.'</span>,
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>sents</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'i am alone in dark.'</span>,
                            <span class='st'>'mother_mary a lot'</span>,
                            <span class='st'>'alone in the dark?'</span>,
                            <span class='st'>'many mothers in the lot....'</span>))

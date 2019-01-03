@@ -1,24 +1,24 @@
 #' K Nearest Neighbours Trainer
-#' @description Trains a k nearest neighbour model using fast search algorithms
-#' KNN is a supervised learning algorithm which is used for both regression and classification problems.
+#' @description Trains a k nearest neighbour model using fast search algorithms. KNN is a supervised learning
+#'              algorithm which is used for both regression and classification problems.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = KNNTrainer$new(k, prob, algorithm, type)
-#' bst$fit_predict(train, test, y)
-#' bst$get_predictions(type)
+#' bst = KNNTrainer$new(k=1, prob=FALSE, algorithm=NULL, type="class")
+#' bst$fit(X_train, X_test, "target")
+#' bst$predict(type)
 #' }
 #' @section Methods:
 #' \describe{
-#'     \item{\code{$new()}}{Initialise the instance of the vectorizer}
-#'     \item{\code{$fit_predict()}}{trains the knn model and stores the test prediction}
-#'     \item{\code{$get_predictions()}}{returns predictions}
+#'     \item{\code{$new()}}{Initialise the instance of the trainer}
+#'     \item{\code{$fit()}}{trains the knn model and stores the test prediction}
+#'     \item{\code{$predict()}}{returns predictions}
 #' }
 #' @section Arguments:
 #' \describe{
 #'     \item{k}{number of neighbours to predict}
-#'     \item{prob}{if probability should be computed}
+#'     \item{prob}{if probability should be computed, default=FALSE}
 #'     \item{algorithm}{algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'}
 #'     \item{type}{type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'}
 #' }
@@ -32,23 +32,23 @@
 #' xtest <- iris[101:150,]
 #'
 #' bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
-#' bst$fit_predict(xtrain, xtest, 'Species')
-#' pred <- bst$get_predictions(type="raw")
-KNNTrainer = R6Class("KNNTrainer", public = list(
-    k=NA,
-    prob=NA,
-    algorithm=NA,
-    type=NA,
+#' bst$fit(xtrain, xtest, 'Species')
+#' pred <- bst$predict(type="raw")
+KNNTrainer <- R6Class("KNNTrainer", public = list(
+    k=1,
+    prob=FALSE,
+    algorithm=NULL,
+    type="class",
     model = NA,
 
-    initialize = function(k, prob, algorithm=c("kd_tree", "cover_tree", "brute"), type="class"){
-        self$k <- k
-        self$prob <- prob
-        self$algorithm <- algorithm
-        self$type <- type
+    initialize = function(k, prob, algorithm, type){
+        if(!(missing(k))) self$k <- k
+        if(!(missing(prob))) self$prob <- prob
+        if(!(missing(algorithm))) self$algorithm <- algorithm
+        if(!(missing(type))) self$type <- type
     },
 
-    fit_predict = function(train, test, y){
+    fit = function(train, test, y){
 
         data <- private$prepare_data(train, test, y)
 
@@ -68,7 +68,7 @@ KNNTrainer = R6Class("KNNTrainer", public = list(
         }
     },
 
-    get_predictions = function(type="raw"){
+    predict = function(type="raw"){
 
         if(self$type == "class"){
             if(type=="raw"){
@@ -102,15 +102,18 @@ KNNTrainer = R6Class("KNNTrainer", public = list(
             test <- test[, setdiff(names(test), y), with=F]
 
             if(ncol(test) != ncol(train))
-                stop(sprintf('Train and test data have unequal independent variables.'))
+                stop(sprintf('Train and test data have
+                             unequal independent variables.'))
 
             if(any(vapply(train, is.factor, logical(1)))
                | any(vapply(train, is.character, logical(1))))
-                stop("Train data contains non-numeric variables. Please convert them into integer.")
+                stop("Train data contains non-numeric variables.
+                     Please convert them into integer.")
 
             if(any(vapply(test, is.factor, logical(1)))
                | any(vapply(test, is.character, logical(1))))
-                stop("Test data contains non-numeric variables. Please convert them into integer.")
+                stop("Test data contains non-numeric variables.
+                     Please convert them into integer.")
 
             # check in case target variable contains float values or NA values
             if(any(is.na(y)))

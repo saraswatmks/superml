@@ -143,7 +143,7 @@ Given a list of text, it generates a bag of words model and returns a data frame
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bst = CountVectorizer$new(min_df, max_df, max_features)
+bst = CountVectorizer$new(min_df=1, max_df=1, max_features=1)
 bst$fit(sentences)
 bst$fit_transform(sentences)
 bst$transform(sentences)
@@ -154,9 +154,9 @@ bst$transform(sentences)
     
     <dl class='dl-horizontal'>
     <dt><code>$new()</code></dt><dd><p>Initialise the instance of the vectorizer</p></dd>
-    <dt><code>$fit()</code></dt><dd><p>creates a memory of count vectorizers and does computations required for transformation task</p></dd>
+    <dt><code>$fit()</code></dt><dd><p>creates a memory of bag of words</p></dd>
     <dt><code>$transform()</code></dt><dd><p>based on encodings learned in <code>fit</code> method, return a bag of words matrix</p></dd>
-    <dt><code>$fit_transform()</code></dt><dd><p>simultaneouly fits and transform in one step and returns bag of words of matrix</p></dd>
+    <dt><code>$fit_transform()</code></dt><dd><p>simultaneouly fits and transform words and returns bag of words of matrix</p></dd>
 </dl>
     
 

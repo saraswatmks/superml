@@ -5,17 +5,18 @@
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = CountVectorizer$new(min_df, max_df, max_features)
+#' bst = CountVectorizer$new(min_df=1, max_df=1, max_features=1)
 #' bst$fit(sentences)
 #' bst$fit_transform(sentences)
 #' bst$transform(sentences)
 #' }
+#'
 #' @section Methods:
 #' \describe{
 #'     \item{\code{$new()}}{Initialise the instance of the vectorizer}
-#'     \item{\code{$fit()}}{creates a memory of count vectorizers and does computations required for transformation task}
+#'     \item{\code{$fit()}}{creates a memory of bag of words}
 #'     \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return a bag of words matrix }
-#'     \item{\code{$fit_transform()}}{simultaneouly fits and transform in one step and returns bag of words of matrix}
+#'     \item{\code{$fit_transform()}}{simultaneouly fits and transform words and returns bag of words of matrix}
 #' }
 #' @section Arguments:
 #' \describe{
@@ -54,6 +55,9 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
         if(!(missing(max_df))) self$max_df <- max_df
         if(!(missing(min_df))) self$min_df <- min_df
         if(!(missing(max_features))) self$max_features <- max_features
+        private$check_args(self$max_df)
+        private$check_args(self$min_df)
+        private$check_args(self$max_features)
 
     },
 
@@ -68,11 +72,11 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
 
         ## count of how many times a term has appear across documents
         self$doc_tokens <- private$private_doc_tokens
-        self$tokens_encoder <- list()
-
-        for(j in seq_along(unique(self$all_tokens))){
-                self$tokens_encoder[[j]] <- self$all_tokens[j]
-        }
+        # self$tokens_encoder <- list()
+        #
+        # for(j in seq_along(unique(self$all_tokens))){
+        #         self$tokens_encoder[[j]] <- self$all_tokens[j]
+        # }
 
         return(invisible(self))
 
@@ -80,16 +84,21 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
 
     fit_transform = function(sentences){
         self$fit(sentences)
+        use_token <- names(self$doc_tokens[1:round(length(self$doc_tokens)
+                                                   *self$max_features)])
         return (private$getmatrix(self$sentences,
-                                  use_tokens = c(self$all_tokens)))
+                                  use_tokens = use_token))
     },
 
     transform = function(sentences){
 
         if(is.null(self$sentences))
             stop("Please run fit before applying transformation.")
+
+        use_token <- names(self$doc_tokens[1:round(length(self$doc_tokens)
+                                                   *self$max_features)])
         return (private$getmatrix(self$sentences,
-                                  use_tokens = c(self$all_tokens)))
+                                  use_tokens = use_token))
 
     }),
 
@@ -99,7 +108,7 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
         private_doc_tokens = NA,
 
         word_split = function(sentences){
-            return (Boost_tokenizer(sentences))
+            return (tm::Boost_tokenizer(sentences))
         },
 
         tokens_limiter = function(sentences, max_df=1, min_df=1){
@@ -181,8 +190,16 @@ CountVectorizer <- R6Class("CountVectorizer", public = list(
             colnames(output_matrix) <- tokens
             return(output_matrix)
 
+        },
+
+        check_args = function(x){
+            if(x < 0 | x > 1)
+                stop(sprintf('The value should be between 0 and 1', x))
         }
 
     )
 
 )
+
+
+

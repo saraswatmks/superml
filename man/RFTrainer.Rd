@@ -3,7 +3,7 @@
 \docType{data}
 \name{RFTrainer}
 \alias{RFTrainer}
-\title{Random Forest Model}
+\title{Random Forest Trainer}
 \format{\code{\link{R6Class}} object.}
 \usage{
 RFTrainer
@@ -16,8 +16,10 @@ This implementation uses ranger R package which provides faster model training.
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-bst = RandomForestTrainer$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)
-bst$fit(X_train, y_train)
+bst = RandomForestTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
+                              criterion, classification=1, class_weights, verbose=TRUE,
+                              seed=42, always_split)
+bst$fit(X_train, "target")
 prediction <- bst$predict(X_test)
 }
 }
@@ -36,8 +38,8 @@ prediction <- bst$predict(X_test)
 
 \describe{
  \item{n_estimators}{the number of trees in the forest, default= 100}
- \item{max_features}{the number of features to consider when looking for the best split
-     Possible values are \code{auto(default)} takes sqrt(num_of_features),
+ \item{max_features}{the number of features to consider when looking for the best split.
+                     Possible values are \code{auto(default)} takes sqrt(num_of_features),
                          \code{sqrt} same as auto,
                          \code{log} takes log(num_of_features),
                          \code{none} takes all features}
@@ -49,7 +51,7 @@ prediction <- bst$predict(X_test)
  \item{class_weights}{weights associated with the classes for sampling of training observation}
  \item{verbose}{show computation status and estimated runtime}
  \item{always_split}{vector of feature names to be always used for splitting}
- \item{seed}{set seed}
+ \item{seed}{seed value}
  \item{importance}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
 }
 }

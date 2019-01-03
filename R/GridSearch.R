@@ -1,7 +1,7 @@
-#' Grid Search Trainer
-#' @description Grid search trainer is used to train a machine learning model with multiple combinations
-#' of training hyper parameters and finds the best combination of parameters. It creates an exhaustive set of hyperparameter
-#' combinations and train model on each combination.
+#' Grid Search CV
+#' @description Grid search CV is used to train a machine learning model with multiple combinations
+#' of training hyper parameters and finds the best combination of parameters which optimizes the evaluation metric.
+#' It creates an exhaustive set of hyperparameter combinations and train model on each combination.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
@@ -12,13 +12,13 @@
 #' }
 #' @section Methods:
 #' \describe{
-#'   \item{\code{$new()}}{Initialises an instance of grid search trainer}
+#'   \item{\code{$new()}}{Initialises an instance of grid search cv}
 #'   \item{\code{$fit()}}{fit model to an input train data and trains the model.}
 #'   \item{\code{$best_iteration()}}{returns best iteration based on a given metric. By default, uses the first scoring metric}
 #' }
 #' @section Arguments:
 #' \describe{
-#'  \item{trainer}{superml trainer object, must be either XGBTrainer, LMTrainer, RFTrainer, GBMTrainer}
+#'  \item{trainer}{superml trainer object, could be either XGBTrainer, RFTrainer, NBTrainer etc.}
 #'  \item{parameters}{list containing parameters}
 #'  \item{n_folds}{number of folds to use to split the train data}
 #'  \item{scoring}{scoring metric used to evaluate the best model, multiple values can be provided.
@@ -27,16 +27,16 @@
 #' @export
 #' @examples
 #' rf <- RFTrainer$new()
-#' gst <-GridSearchTrainer$new(trainer = rf,
+#' gst <-GridSearchCV$new(trainer = rf,
 #'                             parameters = list(n_estimators = c(100),
-#'                             max_depth = c(5,2,10)),
-#'                             n_folds = 3,
-#'                             scoring = c('accuracy','auc'))
+#'                                               max_depth = c(5,2,10)),
+#'                                               n_folds = 3,
+#'                                               scoring = c('accuracy','auc'))
 #' data("iris")
 #' gst$fit(iris, "Species")
 #' gst$best_iteration()
-GridSearchTrainer <- R6Class(
-    "GridSearchTrainer",
+GridSearchCV <- R6Class(
+    "GridSearchCV",
     public = list(
         trainer = NA,
         # is a initialised class
@@ -111,14 +111,17 @@ GridSearchTrainer <- R6Class(
                     preds <- self$trainer$predict(x_valid)
 
                     for (j in self$scoring) {
-                        folds_metric[[j]] = c(folds_metric[[j]], self$get_metrics(j, x_valid[[y]], preds))
+                        folds_metric[[j]] <- c(folds_metric[[j]],
+                                               self$get_metrics(j,
+                                                                x_valid[[y]],
+                                                                preds))
                     }
 
                 }
 
                 for(name in names(folds_metric)){
-                    df[[paste0(name,'_avg')]] = mean(folds_metric[[name]])
-                    df[[paste0(name,'_sd')]] = sd(folds_metric[[name]])
+                    df[[paste0(name,'_avg')]] <- mean(folds_metric[[name]])
+                    df[[paste0(name,'_sd')]] <- sd(folds_metric[[name]])
                 }
                 return (subset(df, select = -c(index)))
             }))
@@ -132,7 +135,8 @@ GridSearchTrainer <- R6Class(
             if (!(class(self$trainer)[1] %in% private$available_trainers))
                 stop(sprintf(
                     strwrap(
-                        "Detected trainer is invalid. It should belong to one of %s classes"
+                        "Detected trainer is invalid.
+                        It should belong to one of %s classes"
                     ),
                     paste(private$available_trainers, collapse = ",")
                 ))
@@ -147,7 +151,8 @@ GridSearchTrainer <- R6Class(
             # use grid search
             print('entering grid search')
             param_grid <- expand.grid(self$parameters)
-            print(sprintf("In total, %s models will be trained", nrow(param_grid)))
+            print(sprintf("In total, %s models will be trained",
+                          nrow(param_grid)))
 
             self$evaluation_scores <- self$runGrid(param_grid, X, y)
 
@@ -170,8 +175,7 @@ GridSearchTrainer <- R6Class(
         # skip prepare_data, assume the data given is in correct format
         available_trainers = c("XGBTrainer",
                                "RFTrainer",
-                               "LMTrainer",
-                               "GBMTrainer")
+                               "NBTrainer")
     )
 )
 

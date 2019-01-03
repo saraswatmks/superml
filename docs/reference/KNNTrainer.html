@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="K Nearest Neighbours Trainer — KNNTrainer" />
 
-<meta property="og:description" content="Trains a k nearest neighbour model using fast search algorithms
-KNN is a supervised learning algorithm which is used for both regression and classification problems." />
+<meta property="og:description" content="Trains a k nearest neighbour model using fast search algorithms. KNN is a supervised learning
+             algorithm which is used for both regression and classification problems." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,8 +128,8 @@ KNN is a supervised learning algorithm which is used for both regression and cla
 
     <div class="ref-description">
     
-    <p>Trains a k nearest neighbour model using fast search algorithms
-KNN is a supervised learning algorithm which is used for both regression and classification problems.</p>
+    <p>Trains a k nearest neighbour model using fast search algorithms. KNN is a supervised learning
+             algorithm which is used for both regression and classification problems.</p>
     
     </div>
 
@@ -143,18 +143,18 @@ KNN is a supervised learning algorithm which is used for both regression and cla
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bst = KNNTrainer$new(k, prob, algorithm, type)
-bst$fit_predict(train, test, y)
-bst$get_predictions(type)
+bst = KNNTrainer$new(k=1, prob=FALSE, algorithm=NULL, type="class")
+bst$fit(X_train, X_test, "target")
+bst$predict(type)
 </pre>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
     <dl class='dl-horizontal'>
-    <dt><code>$new()</code></dt><dd><p>Initialise the instance of the vectorizer</p></dd>
-    <dt><code>$fit_predict()</code></dt><dd><p>trains the knn model and stores the test prediction</p></dd>
-    <dt><code>$get_predictions()</code></dt><dd><p>returns predictions</p></dd>
+    <dt><code>$new()</code></dt><dd><p>Initialise the instance of the trainer</p></dd>
+    <dt><code>$fit()</code></dt><dd><p>trains the knn model and stores the test prediction</p></dd>
+    <dt><code>$predict()</code></dt><dd><p>returns predictions</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -162,7 +162,7 @@ bst$get_predictions(type)
     
     <dl class='dl-horizontal'>
     <dt>k</dt><dd><p>number of neighbours to predict</p></dd>
-    <dt>prob</dt><dd><p>if probability should be computed</p></dd>
+    <dt>prob</dt><dd><p>if probability should be computed, default=FALSE</p></dd>
     <dt>algorithm</dt><dd><p>algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'</p></dd>
     <dt>type</dt><dd><p>type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'</p></dd>
 </dl>
@@ -177,8 +177,8 @@ bst$get_predictions(type)
 <span class='no'>xtest</span> <span class='kw'>&lt;-</span> <span class='no'>iris</span>[<span class='fl'>101</span>:<span class='fl'>150</span>,]
 
 <span class='no'>bst</span> <span class='kw'>&lt;-</span> <span class='no'>KNNTrainer</span>$<span class='fu'>new</span>(<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>prob</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>type</span><span class='kw'>=</span><span class='st'>"class"</span>)
-<span class='no'>bst</span>$<span class='fu'>fit_predict</span>(<span class='no'>xtrain</span>, <span class='no'>xtest</span>, <span class='st'>'Species'</span>)
-<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>bst</span>$<span class='fu'>get_predictions</span>(<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"raw"</span>)</div></pre>
+<span class='no'>bst</span>$<span class='fu'>fit</span>(<span class='no'>xtrain</span>, <span class='no'>xtest</span>, <span class='st'>'Species'</span>)
+<span class='no'>pred</span> <span class='kw'>&lt;-</span> <span class='no'>bst</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='kw'>type</span><span class='kw'>=</span><span class='st'>"raw"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

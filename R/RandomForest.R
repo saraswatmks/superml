@@ -1,12 +1,14 @@
-#' Random Forest Model
+#' Random Forest Trainer
 #' @description Trains a Random Forest model. A random forest is a meta estimator that fits a number of decision tree classifiers on various sub-samples of the dataset and use averaging to improve the predictive accuracy and control over-fitting.
 #' This implementation uses ranger R package which provides faster model training.
 #' @format \code{\link{R6Class}} object.
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = RandomForestTrainer$new(n_estimators, max_features, max_depth, min_node_size, criterion,classification, class_weights, verbose, seed,always_split)
-#' bst$fit(X_train, y_train)
+#' bst = RandomForestTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
+#'                               criterion, classification=1, class_weights, verbose=TRUE,
+#'                               seed=42, always_split)
+#' bst$fit(X_train, "target")
 #' prediction <- bst$predict(X_test)
 #' }
 #' @section Methods:
@@ -19,8 +21,8 @@
 #' @section Arguments:
 #' \describe{
 #'  \item{n_estimators}{the number of trees in the forest, default= 100}
-#'  \item{max_features}{the number of features to consider when looking for the best split
-#'      Possible values are \code{auto(default)} takes sqrt(num_of_features),
+#'  \item{max_features}{the number of features to consider when looking for the best split.
+#'                      Possible values are \code{auto(default)} takes sqrt(num_of_features),
 #'                          \code{sqrt} same as auto,
 #'                          \code{log} takes log(num_of_features),
 #'                          \code{none} takes all features}
@@ -32,7 +34,7 @@
 #'  \item{class_weights}{weights associated with the classes for sampling of training observation}
 #'  \item{verbose}{show computation status and estimated runtime}
 #'  \item{always_split}{vector of feature names to be always used for splitting}
-#'  \item{seed}{set seed}
+#'  \item{seed}{seed value}
 #'  \item{importance}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
 #' }
 #' @export
@@ -74,10 +76,11 @@ RFTrainer <- R6Class("RFTrainer",
                                 ){
 
               if(!(missing(n_estimators))) self$n_estimators <- n_estimators
-              if (!(missing(max_features))) self$max_features <- max_features
-              if (!(missing(max_depth)))    self$max_depth <- max_depth
-              if (!(missing(min_node_size))) self$min_node_size <- min_node_size
-              if (!(missing(classification))) self$classification <- classification
+              if(!(missing(max_features))) self$max_features <- max_features
+              if(!(missing(max_depth)))    self$max_depth <- max_depth
+              if(!(missing(min_node_size))) self$min_node_size <- min_node_size
+              if(!(missing(classification)))
+                  self$classification <- classification
 
               if (self$classification == 1) self$criterion <- "gini"
               else if(self$classification == 0) self$criterion <- "variance"
@@ -89,8 +92,8 @@ RFTrainer <- R6Class("RFTrainer",
           },
 
           fit = function(X, y) {
-              private$check_data(X, y)
 
+              superml::testdata(X, y)
 
               # dependent variable should be passed as factor if classification
               if(self$classification == 1) X[[y]] <- as.factor(X[[y]])
@@ -140,19 +143,6 @@ RFTrainer <- R6Class("RFTrainer",
           }
       ),
 
-      private = list(
-
-          iid_names = NA,
-          trained_model = NA,
-
-          check_data = function(X, y) {
-              if (!(inherits(X, c("data.table", "data.frame"))))
-                  stop("Your data format should be a data.table or data.frame.")
-
-              if(!(y %in% names(X)))
-                  stop("The dependent variable is not available in the data.")
-
-              iid_names <- setdiff(colnames(X), y)
-          }
-      )
+      private = list( trained_model = NA )
 )
+

@@ -9,14 +9,14 @@
 LMTrainer
 }
 \description{
-Trains linear models such as Logistic, Lasso or Ridge regression model. It uses glmnet R package in the backend. Lasso regression can be used
-as a variable selection method also. This class provides fit, predict, cross valdidation functions.
+Trains linear models such as Logistic, Lasso or Ridge regression model. It is built on glmnet R package.
+             This class provides fit, predict, cross valdidation functions.
 }
 \section{Usage}{
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-bst = LMTrainer$new(family, weights, alpha, nlambda, standardize.response)
+bst = LMTrainer$new(family, weights, alpha, lambda=100, standardize.response=FALSE)
 bst$fit(X_train, "target")
 prediction <- bst$predict(X_test)
 bst$cv_model(X_train, "target", nfolds=4, parallel=TRUE)
@@ -43,7 +43,7 @@ cv_prediction <- bst$cv_predict(X_test)
  \item{weights}{observation weights. Can be total counts if responses are proportion matrices. Default is 1 for each observation}
  \item{alpha}{The elasticnet mixing parameter, alpha=1 is the lasso penalty, and alpha=0 the ridge penalty.}
  \item{nlambda}{the number of lambda values - default is 100}
- \item{standardize.response}{This is for the family="mgaussian" family, and allows the user to standardize the response variables}
+ \item{standardize.response}{normalise the dependent variable between 0 and 1, default = FALSE}
 }
 }
 

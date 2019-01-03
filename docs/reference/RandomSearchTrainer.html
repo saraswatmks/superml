@@ -144,7 +144,7 @@ Here, the number of models to be trained can be defined by the user.</p>
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
 rst = RandomSearchTrainer$new(trainer, parameters, n_folds, scoring, n_iter)
-rst$fit(X, y)
+rst$fit(X_train, "target")
 rst$best_iteration(metric)
 </pre>
     
@@ -177,26 +177,8 @@ rst$best_iteration(metric)
                             <span class='kw'>max_depth</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>2</span>,<span class='fl'>10</span>,<span class='fl'>14</span>)),
                             <span class='kw'>n_folds</span> <span class='kw'>=</span> <span class='fl'>3</span>,
                             <span class='kw'>scoring</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'accuracy'</span>,<span class='st'>'auc'</span>),
-                            <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
-<span class='no'>rst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; [1] "In total, 4 models will be trained"</div><div class='input'><span class='no'>rst</span>$<span class='fu'>best_iteration</span>()</div><div class='output co'>#&gt; $n_estimators
-#&gt; [1] 500
-#&gt; 
-#&gt; $max_depth
-#&gt; [1] 10
-#&gt; 
-#&gt; $accuracy_avg
-#&gt; [1] 0.9533333
-#&gt; 
-#&gt; $accuracy_sd
-#&gt; [1] 0.01154701
-#&gt; 
-#&gt; $auc_avg
-#&gt; [1] NaN
-#&gt; 
-#&gt; $auc_sd
-#&gt; [1] NA
-#&gt; </div></pre>
+                            <span class='kw'>n_iter</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'RandomSearchTrainer' not found</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='st'>"iris"</span>)
+<span class='no'>rst</span>$<span class='fu'>fit</span>(<span class='no'>iris</span>, <span class='st'>"Species"</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'rst' not found</span></div><div class='input'><span class='no'>rst</span>$<span class='fu'>best_iteration</span>()</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'rst' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
