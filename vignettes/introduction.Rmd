@@ -25,13 +25,18 @@ This ambitious package is my ongoing effort to help the r-community build ML mod
 
 ## Install 
 
-You can install latest cran version using:
+You can install latest cran version using (recommended):
 
-`install.packages("superml")`
+```{r, eval=FALSE}
+install.packages("superml")
+```
 
 You can install the developmemt version directly from github using:
 
-`devtools::install_github("saraswatmks/superml")`
+
+```{r, eval=FALSE}
+devtools::install_github("saraswatmks/superml")
+```
 
 
 ## Examples - Machine Learning Models
