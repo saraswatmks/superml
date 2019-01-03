@@ -59,11 +59,11 @@ tfidf$predict(X_test)
  \item{lambda}{L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1}
  \item{alpha}{L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0}
  \item{eval_metric}{Evaluation metrics for validation data, a default metric will be assigned according to objective }
- \item{print_every}{print training log after n interations. Default = 50}
+ \item{print_every}{print training log after n interactions. Default = 50}
  \item{feval}{custom evaluation function}
  \item{early_stopping}{Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen}
  \item{maximize}{If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better. }
- \item{custom_objective}{custom objective functioon}
+ \item{custom_objective}{custom objective function}
  \item{save_period}{when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.}
  \item{save_name}{the name or path for periodically saved model file.}
  \item{xgb_model}{a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.}
