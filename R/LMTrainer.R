@@ -96,7 +96,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
 
         } else {
             DX <- as.matrix(setDT(X)[, self$iid_names, with=F])
-            self$model <- glmnet::glmnet(x = DX,
+            self$model <- glmnet(x = DX,
                              y = X[[y]],
                              family = self$family,
                              weights = self$weights,
@@ -119,7 +119,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
                                   type = "response"))
         } else {
             if(is.null(lambda)) lambda <- min(self$model$lambda)
-            return(glmnet::predict.glmnet(object=self$model,
+            return(predict.glmnet(object=self$model,
                     newx = as.matrix(setDT(df)[, c(self$iid_names), with=F]),
                     s = lambda,
                     type = "link"))
@@ -131,7 +131,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         superml::testdata(X, y)
         self$iid_names <- setdiff(colnames(X), y)
         if(isTRUE(parallel)){
-            cl <- parallel::makeCluster(parallel::detectCores())
+            cl <- makeCluster(detectCores())
             doParallel::registerDoParallel(cl)
             message("Starting parallel clusters.")
         }
@@ -139,21 +139,21 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         self$weights <- rep(1, nrow(X))
         DX <- as.matrix(setDT(X)[, self$iid_names, with=FALSE])
 
-        self$cvmodel <- glmnet::cv.glmnet(x = DX
-                                          ,y = X[[y]]
-                                          ,weights = self$weights
-                                          ,lambda = NULL
-                                          ,nfolds = nfolds
-                                          ,parallel = parallel
-                                          ,type.measure = type.measure
-                                          )
+        self$cvmodel <- cv.glmnet(x = DX
+                                  ,y = X[[y]]
+                                  ,weights = self$weights
+                                  ,lambda = NULL
+                                  ,nfolds = nfolds
+                                  ,parallel = parallel
+                                  ,type.measure = type.measure
+                                  )
 
         # this flag is for variable importance
         self$Flag <- TRUE
         message("Computation done.")
         if(isTRUE(parallel)){
             message("Stopping clusters.")
-            parallel::stopCluster(cl)
+            stopCluster(cl)
         }
 
     },
@@ -166,7 +166,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         }
         DX <- as.matrix(setDT(df)[, c(self$iid_names), with=FALSE])
 
-        return(glmnet::predict.cv.glmnet(object=self$cvmodel,
+        return(predict.cv.glmnet(object=self$cvmodel,
                               newx = DX,
                               s = lambda,
                               type="response"))

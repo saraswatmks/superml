@@ -24,9 +24,9 @@
 #' }
 #' @export
 #' @examples
-#' data <- rbind(replicate(20, rnorm(1e5, 2)),
-#'              replicate(20, rnorm(1e5, -1)),
-#'              replicate(20, rnorm(1e5, 5)))
+#' data <- rbind(replicate(20, rnorm(1e4, 2)),
+#'              replicate(20, rnorm(1e4, -1)),
+#'              replicate(20, rnorm(1e4, 5)))
 #' km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
 #' km_model$fit(data, find_optimal = FALSE)
 #' predictions <- km_model$predict(data)
@@ -91,7 +91,7 @@ KMeansTrainer <- R6Class("KMeansTrainer", public = list(
         }
 
         message(sprintf('Using %d clusters to learn from data', self$clusters))
-        self$model <- MiniBatchKmeans(data = X
+        self$model <- ClusterR::MiniBatchKmeans(data = X
                                       ,clusters = self$clusters
                                       ,batch_size = self$batch_size
                                       ,num_init = self$num_init
@@ -107,7 +107,7 @@ KMeansTrainer <- R6Class("KMeansTrainer", public = list(
     },
 
     predict = function(X){
-        return(predict_MBatchKMeans(X, CENTROIDS = self$model$centroids))
+        return(ClusterR::predict_MBatchKMeans(X, CENTROIDS = self$model$centroids))
     })
 
 )

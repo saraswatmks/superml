@@ -71,7 +71,7 @@
 #'                       maximize = FALSE,
 #'                       eval_metric = 'merror',
 #'                       num_class=3,
-#'                       n_estimators = 10)
+#'                       n_estimators = 2)
 #' xgb$fit(df, 'Species')
 #'
 #' # do cross validation to find optimal value for n_estimators

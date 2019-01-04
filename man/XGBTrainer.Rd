@@ -59,7 +59,7 @@ tfidf$predict(X_test)
  \item{lambda}{L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1}
  \item{alpha}{L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0}
  \item{eval_metric}{Evaluation metrics for validation data, a default metric will be assigned according to objective }
- \item{print_every}{print training log after n interactions. Default = 50}
+ \item{print_every}{print training log after n iterations. Default = 50}
  \item{feval}{custom evaluation function}
  \item{early_stopping}{Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen}
  \item{maximize}{If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better. }
@@ -88,7 +88,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
                       maximize = FALSE,
                       eval_metric = 'merror',
                       num_class=3,
-                      n_estimators = 10)
+                      n_estimators = 2)
 xgb$fit(df, 'Species')
 
 # do cross validation to find optimal value for n_estimators

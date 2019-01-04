@@ -25,7 +25,7 @@
 #'     \item{max_df}{consider tokens which occur in maximum this % documents, value lies between 0 and 1}
 #'     \item{max_features}{use top features sorted by count to be used in creating tf-idf features}
 #'     \item{smooth_idf}{to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
-#'  }
+#' }
 #' @export
 #' @examples
 #' df <- data.frame(sents = c('i am alone in dark.',
