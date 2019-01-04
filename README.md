@@ -23,9 +23,11 @@ Description
 In superml, every machine learning algorithm is called as a `trainer`. Following is the list of trainers available as of today:<br/>
 
 -   LMTrainer: used to train linear, logistic, ridge, lasso models
--   RFTrainer: Random Forest Model
 -   KNNTrainer: K-Nearest Neighbour Models
 -   KMeansTrainer: KMeans Model
+-   NBTrainer: Naive Baiyes Model
+-   SVMTrainer: SVM Model
+-   RFTrainer: Random Forest Model
 -   XGBTrainer: XGBoost Model
 
 In addition, there are other useful functions to support modeling tasks such as:
@@ -33,8 +35,8 @@ In addition, there are other useful functions to support modeling tasks such as:
 -   CountVectorizer: Create Bag of Words model
 -   TfidfVectorizer: Create TF-IDF feature model
 -   LabelEncoder: Convert categorical features to numeric
--   GridSearch: For hyperparameter optimization
--   RandomSearch: For hyperparameter optimization
+-   GridSearchCV: For hyperparameter optimization
+-   RandomSearchCV: For hyperparameter optimization
 -   kFoldMean: Target encoding
 -   smoothMean: Target encoding
 
@@ -46,6 +48,8 @@ Any machine learning model can be trained using the following steps:
 ``` r
 data(iris)
 library(superml)
+
+# random forest
 rf <- RFTrainer$new(n_estimators = 100)
 rf$fit(iris, "Species")
 pred <- rf$predict(iris)
