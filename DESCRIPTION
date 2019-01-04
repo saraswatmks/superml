@@ -25,7 +25,6 @@ Imports:
     glmnet(>= 2.0),
     parallel,
     kableExtra,
-    magrittr,
     tm(>= 0.7),
     naivebayes(>= 0.9),
     ClusterR(>= 1.1),
