@@ -86,7 +86,7 @@ KMeansTrainer <- R6Class("KMeansTrainer", public = list(
         if(isTRUE(find_optimal)){
             message('Finding optimal number of clusters
                     based on variance explained')
-            f <- Optimal_Clusters_KMeans(X, max_clusters = self$max_clusters)
+            f <- ClusterR::Optimal_Clusters_KMeans(X, max_clusters = self$max_clusters)
             self$clusters <- which.max(f[-1])+1
         }
 
