@@ -1,3 +1,7 @@
+# superml 0.3.0
+
+* Moved some imports to suggests
+
 # superml 0.2.0
 
 * Added new trainers: SVM, NaiveBayes

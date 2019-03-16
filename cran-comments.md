@@ -1,6 +1,6 @@
 ## Test environments
 
-* local OS X install, R 3.5.1 (local)
+* local macOS X install, R 3.5.1 (local)
 * ubuntu 14.04, R devel (on travis-ci),
 * win-builder (devel)
 * Windows Server 2012 R2 x64 (build 9600) (on appvoyer)
