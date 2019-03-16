@@ -5,11 +5,12 @@
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = XGBTrainer$new(booster, objective, nthread, silent=0, n_estimators=100, learning_rate=0.3,
-#'                      gamma=0, max_depth=6, min_child_weight=1, subsample=1, colsample_bytree=1,
-#'                      lambda=1, alpha = 0, eval_metric, print_every = 50, feval, early_stopping, maximize,
-#'                      custom_objective, save_period, save_name, xgb_model, callbacks, verbose,
-#'                      num_class, weight, na_missing)
+#' bst = XGBTrainer$new(booster, objective, nthread, silent=0, n_estimators=100,
+#'                      learning_rate=0.3, gamma=0, max_depth=6, min_child_weight=1,
+#'                      subsample=1, colsample_bytree=1, lambda=1, alpha = 0,
+#'                      eval_metric, print_every = 50, feval, early_stopping,
+#'                      maximize, custom_objective, save_period, save_name,
+#'                      xgb_model, callbacks, verbose, num_class, weight, na_missing)
 #' bst$fit(X_train, "target", valid=NULL)
 #' tfidf$predict(X_test)
 #' }
@@ -176,6 +177,7 @@ XGBTrainer <- R6Class(
             if(!(missing(num_class))) self$num_class <- num_class
             if(!(missing(weight))) self$weight <- weight
             if(!(missing(na_missing))) self$na_missing <- na_missing
+            superml::check_package("xgboost")
 
         },
 
@@ -208,7 +210,7 @@ XGBTrainer <- R6Class(
             all_data <- private$prepare_data_train(X, y)
 
             message("starting with cv training...")
-            self$cv_model <- xgb.cv(params = params_list
+            self$cv_model <- xgboost::xgb.cv(params = params_list
                                      , data = all_data$train
                                      , nrounds = self$n_estimators
                                      , nfold = nfolds
@@ -261,7 +263,7 @@ XGBTrainer <- R6Class(
 
 
             message("starting with training...")
-            private$trained_model <- xgb.train(params = params_list
+            private$trained_model <- xgboost::xgb.train(params = params_list
                                                 , data = all_data$train
                                                 , nrounds = self$n_estimators
                                                 , watchlist = all_data
@@ -285,17 +287,17 @@ XGBTrainer <- R6Class(
             # worse.
 
             df <- as.data.table(df)
-            dtest <- xgb.DMatrix(data = as.matrix(df[, self$feature_names, with=FALSE]))
+            dtest <- xgboost::xgb.DMatrix(data = as.matrix(df[, self$feature_names, with=FALSE]))
 
             return(stats::predict(private$trained_model, dtest))
         },
 
         show_importance = function(type="plot", topn=10){
 
-            mat <- xgb.importance(feature_names = self$feature_names,
+            mat <- xgboost::xgb.importance(feature_names = self$feature_names,
                                   model = private$trained_model)
             if(type == "plot"){
-                xgb.plot.importance(importance_matrix = mat, top_n = topn)
+                xgboost::xgb.plot.importance(importance_matrix = mat, top_n = topn)
             } else if (type == "table"){
                 return(mat)
             }
@@ -339,15 +341,15 @@ XGBTrainer <- R6Class(
             X <- as.data.table(X)
             if(!(is.null(valid))){
                 valid <- as.data.table(valid)
-                dtrain <- xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y), with=FALSE]),
+                dtrain <- xgboost::xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y), with=FALSE]),
                                       label = X[[y]])
-                dvalid <- xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y), with=FALSE]),
+                dvalid <- xgboost::xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y), with=FALSE]),
                                       label = valid[[y]])
                 return (list(train = dtrain,
                              val = dvalid))
 
             } else {
-                dtrain <-xgb.DMatrix(data = as.matrix(
+                dtrain <- xgboost::xgb.DMatrix(data = as.matrix(
                     X[, setdiff(names(X), y), with=FALSE]), label = X[[y]])
                 return (list(train = dtrain))
             }

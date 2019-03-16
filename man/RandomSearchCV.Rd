@@ -16,7 +16,7 @@ Here, the number of models to be trained can be defined by the user.
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-rst = RandomSearchTrainer$new(trainer, parameters, n_folds, scoring, n_iter)
+rst = RandomSearchCV$new(trainer, parameters, n_folds, scoring, n_iter)
 rst$fit(X_train, "target")
 rst$best_iteration(metric)
 }

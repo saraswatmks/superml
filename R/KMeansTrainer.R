@@ -5,9 +5,10 @@
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' kmt = KMeansTrainer$new(clusters, batch_size = 10, num_init=1, max_iters=100, init_fraction=1,
-#'                         initializer = "kmeans++", early_stop_iter = 10, verbose=FALSE, centroids=NULL,
-#'                         tol = 1e-04, tol_optimal_init=0.3, seed=1, max_clusters=NA)
+#' kmt = KMeansTrainer$new(clusters, batch_size = 10, num_init=1, max_iters=100,
+#'                         init_fraction=1, initializer = "kmeans++", early_stop_iter = 10,
+#'                         verbose=FALSE, centroids=NULL, tol = 1e-04, tol_optimal_init=0.3,
+#'                         seed=1, max_clusters=NA)
 #' bst$fit(X_train, y_train=NULL)
 #' prediction <- bst$predict(X_test)
 #' }
@@ -74,6 +75,7 @@ KMeansTrainer <- R6Class("KMeansTrainer", public = list(
             self$tol_optimal_init <- tol_optimal_init
         if(!(missing(seed))) self$seed <- seed
         if(!(missing(max_clusters))) self$max_clusters <- max_clusters
+        superml::check_package("ClusterR")
 
     },
 

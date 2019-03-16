@@ -10,8 +10,8 @@
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' svm = SVMTrainer$new(type=NULL,scale=TRUE, gammas=NULL, lambdas=NULL, c_values=NULL,predict.prob=FALSE,
-#'                      verbose=NULL, ncores=NULL, partition_choice=0,
+#' svm = SVMTrainer$new(type=NULL,scale=TRUE, gammas=NULL, lambdas=NULL, c_values=NULL,
+#'                      predict.prob=FALSE, verbose=NULL, ncores=NULL, partition_choice=0,
 #'                      seed=-1, grid_choice=NULL, useCells=FALSE, mc_type=NULL,
 #'                      adaptivity_control=0)
 #' svm$fit(X_train, y_train)
@@ -112,6 +112,7 @@ SVMTrainer <- R6Class('SVMTrainer', public = list(
         if(!(missing(c_values))) self$c_values <- c_values
         if(!(missing(quantile))) self$quantile <- quantile
         if(!(missing(weights))) self$quantile <- weights
+        superml::check_package("liquidSVM")
 
     },
 

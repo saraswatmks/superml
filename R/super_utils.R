@@ -66,3 +66,18 @@ testdata <- function(X, y, model=NA){
 
 }
 
+#' @name check_package
+#' @title Internal function
+#' @description Used to check the package is installed
+#' @param X should be a string containing package name
+#'
+#' @return null
+#' @keywords internal
+#' @export
+check_package <- function(pkg) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+        stop(paste0("Need Package " , pkg,  "needed for this function to work. Please install it."),
+             call. = FALSE)
+    }
+}
+

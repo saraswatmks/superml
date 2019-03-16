@@ -46,6 +46,7 @@ KNNTrainer <- R6Class("KNNTrainer", public = list(
         if(!(missing(prob))) self$prob <- prob
         if(!(missing(algorithm))) self$algorithm <- algorithm
         if(!(missing(type))) self$type <- type
+        superml::check_package("FNN")
     },
 
     fit = function(train, test, y){

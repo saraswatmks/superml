@@ -16,7 +16,7 @@ This implementation uses ranger R package which provides faster model training.
 
 For usage details see \bold{Methods, Arguments and Examples} sections.
 \preformatted{
-bst = RandomForestTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
+bst = RFTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
                               criterion, classification=1, class_weights, verbose=TRUE,
                               seed=42, always_split)
 bst$fit(X_train, "target")

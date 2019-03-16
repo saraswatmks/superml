@@ -43,163 +43,183 @@
 CountVectorizer <- R6Class("CountVectorizer", public = list(
 
     sentences = NA,
-    tokens_encoder = NA,
-    max_df = 1,
-    min_df = 1,
-    max_features = 1,
-    all_tokens = NA, ## tokens to use to create matrix
-    top_tokens = NA,
-    doc_tokens = NA,
+    max_df = 1, # should be between 0 and 1
+    min_df = 1, # should be between 0 and 1
+    max_features = 1, # should be integer value 1 means get all features
+    split = " ",# default is space
+    regex = "[^a-zA-Z0-9 ]",
+    model = NULL,
+    remove_stopwords = TRUE,
+    str=NULL,
 
-    initialize = function(max_df, min_df, max_features){
+
+    initialize = function(min_df, max_df, max_features,regex, remove_stopwords, split){
         if(!(missing(max_df))) self$max_df <- max_df
         if(!(missing(min_df))) self$min_df <- min_df
         if(!(missing(max_features))) self$max_features <- max_features
-        private$check_args(self$max_df)
-        private$check_args(self$min_df)
-        private$check_args(self$max_features)
+        if(!(missing(regex))) self$regex <- regex
+        if(!(missing(remove_stopwords))) self$remove_stopwords <- remove_stopwords
+        if(!(missing(split))) self$split <- split
+        private$check_args(self$max_df, what='max_df')
+        private$check_args(self$min_df, what='min_df')
 
     },
 
     fit = function(sentences){
 
-        self$sentences <- sentences
-        self$all_tokens <- private$tokens_limiter(self$sentences,
-                                                  max_df = self$max_df,
-                                                  min_df = self$min_df)
-        ## frequency count of terms
-        self$top_tokens <- private$private_top_tokens
 
-        ## count of how many times a term has appear across documents
-        self$doc_tokens <- private$private_doc_tokens
-        # self$tokens_encoder <- list()
-        #
-        # for(j in seq_along(unique(self$all_tokens))){
-        #         self$tokens_encoder[[j]] <- self$all_tokens[j]
-        # }
+        sentences <- private$preprocess(sentences,
+                                        regex=self$regex,
+                                        remove_stopwords = self$remove_stopwords)
+        ## pass cleaned sentences here
+        ## this function returns a vector of tokens to be
+        ## used as subset in next steps
+        use_tokens <- private$get_tokens(sentences,
+                                        min_df = self$min_df,
+                                        max_df = self$max_df,
+                                        max_features = self$max_features)
 
-        return(invisible(self))
+        self$model <- private$get_bow_df(sentences,
+                                         split_rule = self$split,
+                                         use_tokens=use_tokens)
+
 
     },
 
     fit_transform = function(sentences){
-        self$fit(sentences)
-        use_token <- names(self$doc_tokens[1:round(length(self$doc_tokens)
-                                                   *self$max_features)])
-        return (private$getmatrix(self$sentences,
-                                  use_tokens = use_token))
+
     },
 
     transform = function(sentences){
 
-        if(is.null(self$sentences))
-            stop("Please run fit before applying transformation.")
-
-        use_token <- names(self$doc_tokens[1:round(length(self$doc_tokens)
-                                                   *self$max_features)])
-        return (private$getmatrix(self$sentences,
-                                  use_tokens = use_token))
 
     }),
 
     private =  list(
 
-        private_top_tokens = NA,
-        private_doc_tokens = NA,
+        preprocess = function(sentences, regex="[^0-9a-zA-Z ]", remove_stopwords){
 
-        word_split = function(sentences){
-            return (tm::Boost_tokenizer(sentences))
+
+            # this function returns cleaned sentences
+            s <- gsub(regex, "", sentences)
+
+            if(isTRUE(remove_stopwords)){
+
+                path = system.file("stopwords","english.txt", package = "superml")
+                stopwords <- read.csv(path, header = F, stringsAsFactors = F)[,1]
+
+                # remove stopwords from sentences
+                sw_pattern = paste0("\\b(?:", paste(stopwords, collapse = "|"), ")\\b ?")
+                s <- gsub(pattern = sw_pattern, replacement = '', s, perl = T)
+
+                return(s)
+
+            }
+            return (s)
         },
 
-        tokens_limiter = function(sentences, max_df=1, min_df=1){
 
-            top_tokens <- list() ## sorted dictionary
+        get_tokens = function(sentences, min_df=1, max_df=1, max_features=1, split=NULL){
 
-            temp_tokens <- private$word_split(sentences)
-            temp_len <- length(sentences)
 
-            for(j in temp_tokens){
-                if(!(j %in% names(top_tokens))){
-                    top_tokens[[j]] <- 1
-                } else if(j %in% names(top_tokens)){
-                    top_tokens[[j]] <- top_tokens[[j]] + 1
-                }
+            # sentences should be preprocessed sentences
 
+            # here and use only those tokens which are necessarily required
+            # instead of creating a matrix for all the words
+            tokens_counter <- sort(table(tm::Boost_tokenizer(sentences)), decreasing = TRUE)
+
+            # max features should not be greater than max. value
+            if(max_features > length(tokens_counter))
+                stop('max_features cannot be greater than maximum possible
+                     features. Please pass a smaller value.')
+
+            # max_feature will override other two parameters (min_df, max_df)
+            use_tokens <- NULL
+
+            # this is default value, use all tokens
+            if (max_features == 1){
+                 return(names(tokens_counter))
             }
 
-            # sort the list by values
-            private_top_tokens <- top_tokens[order(unlist(top_tokens),
-                                                   decreasing = T)]
-
-            doc_tokens <- list() ## count token in documents
-
-            for(j in unique(temp_tokens)){
-                for(k in sentences){
-                    l <- j %in% private$word_split(k)
-                    if(l){
-                        if(!(j %in% names(doc_tokens))){
-                            doc_tokens[[j]] <- 1
-                        } else if(j %in% names(doc_tokens)){
-                            doc_tokens[[j]] <- doc_tokens[[j]] + 1
-                        }
-                    }
-                }
+            if(max_features > 1){
+                return (names(tokens_counter)[1:max_features])
             }
 
-            lower_limit <- round(temp_len * min_df) # percentage
-            upper_limit <- round(temp_len * max_df)
+            # min_df = keep tokens that occur in atleast this % documents (lower_limit)
+            # max_df = keep tokens that occur in at max this % documents (upper_limit)
 
             if(min_df > max_df) {
                 stop("min_df cannot be greater than max_df.
                      Please use another value.")
             } else if(min_df == 1 & max_df == 1) {
-                filtered_tokens <- names(doc_tokens)
+                return (names(tokens_counter))
+            }
+
+            # get upper and lower limit values
+            lower_limit <- round(length(sentences) * min_df)
+            upper_limit <- round(length(sentences) * max_df)
+
+            return (list(lower=lower_limit, upper=upper_limit))
+
+        },
+
+        get_bow_df = function(sentences, split_rule=" ", use_tokens=NULL){
+
+            # calculate count of tokens across all documents
+            f <- rbindlist(
+                lapply(
+                    mapply(
+                        cbind, seq(sentences),
+                        strsplit(sentences, split=split_rule)), data.table), fill=TRUE)
+
+            f <- Matrix::Matrix(Matrix::as.matrix(dcast.data.table(f,
+                                  V1 ~ V2,
+                                  fun.aggregate= length,
+                                  value.var="V2")[,-1]), sparse = TRUE)
+
+            if(is.character(use_tokens)){
+
+                return(as.matrix(f[,use_tokens]))
+
+
             } else {
-                filtered_tokens <- names(doc_tokens[doc_tokens > lower_limit &
-                                                    doc_tokens < upper_limit])
-            }
 
-            private$private_doc_tokens <- doc_tokens[order(unlist(doc_tokens),
-                                                           decreasing = T)]
-            return(filtered_tokens)
+                # get count of columns
+                mat <- Matrix::colSums(f)
+
+                # check lower and upper limit
+                use_tokens <- names(mat[mat > lower_limit &
+                                            mat < upper_limit])
+
+                return(as.matrix(f[, use_tokens]))
+
+            }
 
         },
 
-
-        getmatrix = function(sentences, use_tokens){
-
-            output_matrix <- c()
-
-            tokens <- use_tokens
-            n_rows <- length(sentences)
-
-            for(i in seq(n_rows)){
-                s <- vector(mode = "integer", length = length(tokens))
-
-                words <- private$word_split(sentences[i])
-
-                for(j in words){
-                    k <- which(tokens == j)
-                    s[k] <- 1
+        check_args = function(x, max_value, what){
+            if (what == 'max_features'){
+                if(x < 0 )
+                    stop(sprintf('The value for %s cannot be below zero', x))
+                if(x > max_value){
+                    stop(sprintf('The value for %s cannot be
+                             more than max. possible features', x))
                 }
-                output_matrix <- rbind(output_matrix, s)
             }
 
-            row.names(output_matrix) <- NULL
-            output_matrix <- data.frame(output_matrix)
-            colnames(output_matrix) <- tokens
-            return(output_matrix)
+            if(what %in% c('min_df','max_df')){
+                if(x < 0 | x >1)
+                    stop(sprintf('The value for %s cannot be below zero', x))
 
-        },
+            }
 
-        check_args = function(x){
-            if(x < 0 | x > 1)
-                stop(sprintf('The value should be between 0 and 1', x))
         }
 
     )
 
 )
+
+
 
 
 

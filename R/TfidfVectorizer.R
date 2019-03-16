@@ -60,7 +60,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     fit_transform = function(sentences){
         self$fit(sentences)
         temp <- super$transform(sentences)
-        return (private$gettfmatrix(temp, smooth_idf = self$smooth_idf))
+        return (private$gettfmatrix(self$model, smooth_idf = self$smooth_idf))
     },
 
     transform = function(sentences){

@@ -1,7 +1,7 @@
 Package: superml
 Type: Package
 Title: Build Machine Learning Models Like Using Python's Scikit-Learn Library in R
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
           role = c("aut", "cre"))
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
@@ -20,23 +20,24 @@ Depends:
 Imports:
     data.table(>= 1.10),
     assertthat(>= 0.2),
-    Metrics(>= 0.1),
-    xgboost(>= 0.6),
-    glmnet(>= 2.0),
     parallel,
-    kableExtra,
-    tm(>= 0.7),
+    doParallel(>= 1.0),
+    Metrics(>= 0.1)
+Suggests:
+    knitr,
+    rlang,
+    testthat,
+    rmarkdown,
     naivebayes(>= 0.9),
     ClusterR(>= 1.1),
     FNN(>= 1.1),
     liquidSVM(>= 1.2),
     ranger(>= 0.10),
-    caret(>= 6.0),    
-    doParallel(>= 1.0)
-Suggests:
-    knitr,
-    rlang,
-    testthat,
-    rmarkdown
+    caret(>= 6.0),   
+    xgboost(>= 0.6),
+    glmnet(>= 2.0),
+    kableExtra,
+    tm(>= 0.7),
+    Matrix(>= 1.2)
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr

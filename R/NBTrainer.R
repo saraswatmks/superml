@@ -41,6 +41,7 @@ NBTrainer <- R6Class('NBTrainer', public = list(
         if(!(missing(prior))) self$prior <- prior
         if(!(missing(laplace))) self$laplace <- laplace
         if(!(missing(usekernel))) self$usekernel <- usekernel
+        superml::check_package("naivebayes")
 
     },
 

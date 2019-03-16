@@ -5,7 +5,7 @@
 #' @section Usage:
 #' For usage details see \bold{Methods, Arguments and Examples} sections.
 #' \preformatted{
-#' bst = RandomForestTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
+#' bst = RFTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
 #'                               criterion, classification=1, class_weights, verbose=TRUE,
 #'                               seed=42, always_split)
 #' bst$fit(X_train, "target")
@@ -88,6 +88,7 @@ RFTrainer <- R6Class("RFTrainer",
               if(!(missing(seed))) self$seed <- seed
               if(!(missing(class_weights)))  self$class_weights <- class_weights
               if(!(missing(always_split))) self$always_split <- always_split
+              superml::check_package("ranger")
 
           },
 

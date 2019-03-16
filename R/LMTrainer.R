@@ -74,6 +74,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         if(!(missing(standardize.response))) {
             self$standardize.response <- standardize.response
         }
+        superml::check_package("glmnet")
 
     },
 
@@ -96,7 +97,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
 
         } else {
             DX <- as.matrix(setDT(X)[, self$iid_names, with=F])
-            self$model <- glmnet(x = DX,
+            self$model <- glmnet::glmnet(x = DX,
                              y = X[[y]],
                              family = self$family,
                              weights = self$weights,
@@ -119,7 +120,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
                                   type = "response"))
         } else {
             if(is.null(lambda)) lambda <- min(self$model$lambda)
-            return(predict.glmnet(object=self$model,
+            return(glmnet::predict.glmnet(object=self$model,
                     newx = as.matrix(setDT(df)[, c(self$iid_names), with=F]),
                     s = lambda,
                     type = "link"))
@@ -139,7 +140,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         self$weights <- rep(1, nrow(X))
         DX <- as.matrix(setDT(X)[, self$iid_names, with=FALSE])
 
-        self$cvmodel <- cv.glmnet(x = DX
+        self$cvmodel <- glmnet::cv.glmnet(x = DX
                                   ,y = X[[y]]
                                   ,weights = self$weights
                                   ,lambda = NULL
@@ -166,7 +167,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
         }
         DX <- as.matrix(setDT(df)[, c(self$iid_names), with=FALSE])
 
-        return(predict.cv.glmnet(object=self$cvmodel,
+        return(glmnet::predict.cv.glmnet(object=self$cvmodel,
                               newx = DX,
                               s = lambda,
                               type="response"))
