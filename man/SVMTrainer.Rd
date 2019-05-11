@@ -42,41 +42,24 @@ prediction <- svm$predict(X_test)
 
 \describe{
  \item{params}{for detailed explanation on parameters,
-             refer to original documentation https://cran.r-project.org/package=liquidSVM}
+             refer to original documentation https://cran.r-project.org/web/packages/e1071/e1071.pdf}
  \item{type}{type of model to train, possible values: "bc" = binary classification, "mc" = multiclassification,
               "ls" = least square regression, "qt" = quantile regression}
  \item{scale}{normalises the feature between 0 and 1, default = TRUE}
  \item{gammas}{bandwidth of the kernel, default value is chosen from a list of gamma values generated internally}
- \item{lambdas}{regularization parameter}
- \item{c_values}{cost parameter}
- \item{predict.prob}{If TRUE then final prediction is probability else labels. This also restricts the choices of mc_type to c("OvA_ls","AvA_ls").}
- \item{verbose}{display the progress to standard output, possible values are 0, 1}
- \item{ncores}{number of cores to use for parallel processing, possible values are 0 (default), -1}
- \item{partition_choice}{optimization parameter to train on large data sets, possible value are: 0 (disables partitioning) , 6 (high speed), 5 (best error)}
- \item{seed}{random seed, default = -1}
- \item{grid_choice}{internal grid used for convenient hyperparameter tuning of gammas, lambdas, possible values are: 0,1,2,-1,-2}
- \item{useCells}{activates batch processing, set it to TRUE in case of out of memory errors}
- \item{mc_type}{configure multiclassification variant like OnevsAll, AllvsAll, possible values are: "AvA_hinge", "OvA_ls", "OvA_hinge", "AvA_ls"}
- \item{quantile}{do quantile regression, default=FALSE}
- \item{weights}{weights to be used in quantile regression, default is c(0.05, 0.1, 0.5, 0.9, 0.95)}
 }
 }
 
 \examples{
 data(iris)
 ## Multiclassification
-svm <- SVMTrainer$new(type="mc")
+svm <- SVMTrainer$new()
 svm$fit(iris, "Species")
 p <- svm$predict(iris)
 
 ## Least Squares
-svm <- SVMTrainer$new(type="ls")
+svm <- SVMTrainer$new()
 svm$fit(trees, "Height")
-p <- svm$predict(trees)
-
-## Quantile regression
-svm <- SVMTrainer$new(type="qt")
-svm$fit(trees,"Height")
 p <- svm$predict(trees)
 }
 \keyword{datasets}

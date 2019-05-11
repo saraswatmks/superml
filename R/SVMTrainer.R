@@ -26,184 +26,154 @@
 #' @section Arguments:
 #' \describe{
 #'  \item{params}{for detailed explanation on parameters,
-#'              refer to original documentation https://cran.r-project.org/package=liquidSVM}
+#'              refer to original documentation https://cran.r-project.org/web/packages/e1071/e1071.pdf}
 #'  \item{type}{type of model to train, possible values: "bc" = binary classification, "mc" = multiclassification,
 #'               "ls" = least square regression, "qt" = quantile regression}
 #'  \item{scale}{normalises the feature between 0 and 1, default = TRUE}
 #'  \item{gammas}{bandwidth of the kernel, default value is chosen from a list of gamma values generated internally}
-#'  \item{lambdas}{regularization parameter}
-#'  \item{c_values}{cost parameter}
-#'  \item{predict.prob}{If TRUE then final prediction is probability else labels. This also restricts the choices of mc_type to c("OvA_ls","AvA_ls").}
-#'  \item{verbose}{display the progress to standard output, possible values are 0, 1}
-#'  \item{ncores}{number of cores to use for parallel processing, possible values are 0 (default), -1}
-#'  \item{partition_choice}{optimization parameter to train on large data sets, possible value are: 0 (disables partitioning) , 6 (high speed), 5 (best error)}
-#'  \item{seed}{random seed, default = -1}
-#'  \item{grid_choice}{internal grid used for convenient hyperparameter tuning of gammas, lambdas, possible values are: 0,1,2,-1,-2}
-#'  \item{useCells}{activates batch processing, set it to TRUE in case of out of memory errors}
-#'  \item{mc_type}{configure multiclassification variant like OnevsAll, AllvsAll, possible values are: "AvA_hinge", "OvA_ls", "OvA_hinge", "AvA_ls"}
-#'  \item{quantile}{do quantile regression, default=FALSE}
-#'  \item{weights}{weights to be used in quantile regression, default is c(0.05, 0.1, 0.5, 0.9, 0.95)}
 #' }
 #' @export
 #' @examples
 #' data(iris)
 #' ## Multiclassification
-#' svm <- SVMTrainer$new(type="mc")
+#' svm <- SVMTrainer$new()
 #' svm$fit(iris, "Species")
 #' p <- svm$predict(iris)
 #'
 #' ## Least Squares
-#' svm <- SVMTrainer$new(type="ls")
+#' svm <- SVMTrainer$new()
 #' svm$fit(trees, "Height")
-#' p <- svm$predict(trees)
-#'
-#' ## Quantile regression
-#' svm <- SVMTrainer$new(type="qt")
-#' svm$fit(trees,"Height")
 #' p <- svm$predict(trees)
 SVMTrainer <- R6Class('SVMTrainer', public = list(
 
-    type=NULL,
-    scale = TRUE,
-    predict.prob = FALSE,
-    verbose = NULL, # verbose = display
-    ncores = NULL, # ncores = threads
-    partition_choice = 0, # default 0, 6 high speed, 5 best error
-    seed= -1,
-    grid_choice = NULL, # build-in validation scheme to select the best model
-    useCells = FALSE, # use if run into memory issues
-    mc_type = NULL, # to be used only for multiclassification
-    adaptivity_control = 0,
-    gammas = NULL,
-    lambdas = NULL,
-    c_values=NULL,
-    quantile = NULL,
-    weights = c(0.05, 0.1, 0.5, 0.9, 0.95),
-    model = NULL,
+    valid_types = c("C-classification",
+                    "nu-classification",
+                    "one-classification",
+                    "eps-regression",
+                    "nu-regression"),
+    valid_kernels = c("linear",
+                      "polynomial",
+                      "radial basis",
+                      "sigmoid"),
+    remove_cols=NULL,
+    y=NULL,
+    model=NULL,
+    type= NULL,
+    kernel="radial",
+    scale=TRUE,
+    degree=3,
+    gamma=NULL,
+    coef0=0,
+    cost=1,
+    class.weights=NULL,
+    cross=0,
+    fitted=TRUE,
+    probability=FALSE,
+    subset=NULL,
+    cachesize=40,
+    tolerance=0.001,
+    epsilon=0.1,
+    shrinking=TRUE,
+    na.action=stats::na.omit,
 
     initialize = function(type,
+                          kernel,
                           scale,
-                          gammas,
-                          lambdas,
-                          c_values,
-                          predict.prob,
-                          verbose,
-                          ncores,
-                          partition_choice,
-                          seed,
-                          grid_choice,
-                          useCells,
-                          mc_type,
-                          quantile,
-                          weights){
+                          degree,
+                          gamma,
+                          coef0,
+                          cost,
+                          class.weights,
+                          cross,
+                          fitted,
+                          probability,
+                          subset,
+                          cachesize,
+                          tolerance,
+                          epsilon,
+                          shrinking,
+                          na.action
+                          ){
 
         if(!(missing(type))) self$type <- type
+        if(!(missing(kernel))) self$kernel <- kernel
         if(!(missing(scale))) self$scale <- scale
-        if(!(missing(gammas))) self$gammas <- gammas
-        if(!(missing(lambdas))) self$lambdas <- lambdas
-        if(!(missing(predict.prob))) self$predict.prob <- predict.prob
-        if(!(missing(verbose))) self$verbose <- verbose
-        if(!(missing(ncores))) self$ncores <- ncores
-        if(!(missing(partition_choice))) self$partition_choice<-partition_choice
-        if(!(missing(seed))) self$seed <- seed
-        if(!(missing(grid_choice))) self$grid_choice <- grid_choice
-        if(!(missing(useCells))) self$useCells <- useCells
-        if(!(missing(mc_type))) self$mc_type <- mc_type
-        if(!(missing(c_values))) self$c_values <- c_values
-        if(!(missing(quantile))) self$quantile <- quantile
-        if(!(missing(weights))) self$quantile <- weights
-        superml::check_package("liquidSVM")
+        if(!(missing(degree))) self$degree <- degree
+        if(!(missing(gamma))) self$gamma <- gamma
+        if(!(missing(coef0))) self$coef0 <- coef0
+        if(!(missing(cost))) self$cost <- cost
+        if(!(missing(class.weights))) self$class.weights <- class.weights
+        if(!(missing(cross))) self$cross <- cross
+        if(!(missing(fitted))) self$fitted <- fitted
+        if(!(missing(probability))) self$probability <- probability
+        if(!(missing(subset))) self$subset <- subset
+        if(!(missing(na.action))) self$na.action <- na.action
+
+        superml::check_package("e1071")
+        print(paste0("For classification, target variable must be factor type.",
+                " For regression, target variable must be numeric type."))
 
     },
 
     fit = function(X, y){
 
+        self$y <- y
+
+        if (is.data.table(X)) X <- data.frame(X)
+
         superml::testdata(X, y)
 
         # remove columns names which starts with a number, eg. 1bstff
-        cols <- names(X)[grepl(pattern = "^\\d", x = names(X))]
+        self$remove_cols <- names(X)[grepl(pattern = "^\\d", x = setdiff(names(X), y))]
 
-        # by default, take all columns
-        f <- as.formula(paste(y , paste("~ .")))
+        dataX <- X[, setdiff(names(X), c(self$remove_cols, y))]
 
-        if(length(cols) > 0){
-            message(strwrap(sprintf("Removing invalid columns.
-                    The names should not start with a number: %s",
-                                    paste(cols, collapse=","))))
-            f <- as.formula(paste(y , "~", paste(setdiff(names(X),
-                                                         c(cols, y)),
-                                                 collapse = "+")))
+        # by default, take all column
+        self$gamma <- 1 / ncol(dataX)
+
+        # e1071 checks for subset ! missing argument in svm function,
+        # hence we need to pass something so we pass all rows
+        if(is.null(self$subset)) self$subset <- seq(1, nrow(dataX))
+
+        # set parameters
+        if(is.null(self$type)){
+            if(is.factor(X[[y]])){
+                self$type <- "C-classification"
+            } else {
+                self$type <- "eps-regression"
+            }
         }
 
+        self$model <- e1071::svm(x = dataX
+                                 ,y = X[[y]]
+                                 ,type = self$type
+                                 ,kernel = self$kernel)
+                                 # ,scale = self$scales
+                                 # ,degree = self$degree
+                                 # ,gamma = self$gamma
+                                 # ,coef0 = self$coef0
+                                 # ,cost = self$cost
+                                 # ,class.weights = self$class.weights
+                                 # ,cross = self$cross
+                                 # ,fitted = self$fitted
+                                 # ,probability = self$probability
+                                 # ,cachesize=self$cachesize
+                                 # ,tolerance=self$tolerance
+                                 # ,epsilon=self$epsilon
+                                 # ,shrinking=self$shrinking
+                                 # )
 
-
-
-        if(is.null(self$type))
-            stop("Type cannot be left as null. Please provide a valid value.")
-
-        if(self$type %in% c('mc','bc')){
-
-            self$model <- liquidSVM::mcSVM(f # formula
-                                         ,X # data
-                                         ,scale = self$scale
-                                         ,predict.prob = self$predict.prob
-                                         ,display = self$verbose
-                                         ,threads = self$ncores
-                                         ,partition_choice = self$partition_choice
-                                         ,random_seed = self$seed
-                                         ,grid_choice = self$grid_choice
-                                         ,useCells = self$useCells
-                                         ,mc_type = self$mc_type
-                                         ,gammas = self$gammas
-                                         ,lambdas = self$lambdas
-                                         ,c_values = self$c_values)
-
-        }
-
-        if(self$type == "qt"){
-
-            self$model <- liquidSVM::qtSVM(f # formula
-                                           ,X # data
-                                           ,scale = self$scale
-                                           ,weights = self$weights
-                                           ,display = self$verbose
-                                           ,threads = self$ncores
-                                           ,partition_choice = self$partition_choice
-                                           ,random_seed = self$seed
-                                           ,grid_choice = self$grid_choice
-                                           ,useCells = self$useCells
-                                           ,mc_type = self$mc_type
-                                           ,gammas = self$gammas
-                                           ,lambdas = self$lambdas
-                                           ,c_values = self$c_values)
-
-        }
-
-
-        if(self$type == "ls"){
-
-            self$model <- liquidSVM::lsSVM(f # formula
-                                           ,X # data
-                                           ,scale = self$scale
-                                           ,weights = self$weights
-                                           ,display = self$verbose
-                                           ,threads = self$ncores
-                                           ,partition_choice = self$partition_choice
-                                           ,random_seed = self$seed
-                                           ,grid_choice = self$grid_choice
-                                           ,useCells = self$useCells
-                                           ,mc_type = self$mc_type
-                                           ,gammas = self$gammas
-                                           ,lambdas = self$lambdas
-                                           ,c_values = self$c_values)
-
-        }
 
     },
 
     predict = function(X){
 
-        #return(liquidSVM:::predict.liquidSVM(self$model, X))
+        if(is.data.table(X)) X <- data.frame(X)
+
+        if(self$y %in% names(X)) X <- X[, setdiff(names(X), self$y)]
+        if(!(is.null(self$remove_cols))) X[, setdiff(names(X),
+                                                     c(self$remove_cols))]
+
         return(stats:::predict(self$model, X))
     }
 

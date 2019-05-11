@@ -64,7 +64,7 @@ This implementation uses ranger R package which provides faster model training."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@ This implementation uses ranger R package which provides faster model training.<
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bst = RandomForestTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
+bst = RFTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
                               criterion, classification=1, class_weights, verbose=TRUE,
                               seed=42, always_split)
 bst$fit(X_train, "target")

@@ -64,7 +64,7 @@ Here, the number of models to be trained can be defined by the user." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -143,7 +143,7 @@ Here, the number of models to be trained can be defined by the user.</p>
 
     
     <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-rst = RandomSearchTrainer$new(trainer, parameters, n_folds, scoring, n_iter)
+rst = RandomSearchCV$new(trainer, parameters, n_folds, scoring, n_iter)
 rst$fit(X_train, "target")
 rst$best_iteration(metric)
 </pre>
@@ -183,7 +183,7 @@ rst$best_iteration(metric)
 #&gt; [1] 500
 #&gt; 
 #&gt; $max_depth
-#&gt; [1] 10
+#&gt; [1] 2
 #&gt; 
 #&gt; $accuracy_avg
 #&gt; [1] 0.9533333
