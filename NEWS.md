@@ -1,3 +1,7 @@
+# superml 0.4.0
+
+* Fixed svm error. Replaced liquidSVM with e1071 R package.
+
 # superml 0.3.0
 
 * Moved some imports to suggests
