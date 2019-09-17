@@ -93,14 +93,17 @@ KNNTrainer <- R6Class("KNNTrainer", public = list(
             if(!(y %in% names(train)))
                 stop(sprintf("%s not available in training data", y))
 
-            # get dependent variable
-            y <- train[[y]]
+            # get dependent variable and store temporarily 
+            y_temp <- train[[y]]
 
             # select all independent features
             train <- train[,setdiff(names(train), y), with=F]
 
             # subset from test, just in case if the dependet variable is in test
             test <- test[, setdiff(names(test), y), with=F]
+            
+            # set dependent variable to y
+            y <- y_temp
 
             if(ncol(test) != ncol(train))
                 stop(sprintf('Train and test data have
