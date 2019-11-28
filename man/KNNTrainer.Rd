@@ -48,6 +48,65 @@ xtest <- iris[101:150,]
 bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
 bst$fit(xtrain, xtest, 'Species')
 pred <- bst$predict(type="raw")
+
+## ------------------------------------------------
+## Method `KNNTrainer$new`
+## ------------------------------------------------
+
+data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+pred <- bst$predict(type="raw")
+
+## ------------------------------------------------
+## Method `KNNTrainer$fit`
+## ------------------------------------------------
+
+data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+
+## ------------------------------------------------
+## Method `KNNTrainer$predict`
+## ------------------------------------------------
+
+data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+pred <- bst$predict(type="raw")
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{k}}{number of neighbours to predict}
+
+\item{\code{prob}}{if probability should be computed, default=FALSE}
+
+\item{\code{algorithm}}{algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'}
+
+\item{\code{type}}{type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'}
+
+\item{\code{model}}{for internal use}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -65,6 +124,43 @@ pred <- bst$predict(type="raw")
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$new(k, prob, algorithm, type)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{k}}{k number of neighbours to predict}
+
+\item{\code{prob}}{if probability should be computed, default=FALSE}
+
+\item{\code{algorithm}}{algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'}
+
+\item{\code{type}}{type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `KNNTrainer` object.
+}
+
+\subsection{Returns}{
+A `KNNTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+pred <- bst$predict(type="raw")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
@@ -73,12 +169,77 @@ pred <- bst$predict(type="raw")
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$fit(train, test, y)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{train}}{data.frame or matrix}
+
+\item{\code{test}}{data.frame or matrix}
+
+\item{\code{y}}{character, name of target variable}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Trains the KNNTrainer model
+}
+
+\subsection{Returns}{
+NULL
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$predict(type = "raw")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{character, 'raw' for labels else 'prob'}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Predits the nearest neigbours for test data
+}
+
+\subsection{Returns}{
+a list of predicted neighbours
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+
+iris$Species <- as.integer(as.factor(iris$Species))
+
+xtrain <- iris[1:100,]
+xtest <- iris[101:150,]
+
+bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+bst$fit(xtrain, xtest, 'Species')
+pred <- bst$predict(type="raw")
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

@@ -3,56 +3,55 @@
 \name{RFTrainer}
 \alias{RFTrainer}
 \title{Random Forest Trainer}
-\format{\code{\link{R6Class}} object.}
 \description{
+Trains a random forest model.
+}
+\details{
 Trains a Random Forest model. A random forest is a meta estimator that fits a number of decision tree classifiers on various sub-samples of the dataset and use averaging to improve the predictive accuracy and control over-fitting.
 This implementation uses ranger R package which provides faster model training.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-bst = RFTrainer$new(n_estimators=100, max_features="auto", max_depth=5, min_node_size=1,
-                              criterion, classification=1, class_weights, verbose=TRUE,
-                              seed=42, always_split)
-bst$fit(X_train, "target")
-prediction <- bst$predict(X_test)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of random forest model}
-  \item{\code{$fit()}}{fit model to an input train data and trains the model.}
-  \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
-  \item{\code{$get_importance()}}{Get feature importance from the model}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{n_estimators}{the number of trees in the forest, default= 100}
- \item{max_features}{the number of features to consider when looking for the best split.
-                     Possible values are \code{auto(default)} takes sqrt(num_of_features),
-                         \code{sqrt} same as auto,
-                         \code{log} takes log(num_of_features),
-                         \code{none} takes all features}
- \item{max_depth}{the maximum depth of each tree}
- \item{min_node_size}{the minumum number of samples required to split an internal node}
- \item{criterion}{the function to measure the quality of split. For classification, \code{gini} is used which
-     is a measure of gini index. For regression, the \code{variance} of responses is used.}
- \item{classification}{whether to train for classification (1) or regression (0)}
- \item{class_weights}{weights associated with the classes for sampling of training observation}
- \item{verbose}{show computation status and estimated runtime}
- \item{always_split}{vector of feature names to be always used for splitting}
- \item{seed}{seed value}
- \item{importance}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `RFTrainer$new`
+## ------------------------------------------------
+
+data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+
+## ------------------------------------------------
+## Method `RFTrainer$fit`
+## ------------------------------------------------
+
+data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+bst$fit(iris, 'Species')
+
+## ------------------------------------------------
+## Method `RFTrainer$predict`
+## ------------------------------------------------
+
+data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+bst$fit(iris, 'Species')
+predictions <- bst$predict(iris)
+
+## ------------------------------------------------
+## Method `RFTrainer$get_importance`
+## ------------------------------------------------
+
 data("iris")
 bst <- RFTrainer$new(n_estimators=50,
                      max_depth=4,
@@ -62,6 +61,38 @@ bst <- RFTrainer$new(n_estimators=50,
 bst$fit(iris, 'Species')
 predictions <- bst$predict(iris)
 bst$get_importance()
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{n_estimators}}{the number of trees in the forest, default= 100}
+
+\item{\code{max_features}}{the number of features to consider when looking for the best split.
+Possible values are \code{auto(default)} takes sqrt(num_of_features),
+    \code{sqrt} same as auto,
+    \code{log} takes log(num_of_features),
+    \code{none} takes all features}
+
+\item{\code{max_depth}}{the maximum depth of each tree}
+
+\item{\code{min_node_size}}{the minumum number of samples required to split an internal node}
+
+\item{\code{criterion}}{the function to measure the quality of split. For classification, \code{gini} is used which
+is a measure of gini index. For regression, the \code{variance} of responses is used.}
+
+\item{\code{classification}}{whether to train for classification (1) or regression (0)}
+
+\item{\code{verbose}}{show computation status and estimated runtime}
+
+\item{\code{seed}}{seed value}
+
+\item{\code{class_weights}}{weights associated with the classes for sampling of training observation}
+
+\item{\code{always_split}}{vector of feature names to be always used for splitting}
+
+\item{\code{importance}}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -92,12 +123,93 @@ bst$get_importance()
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n_estimators}}{integer, the number of trees in the forest, default= 100}
+
+\item{\code{max_depth}}{integer, the maximum depth of each tree}
+
+\item{\code{max_features}}{integer, the number of features to consider when looking for the best split.
+Possible values are \code{auto(default)} takes sqrt(num_of_features),
+    \code{sqrt} same as auto,
+    \code{log} takes log(num_of_features),
+    \code{none} takes all features}
+
+\item{\code{min_node_size}}{integer, the minumum number of samples required to split an internal node}
+
+\item{\code{classification}}{integer, whether to train for classification (1) or regression (0)}
+
+\item{\code{class_weights}}{weights associated with the classes for sampling of training observation}
+
+\item{\code{always_split}}{vector of feature names to be always used for splitting}
+
+\item{\code{verbose}}{logical, show computation status and estimated runtime}
+
+\item{\code{save_model}}{logical, whether to save model}
+
+\item{\code{seed}}{integer, seed value}
+
+\item{\code{importance}}{Variable importance mode, one of 'none', 'impurity', 'impurity_corrected', 'permutation'. The 'impurity' measure is the Gini index for classification, the variance of the responses for regression. Defaults to "impurity"}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `RFTrainer` object.
+}
+
+\subsection{Returns}{
+A `RFTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$fit(X, y)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame containing train features}
+
+\item{\code{y}}{character, name of the target variable}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Trains the random forest model
+}
+
+\subsection{Returns}{
+NULL, trains and saves the model in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+bst$fit(iris, 'Species')
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -108,12 +220,64 @@ bst$get_importance()
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$predict(df)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{df}}{data.frame containing test features}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Return predictions from random forest model
+}
+
+\subsection{Returns}{
+a vector containing predictions
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+bst <- RFTrainer$new(n_estimators=10,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+bst$fit(iris, 'Species')
+predictions <- bst$predict(iris)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_importance"></a>}}
 \subsection{Method \code{get_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$get_importance()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+Returns feature importance from the model
+}
+
+\subsection{Returns}{
+a data frame containing feature predictions
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data("iris")
+bst <- RFTrainer$new(n_estimators=50,
+                     max_depth=4,
+                     classification=1,
+                     seed=42,
+                     verbose=TRUE)
+bst$fit(iris, 'Species')
+predictions <- bst$predict(iris)
+bst$get_importance()
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

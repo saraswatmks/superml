@@ -3,40 +3,29 @@
 \name{bm25}
 \alias{bm25}
 \title{Best Matching(BM25)}
-\format{\code{\link{R6Class}} object.}
 \description{
+Computer BM25 distance between sentences/documents.
+}
+\details{
 BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
 It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
 This implementation uses multiple cores for faster and parallel computation.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-bm25 = bm25$new(corpus, n_cores)
-bm25$most_similar(input_document, topn)
-bm25$compute(input_document)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialise the instance of the class. Here you pass the complete corpus of the documents}
-  \item{\code{$most_similar()}}{it returns the topn most similar documents from the corpus}
-  \item{\code{$compute()}}{it returns a similarity score for all the documents in the corpus, given a sentence}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{corpus}{a list containing sentences}
- \item{use_parallel}{boolean value used to activate parallel computation, defaults to FALSE}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `bm25$new`
+## ------------------------------------------------
+
+example <- c('white audi 2.5 car','black shoes from office',
+             'new mobile iphone 7','audi tyres audi a3',
+             'nice audi bmw toyota corolla')
+obj <- bm25$new(example, use_parallel=FALSE)
+
+## ------------------------------------------------
+## Method `bm25$most_similar`
+## ------------------------------------------------
+
 example <- c('white audi 2.5 car','black shoes from office',
              'new mobile iphone 7','audi tyres audi a3',
              'nice audi bmw toyota corolla')
@@ -44,14 +33,19 @@ get_bm <- bm25$new(example, use_parallel=FALSE)
 input_document <- c('white toyota corolla')
 get_bm$most_similar(document = input_document, topn = 2)
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{corpus}}{a list containing sentences}
+
+\item{\code{use_parallel}}{enables parallel computation, defaults to FALSE}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{bm25$new()}}
-\item \href{#method-transform}{\code{bm25$transform()}}
-\item \href{#method-calculate_idf}{\code{bm25$calculate_idf()}}
-\item \href{#method-bmscore}{\code{bm25$bmscore()}}
-\item \href{#method-compute}{\code{bm25$compute()}}
 \item \href{#method-most_similar}{\code{bm25$most_similar()}}
 \item \href{#method-clone}{\code{bm25$clone()}}
 }
@@ -63,36 +57,31 @@ get_bm$most_similar(document = input_document, topn = 2)
 \if{html}{\out{<div class="r">}}\preformatted{bm25$new(corpus, use_parallel)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{corpus}}{list, a list containing sentences}
+
+\item{\code{use_parallel}}{logical, enables parallel computation, defaults to FALSE. if TRUE uses n - 1 cores.}
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-transform"></a>}}
-\subsection{Method \code{transform()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{bm25$transform(corpus)}\if{html}{\out{</div>}}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `bm25` object.
 }
 
+\subsection{Returns}{
+A `bm25` object.
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-calculate_idf"></a>}}
-\subsection{Method \code{calculate_idf()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{bm25$calculate_idf(q, corpus = self$corpus)}\if{html}{\out{</div>}}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{example <- c('white audi 2.5 car','black shoes from office',
+             'new mobile iphone 7','audi tyres audi a3',
+             'nice audi bmw toyota corolla')
+obj <- bm25$new(example, use_parallel=FALSE)
 }
+\if{html}{\out{</div>}}
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-bmscore"></a>}}
-\subsection{Method \code{bmscore()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{bm25$bmscore(q, document_from_corpus, corpus = self$corpus)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-compute"></a>}}
-\subsection{Method \code{compute()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{bm25$compute(document, corpus = self$corpus, cores = self$n_cores)}\if{html}{\out{</div>}}
 }
 
 }
@@ -100,7 +89,36 @@ get_bm$most_similar(document = input_document, topn = 2)
 \if{html}{\out{<a id="method-most_similar"></a>}}
 \subsection{Method \code{most_similar()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{bm25$most_similar(document, corpus = self$corpus, topn = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{bm25$most_similar(document, topn = 1)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{document}}{character, for this value we find most similar sentences.}
+
+\item{\code{topn}}{integer, top n sentences to retrieve}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns a list of the most similar sentence
+}
+
+\subsection{Returns}{
+a vector of most similar documents
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{example <- c('white audi 2.5 car','black shoes from office',
+             'new mobile iphone 7','audi tyres audi a3',
+             'nice audi bmw toyota corolla')
+get_bm <- bm25$new(example, use_parallel=FALSE)
+input_document <- c('white toyota corolla')
+get_bm$most_similar(document = input_document, topn = 2)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

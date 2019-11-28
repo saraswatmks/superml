@@ -3,53 +3,70 @@
 \name{TfIdfVectorizer}
 \alias{TfIdfVectorizer}
 \title{TfIDF(Term Frequency Inverse Document Frequency) Vectorizer}
-\format{\code{\link{R6Class}} object.}
 \description{
-Provides an easy way to create tf-idf matrix of features in R. It consists of fit, transform
-              methods (similar to sklearn) to generate tf-idf features.
+Creates a tf-idf matrix
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-tf_object = TfIdfVectorizer$new(max_df=1, min_df=1, max_features=1, smooth_idf=TRUE)
-tf_object$fit(sentences)
-tf_matrix = tf_object$transform(sentences)
-tf_matrix = tf_object$fit_transform(sentences) ## alternate
+\details{
+Given a list of text, it creates a sparse matrix consisting of tf-idf score for tokens from the text.
 }
-}
-
-\section{Methods}{
-
-\describe{
-    \item{\code{$new()}}{Initialise the instance of the vectorizer}
-    \item{\code{$fit()}}{creates a memory of count vectorizers but doesn't return anything}
-    \item{\code{$transform()}}{based on encodings learned in \code{fit} method, returns the tf-idf matrix }
-    \item{\code{$fit_transform()}}{returns tf-idf matrix}
-}
-}
-
-\section{NA}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-tf_object = TfIdfVectorizer$new(max_df=1, min_df=1, max_features=1, smooth_idf=TRUE)
-tf_object$fit(sentences)
-tf_matrix = tf_object$transform(sentences)
-tf_matrix = tf_object$fit_transform(sentences) ## alternate
-}
-}
-
 \examples{
-df <- data.frame(sents = c('i am alone in dark.',
-                           'mother_mary a lot',
-                           'alone in the dark?',
-                           'many mothers in the lot....'))
-tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
-tf_features <- tf$fit_transform(df$sents)
+
+## ------------------------------------------------
+## Method `TfIdfVectorizer$new`
+## ------------------------------------------------
+
+TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+
+## ------------------------------------------------
+## Method `TfIdfVectorizer$fit`
+## ------------------------------------------------
+
+sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+tf = TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+tf$fit(sents)
+
+## ------------------------------------------------
+## Method `TfIdfVectorizer$fit_transform`
+## ------------------------------------------------
+
+\donttest{
+sents <- c('i am alone in dark.','mother_mary a lot',
+         'alone in the dark?', 'many mothers in the lot....')
+tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.1)
+tf_matrix <- tf$fit_transform(sents)
+}
+
+## ------------------------------------------------
+## Method `TfIdfVectorizer$transform`
+## ------------------------------------------------
+
+\donttest{
+sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+new_sents <- c("dark at night",'mothers day')
+tf = TfIdfVectorizer$new(min_df=0.1)
+tf$fit(sents)
+tf_matrix <- tf$transform(new_sents)
+}
 }
 \section{Super class}{
 \code{\link[superml:CountVectorizer]{superml::CountVectorizer}} -> \code{TfIdfVectorizer}
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{sentences}}{a list containing sentences}
+
+\item{\code{max_df}}{When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+
+\item{\code{min_df}}{When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_features}}{use top features sorted by count to be used in bag of words matrix.}
+
+\item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -71,7 +88,35 @@ tf_features <- tf$fit_transform(df$sents)
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$new(max_df, min_df, max_features, smooth_idf)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$new(min_df, max_df, max_features, smooth_idf)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{min_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_df}}{nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_features}}{integer, use top features sorted by count to be used in bag of words matrix.}
+
+\item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `TfIdfVectorizer` object.
+}
+
+\subsection{Returns}{
+A `TfIdfVectorizer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -82,6 +127,31 @@ tf_features <- tf$fit_transform(df$sents)
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$fit(sentences)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the TfIdfVectorizer model on sentences
+}
+
+\subsection{Returns}{
+NULL
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+tf = TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+tf$fit(sents)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit_transform"></a>}}
@@ -90,12 +160,68 @@ tf_features <- tf$fit_transform(df$sents)
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$fit_transform(sentences)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the TfIdfVectorizer model and returns a sparse matrix of count of tokens
+}
+
+\subsection{Returns}{
+a sparse matrix containing tf-idf score for tokens in each given sentence
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\donttest{
+sents <- c('i am alone in dark.','mother_mary a lot',
+         'alone in the dark?', 'many mothers in the lot....')
+tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.1)
+tf_matrix <- tf$fit_transform(sents)
+}
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-transform"></a>}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$transform(sentences)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of new text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns a matrix of tf-idf score of tokens
+}
+
+\subsection{Returns}{
+a sparse matrix containing tf-idf score for tokens in each given sentence
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{\donttest{
+sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+new_sents <- c("dark at night",'mothers day')
+tf = TfIdfVectorizer$new(min_df=0.1)
+tf$fit(sents)
+tf_matrix <- tf$transform(new_sents)
+}
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

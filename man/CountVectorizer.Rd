@@ -3,56 +3,69 @@
 \name{CountVectorizer}
 \alias{CountVectorizer}
 \title{Count Vectorizer}
-\format{\code{\link{R6Class}} object.}
 \description{
 Creates CountVectorizer Model.
-Given a list of text, it generates a bag of words model and returns a data frame consisting of BOW features.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-bst = CountVectorizer$new(min_df=1, max_df=1, max_features=1)
-bst$fit(sentences)
-bst$fit_transform(sentences)
-bst$transform(sentences)
+\details{
+Given a list of text, it generates a bag of words model and returns a sparse matrix consisting of token counts.
 }
-}
-
-\section{Methods}{
-
-\describe{
-    \item{\code{$new()}}{Initialise the instance of the vectorizer}
-    \item{\code{$fit()}}{creates a memory of bag of words}
-    \item{\code{$transform()}}{based on encodings learned in \code{fit} method, return a bag of words matrix }
-    \item{\code{$fit_transform()}}{simultaneouly fits and transform words and returns bag of words of matrix}
-}
-}
-
-\section{NA}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-bst = CountVectorizer$new(min_df=1, max_df=1, max_features=1)
-bst$fit(sentences)
-bst$fit_transform(sentences)
-bst$transform(sentences)
-}
-}
-
 \examples{
-df <- data.frame(sents = c('i am alone in dark.','mother_mary a lot',
-                           'alone in the dark?',
-                           'many mothers in the lot....'))
 
-# fits and transforms on the entire data in one go
-bw <- CountVectorizer$new(min_df = 0.3)
-tf_features <- bw$fit_transform(df$sents)
+## ------------------------------------------------
+## Method `CountVectorizer$new`
+## ------------------------------------------------
 
-# fit on entire data and do transformation in train and test
-bw <- CountVectorizer$new()
-bw$fit(df$sents)
-tf_features <- bw$transform(df$sents)
+cv = CountVectorizer$new(min_df=0.1)
+
+## ------------------------------------------------
+## Method `CountVectorizer$fit`
+## ------------------------------------------------
+
+sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+cv = CountVectorizer$new(min_df=0.1)
+cv$fit(sents)
+
+## ------------------------------------------------
+## Method `CountVectorizer$fit_transform`
+## ------------------------------------------------
+
+sents = c('i am alone in dark.','mother_mary a lot',
+         'alone in the dark?', 'many mothers in the lot....')
+cv <- CountVectorizer$new(min_df=0.1)
+cv_count_matrix <- cv$fit_transform(sents)
+
+## ------------------------------------------------
+## Method `CountVectorizer$transform`
+## ------------------------------------------------
+
+sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+new_sents <- c("dark at night",'mothers day')
+cv = CountVectorizer$new(min_df=0.1)
+cv$fit(sents)
+cv_count_matrix <- cv$transform(new_sents)
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{sentences}}{a list containing sentences}
+
+\item{\code{max_df}}{When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+
+\item{\code{min_df}}{When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_features}}{use top features sorted by count to be used in bag of words matrix.}
+
+\item{\code{split}}{splitting criteria for strings, default: " "}
+
+\item{\code{regex}}{regex expression to use for text cleaning.}
+
+\item{\code{model}}{internal attribute which stores the count model}
+
+\item{\code{remove_stopwords}}{a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -78,12 +91,69 @@ tf_features <- bw$transform(df$sents)
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{min_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_df}}{nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+
+\item{\code{max_features}}{integer, use top features sorted by count to be used in bag of words matrix.}
+
+\item{\code{regex}}{character, regex expression to use for text cleaning.}
+
+\item{\code{remove_stopwords}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+
+\item{\code{split}}{character, splitting criteria for strings, default: " "}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `CountVectorizer` object.
+}
+
+\subsection{Returns}{
+A `CountVectorizer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{cv = CountVectorizer$new(min_df=0.1)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$fit(sentences)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the countvectorizer model on sentences
+}
+
+\subsection{Returns}{
+NULL
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+cv = CountVectorizer$new(min_df=0.1)
+cv$fit(sents)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -94,12 +164,64 @@ tf_features <- bw$transform(df$sents)
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$fit_transform(sentences)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the countvectorizer model and returns a sparse matrix of count of tokens
+}
+
+\subsection{Returns}{
+a sparse matrix containing count of tokens in each given sentence
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{sents = c('i am alone in dark.','mother_mary a lot',
+         'alone in the dark?', 'many mothers in the lot....')
+cv <- CountVectorizer$new(min_df=0.1)
+cv_count_matrix <- cv$fit_transform(sents)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-transform"></a>}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$transform(sentences)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{sentences}}{a list of new text sentences}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns a matrix of count of tokens
+}
+
+\subsection{Returns}{
+a sparse matrix containing count of tokens in each given sentence
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{sents = c('i am alone in dark.','mother_mary a lot',
+          'alone in the dark?', 'many mothers in the lot....')
+new_sents <- c("dark at night",'mothers day')
+cv = CountVectorizer$new(min_df=0.1)
+cv$fit(sents)
+cv_count_matrix <- cv$transform(new_sents)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

@@ -3,43 +3,31 @@
 \name{RandomSearchCV}
 \alias{RandomSearchCV}
 \title{Random Search CV}
-\format{\code{\link{R6Class}} object.}
 \description{
+Hyperparameter tuning using random search scheme.
+}
+\details{
 Given a set of hyper parameters, random search trainer provides a faster way of hyper parameter tuning.
 Here, the number of models to be trained can be defined by the user.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-rst = RandomSearchCV$new(trainer, parameters, n_folds, scoring, n_iter)
-rst$fit(X_train, "target")
-rst$best_iteration(metric)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of random search cv}
-  \item{\code{$fit()}}{fit model to an input train data and trains the model.}
-  \item{\code{$best_iteration()}}{returns best iteration based on a given metric. By default, uses the first scoring metric}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{trainer}{superml trainer object, must be either XGBTrainer, LMTrainer, RFTrainer, NBTrainer}
- \item{parameters}{list containing parameters}
- \item{n_folds}{number of folds to use to split the train data}
- \item{scoring}{scoring metric used to evaluate the best model, multiple values can be provided.
-               currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall}
- \item{n_iter}{number of models to be trained}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `RandomSearchCV$new`
+## ------------------------------------------------
+
+rf <- RFTrainer$new()
+rst <-RandomSearchCV$new(trainer = rf,
+                            parameters = list(n_estimators = c(100,500),
+                            max_depth = c(5,2,10,14)),
+                            n_folds = 3,
+                            scoring = c('accuracy','auc'),
+                            n_iter = 4)
+
+## ------------------------------------------------
+## Method `RandomSearchCV$fit`
+## ------------------------------------------------
+
 rf <- RFTrainer$new()
 rst <-RandomSearchCV$new(trainer = rf,
                             parameters = list(n_estimators = c(100,500),
@@ -54,6 +42,13 @@ rst$best_iteration()
 \section{Super class}{
 \code{\link[superml:GridSearchCV]{superml::GridSearchCV}} -> \code{RandomSearchTrainer}
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{n_iter}}{number of models to be trained}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -66,8 +61,6 @@ rst$best_iteration()
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="superml" data-topic="GridSearchCV" data-id="best_iteration">}\href{../../superml/html/GridSearchCV.html#method-best_iteration}{\code{superml::GridSearchCV$best_iteration()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="superml" data-topic="GridSearchCV" data-id="get_metrics">}\href{../../superml/html/GridSearchCV.html#method-get_metrics}{\code{superml::GridSearchCV$get_metrics()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="superml" data-topic="GridSearchCV" data-id="runGrid">}\href{../../superml/html/GridSearchCV.html#method-runGrid}{\code{superml::GridSearchCV$runGrid()}}\out{</span>}
 }
 \out{</details>}
 }
@@ -84,12 +77,82 @@ rst$best_iteration()
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{trainer}}{superml trainer object, must be either XGBTrainer, LMTrainer, RFTrainer, NBTrainer}
+
+\item{\code{parameters}}{list, list containing parameters}
+
+\item{\code{n_folds}}{integer, number of folds to use to split the train data}
+
+\item{\code{scoring}}{character, scoring metric used to evaluate the best model, multiple values can be provided.
+currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall}
+
+\item{\code{n_iter}}{integer, number of models to be trained}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `RandomSearchTrainer` object.
+}
+
+\subsection{Returns}{
+A `RandomSearchTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{rf <- RFTrainer$new()
+rst <-RandomSearchCV$new(trainer = rf,
+                            parameters = list(n_estimators = c(100,500),
+                            max_depth = c(5,2,10,14)),
+                            n_folds = 3,
+                            scoring = c('accuracy','auc'),
+                            n_iter = 4)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandomSearchCV$fit(X, y)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame containing features}
+
+\item{\code{y}}{character, name of target variable}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Train the model on given hyperparameters
+}
+
+\subsection{Returns}{
+NULL, tunes hyperparameters and stores the result in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{rf <- RFTrainer$new()
+rst <-RandomSearchCV$new(trainer = rf,
+                            parameters = list(n_estimators = c(100,500),
+                            max_depth = c(5,2,10,14)),
+                            n_folds = 3,
+                            scoring = c('accuracy','auc'),
+                            n_iter = 4)
+data("iris")
+rst$fit(iris, "Species")
+rst$best_iteration()
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

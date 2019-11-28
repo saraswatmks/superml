@@ -3,77 +3,57 @@
 \name{XGBTrainer}
 \alias{XGBTrainer}
 \title{Extreme Gradient Boosting Trainer}
-\format{\code{\link{R6Class}} object.}
 \description{
+Trains a XGBoost model in R
+}
+\details{
 Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
-             that creates an ensemble of weak learner to learn about data.
+that creates an ensemble of weak learner to learn about data. It is a wrapper for original xgboost
+R package, you can find the documentation here: \url{http://xgboost.readthedocs.io/en/latest/parameter.html}
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-bst = XGBTrainer$new(booster, objective, nthread, silent=0, n_estimators=100,
-                     learning_rate=0.3, gamma=0, max_depth=6, min_child_weight=1,
-                     subsample=1, colsample_bytree=1, lambda=1, alpha = 0,
-                     eval_metric, print_every = 50, feval, early_stopping,
-                     maximize, custom_objective, save_period, save_name,
-                     xgb_model, callbacks, verbose, num_class, weight, na_missing)
-bst$fit(X_train, "target", valid=NULL)
-tfidf$predict(X_test)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of xgboost model}
-  \item{\code{$fit()}}{fits model to an input train data using given parametes.}
-  \item{\code{$cross_val()}}{performs cross validation on train data}
-  \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{params}{the detailed version of these arguments can found in xgboost documentation \url{http://xgboost.readthedocs.io/en/latest/parameter.html}}
- \item{booster}{the trainer type, the values are \code{gbtree(default)}, \code{gblinear}, \code{dart:gbtree}}
- \item{objective}{specify the learning task. Check the link above for all possible values.}
- \item{max_features}{the number of features to consider when looking for the best split
-     Possible values are \code{auto},\code{sqrt},\code{log},\code{None}}
- \item{n_thread}{number of parallel threads used to run, default is to run using all threads available}
- \item{silent}{0 means printing running messages, 1 means silent mode}
- \item{n_estimators}{number of trees to grow, default = 100}
- \item{learning_rate}{Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3}
- \item{max_depth}{the maximum depth of each tree, default = 6}
- \item{nfold}{set number of folds for cross validation}
- \item{stratified}{if stratified sampling to be done or not, default is TRUE}
- \item{folds}{the list of CV folds' indices - either those passed through the folds parameter or randomly generated.}
- \item{gamma}{Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0}
- \item{min_child_weight}{Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1}
- \item{subsample}{Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
- \item{colsample_bytree}{Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
- \item{lambda}{L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1}
- \item{alpha}{L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0}
- \item{eval_metric}{Evaluation metrics for validation data, a default metric will be assigned according to objective }
- \item{print_every}{print training log after n iterations. Default = 50}
- \item{feval}{custom evaluation function}
- \item{early_stopping}{Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen}
- \item{maximize}{If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better. }
- \item{custom_objective}{custom objective function}
- \item{save_period}{when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.}
- \item{save_name}{the name or path for periodically saved model file.}
- \item{xgb_model}{a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.}
- \item{callbacks}{a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.}
- \item{verbose}{If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose > 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.}
- \item{watchlist}{what information should be printed when verbose=1 or verbose=2. Watchlist is used to specify validation set monitoring during training. For example user can specify watchlist=list(validation1=mat1, validation2=mat2) to watch the performance of each round's model on mat1 and mat2}
- \item{num_class}{set number of classes in case of multiclassification problem}
- \item{weight}{a vector indicating the weight for each row of the input.}
- \item{na_missing}{by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `XGBTrainer$new`
+## ------------------------------------------------
+
+library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+
+## ------------------------------------------------
+## Method `XGBTrainer$cross_val`
+## ------------------------------------------------
+
+library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+
+# do cross validation to find optimal value for n_estimators
+xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+
+## ------------------------------------------------
+## Method `XGBTrainer$fit`
+## ------------------------------------------------
+
 library(data.table)
 df <- copy(iris)
 
@@ -88,15 +68,110 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
                       n_estimators = 2)
 xgb$fit(df, 'Species')
 
-# do cross validation to find optimal value for n_estimators
-xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE,
-              early_stopping = 1)
-best_iter <- xgb$cv_model$best_iteration
-xgb$show_importance()
+## ------------------------------------------------
+## Method `XGBTrainer$predict`
+## ------------------------------------------------
+
+#' library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
 
 # make predictions
 preds <- xgb$predict(as.matrix(iris[,1:4]))
-preds
+
+## ------------------------------------------------
+## Method `XGBTrainer$show_importance`
+## ------------------------------------------------
+
+library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+xgb$show_importance()
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{booster}}{the trainer type, the values are \code{gbtree(default)}, \code{gblinear}, \code{dart:gbtree}}
+
+\item{\code{objective}}{specify the learning task. Check the link above for all possible values.}
+
+\item{\code{nthread}}{number of parallel threads used to run, default is to run using all threads available}
+
+\item{\code{silent}}{0 means printing running messages, 1 means silent mode}
+
+\item{\code{n_estimators}}{number of trees to grow, default = 100}
+
+\item{\code{learning_rate}}{Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3}
+
+\item{\code{gamma}}{Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0}
+
+\item{\code{max_depth}}{the maximum depth of each tree, default = 6}
+
+\item{\code{min_child_weight}}{Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1}
+
+\item{\code{subsample}}{Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
+
+\item{\code{colsample_bytree}}{Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
+
+\item{\code{lambda}}{L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1}
+
+\item{\code{alpha}}{L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0}
+
+\item{\code{eval_metric}}{Evaluation metrics for validation data, a default metric will be assigned according to objective}
+
+\item{\code{print_every}}{print training log after n iterations. Default = 50}
+
+\item{\code{feval}}{custom evaluation function}
+
+\item{\code{early_stopping}}{Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen}
+
+\item{\code{maximize}}{If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better.}
+
+\item{\code{custom_objective}}{custom objective function}
+
+\item{\code{save_period}}{when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.}
+
+\item{\code{save_name}}{the name or path for periodically saved model file.}
+
+\item{\code{xgb_model}}{a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.}
+
+\item{\code{callbacks}}{a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.}
+
+\item{\code{verbose}}{If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose > 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.}
+
+\item{\code{watchlist}}{what information should be printed when verbose=1 or verbose=2. Watchlist is used to specify validation set monitoring during training. For example user can specify watchlist=list(validation1=mat1, validation2=mat2) to watch the performance of each round's model on mat1 and mat2}
+
+\item{\code{num_class}}{set number of classes in case of multiclassification problem}
+
+\item{\code{weight}}{a vector indicating the weight for each row of the input.}
+
+\item{\code{na_missing}}{by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.}
+
+\item{\code{feature_names}}{internal use, stores the feature names for model importance}
+
+\item{\code{cv_model}}{internal use}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -144,19 +219,141 @@ preds
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{booster}}{the trainer type, the values are \code{gbtree(default)}, \code{gblinear}, \code{dart:gbtree}}
+
+\item{\code{objective}}{specify the learning task. Check the link above for all possible values.}
+
+\item{\code{nthread}}{number of parallel threads used to run, default is to run using all threads available}
+
+\item{\code{silent}}{0 means printing running messages, 1 means silent mode}
+
+\item{\code{n_estimators}}{number of trees to grow, default = 100}
+
+\item{\code{learning_rate}}{Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3}
+
+\item{\code{gamma}}{Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0}
+
+\item{\code{max_depth}}{the maximum depth of each tree, default = 6}
+
+\item{\code{min_child_weight}}{Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1}
+
+\item{\code{subsample}}{Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
+
+\item{\code{colsample_bytree}}{Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1}
+
+\item{\code{lambda}}{L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1}
+
+\item{\code{alpha}}{L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0}
+
+\item{\code{eval_metric}}{Evaluation metrics for validation data, a default metric will be assigned according to objective}
+
+\item{\code{print_every}}{print training log after n iterations. Default = 50}
+
+\item{\code{feval}}{custom evaluation function}
+
+\item{\code{early_stopping}}{Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen}
+
+\item{\code{maximize}}{If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better.}
+
+\item{\code{custom_objective}}{custom objective function}
+
+\item{\code{save_period}}{when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.}
+
+\item{\code{save_name}}{the name or path for periodically saved model file.}
+
+\item{\code{xgb_model}}{a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.}
+
+\item{\code{callbacks}}{a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.}
+
+\item{\code{verbose}}{If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose > 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.}
+
+\item{\code{num_class}}{set number of classes in case of multiclassification problem}
+
+\item{\code{weight}}{a vector indicating the weight for each row of the input.}
+
+\item{\code{na_missing}}{by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `XGBTrainer` object.
+}
+
+\subsection{Returns}{
+A `XGBTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cross_val"></a>}}
 \subsection{Method \code{cross_val()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$cross_val(
-  X,
-  y,
-  nfolds = 5,
-  stratified = TRUE,
-  folds = NULL,
-  early_stopping = 50
-)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$cross_val(X, y, nfolds = 5, stratified = TRUE, folds = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame}
+
+\item{\code{y}}{character, name of target variable}
+
+\item{\code{nfolds}}{integer, number of folds}
+
+\item{\code{stratified}}{logical, whether to use stratified sampling}
+
+\item{\code{folds}}{the list of CV folds' indices - either those passed through the folds parameter or randomly generated.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Trains the xgboost model using cross validation scheme
+}
+
+\subsection{Returns}{
+NULL, trains a model and saves it in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+
+# do cross validation to find optimal value for n_estimators
+xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -167,6 +364,44 @@ preds
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$fit(X, y, valid = NULL)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame, training data}
+
+\item{\code{y}}{character, name of target variable}
+
+\item{\code{valid}}{data.frame, validation data}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the xgboost model on given data
+}
+
+\subsection{Returns}{
+NULL, trains a model and keeps it in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
@@ -175,12 +410,86 @@ preds
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$predict(df)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{df}}{data.frame, test data set}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns predicted values for a given test data
+}
+
+\subsection{Returns}{
+xgboost predictions
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{#' library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+
+# make predictions
+preds <- xgb$predict(as.matrix(iris[,1:4]))
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-show_importance"></a>}}
 \subsection{Method \code{show_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$show_importance(type = "plot", topn = 10)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{type}}{character, could be 'plot' or 'table'}
+
+\item{\code{topn}}{integer, top n features to display}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Shows feature importance plot
+}
+
+\subsection{Returns}{
+a table or a plot of feature importance
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{library(data.table)
+df <- copy(iris)
+
+# convert characters/factors to numeric
+df$Species <- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb <- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+xgb$show_importance()
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

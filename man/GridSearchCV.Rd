@@ -3,43 +3,44 @@
 \name{GridSearchCV}
 \alias{GridSearchCV}
 \title{Grid Search CV}
-\format{\code{\link{R6Class}} object.}
 \description{
+Runs grid search cross validation scheme to find best model training parameters.
+}
+\details{
 Grid search CV is used to train a machine learning model with multiple combinations
 of training hyper parameters and finds the best combination of parameters which optimizes the evaluation metric.
 It creates an exhaustive set of hyperparameter combinations and train model on each combination.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-gst = GridSearchTrainer$new(trainer, parameters, n_folds, scoring)
-gst$fit(X, y)
-gst$best_iteration(metric)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of grid search cv}
-  \item{\code{$fit()}}{fit model to an input train data and trains the model.}
-  \item{\code{$best_iteration()}}{returns best iteration based on a given metric. By default, uses the first scoring metric}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{trainer}{superml trainer object, could be either XGBTrainer, RFTrainer, NBTrainer etc.}
- \item{parameters}{list containing parameters}
- \item{n_folds}{number of folds to use to split the train data}
- \item{scoring}{scoring metric used to evaluate the best model, multiple values can be provided.
-               currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `GridSearchCV$new`
+## ------------------------------------------------
+
+rf <- RFTrainer$new()
+gst <-GridSearchCV$new(trainer = rf,
+                      parameters = list(n_estimators = c(100),
+                                        max_depth = c(5,2,10)),
+                                        n_folds = 3,
+                                        scoring = c('accuracy','auc'))
+
+## ------------------------------------------------
+## Method `GridSearchCV$fit`
+## ------------------------------------------------
+
+rf <- RFTrainer$new()
+gst <-GridSearchCV$new(trainer = rf,
+                      parameters = list(n_estimators = c(100),
+                                        max_depth = c(5,2,10)),
+                                        n_folds = 3,
+                                        scoring = c('accuracy','auc'))
+data("iris")
+gst$fit(iris, "Species")
+
+## ------------------------------------------------
+## Method `GridSearchCV$best_iteration`
+## ------------------------------------------------
+
 rf <- RFTrainer$new()
 gst <-GridSearchCV$new(trainer = rf,
                       parameters = list(n_estimators = c(100),
@@ -50,12 +51,25 @@ data("iris")
 gst$fit(iris, "Species")
 gst$best_iteration()
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{trainer}}{superml trainer object, could be either XGBTrainer, RFTrainer, NBTrainer etc.}
+
+\item{\code{parameters}}{a list of parameters to tune}
+
+\item{\code{n_folds}}{number of folds to use to split the train data}
+
+\item{\code{scoring}}{scoring metric used to evaluate the best model, multiple values can be provided. currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall}
+
+\item{\code{evaluation_scores}}{parameter for internal use}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{GridSearchCV$new()}}
-\item \href{#method-get_metrics}{\code{GridSearchCV$get_metrics()}}
-\item \href{#method-runGrid}{\code{GridSearchCV$runGrid()}}
 \item \href{#method-fit}{\code{GridSearchCV$fit()}}
 \item \href{#method-best_iteration}{\code{GridSearchCV$best_iteration()}}
 \item \href{#method-clone}{\code{GridSearchCV$clone()}}
@@ -68,20 +82,38 @@ gst$best_iteration()
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$new(trainer = NA, parameters = NA, n_folds = NA, scoring = NA)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{trainer}}{superml trainer object, could be either XGBTrainer, RFTrainer, NBTrainer etc.}
+
+\item{\code{parameters}}{list, a list of parameters to tune}
+
+\item{\code{n_folds}}{integer, number of folds to use to split the train data}
+
+\item{\code{scoring}}{character, scoring metric used to evaluate the best model, multiple values can be provided.
+currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recall}
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_metrics"></a>}}
-\subsection{Method \code{get_metrics()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$get_metrics(metric, act, pred)}\if{html}{\out{</div>}}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `GridSearchCV` object.
 }
 
+\subsection{Returns}{
+A `GridSearchCV` object.
 }
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-runGrid"></a>}}
-\subsection{Method \code{runGrid()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$runGrid(param_grid, X, y)}\if{html}{\out{</div>}}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{rf <- RFTrainer$new()
+gst <-GridSearchCV$new(trainer = rf,
+                      parameters = list(n_estimators = c(100),
+                                        max_depth = c(5,2,10)),
+                                        n_folds = 3,
+                                        scoring = c('accuracy','auc'))
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -92,12 +124,73 @@ gst$best_iteration()
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$fit(X, y)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame or data.table}
+
+\item{\code{y}}{character, name of target variable}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Trains the model using grid search
+}
+
+\subsection{Returns}{
+NULL
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{rf <- RFTrainer$new()
+gst <-GridSearchCV$new(trainer = rf,
+                      parameters = list(n_estimators = c(100),
+                                        max_depth = c(5,2,10)),
+                                        n_folds = 3,
+                                        scoring = c('accuracy','auc'))
+data("iris")
+gst$fit(iris, "Species")
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-best_iteration"></a>}}
 \subsection{Method \code{best_iteration()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$best_iteration(metric = NULL)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{metric}}{character, which metric to use for evaluation}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns the best parameters
+}
+
+\subsection{Returns}{
+a list of best parameters
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{rf <- RFTrainer$new()
+gst <-GridSearchCV$new(trainer = rf,
+                      parameters = list(n_estimators = c(100),
+                                        max_depth = c(5,2,10)),
+                                        n_folds = 3,
+                                        scoring = c('accuracy','auc'))
+data("iris")
+gst$fit(iris, "Species")
+gst$best_iteration()
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

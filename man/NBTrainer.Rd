@@ -3,46 +3,52 @@
 \name{NBTrainer}
 \alias{NBTrainer}
 \title{Naive Bayes Trainer}
-\format{\code{\link{R6Class}} object.}
 \description{
+Trains a probabilistic naive bayes model
+}
+\details{
 Trains a naive bayes model. It is built on top high performance naivebayes R package.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-nbt = NBTrainer$new(prior=NULL, laplace=0, usekernel=FALSE)
-nbt$fit(X_train, "target")
-prediction <- bst$predict(X_test)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of naive bayes model}
-  \item{\code{$fit()}}{fits model to an input train data and trains the model.}
-  \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{prior}{for detailed explanation of parameters, check: https://cran.r-project.org/package=naivebayes}
- \item{prior}{numeric vector with prior probabilities. vector with prior probabilities of the classes.
-              If unspecified, the class proportions for the training set are used.
-              If present, the probabilities should be specified in the order of the factor levels.}
- \item{laplace}{value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)}
- \item{usekernel}{if TRUE, density is used to estimate the densities of metric predictors}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `NBTrainer$new`
+## ------------------------------------------------
+
+data(iris)
+nb <- NBTrainer$new()
+
+## ------------------------------------------------
+## Method `NBTrainer$fit`
+## ------------------------------------------------
+
+data(iris)
+nb <- NBTrainer$new()
+nb$fit(iris, 'Species')
+
+## ------------------------------------------------
+## Method `NBTrainer$predict`
+## ------------------------------------------------
+
 data(iris)
 nb <- NBTrainer$new()
 nb$fit(iris, 'Species')
 y <- nb$predict(iris)
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{prior}}{numeric vector with prior probabilities. vector with prior probabilities of the classes.
+If unspecified, the class proportions for the training set are used.
+If present, the probabilities should be specified in the order of the factor levels.}
+
+\item{\code{laplace}}{value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)}
+
+\item{\code{usekernel}}{if TRUE, density is used to estimate the densities of metric predictors}
+
+\item{\code{model}}{for internal use}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -60,6 +66,35 @@ y <- nb$predict(iris)
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$new(prior, laplace, usekernel)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{prior}}{numeric, prior numeric vector with prior probabilities. vector with prior probabilities of the classes.
+If unspecified, the class proportions for the training set are used.
+If present, the probabilities should be specified in the order of the factor levels.}
+
+\item{\code{laplace}}{nuemric, value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)}
+
+\item{\code{usekernel}}{logical, if TRUE, density is used to estimate the densities of metric predictors}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `NBTrainer` object.
+}
+
+\subsection{Returns}{
+A `NBTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(iris)
+nb <- NBTrainer$new()
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
@@ -68,12 +103,65 @@ y <- nb$predict(iris)
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$fit(X, y)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame containing train features}
+
+\item{\code{y}}{character, name of target variable}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the naive bayes model
+}
+
+\subsection{Returns}{
+NULL, trains and saves the model in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(iris)
+nb <- NBTrainer$new()
+nb$fit(iris, 'Species')
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$predict(X, type = "class")}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame containing test features}
+
+\item{\code{type}}{character, if the predictions should be labels or probability}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns predictions from the model
+}
+
+\subsection{Returns}{
+NULL, trains and saves the model in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data(iris)
+nb <- NBTrainer$new()
+nb$fit(iris, 'Species')
+y <- nb$predict(iris)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

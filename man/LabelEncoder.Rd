@@ -43,6 +43,57 @@ data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
 lbl <- LabelEncoder$new()
 data_ex$Name <- lbl$fit_transform(data_ex$Name)
 decode_names <- lbl$inverse_transform(data_ex$Name)
+
+## ------------------------------------------------
+## Method `LabelEncoder$fit`
+## ------------------------------------------------
+
+data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+decode_names <- lbl$inverse_transform(data_ex$Name)
+
+## ------------------------------------------------
+## Method `LabelEncoder$fit_transform`
+## ------------------------------------------------
+
+data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+
+## ------------------------------------------------
+## Method `LabelEncoder$transform`
+## ------------------------------------------------
+
+data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$transform(data_ex$Name)
+
+## ------------------------------------------------
+## Method `LabelEncoder$inverse_transform`
+## ------------------------------------------------
+
+data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+decode_names <- lbl$inverse_transform(data_ex$Name)
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{input_data}}{internal use}
+
+\item{\code{encodings}}{internal use}
+
+\item{\code{decodings}}{internal use}
+
+\item{\code{fit_model}}{internal use}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -61,12 +112,63 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit(data_col)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_col}}{a vector containing non-null values}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits the labelencoder model on given data
+}
+
+\subsection{Returns}{
+NULL, calculates the encoding and save in memory
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+decode_names <- lbl$inverse_transform(data_ex$Name)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit_transform"></a>}}
 \subsection{Method \code{fit_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit_transform(data_col)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_col}}{a vector containing non-null values}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fits and returns the encoding
+}
+
+\subsection{Returns}{
+encoding values for the given input data
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
@@ -77,12 +179,63 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$transform(data_col)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{data_col}}{a vector containing non-null values}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns the encodings from the fitted model
+}
+
+\subsection{Returns}{
+encoding values for the given input data
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$transform(data_ex$Name)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-inverse_transform"></a>}}
 \subsection{Method \code{inverse_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$inverse_transform(coded_col)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{coded_col}}{a vector containing label encoded values}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Gives back the original values from a encoded values
+}
+
+\subsection{Returns}{
+original values from the label encoded data
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl <- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name <- lbl$fit_transform(data_ex$Name)
+decode_names <- lbl$inverse_transform(data_ex$Name)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }

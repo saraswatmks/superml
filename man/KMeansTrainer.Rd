@@ -3,48 +3,77 @@
 \name{KMeansTrainer}
 \alias{KMeansTrainer}
 \title{K-Means Trainer}
-\format{\code{\link{R6Class}} object.}
 \description{
+Trains a k-means machine learning model in R
+}
+\details{
 Trains a unsupervised K-Means clustering algorithm. It borrows mini-batch k-means function from
 ClusterR package written in c++, hence it is quite fast.
 }
-\section{Usage}{
-
-For usage details see \bold{Methods, Arguments and Examples} sections.
-\preformatted{
-kmt = KMeansTrainer$new(clusters, batch_size = 10, num_init=1, max_iters=100,
-                        init_fraction=1, initializer = "kmeans++", early_stop_iter = 10,
-                        verbose=FALSE, centroids=NULL, tol = 1e-04, tol_optimal_init=0.3,
-                        seed=1, max_clusters=NA)
-bst$fit(X_train, y_train=NULL)
-prediction <- bst$predict(X_test)
-}
-}
-
-\section{Methods}{
-
-\describe{
-  \item{\code{$new()}}{Initialises an instance of k-means model}
-  \item{\code{$fit()}}{fit model to an input train data}
-  \item{\code{$predict()}}{returns cluster predictions for each row of given data}
-}
-}
-
-\section{Arguments}{
-
-\describe{
- \item{params}{for explanation on parameters, please refer to the documentation of MiniBatchKMeans function in clusterR package \url{https://CRAN.R-project.org/package=ClusterR}}
- \item{find_optimal}{Used to find the optimal number of cluster during \code{fit} method. To use this, make sure the value for max_clusters > 0.}
-}
-}
-
 \examples{
+
+## ------------------------------------------------
+## Method `KMeansTrainer$new`
+## ------------------------------------------------
+
+data <- rbind(replicate(20, rnorm(1e4, 2)),
+             replicate(20, rnorm(1e4, -1)),
+             replicate(20, rnorm(1e4, 5)))
+km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
+
+## ------------------------------------------------
+## Method `KMeansTrainer$fit`
+## ------------------------------------------------
+
+data <- rbind(replicate(20, rnorm(1e4, 2)),
+             replicate(20, rnorm(1e4, -1)),
+             replicate(20, rnorm(1e4, 5)))
+km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
+km_model$fit(data, find_optimal = FALSE)
+
+## ------------------------------------------------
+## Method `KMeansTrainer$predict`
+## ------------------------------------------------
+
 data <- rbind(replicate(20, rnorm(1e4, 2)),
              replicate(20, rnorm(1e4, -1)),
              replicate(20, rnorm(1e4, 5)))
 km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
 km_model$fit(data, find_optimal = FALSE)
 predictions <- km_model$predict(data)
+}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{clusters}}{the number of clusters}
+
+\item{\code{batch_size}}{the size of the mini batches}
+
+\item{\code{num_init}}{number of times the algorithm will be run with different centroid seeds}
+
+\item{\code{max_iters}}{the maximum number of clustering iterations}
+
+\item{\code{init_fraction}}{percentage of data to use for the initialization centroids (applies if initializer is kmeans++ or optimal_init). Should be a float number between 0.0 and 1.0.}
+
+\item{\code{initializer}}{the method of initialization. One of, optimal_init, quantile_init, kmeans++ and random.}
+
+\item{\code{early_stop_iter}}{continue that many iterations after calculation of the best within-cluster-sum-ofsquared-error}
+
+\item{\code{verbose}}{either TRUE or FALSE, indicating whether progress is printed during clustering}
+
+\item{\code{centroids}}{a matrix of initial cluster centroids. The rows of the CENTROIDS matrix should be equal to the number of clusters and the columns should be equal to the columns of the data}
+
+\item{\code{tol}}{a float number. If, in case of an iteration (iteration > 1 and iteration < max_iters) "tol" is greater than the squared norm of the centroids, then kmeans has converged}
+
+\item{\code{tol_optimal_init}}{tolerance value for the ’optimal_init’ initializer. The higher this value is, the far appart from each other the centroids are.}
+
+\item{\code{seed}}{integer value for random number generator (RNG)}
+
+\item{\code{model}}{use for internal purpose}
+
+\item{\code{max_clusters}}{either a numeric value, a contiguous or non-continguous numeric vector specifying the cluster search space}
+}
+\if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
@@ -76,6 +105,55 @@ predictions <- km_model$predict(data)
 )}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{clusters}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
+
+\item{\code{batch_size}}{nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+
+\item{\code{num_init}}{integer, use top features sorted by count to be used in bag of words matrix.}
+
+\item{\code{max_iters}}{character, regex expression to use for text cleaning.}
+
+\item{\code{init_fraction}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+
+\item{\code{initializer}}{character, splitting criteria for strings, default: " "}
+
+\item{\code{early_stop_iter}}{continue that many iterations after calculation of the best within-cluster-sum-ofsquared-error}
+
+\item{\code{verbose}}{either TRUE or FALSE, indicating whether progress is printed during clustering}
+
+\item{\code{centroids}}{a matrix of initial cluster centroids. The rows of the CENTROIDS matrix should be equal to the number of clusters and the columns should be equal to the columns of the data}
+
+\item{\code{tol}}{a float number. If, in case of an iteration (iteration > 1 and iteration < max_iters) "tol" is greater than the squared norm of the centroids, then kmeans has converged}
+
+\item{\code{tol_optimal_init}}{tolerance value for the ’optimal_init’ initializer. The higher this value is, the far appart from each other the centroids are.}
+
+\item{\code{seed}}{integer value for random number generator (RNG)}
+
+\item{\code{max_clusters}}{either a numeric value, a contiguous or non-continguous numeric vector specifying the cluster search space}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Create a new `KMeansTrainer` object.
+}
+
+\subsection{Returns}{
+A `KMeansTrainer` object.
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data <- rbind(replicate(20, rnorm(1e4, 2)),
+             replicate(20, rnorm(1e4, -1)),
+             replicate(20, rnorm(1e4, 5)))
+km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
@@ -84,12 +162,69 @@ predictions <- km_model$predict(data)
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$fit(X, y = NULL, find_optimal = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame or matrix containing features}
+
+\item{\code{y}}{NULL only kept here for superml's standard way}
+
+\item{\code{find_optimal}}{logical, to find the optimal clusters automatically}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Trains the KMeansTrainer model
+}
+
+\subsection{Returns}{
+NULL
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data <- rbind(replicate(20, rnorm(1e4, 2)),
+             replicate(20, rnorm(1e4, -1)),
+             replicate(20, rnorm(1e4, 5)))
+km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
+km_model$fit(data, find_optimal = FALSE)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$predict(X)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{X}}{data.frame or matrix}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Returns the prediction on test data
+}
+
+\subsection{Returns}{
+a vector of predictions
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{data <- rbind(replicate(20, rnorm(1e4, 2)),
+             replicate(20, rnorm(1e4, -1)),
+             replicate(20, rnorm(1e4, 5)))
+km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
+km_model$fit(data, find_optimal = FALSE)
+predictions <- km_model$predict(data)
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
