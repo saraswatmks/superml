@@ -4,7 +4,13 @@
 \name{reg_train}
 \alias{reg_train}
 \title{reg_train}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 1460 rows and 81 columns.}
+\format{A data frame with 81 variables
+\describe{
+\item{\code{SalePrice}}{the property's sale price in dollars. This is the target variable that you're trying to predict.}
+}}
+\source{
+\url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}
+}
 \usage{
 reg_train
 }

@@ -106,7 +106,7 @@ rmse(actual = xtest$SalePrice, predicted=labels)
 ```
 
 **SVM Regression**
-```{r}
+```{r, eval=FALSE}
 svm <- SVMTrainer$new()
 svm$fit(xtrain, 'SalePrice')
 pred <- svm$predict(xtest)
@@ -124,7 +124,7 @@ rmse(actual = xtest$SalePrice, predicted = predictions)
 
 **Lasso Regression**
 ```{r}
-lf <- LMTrainer$new(family = "gaussian", alpha=1, lambda = 1000)
+lf <- LMTrainer$new(family = "gaussian", alpha = 1, lambda = 1000)
 lf$fit(X = xtrain, y = "SalePrice")
 predictions <- lf$predict(df = xtest)
 rmse(actual = xtest$SalePrice, predicted = predictions)
@@ -139,7 +139,7 @@ rmse(actual = xtest$SalePrice, predicted = predictions)
 ```
 
 **Logistic Regression with CV**
-```{r}
+```{r, eval=FALSE}
 lf <- LMTrainer$new(family = "gaussian")
 lf$cv_model(X = xtrain, y = 'SalePrice', nfolds = 5, parallel = FALSE)
 predictions <- lf$cv_predict(df = xtest)
@@ -171,7 +171,7 @@ rmse(actual = xtest$SalePrice, predicted = pred)
 
 **Grid Search**
 ```{r}
-xgb <- XGBTrainer$new(objective="reg:linear")
+xgb <- XGBTrainer$new(objective ="reg:linear")
 
 gst <-GridSearchCV$new(trainer = xgb,
                              parameters = list(n_estimators = c(10,50), max_depth = c(5,2)),
@@ -184,12 +184,12 @@ gst$best_iteration()
 **Random Search**
 ```{r}
 rf <- RFTrainer$new()
-rst <-RandomSearchCV$new(trainer = rf,
-                             parameters = list(n_estimators = c(10,50),
+rst <- RandomSearchCV$new(trainer = rf,
+                             parameters = list(n_estimators = c(5,10),
                              max_depth = c(5,2)),
                              n_folds = 3,
                              scoring = c('accuracy','auc'),
-                             n_iter=3)
+                             n_iter = 3)
 rst$fit(xtrain, "SalePrice")
 rst$best_iteration()
 ```
@@ -253,7 +253,7 @@ auc(actual = xtest$Survived, predicted=pred)
 ```
 
 **SVM Classification**
-```{r}
+```{r, eval=FALSE}
 #predicts labels
 svm <- SVMTrainer$new()
 svm$fit(xtrain, 'Survived')
@@ -273,7 +273,7 @@ auc(actual = xtest$Survived, predicted = predictions)
 ```
 
 **Lasso Logistic Regression**
-```{r}
+```{r, eval=FALSE}
 lf <- LMTrainer$new(family="binomial", alpha=1)
 lf$cv_model(X = xtrain, y = "Survived", nfolds = 5, parallel = FALSE)
 pred <- lf$cv_predict(df = xtest)
@@ -282,7 +282,7 @@ auc(actual = xtest$Survived, predicted = pred)
 ```
 
 **Ridge Logistic Regression**
-```{r}
+```{r, eval=FALSE}
 lf <- LMTrainer$new(family="binomial", alpha=0)
 lf$cv_model(X = xtrain, y = "Survived", nfolds = 5, parallel = FALSE)
 pred <- lf$cv_predict(df = xtest)
@@ -329,9 +329,8 @@ gst$best_iteration()
 **Random Search**
 ```{r}
 rf <- RFTrainer$new()
-rst <-RandomSearchCV$new(trainer = rf,
-                             parameters = list(n_estimators = c(10,50),
-                             max_depth = c(5,2)),
+rst <- RandomSearchCV$new(trainer = rf,
+                             parameters = list(n_estimators = c(10,50), max_depth = c(5,2)),
                              n_folds = 3,
                              scoring = c('accuracy','auc'),
                              n_iter = 3)

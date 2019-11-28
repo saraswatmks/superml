@@ -1,3 +1,7 @@
+# superml 0.5.0
+
+* glmnet changed its api. Fix Failing tests. Temporary fix by using "donttest" on its examples. Updates package documentation to support R6 classes.
+
 # superml 0.4.0
 
 * Fixed svm error. Replaced liquidSVM with e1071 R package.

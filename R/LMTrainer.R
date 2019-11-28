@@ -166,8 +166,8 @@ LMTrainer <- R6Class("LMTrainer", public = list(
             else print("Please run the cv_model function.")
         }
         DX <- as.matrix(setDT(df)[, c(self$iid_names), with=FALSE])
-
-        return(glmnet::predict.cv.glmnet(object=self$cvmodel,
+        print(DX)
+        return(glmnet::predict.glmnet(object=self$cvmodel,
                               newx = DX,
                               s = lambda,
                               type="response"))

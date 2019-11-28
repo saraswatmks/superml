@@ -1,7 +1,7 @@
 Package: superml
 Type: Package
 Title: Build Machine Learning Models Like Using Python's Scikit-Learn Library in R
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
           role = c("aut", "cre"))
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
@@ -39,5 +39,5 @@ Suggests:
     tm(>= 0.7),
     Matrix(>= 1.2),
     e1071(>= 1.7)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 VignetteBuilder: knitr

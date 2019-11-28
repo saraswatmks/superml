@@ -4,21 +4,7 @@
 \name{cla_train}
 \alias{cla_train}
 \title{cla_train}
-\format{A data frame with 12 variables:
-\describe{
-\item{\code{PassengerId}}{unique ID of the passenger}
-\item{\code{Survived}}{survival of the passenger}
-\item{\code{Pclass}}{ticket class}
-\item{\code{Name}}{name of the passenger}
-\item{\code{Sex}}{sex of the passenger}
-\item{\code{Age}}{Age of the passenger}
-\item{\code{SibSp}}{number of siblings/spouse aboard the titanic}
-\item{\code{Parch}}{number of parents / child aboard the titanic}
-\item{\code{Ticket}}{ticket number}
-\item{\code{Fare}}{passenger fare}
-\item{\code{Cabin}}{cabin number}
-\item{\code{Embarked}}{port of embarkation}
-}}
+\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 891 rows and 12 columns.}
 \source{
 \url{https://www.kaggle.com/c/titanic/data}
 }
@@ -26,7 +12,7 @@
 cla_train
 }
 \description{
-Training Dataset used for classification examples. This is classic titanic dataset used to predict
-if a passenger will survive or not in titanic ship disaster.
+Training Dataset used for classification examples.
+This is classic titanic dataset used to predict if a passenger will survive or not in titanic ship disaster.
 }
 \keyword{datasets}

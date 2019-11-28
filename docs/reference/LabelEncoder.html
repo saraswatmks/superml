@@ -8,21 +8,25 @@
 
 <title>Label Encoder — LabelEncoder • SuperML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,12 +34,13 @@
 
 
 
-<meta property="og:title" content="Label Encoder — LabelEncoder" />
 
+<meta property="og:title" content="Label Encoder — LabelEncoder" />
 <meta property="og:description" content="Encodes and decodes categorical variables into integer values and vice versa.
 This is a commonly performed task in data preparation during model training, because all machine learning models require
 the data to be encoded into numerical format. It takes a vector of character or factor values and encodes them into numeric." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -47,6 +52,7 @@ the data to be encoded into numerical format. It takes a vector of character or 
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -65,7 +71,7 @@ the data to be encoded into numerical format. It takes a vector of character or 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -85,7 +91,7 @@ the data to be encoded into numerical format. It takes a vector of character or 
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/introduction.html">Introduction to SuperML</a>
+      <a href="../articles/superml_tutorial.html">Introduction to superml</a>
     </li>
   </ul>
 </li>
@@ -96,7 +102,6 @@ the data to be encoded into numerical format. It takes a vector of character or 
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/saraswatmks/superml">
@@ -117,6 +122,7 @@ the data to be encoded into numerical format. It takes a vector of character or 
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -128,71 +134,239 @@ the data to be encoded into numerical format. It takes a vector of character or 
     </div>
 
     <div class="ref-description">
-    
     <p>Encodes and decodes categorical variables into integer values and vice versa.
 This is a commonly performed task in data preparation during model training, because all machine learning models require
 the data to be encoded into numerical format. It takes a vector of character or factor values and encodes them into numeric.</p>
-    
     </div>
 
-    <pre class="usage"><span class='no'>LabelEncoder</span></pre>
-        
+
+
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
     <p><code>R6Class</code> object.</p>
-    
     <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
     
-    <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
+
+<p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
 lbl = LabelEncoder$new()
 lbl$fit(x)
 lbl$fit_transform(x)
 lbl$transform(x)
 </pre>
-    
+
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <dl class='dl-horizontal'>
+
+<dl class='dl-horizontal'>
   <dt><code>$new()</code></dt><dd><p>Initialise the instance of the encoder</p></dd>
   <dt><code>$fit()</code></dt><dd><p>creates a memory of encodings but doesn't return anything</p></dd>
   <dt><code>$transform()</code></dt><dd><p>based on encodings learned in <code>fit</code> method is applies the transformation</p></dd>
   <dt><code>$fit_transform()</code></dt><dd><p>encodes the data and keep a memory of encodings simultaneously</p></dd>
   <dt><code>$inverse_transform()</code></dt><dd><p>encodes the data and keep a memory of encodings simultaneously</p></dd>
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
 
     
-    <dl class='dl-horizontal'>
+
+<dl class='dl-horizontal'>
  <dt>data</dt><dd><p>a vector or list containing the character / factor values</p></dd>
+
 </dl>
+
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
+<dt><code>input_data</code></dt><dd><p>internal use</p></dd>
+
+<dt><code>encodings</code></dt><dd><p>internal use</p></dd>
+
+<dt><code>decodings</code></dt><dd><p>internal use</p></dd>
+
+<dt><code>fit_model</code></dt><dd><p>internal use</p></dd>
+
+</dl><p></div></p>
+    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
+
     
+<h3>Public methods</h3>
+
+<ul>
+<li><p><a href='#method-fit'><code>LabelEncoder$fit()</code></a></p></li>
+<li><p><a href='#method-fit_transform'><code>LabelEncoder$fit_transform()</code></a></p></li>
+<li><p><a href='#method-transform'><code>LabelEncoder$transform()</code></a></p></li>
+<li><p><a href='#method-inverse_transform'><code>LabelEncoder$inverse_transform()</code></a></p></li>
+<li><p><a href='#method-clone'><code>LabelEncoder$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-fit"></a></p><h3>Method <code>fit()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>LabelEncoder$fit(data_col)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>data_col</code></dt><dd><p>a vector containing non-null values</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Fits the labelencoder model on given data</p>
+
+<h3>Returns</h3>
+<p>NULL, calculates the encoding and save in memory</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>data_ex &lt;- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl &lt;- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name &lt;- lbl$fit_transform(data_ex$Name)
+decode_names &lt;- lbl$inverse_transform(data_ex$Name)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-fit_transform"></a></p><h3>Method <code>fit_transform()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>LabelEncoder$fit_transform(data_col)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>data_col</code></dt><dd><p>a vector containing non-null values</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Fits and returns the encoding</p>
+
+<h3>Returns</h3>
+<p>encoding values for the given input data</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>data_ex &lt;- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl &lt;- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name &lt;- lbl$fit_transform(data_ex$Name)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-transform"></a></p><h3>Method <code><a href='https://rdrr.io/r/base/transform.html'>transform()</a></code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>LabelEncoder$transform(data_col)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>data_col</code></dt><dd><p>a vector containing non-null values</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Returns the encodings from the fitted model</p>
+
+<h3>Returns</h3>
+<p>encoding values for the given input data</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>data_ex &lt;- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl &lt;- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name &lt;- lbl$transform(data_ex$Name)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-inverse_transform"></a></p><h3>Method <code>inverse_transform()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>LabelEncoder$inverse_transform(coded_col)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>coded_col</code></dt><dd><p>a vector containing label encoded values</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Gives back the original values from a encoded values</p>
+
+<h3>Returns</h3>
+<p>original values from the label encoded data</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>data_ex &lt;- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+lbl &lt;- LabelEncoder$new()
+lbl$fit(data_ex$Name)
+data_ex$Name &lt;- lbl$fit_transform(data_ex$Name)
+decode_names &lt;- lbl$inverse_transform(data_ex$Name)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>LabelEncoder$clone(deep = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+    <pre class="examples"><div class='input'><span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
 <span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
+<span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>fit_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+<span class='no'>decode_names</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>inverse_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `LabelEncoder$fit`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+<span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
+<span class='no'>lbl</span>$<span class='fu'>fit</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+<span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>fit_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+<span class='no'>decode_names</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>inverse_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `LabelEncoder$fit_transform`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+<span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
+<span class='no'>lbl</span>$<span class='fu'>fit</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+<span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>fit_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `LabelEncoder$transform`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+<span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
+<span class='no'>lbl</span>$<span class='fu'>fit</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+<span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `LabelEncoder$inverse_transform`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='no'>data_ex</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>Score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>,<span class='fl'>4</span>), <span class='kw'>Name</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'Ao'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Bo'</span>,<span class='st'>'Co'</span>))
+<span class='no'>lbl</span> <span class='kw'>&lt;-</span> <span class='no'>LabelEncoder</span>$<span class='fu'>new</span>()
+<span class='no'>lbl</span>$<span class='fu'>fit</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
 <span class='no'>data_ex</span>$<span class='no'>Name</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>fit_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)
 <span class='no'>decode_names</span> <span class='kw'>&lt;-</span> <span class='no'>lbl</span>$<span class='fu'>inverse_transform</span>(<span class='no'>data_ex</span>$<span class='no'>Name</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#format">Format</a></li>
-
       <li><a href="#usage">Usage</a></li>
-
       <li><a href="#methods">Methods</a></li>
-
       <li><a href="#arguments">Arguments</a></li>
-      
+      <li><a href="#public-fields">Public fields</a></li>
+      <li><a href="#methods">Methods</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -200,13 +374,16 @@ lbl$transform(x)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

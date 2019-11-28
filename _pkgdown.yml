@@ -46,7 +46,6 @@ reference:
   - '`KNNTrainer`'
   - '`NBTrainer`'
   - '`RFTrainer`'
-  - '`SVMTrainer`'
   - '`XGBTrainer`'
 
 - title: Helpers

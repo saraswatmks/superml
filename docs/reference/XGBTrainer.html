@@ -8,21 +8,25 @@
 
 <title>Extreme Gradient Boosting Trainer — XGBTrainer • SuperML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +34,11 @@
 
 
 
-<meta property="og:title" content="Extreme Gradient Boosting Trainer — XGBTrainer" />
 
-<meta property="og:description" content="Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
-             that creates an ensemble of weak learner to learn about data." />
+<meta property="og:title" content="Extreme Gradient Boosting Trainer — XGBTrainer" />
+<meta property="og:description" content="Trains a XGBoost model in R" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -64,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -84,7 +89,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/introduction.html">Introduction to SuperML</a>
+      <a href="../articles/superml_tutorial.html">Introduction to superml</a>
     </li>
   </ul>
 </li>
@@ -95,7 +100,6 @@
   <a href="../news/index.html">News</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/saraswatmks/superml">
@@ -116,6 +120,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -127,89 +132,416 @@
     </div>
 
     <div class="ref-description">
-    
-    <p>Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
-             that creates an ensemble of weak learner to learn about data.</p>
-    
+    <p>Trains a XGBoost model in R</p>
     </div>
 
-    <pre class="usage"><span class='no'>XGBTrainer</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p><code>R6Class</code> object.</p>
-    
-    <h2 class="hasAnchor" id="usage"><a class="anchor" href="#usage"></a>Usage</h2>
 
-    
-    <p>For usage details see <b>Methods, Arguments and Examples</b> sections.</p><pre>
-bst = XGBTrainer$new(booster, objective, nthread, silent=0, n_estimators=100,
-                     learning_rate=0.3, gamma=0, max_depth=6, min_child_weight=1,
-                     subsample=1, colsample_bytree=1, lambda=1, alpha = 0,
-                     eval_metric, print_every = 50, feval, early_stopping,
-                     maximize, custom_objective, save_period, save_name,
-                     xgb_model, callbacks, verbose, num_class, weight, na_missing)
-bst$fit(X_train, "target", valid=NULL)
-tfidf$predict(X_test)
-</pre>
-    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Trains a Extreme Gradient Boosting Model. XGBoost belongs to a family of boosting algorithms
+that creates an ensemble of weak learner to learn about data. It is a wrapper for original xgboost
+R package, you can find the documentation here: <a href='http://xgboost.readthedocs.io/en/latest/parameter.html'>http://xgboost.readthedocs.io/en/latest/parameter.html</a></p>
+    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+
+    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
+<dt><code>booster</code></dt><dd><p>the trainer type, the values are <code>gbtree(default)</code>, <code>gblinear</code>, <code>dart:gbtree</code></p></dd>
+
+<dt><code>objective</code></dt><dd><p>specify the learning task. Check the link above for all possible values.</p></dd>
+
+<dt><code>nthread</code></dt><dd><p>number of parallel threads used to run, default is to run using all threads available</p></dd>
+
+<dt><code>silent</code></dt><dd><p>0 means printing running messages, 1 means silent mode</p></dd>
+
+<dt><code>n_estimators</code></dt><dd><p>number of trees to grow, default = 100</p></dd>
+
+<dt><code>learning_rate</code></dt><dd><p>Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3</p></dd>
+
+<dt><code>gamma</code></dt><dd><p>Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0</p></dd>
+
+<dt><code>max_depth</code></dt><dd><p>the maximum depth of each tree, default = 6</p></dd>
+
+<dt><code>min_child_weight</code></dt><dd><p>Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1</p></dd>
+
+<dt><code>subsample</code></dt><dd><p>Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
+
+<dt><code>colsample_bytree</code></dt><dd><p>Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
+
+<dt><code>lambda</code></dt><dd><p>L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1</p></dd>
+
+<dt><code>alpha</code></dt><dd><p>L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0</p></dd>
+
+<dt><code>eval_metric</code></dt><dd><p>Evaluation metrics for validation data, a default metric will be assigned according to objective</p></dd>
+
+<dt><code>print_every</code></dt><dd><p>print training log after n iterations. Default = 50</p></dd>
+
+<dt><code>feval</code></dt><dd><p>custom evaluation function</p></dd>
+
+<dt><code>early_stopping</code></dt><dd><p>Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen</p></dd>
+
+<dt><code>maximize</code></dt><dd><p>If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better.</p></dd>
+
+<dt><code>custom_objective</code></dt><dd><p>custom objective function</p></dd>
+
+<dt><code>save_period</code></dt><dd><p>when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.</p></dd>
+
+<dt><code>save_name</code></dt><dd><p>the name or path for periodically saved model file.</p></dd>
+
+<dt><code>xgb_model</code></dt><dd><p>a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.</p></dd>
+
+<dt><code>callbacks</code></dt><dd><p>a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.</p></dd>
+
+<dt><code>verbose</code></dt><dd><p>If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose &gt; 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.</p></dd>
+
+<dt><code>watchlist</code></dt><dd><p>what information should be printed when verbose=1 or verbose=2. Watchlist is used to specify validation set monitoring during training. For example user can specify watchlist=list(validation1=mat1, validation2=mat2) to watch the performance of each round's model on mat1 and mat2</p></dd>
+
+<dt><code>num_class</code></dt><dd><p>set number of classes in case of multiclassification problem</p></dd>
+
+<dt><code>weight</code></dt><dd><p>a vector indicating the weight for each row of the input.</p></dd>
+
+<dt><code>na_missing</code></dt><dd><p>by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.</p></dd>
+
+<dt><code>feature_names</code></dt><dd><p>internal use, stores the feature names for model importance</p></dd>
+
+<dt><code>cv_model</code></dt><dd><p>internal use</p></dd>
+
+</dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <dl class='dl-horizontal'>
-  <dt><code>$new()</code></dt><dd><p>Initialises an instance of xgboost model</p></dd>
-  <dt><code>$fit()</code></dt><dd><p>fits model to an input train data using given parametes.</p></dd>
-  <dt><code>$cross_val()</code></dt><dd><p>performs cross validation on train data</p></dd>
-  <dt><code>$predict()</code></dt><dd><p>returns predictions by fitting the trained model on test data.</p></dd>
-</dl>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+<h3>Public methods</h3>
 
-    
-    <dl class='dl-horizontal'>
- <dt>params</dt><dd><p>the detailed version of these arguments can found in xgboost documentation <a href='http://xgboost.readthedocs.io/en/latest/parameter.html'>http://xgboost.readthedocs.io/en/latest/parameter.html</a></p></dd>
- <dt>booster</dt><dd><p>the trainer type, the values are <code>gbtree(default)</code>, <code>gblinear</code>, <code>dart:gbtree</code></p></dd>
- <dt>objective</dt><dd><p>specify the learning task. Check the link above for all possible values.</p></dd>
- <dt>max_features</dt><dd><p>the number of features to consider when looking for the best split
-     Possible values are <code>auto</code>,<code>sqrt</code>,<code>log</code>,<code>None</code></p></dd>
- <dt>n_thread</dt><dd><p>number of parallel threads used to run, default is to run using all threads available</p></dd>
- <dt>silent</dt><dd><p>0 means printing running messages, 1 means silent mode</p></dd>
- <dt>n_estimators</dt><dd><p>number of trees to grow, default = 100</p></dd>
- <dt>learning_rate</dt><dd><p>Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3</p></dd>
- <dt>max_depth</dt><dd><p>the maximum depth of each tree, default = 6</p></dd>
- <dt>nfold</dt><dd><p>set number of folds for cross validation</p></dd>
- <dt>stratified</dt><dd><p>if stratified sampling to be done or not, default is TRUE</p></dd>
- <dt>folds</dt><dd><p>the list of CV folds' indices - either those passed through the folds parameter or randomly generated.</p></dd>
- <dt>gamma</dt><dd><p>Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0</p></dd>
- <dt>min_child_weight</dt><dd><p>Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1</p></dd>
- <dt>subsample</dt><dd><p>Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
- <dt>colsample_bytree</dt><dd><p>Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
- <dt>lambda</dt><dd><p>L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1</p></dd>
- <dt>alpha</dt><dd><p>L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0</p></dd>
- <dt>eval_metric</dt><dd><p>Evaluation metrics for validation data, a default metric will be assigned according to objective</p></dd>
- <dt>print_every</dt><dd><p>print training log after n iterations. Default = 50</p></dd>
- <dt>feval</dt><dd><p>custom evaluation function</p></dd>
- <dt>early_stopping</dt><dd><p>Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen</p></dd>
- <dt>maximize</dt><dd><p>If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better.</p></dd>
- <dt>custom_objective</dt><dd><p>custom objective function</p></dd>
- <dt>save_period</dt><dd><p>when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.</p></dd>
- <dt>save_name</dt><dd><p>the name or path for periodically saved model file.</p></dd>
- <dt>xgb_model</dt><dd><p>a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.</p></dd>
- <dt>callbacks</dt><dd><p>a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.</p></dd>
- <dt>verbose</dt><dd><p>If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose &gt; 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.</p></dd>
- <dt>watchlist</dt><dd><p>what information should be printed when verbose=1 or verbose=2. Watchlist is used to specify validation set monitoring during training. For example user can specify watchlist=list(validation1=mat1, validation2=mat2) to watch the performance of each round's model on mat1 and mat2</p></dd>
- <dt>num_class</dt><dd><p>set number of classes in case of multiclassification problem</p></dd>
- <dt>weight</dt><dd><p>a vector indicating the weight for each row of the input.</p></dd>
- <dt>na_missing</dt><dd><p>by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.</p></dd>
-</dl>
-    
+<ul>
+<li><p><a href='#method-new'><code>XGBTrainer$new()</code></a></p></li>
+<li><p><a href='#method-cross_val'><code>XGBTrainer$cross_val()</code></a></p></li>
+<li><p><a href='#method-fit'><code>XGBTrainer$fit()</code></a></p></li>
+<li><p><a href='#method-predict'><code>XGBTrainer$predict()</code></a></p></li>
+<li><p><a href='#method-show_importance'><code>XGBTrainer$show_importance()</code></a></p></li>
+<li><p><a href='#method-clone'><code>XGBTrainer$clone()</code></a></p></li>
+</ul>
+<p><hr>
+<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$new(
+  booster,
+  objective,
+  nthread,
+  silent,
+  n_estimators,
+  learning_rate,
+  gamma,
+  max_depth,
+  min_child_weight,
+  subsample,
+  colsample_bytree,
+  lambda,
+  alpha,
+  eval_metric,
+  print_every,
+  feval,
+  early_stopping,
+  maximize,
+  custom_objective,
+  save_period,
+  save_name,
+  xgb_model,
+  callbacks,
+  verbose,
+  num_class,
+  weight,
+  na_missing
+)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>booster</code></dt><dd><p>the trainer type, the values are <code>gbtree(default)</code>, <code>gblinear</code>, <code>dart:gbtree</code></p></dd>
+
+<dt><code>objective</code></dt><dd><p>specify the learning task. Check the link above for all possible values.</p></dd>
+
+<dt><code>nthread</code></dt><dd><p>number of parallel threads used to run, default is to run using all threads available</p></dd>
+
+<dt><code>silent</code></dt><dd><p>0 means printing running messages, 1 means silent mode</p></dd>
+
+<dt><code>n_estimators</code></dt><dd><p>number of trees to grow, default = 100</p></dd>
+
+<dt><code>learning_rate</code></dt><dd><p>Step size shrinkage used in update to prevents overfitting. Lower the learning rate, more time it takes in training, value lies between between 0 and 1. Default = 0.3</p></dd>
+
+<dt><code>gamma</code></dt><dd><p>Minimum loss reduction required to make a further partition on a leaf node of the tree. The larger gamma is, the more conservative the algorithm will be. Value lies between 0 and infinity, Default = 0</p></dd>
+
+<dt><code>max_depth</code></dt><dd><p>the maximum depth of each tree, default = 6</p></dd>
+
+<dt><code>min_child_weight</code></dt><dd><p>Minimum sum of instance weight (hessian) needed in a child. If the tree partition step results in a leaf node with the sum of instance weight less than min_child_weight, then the building process will give up further partitioning. In linear regression task, this simply corresponds to minimum number of instances needed to be in each node. The larger min_child_weight is, the more conservative the algorithm will be. Value lies between 0 and infinity. Default = 1</p></dd>
+
+<dt><code>subsample</code></dt><dd><p>Subsample ratio of the training instances. Setting it to 0.5 means that XGBoost would randomly sample half of the training data prior to growing trees. and this will prevent overfitting. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
+
+<dt><code>colsample_bytree</code></dt><dd><p>Subsample ratio of columns when constructing each tree. Subsampling will occur once in every boosting iteration. Value lies between 0 and 1. Default = 1</p></dd>
+
+<dt><code>lambda</code></dt><dd><p>L2 regularization term on weights. Increasing this value will make model more conservative. Default = 1</p></dd>
+
+<dt><code>alpha</code></dt><dd><p>L1 regularization term on weights. Increasing this value will make model more conservative. Default = 0</p></dd>
+
+<dt><code>eval_metric</code></dt><dd><p>Evaluation metrics for validation data, a default metric will be assigned according to objective</p></dd>
+
+<dt><code>print_every</code></dt><dd><p>print training log after n iterations. Default = 50</p></dd>
+
+<dt><code>feval</code></dt><dd><p>custom evaluation function</p></dd>
+
+<dt><code>early_stopping</code></dt><dd><p>Used to prevent overfitting, stops model training after this number of iterations if there is no improvement seen</p></dd>
+
+<dt><code>maximize</code></dt><dd><p>If feval and early_stopping_rounds are set, then this parameter must be set as well. When it is TRUE, it means the larger the evaluation score the better.</p></dd>
+
+<dt><code>custom_objective</code></dt><dd><p>custom objective function</p></dd>
+
+<dt><code>save_period</code></dt><dd><p>when it is non-NULL, model is saved to disk after every save_period rounds, 0 means save at the end.</p></dd>
+
+<dt><code>save_name</code></dt><dd><p>the name or path for periodically saved model file.</p></dd>
+
+<dt><code>xgb_model</code></dt><dd><p>a previously built model to continue the training from. Could be either an object of class xgb.Booster, or its raw data, or the name of a file with a previously saved model.</p></dd>
+
+<dt><code>callbacks</code></dt><dd><p>a list of callback functions to perform various task during boosting. See callbacks. Some of the callbacks are automatically created depending on the parameters' values. User can provide either existing or their own callback methods in order to customize the training process.</p></dd>
+
+<dt><code>verbose</code></dt><dd><p>If 0, xgboost will stay silent. If 1, xgboost will print information of performance. If 2, xgboost will print some additional information. Setting verbose &gt; 0 automatically engages the cb.evaluation.log and cb.print.evaluation callback functions.</p></dd>
+
+<dt><code>num_class</code></dt><dd><p>set number of classes in case of multiclassification problem</p></dd>
+
+<dt><code>weight</code></dt><dd><p>a vector indicating the weight for each row of the input.</p></dd>
+
+<dt><code>na_missing</code></dt><dd><p>by default is set to NA, which means that NA values should be considered as 'missing' by the algorithm. Sometimes, 0 or other extreme value might be used to represent missing values. This parameter is only used when input is a dense matrix.</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Create a new `XGBTrainer` object.</p>
+
+<h3>Returns</h3>
+<p>A `XGBTrainer` object.</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>library(data.table)
+df &lt;- copy(iris)
+
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-cross_val"></a></p><h3>Method <code>cross_val()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$cross_val(X, y, nfolds = 5, stratified = TRUE, folds = NULL)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>X</code></dt><dd><p>data.frame</p></dd>
+
+<dt><code>y</code></dt><dd><p>character, name of target variable</p></dd>
+
+<dt><code>nfolds</code></dt><dd><p>integer, number of folds</p></dd>
+
+<dt><code>stratified</code></dt><dd><p>logical, whether to use stratified sampling</p></dd>
+
+<dt><code>folds</code></dt><dd><p>the list of CV folds' indices - either those passed through the folds parameter or randomly generated.</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Trains the xgboost model using cross validation scheme</p>
+
+<h3>Returns</h3>
+<p>NULL, trains a model and saves it in memory</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>library(data.table)
+df &lt;- copy(iris)
+
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+
+# do cross validation to find optimal value for n_estimators
+xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-fit"></a></p><h3>Method <code>fit()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$fit(X, y, valid = NULL)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>X</code></dt><dd><p>data.frame, training data</p></dd>
+
+<dt><code>y</code></dt><dd><p>character, name of target variable</p></dd>
+
+<dt><code>valid</code></dt><dd><p>data.frame, validation data</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Fits the xgboost model on given data</p>
+
+<h3>Returns</h3>
+<p>NULL, trains a model and keeps it in memory</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>library(data.table)
+df &lt;- copy(iris)
+
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-predict"></a></p><h3>Method <code><a href='https://rdrr.io/r/stats/predict.html'>predict()</a></code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$predict(df)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>df</code></dt><dd><p>data.frame, test data set</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Returns predicted values for a given test data</p>
+
+<h3>Returns</h3>
+<p>xgboost predictions</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>#' library(data.table)
+df &lt;- copy(iris)
+
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+
+# make predictions
+preds &lt;- xgb$predict(as.matrix(iris[,1:4]))
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-show_importance"></a></p><h3>Method <code>show_importance()</code></h3>
+
+<h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$show_importance(type = "plot", topn = 10)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>type</code></dt><dd><p>character, could be 'plot' or 'table'</p></dd>
+
+<dt><code>topn</code></dt><dd><p>integer, top n features to display</p></dd>
+
+</dl><p></div></p>
+<h3>Details</h3>
+<p>Shows feature importance plot</p>
+
+<h3>Returns</h3>
+<p>a table or a plot of feature importance</p>
+<h3>Examples</h3>
+<p><div class="r example copy"></p><pre>library(data.table)
+df &lt;- copy(iris)
+
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
+
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+xgb$show_importance()
+</pre><p></div></p>
+
+<p><hr>
+<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
+<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
+<p><div class="r"></p><pre>XGBTrainer$clone(deep = FALSE)</pre><p></div></p>
+
+<h3>Arguments</h3>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
+<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
+
+</dl><p></div></p>
+
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>data.table</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/data.table/topics/copy'>copy</a></span>(<span class='no'>iris</span>)
+    <pre class="examples"><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `XGBTrainer$new`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>iris</span>)
 
 <span class='co'># convert characters/factors to numeric</span>
-<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/numeric'>as.numeric</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
+<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
+
+<span class='co'># initialise model</span>
+<span class='no'>xgb</span> <span class='kw'>&lt;-</span> <span class='no'>XGBTrainer</span>$<span class='fu'>new</span>(<span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>'multi:softmax'</span>,
+                      <span class='kw'>maximize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                      <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
+                      <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
+                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `XGBTrainer$cross_val`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>iris</span>)
+
+<span class='co'># convert characters/factors to numeric</span>
+<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
+
+<span class='co'># initialise model</span>
+<span class='no'>xgb</span> <span class='kw'>&lt;-</span> <span class='no'>XGBTrainer</span>$<span class='fu'>new</span>(<span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>'multi:softmax'</span>,
+                      <span class='kw'>maximize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                      <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
+                      <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
+                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+
+<span class='co'># do cross validation to find optimal value for n_estimators</span>
+<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000+0.000000	test-merror:0.053333+0.033993 
+#&gt; Multiple eval metrics are present. Will use test_merror for early stopping.
+#&gt; Will train until test_merror hasn't improved in 50 rounds.
+#&gt; 
+#&gt; [2]	train-merror:0.016667+0.004714	test-merror:0.046667+0.024944 </div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `XGBTrainer$fit`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>iris</span>)
+
+<span class='co'># convert characters/factors to numeric</span>
+<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
 
 <span class='co'># initialise model</span>
 <span class='no'>xgb</span> <span class='kw'>&lt;-</span> <span class='no'>XGBTrainer</span>$<span class='fu'>new</span>(<span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>'multi:softmax'</span>,
@@ -218,43 +550,65 @@ tfidf$predict(X_test)
                       <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
                       <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
-#&gt; [2]	train-merror:0.026667 </div><div class='input'>
-<span class='co'># do cross validation to find optimal value for n_estimators</span>
-<span class='no'>xgb</span>$<span class='fu'>cross_val</span>(<span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>df</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'Species'</span>,<span class='kw'>nfolds</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>stratified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-              <span class='kw'>early_stopping</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with cv training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.016667+0.012472	test-merror:0.053333+0.041096 
-#&gt; Multiple eval metrics are present. Will use test_merror for early stopping.
-#&gt; Will train until test_merror hasn't improved in 1 rounds.
+#&gt; Will train until train_merror hasn't improved in 50 rounds.
 #&gt; 
-#&gt; [2]	train-merror:0.016667+0.012472	test-merror:0.053333+0.041096 
-#&gt; Stopping. Best iteration:
-#&gt; [1]	train-merror:0.016667+0.012472	test-merror:0.053333+0.041096
-#&gt; </div><div class='input'><span class='no'>best_iter</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='no'>cv_model</span>$<span class='no'>best_iteration</span>
-<span class='no'>xgb</span>$<span class='fu'>show_importance</span>()</div><div class='img'><img src='XGBTrainer-1.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt; [2]	train-merror:0.026667 </div><div class='input'>
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `XGBTrainer$predict`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='co'>#' library(data.table)</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>iris</span>)
+
+<span class='co'># convert characters/factors to numeric</span>
+<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
+
+<span class='co'># initialise model</span>
+<span class='no'>xgb</span> <span class='kw'>&lt;-</span> <span class='no'>XGBTrainer</span>$<span class='fu'>new</span>(<span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>'multi:softmax'</span>,
+                      <span class='kw'>maximize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                      <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
+                      <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
+                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
+#&gt; Will train until train_merror hasn't improved in 50 rounds.
+#&gt; 
+#&gt; [2]	train-merror:0.026667 </div><div class='input'>
 <span class='co'># make predictions</span>
-<span class='no'>preds</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/predict'>predict</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/data.table/topics/as.matrix'>as.matrix</a></span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]))
-<span class='no'>preds</span></div><div class='output co'>#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt;  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1
-#&gt;  [75] 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 1 2 2 2 2
-#&gt; [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
-#&gt; [149] 2 2</div></pre>
+<span class='no'>preds</span> <span class='kw'>&lt;-</span> <span class='no'>xgb</span>$<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html'>as.matrix</a></span>(<span class='no'>iris</span>[,<span class='fl'>1</span>:<span class='fl'>4</span>]))
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `XGBTrainer$show_importance`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>data.table</span>)
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/copy.html'>copy</a></span>(<span class='no'>iris</span>)
+
+<span class='co'># convert characters/factors to numeric</span>
+<span class='no'>df</span>$<span class='no'>Species</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='no'>df</span>$<span class='no'>Species</span>))-<span class='fl'>1</span>
+
+<span class='co'># initialise model</span>
+<span class='no'>xgb</span> <span class='kw'>&lt;-</span> <span class='no'>XGBTrainer</span>$<span class='fu'>new</span>(<span class='kw'>objective</span> <span class='kw'>=</span> <span class='st'>'multi:softmax'</span>,
+                      <span class='kw'>maximize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+                      <span class='kw'>eval_metric</span> <span class='kw'>=</span> <span class='st'>'merror'</span>,
+                      <span class='kw'>num_class</span><span class='kw'>=</span><span class='fl'>3</span>,
+                      <span class='kw'>n_estimators</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>xgb</span>$<span class='fu'>fit</span>(<span class='no'>df</span>, <span class='st'>'Species'</span>)</div><div class='output co'>#&gt; <span class='message'>converting the data into xgboost format..</span></div><div class='output co'>#&gt; <span class='message'>starting with training...</span></div><div class='output co'>#&gt; [1]	train-merror:0.020000 
+#&gt; Will train until train_merror hasn't improved in 50 rounds.
+#&gt; 
+#&gt; [2]	train-merror:0.026667 </div><div class='input'><span class='no'>xgb</span>$<span class='fu'>show_importance</span>()</div><div class='img'><img src='XGBTrainer-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#usage">Usage</a></li>
-
+      <li><a href="#details">Details</a></li>
+      <li><a href="#public-fields">Public fields</a></li>
       <li><a href="#methods">Methods</a></li>
-
-      <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -262,13 +616,16 @@ tfidf$predict(X_test)
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

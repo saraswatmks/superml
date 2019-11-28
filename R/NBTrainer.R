@@ -1,50 +1,60 @@
 #' Naive Bayes Trainer
-#' @description Trains a naive bayes model. It is built on top high performance naivebayes R package.
-#' @format \code{\link{R6Class}} object.
-#' @section Usage:
-#' For usage details see \bold{Methods, Arguments and Examples} sections.
-#' \preformatted{
-#' nbt = NBTrainer$new(prior=NULL, laplace=0, usekernel=FALSE)
-#' nbt$fit(X_train, "target")
-#' prediction <- bst$predict(X_test)
-#' }
-#' @section Methods:
-#' \describe{
-#'   \item{\code{$new()}}{Initialises an instance of naive bayes model}
-#'   \item{\code{$fit()}}{fits model to an input train data and trains the model.}
-#'   \item{\code{$predict()}}{returns predictions by fitting the trained model on test data.}
-#' }
-#' @section Arguments:
-#' \describe{
-#'  \item{prior}{for detailed explanation of parameters, check: https://cran.r-project.org/package=naivebayes}
-#'  \item{prior}{numeric vector with prior probabilities. vector with prior probabilities of the classes.
-#'               If unspecified, the class proportions for the training set are used.
-#'               If present, the probabilities should be specified in the order of the factor levels.}
-#'  \item{laplace}{value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)}
-#'  \item{usekernel}{if TRUE, density is used to estimate the densities of metric predictors}
-#' }
+#'
+#' Trains a probabilistic naive bayes model
+#'
+#' @details
+#' Trains a naive bayes model. It is built on top high performance naivebayes R package.
+#'
 #' @export
-#' @examples
-#' data(iris)
-#' nb <- NBTrainer$new()
-#' nb$fit(iris, 'Species')
-#' y <- nb$predict(iris)
+
 NBTrainer <- R6Class('NBTrainer', public = list(
 
+    #' @field prior numeric vector with prior probabilities. vector with prior probabilities of the classes.
+    #'               If unspecified, the class proportions for the training set are used.
+    #'               If present, the probabilities should be specified in the order of the factor levels.
     prior = NULL,
+    #' @field laplace value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)
     laplace = 0,
+    #' @field usekernel if TRUE, density is used to estimate the densities of metric predictors
     usekernel = FALSE,
-    model=NULL,
+    #' @field model for internal use
+    model = NULL,
+
+    #' @details
+    #' Create a new `NBTrainer` object.
+    #'
+    #' @param prior numeric, prior numeric vector with prior probabilities. vector with prior probabilities of the classes.
+    #'               If unspecified, the class proportions for the training set are used.
+    #'               If present, the probabilities should be specified in the order of the factor levels.
+    #' @param laplace nuemric, value used for Laplace smoothing. Defaults to 0 (no Laplace smoothing)
+    #' @param usekernel logical, if TRUE, density is used to estimate the densities of metric predictors
+    #'
+    #' @return A `NBTrainer` object.
+    #'
+    #' @examples
+    #' data(iris)
+    #' nb <- NBTrainer$new()
 
     initialize = function(prior, laplace, usekernel){
 
-        if(!(missing(prior))) self$prior <- prior
-        if(!(missing(laplace))) self$laplace <- laplace
-        if(!(missing(usekernel))) self$usekernel <- usekernel
+        if (!(missing(prior))) self$prior <- prior
+        if (!(missing(laplace))) self$laplace <- laplace
+        if (!(missing(usekernel))) self$usekernel <- usekernel
         superml::check_package("naivebayes")
 
     },
 
+    #' @details
+    #' Fits the naive bayes model
+    #'
+    #' @param X data.frame containing train features
+    #' @param y character, name of target variable
+    #' @return NULL, trains and saves the model in memory
+    #'
+    #' @examples
+    #' data(iris)
+    #' nb <- NBTrainer$new()
+    #' nb$fit(iris, 'Species')
 
     fit = function(X, y){
 
@@ -56,16 +66,29 @@ NBTrainer <- R6Class('NBTrainer', public = list(
 
         f <- as.formula(paste(y , paste("~ .")))
         self$model <- naivebayes::naive_bayes(f
-                                              ,data=X
+                                              ,data = X
                                               ,laplace = self$laplace
                                               ,prior = self$prior
                                               ,usekernel = self$usekernel)
 
     },
 
+    #' @details
+    #' Returns predictions from the model
+    #'
+    #' @param X data.frame containing test features
+    #' @param type character, if the predictions should be labels or probability
+    #' @return NULL, trains and saves the model in memory
+    #'
+    #' @examples
+    #' data(iris)
+    #' nb <- NBTrainer$new()
+    #' nb$fit(iris, 'Species')
+    #' y <- nb$predict(iris)
+
     predict = function(X, type="class"){
 
-        return (stats::predict(self$model, X, type=type))
+        return(stats::predict(self$model, X, type = type))
 
     }
 

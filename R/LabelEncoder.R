@@ -32,12 +32,28 @@
 
 LabelEncoder <- R6Class("LabelEncoder", public = list(
 
+    #' @field input_data internal use
     input_data = NA,
+    #' @field encodings internal use
     encodings = NA,
+    #' @field decodings internal use
     decodings = NA,
+    #' @field fit_model internal use
     fit_model = FALSE,
 
-    # nothing to initialise in this class
+    #' @details
+    #' Fits the labelencoder model on given data
+    #'
+    #' @param data_col a vector containing non-null values
+    #' @return NULL, calculates the encoding and save in memory
+    #'
+    #' @examples
+    #' data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+    #' lbl <- LabelEncoder$new()
+    #' lbl$fit(data_ex$Name)
+    #' data_ex$Name <- lbl$fit_transform(data_ex$Name)
+    #' decode_names <- lbl$inverse_transform(data_ex$Name)
+
     fit = function(data_col){
 
         self$input_data <- private$check_data(data_col)
@@ -46,6 +62,18 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
         self$fit_model <- TRUE
 
     },
+
+    #' @details
+    #' Fits and returns the encoding
+    #'
+    #' @param data_col a vector containing non-null values
+    #' @return encoding values for the given input data
+    #'
+    #' @examples
+    #' data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+    #' lbl <- LabelEncoder$new()
+    #' lbl$fit(data_ex$Name)
+    #' data_ex$Name <- lbl$fit_transform(data_ex$Name)
 
     fit_transform = function(data_col){
 
@@ -56,19 +84,31 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
                                self$encodings,
                                convert_type = NULL,
                                output_type = numeric(1))
-        return (vals)
+        return(vals)
 
     },
 
+    #' @details
+    #' Returns the encodings from the fitted model
+    #'
+    #' @param data_col a vector containing non-null values
+    #' @return encoding values for the given input data
+    #'
+    #' @examples
+    #' data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+    #' lbl <- LabelEncoder$new()
+    #' lbl$fit(data_ex$Name)
+    #' data_ex$Name <- lbl$transform(data_ex$Name)
+
     transform = function(data_col){
 
-        if(!(isTRUE(self$fit_model)))
+        if (!(isTRUE(self$fit_model)))
             stop("Please run fit before using transform.")
 
         data_col <- private$check_data(data_col)
 
         # all values in the new vector should be in encodings
-        if(!(all(data_col %in% names(self$encodings)))){
+        if (!(all(data_col %in% names(self$encodings)))) {
             message(strwrap("There are new values in this vector which weren't
                  available during fit. Replacing those values with 'NA'"))
 
@@ -82,13 +122,26 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
                                self$encodings,
                                convert_type = NULL,
                                output_type = numeric(1))
-        return (vals)
+        return(vals)
     },
+
+    #' @details
+    #' Gives back the original values from a encoded values
+    #'
+    #' @param coded_col a vector containing label encoded values
+    #' @return original values from the label encoded data
+    #'
+    #' @examples
+    #' data_ex <- data.frame(Score = c(10,20,30,4), Name=c('Ao','Bo','Bo','Co'))
+    #' lbl <- LabelEncoder$new()
+    #' lbl$fit(data_ex$Name)
+    #' data_ex$Name <- lbl$fit_transform(data_ex$Name)
+    #' decode_names <- lbl$inverse_transform(data_ex$Name)
 
     inverse_transform = function(coded_col){
 
         #check if all values exist in decode
-        if(!(all(coded_col %in% self$encodings))){
+        if (!(all(coded_col %in% self$encodings))) {
             stop(strwrap("There are new values in this data which weren't
                     available during fit. Please fix the issue."))
         }
@@ -97,8 +150,8 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
         vals <- private$mapper(coded_col,
                                self$decodings,
                                convert_type = as.character,
-                               output_type= character(1))
-        return (vals)
+                               output_type = character(1))
+        return(vals)
 
     }
 
@@ -114,8 +167,8 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
         maps <- list()
 
         # because the encoding should start with zero (i - 1)
-        for(i in seq(all_values))  maps[all_values[i]] <- i-1
-        return (maps)
+        for (i in seq(all_values))  maps[all_values[i]] <- i - 1
+        return(maps)
 
     },
 
@@ -130,10 +183,10 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
 
     mapper = function(input_vec, coded_list, convert_type ,output_type){
 
-        if(is.null(convert_type)){
+        if (is.null(convert_type)) {
             # this is to avoid using convert_type argument for
             # transform, fit_transform
-            return (vapply(input_vec,
+            return(vapply(input_vec,
                            function(x) coded_list[[x]],
                            FUN.VALUE = output_type,
                            USE.NAMES = F))
@@ -149,17 +202,17 @@ LabelEncoder <- R6Class("LabelEncoder", public = list(
     check_data = function(data_col){
 
         # fix data issues here
-        if(any(is.na(data_col))){
+        if (any(is.na(data_col))) {
             message("The data contains NA values. Imputing NA with 'NA' ")
             data_col <- replace(data_col, which(is.na(data_col)), "NA")
         }
 
-        if(any((data_col == ""))){
+        if (any((data_col == ""))) {
             message("The data contains blank values. Imputing them with 'NA' ")
             data_col <- replace(data_col, which(data_col == ""), "NA")
         }
 
-        if(any((data_col == " "))){
+        if (any((data_col == " "))) {
             message("The data contains blank values. Imputing them with 'NA' ")
             data_col <- replace(data_col, which(data_col == " "), "NA")
         }

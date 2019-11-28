@@ -35,11 +35,38 @@
 #' bst$fit(xtrain, xtest, 'Species')
 #' pred <- bst$predict(type="raw")
 KNNTrainer <- R6Class("KNNTrainer", public = list(
-    k=1,
-    prob=FALSE,
-    algorithm=NULL,
-    type="class",
+
+    #' @field k number of neighbours to predict
+    k = 1,
+    #' @field prob if probability should be computed, default=FALSE
+    prob = FALSE,
+    #' @field algorithm algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'
+    algorithm = NULL,
+    #' @field type type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'
+    type = "class",
+    #' @field model for internal use
     model = NA,
+
+    #' @details
+    #' Create a new `KNNTrainer` object.
+    #'
+    #' @param k k number of neighbours to predict
+    #' @param prob if probability should be computed, default=FALSE
+    #' @param algorithm algorithm used to train the model, possible values are 'kd_tree','cover_tree','brute'
+    #' @param type type of problem to solve i.e. regression or classification, possible values are 'reg' or 'class'
+    #' @return A `KNNTrainer` object.
+    #'
+    #' @examples
+    #' data("iris")
+    #'
+    #' iris$Species <- as.integer(as.factor(iris$Species))
+    #'
+    #' xtrain <- iris[1:100,]
+    #' xtest <- iris[101:150,]
+    #'
+    #' bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+    #' bst$fit(xtrain, xtest, 'Species')
+    #' pred <- bst$predict(type="raw")
 
     initialize = function(k, prob, algorithm, type){
         if(!(missing(k))) self$k <- k
@@ -48,6 +75,25 @@ KNNTrainer <- R6Class("KNNTrainer", public = list(
         if(!(missing(type))) self$type <- type
         superml::check_package("FNN")
     },
+
+    #' @details
+    #' Trains the KNNTrainer model
+    #'
+    #' @param train data.frame or matrix
+    #' @param test data.frame or matrix
+    #' @param y character, name of target variable
+    #' @return NULL
+    #'
+    #' @examples
+    #' data("iris")
+    #'
+    #' iris$Species <- as.integer(as.factor(iris$Species))
+    #'
+    #' xtrain <- iris[1:100,]
+    #' xtest <- iris[101:150,]
+    #'
+    #' bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+    #' bst$fit(xtrain, xtest, 'Species')
 
     fit = function(train, test, y){
 
@@ -69,15 +115,33 @@ KNNTrainer <- R6Class("KNNTrainer", public = list(
         }
     },
 
+    #' @details
+    #' Predits the nearest neigbours for test data
+    #'
+    #' @param type character, 'raw' for labels else 'prob'
+    #' @return a list of predicted neighbours
+    #'
+    #' @examples
+    #' data("iris")
+    #'
+    #' iris$Species <- as.integer(as.factor(iris$Species))
+    #'
+    #' xtrain <- iris[1:100,]
+    #' xtest <- iris[101:150,]
+    #'
+    #' bst <- KNNTrainer$new(k=3, prob=TRUE, type="class")
+    #' bst$fit(xtrain, xtest, 'Species')
+    #' pred <- bst$predict(type="raw")
+
     predict = function(type="raw"){
 
-        if(self$type == "class"){
-            if(type=="raw"){
+        if (self$type == "class") {
+            if (type == "raw") {
                 return(as.numeric(as.character(self$model)))
-            } else if(type=="prob"){
+            } else if (type == "prob") {
                 return(attr(self$model, "prob"))
             }
-        } else if (self$type == "reg"){
+        } else if (self$type == "reg") {
             return(self$model$pred)
         }
 
@@ -90,47 +154,47 @@ KNNTrainer <- R6Class("KNNTrainer", public = list(
             train <- as.data.table(train)
             test <- as.data.table(test)
 
-            if(!(y %in% names(train)))
+            if (!(y %in% names(train)))
                 stop(sprintf("%s not available in training data", y))
 
-            # get dependent variable and store temporarily 
+            # get dependent variable and store temporarily
             y_temp <- train[[y]]
 
             # select all independent features
-            train <- train[,setdiff(names(train), y), with=F]
+            train <- train[,setdiff(names(train), y), with = F]
 
             # subset from test, just in case if the dependet variable is in test
-            test <- test[, setdiff(names(test), y), with=F]
-            
+            test <- test[, setdiff(names(test), y), with = F]
+
             # set dependent variable to y
             y <- y_temp
 
-            if(ncol(test) != ncol(train))
+            if (ncol(test) != ncol(train))
                 stop(sprintf('Train and test data have
                              unequal independent variables.'))
 
-            if(any(vapply(train, is.factor, logical(1)))
+            if (any(vapply(train, is.factor, logical(1)))
                | any(vapply(train, is.character, logical(1))))
                 stop("Train data contains non-numeric variables.
                      Please convert them into integer.")
 
-            if(any(vapply(test, is.factor, logical(1)))
+            if (any(vapply(test, is.factor, logical(1)))
                | any(vapply(test, is.character, logical(1))))
                 stop("Test data contains non-numeric variables.
                      Please convert them into integer.")
 
             # check in case target variable contains float values or NA values
-            if(any(is.na(y)))
+            if (any(is.na(y)))
                 stop("The target variable contains NA values.")
 
-            if(self$type=="class"){
-                if(is.numeric(y)){
-                    if(!(all(y == floor(y))))
+            if (self$type=="class") {
+                if (is.numeric(y)){
+                    if (!(all(y == floor(y))))
                         stop("The target variable contains float values")
                 }
             }
 
-            return(list(train = train, test= test, y = y))
+            return(list(train = train, test = test, y = y))
         }
 
     )

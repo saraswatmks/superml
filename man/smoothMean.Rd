@@ -4,8 +4,15 @@
 \alias{smoothMean}
 \title{smoothMean Calculator}
 \usage{
-smoothMean(train_df, test_df, colname, target, min_samples_leaf = 1,
-  smoothing = 1, noise_level = 0)
+smoothMean(
+  train_df,
+  test_df,
+  colname,
+  target,
+  min_samples_leaf = 1,
+  smoothing = 1,
+  noise_level = 0
+)
 }
 \arguments{
 \item{train_df}{train dataset}

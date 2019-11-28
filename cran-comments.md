@@ -14,10 +14,17 @@ There were no ERRORs or WARNINGs.
 
 There was 1 NOTE (found only on Ubuntu Linux 16.04 LTS, R-release, GCC):
 
-* Possibly mis-spelled words in DESCRIPTION:
+  New submission
+  Package was archived on CRAN
+
+  Possibly mis-spelled words in DESCRIPTION:
   Scikit (3:58)
   learn's (11:45)
   scikit (11:38)
+  
+  CRAN repository db overrides:
+  X-CRAN-Comment: Archived on 2019-11-25 as check problems were not
+    corrected in time.
  
   It is not a spelling mistake. It's the name of a python library.
   This is my second submission on cran.
