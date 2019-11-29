@@ -12,7 +12,5 @@
 #' Training Dataset used for regression examples. In this data set, we have to predict
 #' the sale price of the houses.
 #'
-#' @format A data frame with 81 variables
-#'
 #' @source \url{https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data}
 "reg_train"
