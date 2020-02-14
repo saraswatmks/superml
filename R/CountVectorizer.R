@@ -16,7 +16,7 @@ CountVectorizer <- R6::R6Class(
         #' @field min_df When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.
         min_df = 1,
         #' @field max_features use top features sorted by count to be used in bag of words matrix.
-        max_features = 1,
+        max_features = NULL,
         #' @field split splitting criteria for strings, default: " "
         split = " ",
         #' @field regex regex expression to use for text cleaning.
@@ -33,7 +33,7 @@ CountVectorizer <- R6::R6Class(
         #' @param max_df nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.
         #' @param max_features integer, use top features sorted by count to be used in bag of words matrix.
         #' @param regex character, regex expression to use for text cleaning.
-        #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard stopwords
+        #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords
         #' @param split character, splitting criteria for strings, default: " "
         #'
         #' @return A `CountVectorizer` object.
@@ -173,7 +173,7 @@ CountVectorizer <- R6::R6Class(
         },
 
 
-        get_tokens = function(sentences, min_df=1, max_df=1, max_features=1, split=NULL){
+        get_tokens = function(sentences, min_df=1, max_df=1, max_features=NULL, split=NULL){
 
 
             # sentences should be preprocessed sentences
@@ -182,36 +182,48 @@ CountVectorizer <- R6::R6Class(
             # instead of creating a matrix for all the words
             tokens_counter <- sort(table(tm::Boost_tokenizer(sentences)), decreasing = TRUE)
 
-            # max features should not be greater than max. value
-            if (max_features > length(tokens_counter))
-                stop('max_features cannot be greater than maximum possible
-                     features. Please pass a smaller value.')
+
+            # check for default features
+            if (is.null(max_features) & (max_df == 1) & (min_df == 1)) {
+                # return all the tokens
+                return(names(tokens_counter))
+            }
+
+            # Check max feature
 
             # max_feature will override other two parameters (min_df, max_df)
-            # this is default value, use all tokens
-            if (max_features == 1) {
-                return(names(tokens_counter))
+            if (!(is.null(max_features))) {
+                if (max_features > length(tokens_counter)) {
+                    stop('max_features cannot be greater than maximum possible features. Please pass a smaller value.')
+                }
+                # this is default value, use all tokens
+                if (max_features == 1) {
+                    return(names(tokens_counter))
+                }
+
+                if (max_features > 1) {
+                    return(names(tokens_counter)[1:max_features])
+                }
+
             }
 
-            if (max_features > 1) {
-                return(names(tokens_counter)[1:max_features])
+            # get proportion of tokens across documents
+            docs_len <- length(sentences)
+            docs_count <- sapply(names(tokens_counter),
+                                 function(x)
+                                     (sum(grepl(pattern = paste0("\\b", x,"\\b"), s)) / docs_len))
+
+            # Check min_df and max_df
+            if (min_df == 1 & max_df != 1) {
+                # use max_df
+                return(names(docs_count)[docs_count <= max_df])
+            } else if (min_df != 1 & max_df == 1) {
+                # use min_df
+                return(names(docs_count)[docs_count >= min_df])
+            } else if (min_df != 1 & max_df != 1) {
+                # now filter documents on given min_df or max_df value
+                return(names(docs_count)[(docs_count >= min_df) & (docs_count <= max_df)])
             }
-
-            # min_df = keep tokens that occur in atleast this % documents (lower_limit)
-            # max_df = keep tokens that occur in at max this % documents (upper_limit)
-
-            if (min_df > max_df) {
-                stop("min_df cannot be greater than max_df.
-                     Please use another value.")
-            } else if (min_df == 1 & max_df == 1) {
-                return(names(tokens_counter))
-            }
-
-            # get upper and lower limit values
-            lower_limit <- round(length(sentences) * min_df)
-            upper_limit <- round(length(sentences) * max_df)
-
-            return(list(lower = lower_limit, upper = upper_limit))
 
         },
 
@@ -226,7 +238,7 @@ CountVectorizer <- R6::R6Class(
                 lapply(
                     Map(
                         cbind, seq(sentences),
-                        strsplit(sentences, split = split_rule)), data.table), fill=TRUE)
+                        strsplit(sentences, split = split_rule)), data.table), fill = TRUE)
 
             f <- Matrix::Matrix(Matrix::as.matrix(dcast.data.table(f,
                                                                    V1 ~ V2,
