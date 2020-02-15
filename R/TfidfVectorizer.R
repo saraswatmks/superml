@@ -16,10 +16,9 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @field min_df When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.
     min_df = 1,
     #' @field max_features use top features sorted by count to be used in bag of words matrix.
-    max_features = 1,
+    max_features = NULL,
     #' @field smooth_idf logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once
     smooth_idf = TRUE,
-
 
     #' @details
     #' Create a new `TfIdfVectorizer` object.
@@ -34,8 +33,8 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @examples
     #' TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
 
-    initialize = function(min_df, max_df, max_features, smooth_idf){
-        super$initialize(max_df, min_df, max_features)
+    initialize = function(min_df, max_df, max_features, smooth_idf, remove_stopwords){
+        super$initialize(min_df = min_df, max_df = max_df, max_features = max_features, remove_stopwords = remove_stopwords)
         if (!(missing(smooth_idf))) self$smooth_idf <- smooth_idf
 
     },
@@ -76,7 +75,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
 
     fit_transform = function(sentences){
         self$fit(sentences)
-        return(private$gettfmatrix(self$model, smooth_idf = self$smooth_idf))
+        return(private$gettfmatrix(self$model, sentences = sentences, smooth_idf = self$smooth_idf))
     },
 
     #' @details
@@ -105,18 +104,21 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     }),
 
     private = list(
-        gettfmatrix = function(countmatrix, smooth_idf = TRUE){
+        gettfmatrix = function(countmatrix, sentences, smooth_idf = TRUE){
 
-            tf  <- countmatrix
+            # create idf matrix
+            tokens <- colnames(countmatrix)
 
-            if (isTRUE(smooth_idf)) idf <- log(1 + nrow(tf) /
-                                                  (1 + colSums(tf))) + 1
-            else idf <- log(nrow(tf) / colSums(tf))
+            # Number of documents with term t in it
+            n_docs_with_token <- sapply(tokens, function(x) sum(grepl(pattern = paste0("\\b", x,"\\b"), x = sentences)))
+            total_docs <- nrow(countmatrix)
 
-            tfidf <- tf
+            # add 1 to avoid zero division error
+            idf_ <- log((total_docs + as.numeric(smooth_idf)) / (n_docs_with_token + as.numeric(smooth_idf))) + 1
 
-            for (word in names(idf)) {
-                tfidf[, word] <- tf[, word] * idf[word]
+            tfidf <- countmatrix
+            for (word in tokens) {
+                tfidf[, word] <- tfidf[, word] * idf_[[word]]
             }
 
             return(tfidf)
