@@ -267,7 +267,7 @@ CountVectorizer <- R6::R6Class(
             # get proportion of tokens across documents
             docs_count <- sapply(tokens_counter,
                                  function(x)
-                                     (sum(grepl(pattern = paste0("\\b", x,"\\b"), s)) / length(sentences)))
+                                     (sum(grepl(pattern = paste0("\\b", x,"\\b"), sentences)) / length(sentences)))
 
             # Check min_df and max_df
 
