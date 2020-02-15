@@ -143,8 +143,7 @@ CountVectorizer <- R6::R6Class(
                 stop("Please run fit before applying transformation.")
 
             # use the same column names from self$model
-            use_token <- attr(self$model, "Dimnames")[[2]]
-
+            use_token <- attr(self$model, "dimnames")[[2]]
             return(
                 private$get_bow_df(
                     sentences,
@@ -251,7 +250,9 @@ CountVectorizer <- R6::R6Class(
             # max_feature will override other two parameters (min_df, max_df)
             if (!(is.null(max_features))) {
                 if (max_features > length(tokens_counter)) {
-                    stop('max_features cannot be greater than maximum possible features. Please pass a smaller value.')
+                    # use all possible features
+                    max_features <- length(tokens_counter)
+
                 }
                 # use all tokens
                 if (max_features == 1) {
@@ -290,24 +291,26 @@ CountVectorizer <- R6::R6Class(
                               model = NULL,
                               ctransform=FALSE){
 
-            f <- sapply(use_tokens,
-                       function(x) lapply(sentences,
-                                          function(y) sum(grepl(pattern = paste0("\\b", x,"\\b"), x = y))))
+            # only compute during fit
+            if (is.null(model)) {
+                f <- sapply(use_tokens,
+                            function(x) lapply(sentences,
+                                               function(y) sum(grepl(pattern = paste0("\\b", x,"\\b"), x = y))))
+                f <- apply(f, 2, as.numeric)
 
-            f <- Matrix::Matrix(f, sparse = T)
+                return(f[, use_tokens])
+            }
 
             if (isTRUE(ctransform)) {
 
-                common_cols <- use_tokens[(use_tokens %in% colnames(f))]
+                common_cols <- use_tokens[(use_tokens %in% colnames(model))]
                 different_cols <- setdiff(use_tokens, common_cols)
                 tr_output <- do.call(cbind,
                                      sapply(different_cols,
                                             function(x) list(rep_len(0, nrow(f)))))
 
-                return(do.call(cbind, list(f[,common_cols], tr_output)))
+                return(do.call(cbind, list(model[,common_cols], tr_output)))
 
-            } else {
-                return(f[,use_tokens])
             }
 
         },

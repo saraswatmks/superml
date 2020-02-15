@@ -179,7 +179,8 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
 
             if (isTRUE(norm)) {
                 # normalize rows
-                tfidf = Matrix::Diagonal(x = 1 / sqrt(Matrix::rowSums(tfidf^2))) %*% tfidf
+                # tfidf = Matrix::Diagonal(x = 1 / sqrt(Matrix::rowSums(tfidf^2))) %*% tfidf
+                tfidf = diag(x = 1 / sqrt(rowSums(tfidf^2))) %*% tfidf
                 return(tfidf)
             }
 
