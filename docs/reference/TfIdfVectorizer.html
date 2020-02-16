@@ -154,7 +154,19 @@
 
 <dt><code>max_features</code></dt><dd><p>use top features sorted by count to be used in bag of words matrix.</p></dd>
 
+<dt><code>ngram_range</code></dt><dd><p>The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n &lt;= n &lt;= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.</p></dd>
+
+<dt><code>split</code></dt><dd><p>splitting criteria for strings, default: " "</p></dd>
+
+<dt><code>regex</code></dt><dd><p>regex expression to use for text cleaning.</p></dd>
+
+<dt><code>remove_stopwords</code></dt><dd><p>a list of stopwords to use, by default it uses its inbuilt list of standard stopwords</p></dd>
+
 <dt><code>smooth_idf</code></dt><dd><p>logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once</p></dd>
+
+<dt><code>norm</code></dt><dd><p>logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE</p></dd>
+
+<dt><code>parallel</code></dt><dd><p>speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -178,17 +190,39 @@
 <a id="method-new"></a></p><h3>Method <code>new()</code></h3>
 
 <h3>Usage</h3>
-<p><div class="r"></p><pre>TfIdfVectorizer$new(min_df, max_df, max_features, smooth_idf)</pre><p></div></p>
+<p><div class="r"></p><pre>TfIdfVectorizer$new(
+  min_df,
+  max_df,
+  max_features,
+  ngram_range,
+  regex,
+  remove_stopwords,
+  split,
+  smooth_idf,
+  norm
+)</pre><p></div></p>
 
 <h3>Arguments</h3>
 <p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>min_df</code></dt><dd><p>numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.</p></dd>
 
-<dt><code>max_df</code></dt><dd><p>nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.</p></dd>
+<dt><code>max_df</code></dt><dd><p>numeric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.</p></dd>
 
-<dt><code>max_features</code></dt><dd><p>integer, use top features sorted by count to be used in bag of words matrix.</p></dd>
+<dt><code>max_features</code></dt><dd><p>integer, Build a vocabulary that only consider the top max_features ordered by term frequency across the corpus.</p></dd>
+
+<dt><code>ngram_range</code></dt><dd><p>vector, The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n &lt;= n &lt;= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.</p></dd>
+
+<dt><code>regex</code></dt><dd><p>character, regex expression to use for text cleaning.</p></dd>
+
+<dt><code>remove_stopwords</code></dt><dd><p>list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords</p></dd>
+
+<dt><code>split</code></dt><dd><p>character, splitting criteria for strings, default: " "</p></dd>
 
 <dt><code>smooth_idf</code></dt><dd><p>logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once</p></dd>
+
+<dt><code>norm</code></dt><dd><p>logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE</p></dd>
+
+<dt><code>parallel</code></dt><dd><p>logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
 
 </dl><p></div></p>
 <h3>Details</h3>
@@ -197,7 +231,7 @@
 <h3>Returns</h3>
 <p>A `TfIdfVectorizer` object.</p>
 <h3>Examples</h3>
-<p><div class="r example copy"></p><pre>TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+<p><div class="r example copy"></p><pre>TfIdfVectorizer$new()
 </pre><p></div></p>
 
 <p><hr>
@@ -294,17 +328,20 @@ tf_matrix &lt;- tf$transform(new_sents)
 <span class='co'>## Method `TfIdfVectorizer$new`</span>
 <span class='co'>## ------------------------------------------------</span>
 
-<span class='no'>TfIdfVectorizer</span>$<span class='fu'>new</span>(<span class='kw'>smooth_idf</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_df</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</div><div class='output co'>#&gt; &lt;TfIdfVectorizer&gt;
+<span class='no'>TfIdfVectorizer</span>$<span class='fu'>new</span>()</div><div class='output co'>#&gt; &lt;TfIdfVectorizer&gt;
 #&gt;   Inherits from: &lt;CountVectorizer&gt;
 #&gt;   Public:
 #&gt;     clone: function (deep = FALSE) 
 #&gt;     fit: function (sentences) 
 #&gt;     fit_transform: function (sentences) 
-#&gt;     initialize: function (min_df, max_df, max_features, smooth_idf) 
-#&gt;     max_df: 0.3
-#&gt;     max_features: 1
+#&gt;     initialize: function (min_df, max_df, max_features, ngram_range, regex, remove_stopwords, 
+#&gt;     max_df: 1
+#&gt;     max_features: NULL
 #&gt;     min_df: 1
 #&gt;     model: NULL
+#&gt;     ngram_range: 1 1
+#&gt;     norm: TRUE
+#&gt;     parallel: TRUE
 #&gt;     regex: [^a-zA-Z0-9 ]
 #&gt;     remove_stopwords: TRUE
 #&gt;     sentences: NA
@@ -313,10 +350,14 @@ tf_matrix &lt;- tf$transform(new_sents)
 #&gt;     transform: function (sentences) 
 #&gt;   Private:
 #&gt;     check_args: function (x, max_value, what) 
-#&gt;     get_bow_df: function (sentences, split_rule = " ", use_tokens = NULL, model = NULL, 
-#&gt;     get_tokens: function (sentences, min_df = 1, max_df = 1, max_features = 1, 
-#&gt;     gettfmatrix: function (countmatrix, smooth_idf = TRUE) 
-#&gt;     preprocess: function (sentences, regex = "[^0-9a-zA-Z ]", remove_stopwords) </div><div class='input'>
+#&gt;     CJ.dt: function (X, Y) 
+#&gt;     get_bow_df: function (sentences, use_tokens = NULL) 
+#&gt;     get_tokens: function (sentences, min_df = 1, max_df = 1, ngram_range = NULL, 
+#&gt;     gettfmatrix: function (countmatrix, sentences, norm, smooth_idf = TRUE) 
+#&gt;     gsub_match: function (token, sent) 
+#&gt;     preprocess: function (sentences, regex = "[^0-9a-zA-Z ]", remove_stopwords) 
+#&gt;     super_apply_tokenizer: function (text, ngram_range, split) 
+#&gt;     super_tokenizer: function (text, ngram_range, split = " ") </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `TfIdfVectorizer$fit`</span>
 <span class='co'>## ------------------------------------------------</span>
@@ -334,7 +375,8 @@ tf_matrix &lt;- tf$transform(new_sents)
 <span class='no'>sents</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'i am alone in dark.'</span>,<span class='st'>'mother_mary a lot'</span>,
          <span class='st'>'alone in the dark?'</span>, <span class='st'>'many mothers in the lot....'</span>)
 <span class='no'>tf</span> <span class='kw'>&lt;-</span> <span class='no'>TfIdfVectorizer</span>$<span class='fu'>new</span>(<span class='kw'>smooth_idf</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>min_df</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
-<span class='no'>tf_matrix</span> <span class='kw'>&lt;-</span> <span class='no'>tf</span>$<span class='fu'>fit_transform</span>(<span class='no'>sents</span>)</div><div class='output co'>#&gt; <span class='error'>Error in colSums(tf): 'x' must be an array of at least two dimensions</span></div><div class='input'><span class='co'># }</span>
+<span class='no'>tf_matrix</span> <span class='kw'>&lt;-</span> <span class='no'>tf</span>$<span class='fu'>fit_transform</span>(<span class='no'>sents</span>)
+<span class='co'># }</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `TfIdfVectorizer$transform`</span>
@@ -346,8 +388,8 @@ tf_matrix &lt;- tf$transform(new_sents)
 <span class='no'>new_sents</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dark at night"</span>,<span class='st'>'mothers day'</span>)
 <span class='no'>tf</span> <span class='kw'>=</span> <span class='no'>TfIdfVectorizer</span>$<span class='fu'>new</span>(<span class='kw'>min_df</span><span class='kw'>=</span><span class='fl'>0.1</span>)
 <span class='no'>tf</span>$<span class='fu'>fit</span>(<span class='no'>sents</span>)
-<span class='no'>tf_matrix</span> <span class='kw'>&lt;-</span> <span class='no'>tf</span>$<span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span>(<span class='no'>new_sents</span>)</div><div class='output co'>#&gt; <span class='error'>Error in colSums(tf): 'x' must be an array of at least two dimensions</span></div><div class='input'># }
-</div></pre>
+<span class='no'>tf_matrix</span> <span class='kw'>&lt;-</span> <span class='no'>tf</span>$<span class='fu'><a href='https://rdrr.io/r/base/transform.html'>transform</a></span>(<span class='no'>new_sents</span>)
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
