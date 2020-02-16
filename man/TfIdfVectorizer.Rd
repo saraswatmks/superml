@@ -109,7 +109,8 @@ tf_matrix <- tf$transform(new_sents)
   remove_stopwords,
   split,
   smooth_idf,
-  norm
+  norm,
+  parallel
 )}\if{html}{\out{</div>}}
 }
 
