@@ -101,7 +101,6 @@ CountVectorizer <- R6::R6Class(
             )
 
             self$model <- private$get_bow_df(self$sentences,
-                                             split_rule = self$split,
                                              use_tokens = use_tokens)
 
 
@@ -143,13 +142,10 @@ CountVectorizer <- R6::R6Class(
                 stop("Please run fit before applying transformation.")
 
             # use the same column names from self$model
-            use_token <- attr(self$model, "dimnames")[[2]]
             return(
                 private$get_bow_df(
                     sentences,
-                    use_tokens = use_token,
-                    model = self$model,
-                    ctransform = TRUE
+                    use_tokens = colnames(self$model)
                 )
             )
 
@@ -235,7 +231,7 @@ CountVectorizer <- R6::R6Class(
                     stop("ngram_range must have a min-max value for ngrams. Try using: c(1, 2)")
                 }
 
-                tokens_counter <- sort(unique(private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)))
+                tokens_counter <- sort(unique(super_tokenizer(sentences, ngram_range = ngram_range, split = split)))
             }
 
 
@@ -285,33 +281,34 @@ CountVectorizer <- R6::R6Class(
 
         },
 
-        get_bow_df = function(sentences,
-                              split_rule=" ",
-                              use_tokens=NULL,
-                              model = NULL,
-                              ctransform=FALSE){
+        CJ.dt = function(X,Y) {
+            stopifnot(is.data.table(X),is.data.table(Y))
+            k = NULL
+            X = X[, c(k = 1, .SD)]
+            setkey(X, k)
+            Y = Y[, c(k = 1, .SD)]
+            setkey(Y, NULL)
+            X[Y, allow.cartesian = TRUE][, k := NULL][]
+        },
 
-            # only compute during fit
-            if (is.null(model)) {
-                f <- sapply(use_tokens,
-                            function(x) lapply(sentences,
-                                               function(y) sum(grepl(pattern = paste0("\\b", x,"\\b"), x = y))))
-                f <- apply(f, 2, as.numeric)
 
-                return(f[, use_tokens])
-            }
+        gsub_match = function(token, sent) {
+            return(gsub(pattern = paste0("\\b", token,"\\b"),  replacement = "", x = sent))
+        },
 
-            if (isTRUE(ctransform)) {
+        get_bow_df = function(sentences, use_tokens=NULL){
 
-                common_cols <- use_tokens[(use_tokens %in% colnames(model))]
-                different_cols <- setdiff(use_tokens, common_cols)
-                tr_output <- do.call(cbind,
-                                     sapply(different_cols,
-                                            function(x) list(rep_len(0, nrow(f)))))
+            f <- data.table(index = seq(sentences), docs = sentences)
+            t <- data.table(tokens = use_tokens)
+            f <- CJ.dt(f, t)[order(index)]
 
-                return(do.call(cbind, list(model[,common_cols], tr_output)))
+            # use char differences, faster solution
+            f[, char_diff := nchar(docs) - nchar(mapply(gsub_match, tokens, docs))]
+            f[, char_diff := as.integer(char_diff / nchar(tokens))]
 
-            }
+            f <- dcast(f, index ~ tokens, value.var = 'char_diff')[,-1]
+
+            return(as.matrix(f[, ..use_tokens]))
 
         },
 
