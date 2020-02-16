@@ -55,7 +55,9 @@ cv_count_matrix <- cv$transform(new_sents)
 
 \item{\code{min_df}}{When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
 
-\item{\code{max_features}}{use top features sorted by count to be used in bag of words matrix.}
+\item{\code{max_features}}{Build a vocabulary that only consider the top max_features ordered by term frequency across the corpus.}
+
+\item{\code{ngram_range}}{The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n <= n <= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.}
 
 \item{\code{split}}{splitting criteria for strings, default: " "}
 
@@ -64,6 +66,8 @@ cv_count_matrix <- cv$transform(new_sents)
 \item{\code{model}}{internal attribute which stores the count model}
 
 \item{\code{remove_stopwords}}{a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+
+\item{\code{parallel}}{speeds up ngrams computation using n-1 cores, defaults: TRUE}
 }
 \if{html}{\out{</div>}}
 }
@@ -85,9 +89,11 @@ cv_count_matrix <- cv$transform(new_sents)
   min_df,
   max_df,
   max_features,
+  ngram_range,
   regex,
   remove_stopwords,
-  split
+  split,
+  parallel
 )}\if{html}{\out{</div>}}
 }
 
@@ -96,15 +102,19 @@ cv_count_matrix <- cv$transform(new_sents)
 \describe{
 \item{\code{min_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
 
-\item{\code{max_df}}{nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+\item{\code{max_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
 
-\item{\code{max_features}}{integer, use top features sorted by count to be used in bag of words matrix.}
+\item{\code{max_features}}{integer, Build a vocabulary that only consider the top max_features ordered by term frequency across the corpus.}
+
+\item{\code{ngram_range}}{vector, The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n <= n <= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.}
 
 \item{\code{regex}}{character, regex expression to use for text cleaning.}
 
-\item{\code{remove_stopwords}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+\item{\code{remove_stopwords}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords}
 
 \item{\code{split}}{character, splitting criteria for strings, default: " "}
+
+\item{\code{parallel}}{logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE}
 }
 \if{html}{\out{</div>}}
 }
