@@ -27,6 +27,9 @@ CountVectorizer <- R6::R6Class(
         model = NULL,
         #' @field remove_stopwords a list of stopwords to use, by default it uses its inbuilt list of standard stopwords
         remove_stopwords = TRUE,
+        #' @field parallel speeds up ngrams computation using n-1 cores, defaults: TRUE
+        parallel = TRUE,
+
 
         #' @details
         #' Create a new `CountVectorizer` object.
@@ -36,8 +39,9 @@ CountVectorizer <- R6::R6Class(
         #' @param max_features integer, Build a vocabulary that only consider the top max_features ordered by term frequency across the corpus.
         #' @param ngram_range vector, The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n <= n <= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.
         #' @param regex character, regex expression to use for text cleaning.
-        #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords
         #' @param split character, splitting criteria for strings, default: " "
+        #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords
+        #' @param parallel logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE
         #'
         #' @return A `CountVectorizer` object.
         #'
@@ -50,7 +54,8 @@ CountVectorizer <- R6::R6Class(
                               ngram_range,
                               regex,
                               remove_stopwords,
-                              split) {
+                              split,
+                              parallel) {
             if (!(missing(max_df)))
                 self$max_df <- max_df
             if (!(missing(min_df)))
@@ -65,6 +70,9 @@ CountVectorizer <- R6::R6Class(
                 self$remove_stopwords <- remove_stopwords
             if (!(missing(split)))
                 self$split <- split
+            if (!(missing(parallel)))
+                self$parallel <- parallel
+
             private$check_args(self$max_df, what = 'max_df')
             private$check_args(self$min_df, what = 'min_df')
 
@@ -97,7 +105,8 @@ CountVectorizer <- R6::R6Class(
                 max_df = self$max_df,
                 max_features = self$max_features,
                 ngram_range = self$ngram_range,
-                split = self$split
+                split = self$split,
+                parallel = self$parallel
             )
 
             self$model <- private$get_bow_df(self$sentences,
@@ -194,7 +203,7 @@ CountVectorizer <- R6::R6Class(
             for (i in text) {
                 vec = unlist(strsplit(i, split = split))
                 token_len = length(vec)
-                if (token_len == ngram_min) {
+                if (token_len <= ngram_min) {
                     tokens = c(tokens, paste(vec, collapse = split))
                     next
                 }
@@ -217,13 +226,44 @@ CountVectorizer <- R6::R6Class(
         },
 
 
-        get_tokens = function(sentences, min_df=1, max_df=1, ngram_range = NULL, max_features=NULL, split=NULL){
+        super_apply_tokenizer = function(text, ngram_range, split){
+
+            ngram_min = ngram_range[1]
+            ngram_max = ngram_range[2]
+
+            tokens = c()
+
+            vec = unlist(strsplit(text, split = split))
+            token_len = length(vec)
+            if (token_len <= ngram_min) {
+                tokens = c(tokens, paste(vec, collapse = split))
+                return(tokens)
+            }
+
+            for (w in seq(token_len - ngram_min)) {
+                for (x in seq(ngram_min, ngram_max)) {
+
+                    if (w + x - 1 <= token_len) {
+                        v = paste(vec[w:(w + x - 1)], collapse = split)
+                        tokens = c(tokens, v)
+                    }
+                }
+            }
+
+            return(tokens)
+        },
+
+
+        get_tokens = function(sentences, min_df=1, max_df=1, ngram_range = NULL, max_features=NULL, split=NULL, parallel=TRUE){
+
 
             # sentences should be preprocessed sentences
             # if n_gram is not use
             # or if n_gram is (1,1) tokenize by space
             if (is.null(ngram_range) | all(ngram_range == 1) ) {
-                tokens_counter <- sort(unique(tm::Boost_tokenizer(sentences)))
+                tokens_counter <- tm::Boost_tokenizer(sentences)
+
+
             } else {
                 # create tokens using gram range
                 # do validation check
@@ -231,9 +271,22 @@ CountVectorizer <- R6::R6Class(
                     stop("ngram_range must have a min-max value for ngrams. Try using: c(1, 2)")
                 }
 
-                tokens_counter <- sort(unique(private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)))
+                if (isTRUE(parallel)) {
+
+                    tokens_counter <- parallel::mclapply(sentences,
+                                            function(x) private$super_apply_tokenizer(x, ngram_range = ngram_range, split = split),
+                                            mc.cores = parallel::detectCores() - 1)
+                } else {
+                    # much slower
+                    tokens_counter <- private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)
+                }
+
             }
 
+            # sort the tokens by frequency
+            tokens_counter <- data.table(col = unlist(tokens_counter, use.names = FALSE))
+            # radix sorting is faster
+            tokens_counter <- tokens_counter[,.N,col][order(N, decreasing = T)]$col
 
             # check for default features
             if (is.null(max_features) & (max_df == 1) & (min_df == 1)) {
@@ -246,16 +299,12 @@ CountVectorizer <- R6::R6Class(
             # max_feature will override other two parameters (min_df, max_df)
             if (!(is.null(max_features))) {
                 if (max_features > length(tokens_counter)) {
-                    # use all possible features
-                    max_features <- length(tokens_counter)
-
-                }
-                # use all tokens
-                if (max_features == 1) {
+                    # return all possible tokens
                     return(tokens_counter)
+
                 }
 
-                if (max_features > 1) {
+                if (max_features >= 1) {
                     return(tokens_counter[1:max_features])
                 }
 
@@ -265,7 +314,6 @@ CountVectorizer <- R6::R6Class(
             docs_count <- sapply(tokens_counter,
                                  function(x)
                                      (sum(grepl(pattern = paste0("\\b", x,"\\b"), sentences)) / length(sentences)))
-
             # Check min_df and max_df
 
             if (min_df == 1 & max_df != 1) {
@@ -297,6 +345,12 @@ CountVectorizer <- R6::R6Class(
         },
 
         get_bow_df = function(sentences, use_tokens=NULL){
+
+            # check is tokens exists
+            if (length(use_tokens) < 1) {
+                stop("No tokens found matching the given criteria. Please use a larger value. ")
+            }
+
 
             f <- data.table(index = seq(sentences), docs = sentences)
             t <- data.table(tokens = use_tokens)

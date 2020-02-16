@@ -29,6 +29,9 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     smooth_idf = TRUE,
     #' @field norm logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE
     norm = TRUE,
+    #' @field parallel speeds up ngrams computation using n-1 cores, defaults: TRUE
+    parallel = TRUE,
+
 
     #' @details
     #' Create a new `TfIdfVectorizer` object.
@@ -42,6 +45,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @param split character, splitting criteria for strings, default: " "
     #' @param smooth_idf logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once
     #' @param norm logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE
+    #' @param parallel logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE
     #'
     #' @return A `TfIdfVectorizer` object.
     #'
