@@ -231,7 +231,7 @@ CountVectorizer <- R6::R6Class(
                     stop("ngram_range must have a min-max value for ngrams. Try using: c(1, 2)")
                 }
 
-                tokens_counter <- sort(unique(super_tokenizer(sentences, ngram_range = ngram_range, split = split)))
+                tokens_counter <- sort(unique(private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)))
             }
 
 
@@ -300,10 +300,10 @@ CountVectorizer <- R6::R6Class(
 
             f <- data.table(index = seq(sentences), docs = sentences)
             t <- data.table(tokens = use_tokens)
-            f <- CJ.dt(f, t)[order(index)]
+            f <- private$CJ.dt(f, t)[order(index)]
 
             # use char differences, faster solution
-            f[, char_diff := nchar(docs) - nchar(mapply(gsub_match, tokens, docs))]
+            f[, char_diff := nchar(docs) - nchar(mapply(private$gsub_match, tokens, docs))]
             f[, char_diff := as.integer(char_diff / nchar(tokens))]
 
             f <- dcast(f, index ~ tokens, value.var = 'char_diff')[,-1]
