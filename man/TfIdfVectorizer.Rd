@@ -15,7 +15,7 @@ Given a list of text, it creates a sparse matrix consisting of tf-idf score for 
 ## Method `TfIdfVectorizer$new`
 ## ------------------------------------------------
 
-TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+TfIdfVectorizer$new()
 
 ## ------------------------------------------------
 ## Method `TfIdfVectorizer$fit`
@@ -64,7 +64,19 @@ tf_matrix <- tf$transform(new_sents)
 
 \item{\code{max_features}}{use top features sorted by count to be used in bag of words matrix.}
 
+\item{\code{ngram_range}}{The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n <= n <= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.}
+
+\item{\code{split}}{splitting criteria for strings, default: " "}
+
+\item{\code{regex}}{regex expression to use for text cleaning.}
+
+\item{\code{remove_stopwords}}{a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
+
 \item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
+
+\item{\code{norm}}{logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE}
+
+\item{\code{parallel}}{speeds up ngrams computation using n-1 cores, defaults: TRUE}
 }
 \if{html}{\out{</div>}}
 }
@@ -88,7 +100,17 @@ tf_matrix <- tf$transform(new_sents)
 \if{html}{\out{<a id="method-new"></a>}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$new(min_df, max_df, max_features, smooth_idf)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$new(
+  min_df,
+  max_df,
+  max_features,
+  ngram_range,
+  regex,
+  remove_stopwords,
+  split,
+  smooth_idf,
+  norm
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -96,11 +118,23 @@ tf_matrix <- tf$transform(new_sents)
 \describe{
 \item{\code{min_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly lower than the given threshold, value lies between 0 and 1.}
 
-\item{\code{max_df}}{nuemric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
+\item{\code{max_df}}{numeric, When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.}
 
-\item{\code{max_features}}{integer, use top features sorted by count to be used in bag of words matrix.}
+\item{\code{max_features}}{integer, Build a vocabulary that only consider the top max_features ordered by term frequency across the corpus.}
+
+\item{\code{ngram_range}}{vector, The lower and upper boundary of the range of n-values for different word n-grams or char n-grams to be extracted. All values of n such such that min_n <= n <= max_n will be used. For example an ngram_range of c(1, 1) means only unigrams, c(1, 2) means unigrams and bigrams, and c(2, 2) means only bigrams.}
+
+\item{\code{regex}}{character, regex expression to use for text cleaning.}
+
+\item{\code{remove_stopwords}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords}
+
+\item{\code{split}}{character, splitting criteria for strings, default: " "}
 
 \item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
+
+\item{\code{norm}}{logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE}
+
+\item{\code{parallel}}{logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE}
 }
 \if{html}{\out{</div>}}
 }
@@ -113,7 +147,7 @@ A `TfIdfVectorizer` object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.3)
+\preformatted{TfIdfVectorizer$new()
 }
 \if{html}{\out{</div>}}
 

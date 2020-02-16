@@ -1,0 +1,177 @@
+---
+title: "How to use TfidfVectorizer in R ?"
+author: "Manish Saraswat"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Guide to TfidfVectorizer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this tutorial, we'll look at how to create tfidf feature matrix in R in two simple steps with superml. Superml borrows speed gains using parallel computation and optimised functions from data.table R package. Tfidf matrix can be used to as features for a machine learning model. Also, we can use tdidf features as an embedding to represent the given texts.
+
+## Install 
+
+You can install latest cran version using (recommended):
+
+```{r, eval=FALSE}
+install.packages("superml")
+```
+
+You can install the developmemt version directly from github using:
+
+
+```{r, eval=FALSE}
+devtools::install_github("saraswatmks/superml")
+```
+
+## Sample Data
+
+First, we'll create a sample data. Feel free to run it alongside in your laptop and check the results.
+
+```{r}
+library(superml)
+
+# should be a vector of texts
+sents <-  c('i am going home and home',
+          'where are you going.? //// ',
+          'how does it work',
+          'transform your work and go work again',
+          'home is where you go from to work')
+
+# generate more sentences
+n <- 10
+sents <- rep(sents, n) 
+length(sents)
+```
+
+For sample, we've generated 50 documents. Let's create the features now. For ease, superml uses the similar API
+layout as python scikit-learn.
+
+```{r}
+# initialise the class
+tfv <- TfIdfVectorizer$new(max_features = 10, remove_stopwords = FALSE)
+
+# generate the matrix
+tf_mat <- tfv$fit_transform(sents)
+
+head(tf_mat, 3)
+
+```
+
+**Few observations:**
+
+* `remove_stopwords = FALSE` defaults to `TRUE`. We set it to `FALSE` since most of the words in our dummy `sents` are stopwords. 
+* `max_features = 10` select the top 10 features (tokens) based on frequency.
+* The returned matrix is normalised by default, `norm = TRUE` is set by default.
+ 
+ Now, let's generate the matrix using its `ngram_range` features.
+ 
+```{r}
+# initialise the class
+tfv <- TfIdfVectorizer$new(min_df = 0.4, remove_stopwords = FALSE, ngram_range = c(1, 3))
+
+# generate the matrix
+tf_mat <- tfv$fit_transform(sents)
+
+head(tf_mat, 3)
+
+```
+ 
+**Few observations:**
+
+* `ngram_range = c(1,3)` set the lower and higher range respectively of the resulting ngram tokens.
+* `min_df = 0.4` says to keep the tokens which occurs in atleast 40% & above of the documents.
+
+## Usage for a Machine Learning Model
+
+In order to use Tfidf Vectorizer for a machine learning model, sometimes it gets confusing as to which method `fit_transform`, `fit`, `transform` should be used to generate tfidf features for the given data. Here's a way to do:
+
+```{r, warning=FALSE}
+
+library(data.table)
+library(superml)
+
+# use sents from above
+sents <-  c('i am going home and home',
+          'where are you going.? //// ',
+          'how does it work',
+          'transform your work and go work again',
+          'home is where you go from to work',
+          'how does it work')
+
+# create dummy data
+train <- data.table(text = sents, target = rep(c(0,1), 3))
+test <- data.table(text = sample(sents), target = rep(c(0,1), 3))
+```
+
+Let's see how the data looks like:
+
+```{r}
+head(train, 3)
+
+```
+
+```{r}
+head(test, 3)
+```
+
+Now, we generate features for train-test data:
+
+```{r}
+
+tfv <- TfIdfVectorizer$new(min_df = 0.3, remove_stopwords = FALSE, ngram_range = c(1,3))
+
+# we fit on train data
+tfv$fit(train$text)
+
+train_tf_features <- tfv$transform(train$text)
+test_tf_features <- tfv$transform(test$text)
+
+dim(train_tf_features)
+dim(test_tf_features)
+
+```
+
+
+We generate 15 features for each of the given data. Let's see how they look:
+
+```{r}
+head(train_tf_features, 3)
+```
+
+```{r}
+head(test_tf_features, 3)
+```
+
+
+Finally, to train a machine learning model on this, you can simply do:
+
+```{r}
+
+# ensure the input to classifier is a data.table or data.frame object
+x_train <- data.table(cbind(train_tf_features, target = train$target))
+x_test <- data.table(test_tf_features)
+
+
+xgb <- XGBTrainer$new(n_estimators = 10, objective = "binary:logistic")
+xgb$fit(x_train, "target")
+
+predictions <- xgb$predict(x_test)
+predictions
+
+```
+
+
+## Summary
+
+In this tutorial, we discussed how to use superml's tfidfvectorizer to create tfidf matrix and train a machine learning model on it.
+

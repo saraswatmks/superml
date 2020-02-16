@@ -1,3 +1,9 @@
+# superml 0.5.1
+
+* Fix bugs in CountVectorizer & TfidfVectorizer
+* Add ngram_range feature
+* Add more documentation on vectorizers
+
 # superml 0.5.0
 
 * glmnet changed its api. Fix Failing tests. Temporary fix by using "donttest" on its examples. Updates package documentation to support R6 classes.
