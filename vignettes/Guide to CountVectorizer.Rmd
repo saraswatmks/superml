@@ -128,16 +128,16 @@ Now, we generate features for train-test data:
 
 ```{r}
 
-tfv <- CountVectorizer$new(max_features = 12, remove_stopwords = FALSE, ngram_range = c(1,3))
+cfv <- CountVectorizer$new(max_features = 12, remove_stopwords = FALSE, ngram_range = c(1,3))
 
 # we fit on train data
-tfv$fit(train$text)
+cfv$fit(train$text)
 
-train_tf_features <- tfv$transform(train$text)
-test_tf_features <- tfv$transform(test$text)
+train_cf_features <- cfv$transform(train$text)
+test_cf_features <- cfv$transform(test$text)
 
-dim(train_tf_features)
-dim(test_tf_features)
+dim(train_cf_features)
+dim(test_cf_features)
 
 ```
 
@@ -145,11 +145,11 @@ dim(test_tf_features)
 We generate 12 features for each of the given data. Let's see how they look:
 
 ```{r}
-head(train_tf_features, 3)
+head(train_cf_features, 3)
 ```
 
 ```{r}
-head(test_tf_features, 3)
+head(test_cf_features, 3)
 ```
 
 
@@ -158,11 +158,11 @@ Finally, to train a machine learning model on this, you can simply do:
 ```{r}
 
 # ensure the input to classifier is a data.table or data.frame object
-x_train <- data.table(cbind(train_tf_features, target = train$target))
-x_test <- data.table(test_tf_features)
+x_train <- data.table(cbind(train_cf_features, target = train$target))
+x_test <- data.table(test_cf_features)
 
 
-xgb <- XGBTrainer$new(n_estimators = 10, objective = "binary:logistic")
+xgb <- RFTrainer$new(n_estimators = 10)
 xgb$fit(x_train, "target")
 
 predictions <- xgb$predict(x_test)
