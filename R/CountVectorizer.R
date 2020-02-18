@@ -273,9 +273,17 @@ CountVectorizer <- R6::R6Class(
 
                 if (isTRUE(parallel)) {
 
+                    if (.Platform$OS.type == 'windows') {
+                        n_cores <- 1
+                    } else {
+                        n_cores <- parallel::detectCores() - 1
+                    }
+
                     tokens_counter <- parallel::mclapply(sentences,
                                             function(x) private$super_apply_tokenizer(x, ngram_range = ngram_range, split = split),
-                                            mc.cores = parallel::detectCores() - 1)
+                                            mc.cores = n_cores,
+                                            mc.preschedule = TRUE,
+                                            mc.cleanup = TRUE)
                 } else {
                     # much slower
                     tokens_counter <- private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)

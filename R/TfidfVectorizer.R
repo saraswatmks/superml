@@ -60,7 +60,8 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                           remove_stopwords,
                           split,
                           smooth_idf,
-                          norm
+                          norm,
+                          parallel
                           ){
         super$initialize(min_df = min_df,
                          max_df = max_df,
@@ -68,7 +69,8 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                          ngram_range = ngram_range,
                          remove_stopwords = remove_stopwords,
                          regex = regex,
-                         split = split)
+                         split = split,
+                         parallel = parallel)
         if (!(missing(min_df)))
             self$min_df <- min_df
         if (!(missing(max_df)))
@@ -87,6 +89,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
             self$smooth_idf <- smooth_idf
         if (!(missing(norm)))
             self$norm <- norm
+
 
         private$check_args(self$max_df, what = 'max_df')
         private$check_args(self$min_df, what = 'min_df')
