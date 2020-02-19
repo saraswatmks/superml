@@ -27,6 +27,11 @@ navbar:
       menu:
       - text: Introduction to superml
         href: articles/superml_tutorial.html
+      - text: Guide to CountVectorizer
+        href: articles/Guide-to-CountVectorizer.html
+      - text: Guide to TfIdfVectorizer
+        href: articles/Guide-to-TfidfVectorizer.html
+
     news:
       text: News
       href: news/index.html
