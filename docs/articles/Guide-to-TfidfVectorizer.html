@@ -97,7 +97,7 @@
       <h1>How to use TfidfVectorizer in R ?</h1>
                         <h4 class="author">Manish Saraswat</h4>
             
-            <h4 class="date">2020-02-19</h4>
+            <h4 class="date">2020-02-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/master/vignettes/Guide-to-TfidfVectorizer.Rmd"><code>vignettes/Guide-to-TfidfVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-TfidfVectorizer.Rmd</code></div>
@@ -142,14 +142,14 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5">tf_mat &lt;-<span class="st"> </span>tfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tf_mat, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;      work      home     going       and     where       you go         i</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; [1,]    0 0.6453206 0.3226603 0.3226603 0.0000000 0.0000000  0 0.4332101</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; [2,]    0 0.0000000 0.4563106 0.0000000 0.4563106 0.4563106  0 0.0000000</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; [3,]    1 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000  0 0.0000000</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;             am       are</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; [1,] 0.4332101 0.0000000</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; [2,] 0.0000000 0.6126516</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; [3,] 0.0000000 0.0000000</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;      work      home       and go     going     where       you again       am</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; [1,]    0 0.7159943 0.3579971  0 0.3579971 0.0000000 0.0000000     0 0.480654</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; [2,]    0 0.0000000 0.0000000  0 0.4563106 0.4563106 0.4563106     0 0.000000</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; [3,]    1 0.0000000 0.0000000  0 0.0000000 0.0000000 0.0000000     0 0.000000</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;            are</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; [1,] 0.0000000</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; [2,] 0.6126516</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; [3,] 0.0000000</span></a></code></pre></div>
 <p><strong>Few observations:</strong></p>
 <ul>
 <li>
@@ -166,10 +166,10 @@
 <a class="sourceLine" id="cb5-5" data-line-number="5">tf_mat &lt;-<span class="st"> </span>tfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(tf_mat, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;           home       and     where       you work go     going</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; [1,] 0.8164966 0.4082483 0.0000000 0.0000000    0  0 0.4082483</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503    0  0 0.5773503</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.0000000 0.0000000    1  0 0.0000000</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;      work      home       and go     going     where       you</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; [1,]    0 0.8164966 0.4082483  0 0.4082483 0.0000000 0.0000000</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt; [2,]    0 0.0000000 0.0000000  0 0.5773503 0.5773503 0.5773503</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt; [3,]    1 0.0000000 0.0000000  0 0.0000000 0.0000000 0.0000000</span></a></code></pre></div>
 <p><strong>Few observations:</strong></p>
 <ul>
 <li>
@@ -204,10 +204,10 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt; 2: where are you going.? ////       1</span></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; 3:            how does it work      0</span></a></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;                                 text target</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; 1:                  how does it work      0</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 2:       where are you going.? ////       1</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 3: home is where you go from to work      0</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt;                                     text target</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; 1:                      how does it work      0</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 2:                      how does it work      1</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 3: transform your work and go work again      0</span></a></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">min_df =</span> <span class="fl">0.3</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
@@ -224,31 +224,27 @@
 <a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; [1]  6 15</span></a></code></pre></div>
 <p>We generate 15 features for each of the given data. Let’s see how they look:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(train_tf_features, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt;           home       and     where       you       how  how does how does it</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1,] 0.8164966 0.4082483 0.0000000 0.0000000 0.0000000 0.0000000   0.0000000</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;           does   does it does it work        it   it work      work go</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; [1,] 0.0000000 0.0000000    0.0000000 0.0000000 0.0000000 0.0000000  0</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; [2,] 0.0000000 0.0000000    0.0000000 0.0000000 0.0000000 0.0000000  0</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; [3,] 0.3425257 0.3425257    0.3425257 0.3425257 0.3425257 0.2478085  0</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;          going</span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; [1,] 0.4082483</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt;           work      home       and      does   does it does it work go</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1,] 0.0000000 0.8164966 0.4082483 0.0000000 0.0000000    0.0000000  0</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000    0.0000000  0</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [3,] 0.2478085 0.0000000 0.0000000 0.3425257 0.3425257    0.3425257  0</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;          going       how  how does how does it        it   it work     where</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; [1,] 0.4082483 0.0000000 0.0000000   0.0000000 0.0000000 0.0000000 0.0000000</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; [2,] 0.5773503 0.0000000 0.0000000   0.0000000 0.0000000 0.0000000 0.5773503</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; [3,] 0.0000000 0.3425257 0.3425257   0.3425257 0.3425257 0.3425257 0.0000000</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co">#&gt;            you</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">#&gt; [1,] 0.0000000</span></a>
 <a class="sourceLine" id="cb10-12" data-line-number="12"><span class="co">#&gt; [2,] 0.5773503</span></a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co">#&gt; [3,] 0.0000000</span></a></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test_tf_features, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt;           home       and     where       you       how  how does how does it</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; [1,] 0.8164966 0.4082483 0.0000000 0.0000000 0.0000000 0.0000000   0.0000000</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;           does   does it does it work        it   it work      work go</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; [1,] 0.0000000 0.0000000    0.0000000 0.0000000 0.0000000 0.0000000  0</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; [2,] 0.0000000 0.0000000    0.0000000 0.0000000 0.0000000 0.0000000  0</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; [3,] 0.3425257 0.3425257    0.3425257 0.3425257 0.3425257 0.2478085  0</span></a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt;          going</span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt; [1,] 0.4082483</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; [2,] 0.5773503</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; [3,] 0.0000000</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt;           work home       and      does   does it does it work        go going</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; [1,] 0.2478085    0 0.0000000 0.3425257 0.3425257    0.3425257 0.0000000     0</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; [2,] 0.2478085    0 0.0000000 0.3425257 0.3425257    0.3425257 0.0000000     0</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; [3,] 0.7151500    0 0.4942471 0.0000000 0.0000000    0.0000000 0.4942471     0</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;            how  how does how does it        it   it work where you</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; [1,] 0.3425257 0.3425257   0.3425257 0.3425257 0.3425257     0   0</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; [2,] 0.3425257 0.3425257   0.3425257 0.3425257 0.3425257     0   0</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; [3,] 0.0000000 0.0000000   0.0000000 0.0000000 0.0000000     0   0</span></a></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply do:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co"># ensure the input to classifier is a data.table or data.frame object</span></a>

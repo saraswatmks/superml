@@ -161,13 +161,15 @@
 
 <dt><code>split</code></dt><dd><p>splitting criteria for strings, default: " "</p></dd>
 
-<dt><code>regex</code></dt><dd><p>regex expression to use for text cleaning.</p></dd>
+<dt><code>lowercase</code></dt><dd><p>convert all characters to lowercase before tokenizing</p></dd>
 
-<dt><code>model</code></dt><dd><p>internal attribute which stores the count model</p></dd>
+<dt><code>regex</code></dt><dd><p>regex expression to use for text cleaning.</p></dd>
 
 <dt><code>remove_stopwords</code></dt><dd><p>a list of stopwords to use, by default it uses its inbuilt list of standard stopwords</p></dd>
 
 <dt><code>parallel</code></dt><dd><p>speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
+
+<dt><code>model</code></dt><dd><p>internal attribute which stores the count model</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -194,6 +196,7 @@
   regex,
   remove_stopwords,
   split,
+  lowercase,
   parallel
 )</pre><p></div></p>
 
@@ -212,6 +215,8 @@
 <dt><code>remove_stopwords</code></dt><dd><p>list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords</p></dd>
 
 <dt><code>split</code></dt><dd><p>character, splitting criteria for strings, default: " "</p></dd>
+
+<dt><code>lowercase</code></dt><dd><p>logical, convert all characters to lowercase before tokenizing, default: TRUE</p></dd>
 
 <dt><code>parallel</code></dt><dd><p>logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
 
