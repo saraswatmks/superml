@@ -76,8 +76,7 @@ testdata <- function(X, y, model=NA){
 #' @export
 check_package <- function(pkg) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
-        warning(paste0("Require Package " , pkg,  "for this function to
-                       work. Installing it."))
+        warning(paste0("Require Package " , pkg,  " for this function to work. Installing it.\n"))
         utils::install.packages(pkg, repos = "http://cran.us.r-project.org")
         message("Finished installing.")
     }
