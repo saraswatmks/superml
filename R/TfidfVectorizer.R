@@ -7,8 +7,8 @@
 #'
 #' @export
 TfIdfVectorizer <- R6Class("TfIdfVectorizer",
-                               inherit = CountVectorizer,
-                               public = list(
+                            inherit = CountVectorizer,
+                            public = list(
     #' @field sentences a list containing sentences
     sentences = NA,
     #' @field max_df When building the vocabulary ignore terms that have a document frequency strictly higher than the given threshold, value lies between 0 and 1.
@@ -21,6 +21,8 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     ngram_range = c(1,1),
     #' @field split splitting criteria for strings, default: " "
     split = " ",
+    #' @field lowercase convert all characters to lowercase before tokenizing
+    lowercase = TRUE,
     #' @field regex regex expression to use for text cleaning.
     regex = "[^a-zA-Z0-9 ]",
     #' @field remove_stopwords a list of stopwords to use, by default it uses its inbuilt list of standard stopwords
@@ -43,6 +45,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @param regex character, regex expression to use for text cleaning.
     #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords
     #' @param split character, splitting criteria for strings, default: " "
+    #' @param lowercase logical, convert all characters to lowercase before tokenizing, default: TRUE
     #' @param smooth_idf logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once
     #' @param norm logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE
     #' @param parallel logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE
@@ -59,6 +62,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                           regex,
                           remove_stopwords,
                           split,
+                          lowercase,
                           smooth_idf,
                           norm,
                           parallel
@@ -70,6 +74,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                          remove_stopwords = remove_stopwords,
                          regex = regex,
                          split = split,
+                         lowercase = lowercase,
                          parallel = parallel)
         if (!(missing(min_df)))
             self$min_df <- min_df
@@ -158,9 +163,9 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
 
         if (is.null(self$sentences))
             stop("Please run fit before applying transformation.")
-        bow <- super$transform(self$sentences)
+        bow <- super$transform(sentences)
         return(private$gettfmatrix(bow,
-                                   sentences = self$sentences,
+                                   sentences = sentences,
                                    norm = self$norm,
                                    smooth_idf = self$smooth_idf))
 
@@ -188,6 +193,10 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                 # normalize rows
                 # tfidf = Matrix::Diagonal(x = 1 / sqrt(Matrix::rowSums(tfidf^2))) %*% tfidf
                 tfidf = diag(x = 1 / sqrt(rowSums(tfidf^2))) %*% tfidf
+                if (any(is.na(tfidf))) {
+                    tfidf[is.na(tfidf)] <- 0
+                }
+
                 return(tfidf)
             }
 
