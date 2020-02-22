@@ -171,6 +171,11 @@ CountVectorizer <- R6::R6Class(
 
         preprocess = function(sentences, regex="[^0-9a-zA-Z ]", lowercase, remove_stopwords){
 
+            # check na values
+            if (any(is.na(sentences))) {
+                stop("Found NAs in the given text. Cannot process NA values.")
+            }
+
             # this function returns cleaned sentences
             s <- gsub(regex, " ", sentences)
             # trim whitespace
@@ -178,11 +183,6 @@ CountVectorizer <- R6::R6Class(
             # convert to lowercase
             if (isTRUE(lowercase)) {
                 s <- sapply(s, tolower, USE.NAMES = F)
-            }
-
-            # check na values
-            if (any(is.na(sentences))) {
-                stop("Found NAs in the given text. Cannot process NA values.")
             }
 
             if (isTRUE(remove_stopwords)) {
@@ -203,67 +203,6 @@ CountVectorizer <- R6::R6Class(
         },
 
 
-        super_tokenizer = function(text, ngram_range, split = " "){
-
-            ngram_min = ngram_range[1]
-            ngram_max = ngram_range[2]
-
-            tokens = c()
-
-            for (i in text) {
-                vec = unlist(strsplit(i, split = split))
-                token_len = length(vec)
-                if (token_len <= ngram_min) {
-                    tokens = c(tokens, paste(vec, collapse = split))
-                    next
-                }
-
-                tk = c()
-                for (w in seq(token_len - ngram_min)) {
-                    for (x in seq(ngram_min, ngram_max)) {
-
-                        if (w + x - 1 <= token_len) {
-                            v = paste(vec[w:(w + x - 1)], collapse = split)
-                            tk = c(tk, v)
-                        }
-                    }
-                }
-
-                tokens = c(tokens, tk)
-
-            }
-            return(tokens)
-        },
-
-
-        super_apply_tokenizer = function(text, ngram_range, split){
-
-            ngram_min = ngram_range[1]
-            ngram_max = ngram_range[2]
-
-            tokens = c()
-
-            vec = unlist(strsplit(text, split = split))
-            token_len = length(vec)
-            if (token_len <= ngram_min) {
-                tokens = c(tokens, paste(vec, collapse = split))
-                return(tokens)
-            }
-
-            for (w in seq(token_len - ngram_min)) {
-                for (x in seq(ngram_min, ngram_max)) {
-
-                    if (w + x - 1 <= token_len) {
-                        v = paste(vec[w:(w + x - 1)], collapse = split)
-                        tokens = c(tokens, v)
-                    }
-                }
-            }
-
-            return(tokens)
-        },
-
-
         get_tokens = function(sentences, min_df=1, max_df=1, ngram_range = NULL, max_features=NULL, split=NULL, parallel=TRUE){
 
 
@@ -271,14 +210,14 @@ CountVectorizer <- R6::R6Class(
             # if n_gram is not use
             # or if n_gram is (1,1) tokenize by space
             if (is.null(ngram_range) | all(ngram_range == 1) ) {
-                tokens_counter <- tm::Boost_tokenizer(sentences)
+                tokens_counter <- superml:::superTokenizer(sentences)
 
 
             } else {
                 # create tokens using gram range
                 # do validation check
                 if (is.vector(ngram_range) & length(ngram_range) != 2) {
-                    stop("ngram_range must have a min-max value for ngrams. Try using: c(1, 2)")
+                    stop("ngram_range must have a min-max value for tokens length. Try using: c(1, 2)")
                 }
 
                 if (isTRUE(parallel)) {

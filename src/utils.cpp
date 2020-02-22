@@ -1,6 +1,7 @@
 // [[Rcpp::depends(BH)]]
 #include <Rcpp.h>
 #include <boost/algorithm/string/join.hpp>
+#include<boost/tokenizer.hpp>
 using namespace Rcpp;
 using namespace std;
 
@@ -52,7 +53,23 @@ std::vector<std::string> superNgrams(std::string str, NumericVector ngram_range,
 
 }
 
+// Converts a vector of string into a vector a tokens, strips from all punctuations
+// [[Rcpp::export]]
+CharacterVector superTokenizer(std::vector<std::string> string){
 
+    CharacterVector output;
 
+    for(auto i: string){
+
+        boost::tokenizer<> tok(i);
+        for(boost::tokenizer<>::iterator beg=tok.begin(); beg!=tok.end(); ++beg){
+            output.push_back(*beg);
+        }
+
+    }
+
+    return output;
+
+}
 
 

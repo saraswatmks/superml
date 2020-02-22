@@ -30,10 +30,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// superTokenizer
+CharacterVector superTokenizer(std::vector<std::string> string);
+RcppExport SEXP _superml_superTokenizer(SEXP stringSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type string(stringSEXP);
+    rcpp_result_gen = Rcpp::wrap(superTokenizer(string));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_superml_superSplit", (DL_FUNC) &_superml_superSplit, 2},
     {"_superml_superNgrams", (DL_FUNC) &_superml_superNgrams, 3},
+    {"_superml_superTokenizer", (DL_FUNC) &_superml_superTokenizer, 1},
     {NULL, NULL, 0}
 };
 

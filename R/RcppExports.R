@@ -9,3 +9,7 @@ superNgrams <- function(str, ngram_range, sep) {
     .Call('_superml_superNgrams', PACKAGE = 'superml', str, ngram_range, sep)
 }
 
+superTokenizer <- function(string) {
+    .Call('_superml_superTokenizer', PACKAGE = 'superml', string)
+}
+

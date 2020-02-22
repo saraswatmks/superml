@@ -37,9 +37,6 @@ Suggests:
     caret(>= 6.0),   
     xgboost(>= 0.6),
     glmnet(>= 2.0),
-    kableExtra,
-    tm(>= 0.7),
-    Matrix(>= 1.2),
     e1071(>= 1.7)
 RoxygenNote: 7.0.1
 VignetteBuilder: knitr
