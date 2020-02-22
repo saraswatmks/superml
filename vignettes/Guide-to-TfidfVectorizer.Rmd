@@ -33,6 +33,18 @@ You can install the developmemt version directly from github using:
 devtools::install_github("saraswatmks/superml")
 ```
 
+
+## Caveats on superml installation
+
+For machine learning, superml is based on the existing R packages. Hence, while installing the
+package, we don't install all the dependencies. However, while training any model, superml will automatically install the package if its not found. Still, if you want to install all dependencies
+at once, you can simply do:
+
+```{r, eval=FALSE}
+install.packages("superml", dependencies=TRUE)
+```
+
+
 ## Sample Data
 
 First, we'll create a sample data. Feel free to run it alongside in your laptop and check the results.
