@@ -13,12 +13,12 @@
 #' counts <- Counter(d, sort=TRUE, decreasing=TRUE)
 Counter <- function(data, sort=TRUE, decreasing=FALSE){
 
-    if(is.null(data)) stop("Please provide input data values")
-    if(is.data.frame(data) | is.matrix(data))
+    if (is.null(data)) stop("Please provide input data values")
+    if (is.data.frame(data) | is.matrix(data))
         stop("Please provide a vector of values
              instead of a data frame or matrix")
 
-    if(is.list(data)) data <- unlist(data)
+    if (is.list(data)) data <- unlist(data)
 
     op <- table(data) # vals
     n_op <- names(op)
