@@ -14,6 +14,7 @@ You can install latest stable cran version using (recommended):
 
 ```r
 install.packages("superml")
+install.packages("superml", dependencies=TRUE) # to install all dependencies at once
 ```
 
 You can install superml from github with:
