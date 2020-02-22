@@ -164,6 +164,8 @@
 
 <dt><code>split</code></dt><dd><p>splitting criteria for strings, default: " "</p></dd>
 
+<dt><code>lowercase</code></dt><dd><p>convert all characters to lowercase before tokenizing</p></dd>
+
 <dt><code>regex</code></dt><dd><p>regex expression to use for text cleaning.</p></dd>
 
 <dt><code>remove_stopwords</code></dt><dd><p>a list of stopwords to use, by default it uses its inbuilt list of standard stopwords</p></dd>
@@ -204,6 +206,7 @@
   regex,
   remove_stopwords,
   split,
+  lowercase,
   smooth_idf,
   norm,
   parallel
@@ -224,6 +227,8 @@
 <dt><code>remove_stopwords</code></dt><dd><p>list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords</p></dd>
 
 <dt><code>split</code></dt><dd><p>character, splitting criteria for strings, default: " "</p></dd>
+
+<dt><code>lowercase</code></dt><dd><p>logical, convert all characters to lowercase before tokenizing, default: TRUE</p></dd>
 
 <dt><code>smooth_idf</code></dt><dd><p>logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once</p></dd>
 
@@ -363,9 +368,7 @@ tf_matrix &lt;- tf$transform(new_sents)
 #&gt;     get_tokens: function (sentences, min_df = 1, max_df = 1, ngram_range = NULL, 
 #&gt;     gettfmatrix: function (countmatrix, sentences, norm, smooth_idf = TRUE) 
 #&gt;     gsub_match: function (token, sent) 
-#&gt;     preprocess: function (sentences, regex = "[^0-9a-zA-Z ]", lowercase, remove_stopwords) 
-#&gt;     super_apply_tokenizer: function (text, ngram_range, split) 
-#&gt;     super_tokenizer: function (text, ngram_range, split = " ") </div><div class='input'>
+#&gt;     preprocess: function (sentences, regex = "[^0-9a-zA-Z ]", lowercase, remove_stopwords) </div><div class='input'>
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `TfIdfVectorizer$fit`</span>
 <span class='co'>## ------------------------------------------------</span>

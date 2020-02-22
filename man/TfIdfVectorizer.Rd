@@ -68,6 +68,8 @@ tf_matrix <- tf$transform(new_sents)
 
 \item{\code{split}}{splitting criteria for strings, default: " "}
 
+\item{\code{lowercase}}{convert all characters to lowercase before tokenizing}
+
 \item{\code{regex}}{regex expression to use for text cleaning.}
 
 \item{\code{remove_stopwords}}{a list of stopwords to use, by default it uses its inbuilt list of standard stopwords}
@@ -108,6 +110,7 @@ tf_matrix <- tf$transform(new_sents)
   regex,
   remove_stopwords,
   split,
+  lowercase,
   smooth_idf,
   norm,
   parallel
@@ -130,6 +133,8 @@ tf_matrix <- tf$transform(new_sents)
 \item{\code{remove_stopwords}}{list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords}
 
 \item{\code{split}}{character, splitting criteria for strings, default: " "}
+
+\item{\code{lowercase}}{logical, convert all characters to lowercase before tokenizing, default: TRUE}
 
 \item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
 
