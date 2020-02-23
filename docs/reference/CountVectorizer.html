@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -167,8 +167,6 @@
 
 <dt><code>remove_stopwords</code></dt><dd><p>a list of stopwords to use, by default it uses its inbuilt list of standard stopwords</p></dd>
 
-<dt><code>parallel</code></dt><dd><p>speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
-
 <dt><code>model</code></dt><dd><p>internal attribute which stores the count model</p></dd>
 
 </dl><p></div></p>
@@ -196,8 +194,7 @@
   regex,
   remove_stopwords,
   split,
-  lowercase,
-  parallel
+  lowercase
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
@@ -217,8 +214,6 @@
 <dt><code>split</code></dt><dd><p>character, splitting criteria for strings, default: " "</p></dd>
 
 <dt><code>lowercase</code></dt><dd><p>logical, convert all characters to lowercase before tokenizing, default: TRUE</p></dd>
-
-<dt><code>parallel</code></dt><dd><p>logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE</p></dd>
 
 </dl><p></div></p>
 <h3>Details</h3>
