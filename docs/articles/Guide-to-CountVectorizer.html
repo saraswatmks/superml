@@ -97,7 +97,7 @@
       <h1>How to use CountVectorizer in R ?</h1>
                         <h4 class="author">Manish Saraswat</h4>
             
-            <h4 class="date">2020-02-22</h4>
+            <h4 class="date">2020-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/master/vignettes/Guide-to-CountVectorizer.Rmd"><code>vignettes/Guide-to-CountVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-CountVectorizer.Rmd</code></div>
@@ -141,8 +141,8 @@
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(sents)</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; [1] 50</span></a></code></pre></div>
 <p>For sample, we’ve generated 50 documents. Let’s create the features now. For ease, superml uses the similar API layout as python scikit-learn.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># generate the matrix</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">cf_mat &lt;-<span class="st"> </span>cfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
@@ -160,8 +160,8 @@
 <code>max_features = 10</code> select the top 10 features (tokens) based on frequency.</li>
 </ul>
 <p>Now, let’s generate the matrix using its <code>ngram_range</code> features.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># generate the matrix</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">cf_mat &lt;-<span class="st"> </span>cfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
@@ -204,12 +204,12 @@
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 3:            how does it work      0</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt;                                     text target</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; 1:           where are you going.? ////       0</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; 2:                      how does it work      1</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 3: transform your work and go work again      0</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; 1:                      how does it work      0</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; 2: transform your work and go work again      1</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 3:           where are you going.? ////       0</span></a></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">12</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">cfv &lt;-<span class="st"> </span>CountVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">12</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># we fit on train data</span></a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">cfv<span class="op">$</span><span class="kw">fit</span>(train<span class="op">$</span>text)</a>
@@ -233,12 +233,12 @@
 <a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; [3,]  1</span></a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test_cf_features, <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt;      work home and does does it does it work go going how how does how does it</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1,]    0    0   0    0       0            0  0     1   0        0           0</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; [2,]    1    0   0    1       1            1  0     0   1        1           1</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [3,]    2    0   1    0       0            0  1     0   0        0           0</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1,]    1    0   0    1       1            1  0     0   1        1           1</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; [2,]    2    0   1    0       0            0  1     0   0        0           0</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [3,]    0    0   0    0       0            0  0     1   0        0           0</span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;      it</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; [1,]  0</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [2,]  1</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; [1,]  1</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [2,]  0</span></a>
 <a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [3,]  0</span></a></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply do:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
