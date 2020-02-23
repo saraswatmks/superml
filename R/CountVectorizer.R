@@ -288,21 +288,6 @@ CountVectorizer <- R6::R6Class(
 
         },
 
-        CJ.dt = function(X,Y) {
-            stopifnot(is.data.table(X),is.data.table(Y))
-            k = NULL
-            X = X[, c(k = 1, .SD)]
-            setkey(X, k)
-            Y = Y[, c(k = 1, .SD)]
-            setkey(Y, NULL)
-            X[Y, allow.cartesian = TRUE][, k := NULL][]
-        },
-
-
-        gsub_match = function(token, sent) {
-            return(gsub(pattern = paste0("\\b", token,"\\b"),  replacement = "", x = sent))
-        },
-
         get_bow_df = function(sentences, use_tokens=NULL){
 
             # check is tokens exists
@@ -311,17 +296,9 @@ CountVectorizer <- R6::R6Class(
             }
 
 
-            f <- data.table(index = seq(sentences), docs = sentences)
-            t <- data.table(tokens = use_tokens)
-            f <- private$CJ.dt(f, t)[order(index)]
+            f <- superml:::superCountMatrix(sentences, use_tokens)
 
-            # use char differences, faster solution
-            f[, char_diff := nchar(docs) - nchar(mapply(private$gsub_match, tokens, docs))]
-            f[, char_diff := as.integer(char_diff / nchar(tokens))]
-
-            f <- dcast(f, index ~ tokens, value.var = 'char_diff', fill = 0)[,-1]
-
-            return(as.matrix(f[, ..use_tokens]))
+            return(f)
 
         },
 
