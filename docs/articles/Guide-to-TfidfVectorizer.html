@@ -97,7 +97,7 @@
       <h1>How to use TfidfVectorizer in R ?</h1>
                         <h4 class="author">Manish Saraswat</h4>
             
-            <h4 class="date">2020-02-22</h4>
+            <h4 class="date">2020-02-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/master/vignettes/Guide-to-TfidfVectorizer.Rmd"><code>vignettes/Guide-to-TfidfVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-TfidfVectorizer.Rmd</code></div>
@@ -141,8 +141,8 @@
 <a class="sourceLine" id="cb4-14" data-line-number="14"><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(sents)</a>
 <a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; [1] 50</span></a></code></pre></div>
 <p>For sample, we’ve generated 50 documents. Let’s create the features now. For ease, superml uses the similar API layout as python scikit-learn.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">max_features =</span> <span class="dv">10</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># generate the matrix</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5">tf_mat &lt;-<span class="st"> </span>tfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
@@ -165,8 +165,8 @@
 <li>The returned matrix is normalised by default, <code>norm = TRUE</code> is set by default.</li>
 </ul>
 <p>Now, let’s generate the matrix using its <code>ngram_range</code> features.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">min_df =</span> <span class="fl">0.4</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">min_df =</span> <span class="fl">0.4</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># generate the matrix</span></a>
 <a class="sourceLine" id="cb6-5" data-line-number="5">tf_mat &lt;-<span class="st"> </span>tfv<span class="op">$</span><span class="kw">fit_transform</span>(sents)</a>
@@ -210,13 +210,13 @@
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; 2: where are you going.? ////       1</span></a>
 <a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 3:            how does it work      0</span></a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt;                           text target</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; 1:            how does it work      0</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; 2:            how does it work      1</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 3: where are you going.? ////       0</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt;                                     text target</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; 1:                      how does it work      0</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt; 2:              i am going home and home      1</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; 3: transform your work and go work again      0</span></a></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># initialise the class, set parallel to TRUE for fast computation</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">min_df =</span> <span class="fl">0.3</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># initialise the class</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">tfv &lt;-<span class="st"> </span>TfIdfVectorizer<span class="op">$</span><span class="kw">new</span>(<span class="dt">min_df =</span> <span class="fl">0.3</span>, <span class="dt">remove_stopwords =</span> <span class="ot">FALSE</span>, <span class="dt">ngram_range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># we fit on train data</span></a>
 <a class="sourceLine" id="cb10-5" data-line-number="5">tfv<span class="op">$</span><span class="kw">fit</span>(train<span class="op">$</span>text)</a>
@@ -243,14 +243,14 @@
 <a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; [2,] 0.5773503</span></a>
 <a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt; [3,] 0.0000000</span></a></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(test_tf_features, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt;           work home and      does   does it does it work go     going       how</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1,] 0.2478085    0   0 0.3425257 0.3425257    0.3425257  0 0.0000000 0.3425257</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; [2,] 0.2478085    0   0 0.3425257 0.3425257    0.3425257  0 0.0000000 0.3425257</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [3,] 0.0000000    0   0 0.0000000 0.0000000    0.0000000  0 0.5773503 0.0000000</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;       how does how does it        it   it work     where       you</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; [1,] 0.3425257   0.3425257 0.3425257 0.3425257 0.0000000 0.0000000</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [2,] 0.3425257   0.3425257 0.3425257 0.3425257 0.0000000 0.0000000</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [3,] 0.0000000   0.0000000 0.0000000 0.0000000 0.5773503 0.5773503</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt;           work      home       and      does   does it does it work        go</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1,] 0.2478085 0.0000000 0.0000000 0.3425257 0.3425257    0.3425257 0.0000000</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; [2,] 0.0000000 0.8164966 0.4082483 0.0000000 0.0000000    0.0000000 0.0000000</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [3,] 0.7151500 0.0000000 0.4942471 0.0000000 0.0000000    0.0000000 0.4942471</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt;          going       how  how does how does it        it   it work where you</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; [1,] 0.0000000 0.3425257 0.3425257   0.3425257 0.3425257 0.3425257     0   0</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [2,] 0.4082483 0.0000000 0.0000000   0.0000000 0.0000000 0.0000000     0   0</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.0000000   0.0000000 0.0000000 0.0000000     0   0</span></a></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply do:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># ensure the input to classifier is a data.table or data.frame object</span></a>
