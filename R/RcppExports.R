@@ -5,7 +5,7 @@ superSplit <- function(str, sep = ' ') {
     .Call('_superml_superSplit', PACKAGE = 'superml', str, sep)
 }
 
-superNgrams <- function(str, ngram_range, sep) {
+superNgrams <- function(str, ngram_range, sep = ' ') {
     .Call('_superml_superNgrams', PACKAGE = 'superml', str, ngram_range, sep)
 }
 

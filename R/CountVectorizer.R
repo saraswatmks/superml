@@ -27,8 +27,6 @@ CountVectorizer <- R6::R6Class(
         regex = "[^a-zA-Z0-9 ]",
         #' @field remove_stopwords a list of stopwords to use, by default it uses its inbuilt list of standard stopwords
         remove_stopwords = TRUE,
-        #' @field parallel speeds up ngrams computation using n-1 cores, defaults: TRUE
-        parallel = TRUE,
         #' @field model internal attribute which stores the count model
         model = NULL,
 
@@ -43,7 +41,6 @@ CountVectorizer <- R6::R6Class(
         #' @param split character, splitting criteria for strings, default: " "
         #' @param lowercase logical, convert all characters to lowercase before tokenizing, default: TRUE
         #' @param remove_stopwords list, a list of stopwords to use, by default it uses its inbuilt list of standard english stopwords
-        #' @param parallel logical,  speeds up ngrams computation using n-1 cores, defaults: TRUE
         #'
         #' @return A `CountVectorizer` object.
         #'
@@ -57,8 +54,8 @@ CountVectorizer <- R6::R6Class(
                               regex,
                               remove_stopwords,
                               split,
-                              lowercase,
-                              parallel) {
+                              lowercase
+                              ) {
             if (!(missing(max_df)))
                 self$max_df <- max_df
             if (!(missing(min_df)))
@@ -75,8 +72,6 @@ CountVectorizer <- R6::R6Class(
                 self$split <- split
             if (!(missing(lowercase)))
                 self$lowercase <- lowercase
-            if (!(missing(parallel)))
-                self$parallel <- parallel
 
             private$check_args(self$max_df, what = 'max_df')
             private$check_args(self$min_df, what = 'min_df')
@@ -111,8 +106,7 @@ CountVectorizer <- R6::R6Class(
                 max_df = self$max_df,
                 max_features = self$max_features,
                 ngram_range = self$ngram_range,
-                split = self$split,
-                parallel = self$parallel
+                split = self$split
             )
 
             self$model <- private$get_bow_df(self$sentences,
@@ -203,7 +197,7 @@ CountVectorizer <- R6::R6Class(
         },
 
 
-        get_tokens = function(sentences, min_df=1, max_df=1, ngram_range = NULL, max_features=NULL, split=NULL, parallel=TRUE){
+        get_tokens = function(sentences, min_df=1, max_df=1, ngram_range = NULL, max_features=NULL, split=NULL){
 
 
             # sentences should be preprocessed sentences
@@ -220,26 +214,8 @@ CountVectorizer <- R6::R6Class(
                     stop("ngram_range must have a min-max value for tokens length. Try using: c(1, 2)")
                 }
 
-                if (isTRUE(parallel)) {
-
-                    if (.Platform$OS.type == 'windows') {
-                        n_cores <- 1
-                    } else {
-                        n_cores <- parallel::detectCores() - 1
-                    }
-
-                    tokens_counter <- parallel::mclapply(sentences,
-                                                         function(x) superml:::superNgrams(x, ngram_range = ngram_range, sep = split),
-                                                        mc.cores = n_cores,
-                                                        mc.preschedule = TRUE,
-                                                        mc.cleanup = TRUE)
-                } else {
-                    # much slower
-                    # tokens_counter <- private$super_tokenizer(sentences, ngram_range = ngram_range, split = split)
-                    # fast c++
-                    tokens_counter <- sapply(sentences, function(x) superml:::superNgrams(x, ngram_range = ngram_range, sep = split))
-                }
-
+                # fast c++
+                tokens_counter <- sapply(sentences, function(x) superml:::superNgrams(x, ngram_range = ngram_range, sep = split))
             }
 
             # sort the tokens by frequency
@@ -294,7 +270,6 @@ CountVectorizer <- R6::R6Class(
             if (length(use_tokens) < 1) {
                 stop("No tokens found matching the given criteria. Please use a larger value. ")
             }
-
 
             f <- superml:::superCountMatrix(sentences, use_tokens)
 

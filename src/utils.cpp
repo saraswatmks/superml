@@ -19,7 +19,7 @@ CharacterVector superSplit(std::string str, char sep = ' ') {
 
 // Convert a string into a vector of ngram tokens
 // [[Rcpp::export]]
-std::vector<std::string> superNgrams(std::string str, NumericVector ngram_range, char sep){
+std::vector<std::string> superNgrams(std::string str, NumericVector ngram_range, char sep = ' '){
 
     CharacterVector cv;
     cv = superSplit(str, sep);
