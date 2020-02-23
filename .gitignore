@@ -9,3 +9,5 @@ packrat/lib*/
 inst/doc
 ^data-raw$
 ^_pkgdown\.yml$
+src/*.o
+src/*.so

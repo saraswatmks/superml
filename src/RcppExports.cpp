@@ -6,12 +6,12 @@
 using namespace Rcpp;
 
 // superSplit
-CharacterVector superSplit(const std::string& str, char sep);
+CharacterVector superSplit(std::string str, char sep);
 RcppExport SEXP _superml_superSplit(SEXP strSEXP, SEXP sepSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const std::string& >::type str(strSEXP);
+    Rcpp::traits::input_parameter< std::string >::type str(strSEXP);
     Rcpp::traits::input_parameter< char >::type sep(sepSEXP);
     rcpp_result_gen = Rcpp::wrap(superSplit(str, sep));
     return rcpp_result_gen;
@@ -31,7 +31,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // superTokenizer
-CharacterVector superTokenizer(std::vector<std::string> string);
+std::vector<std::string> superTokenizer(std::vector<std::string> string);
 RcppExport SEXP _superml_superTokenizer(SEXP stringSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -41,11 +41,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// superCountMatrix
+NumericMatrix superCountMatrix(std::vector<std::string> sent, std::vector<std::string> tokens);
+RcppExport SEXP _superml_superCountMatrix(SEXP sentSEXP, SEXP tokensSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type sent(sentSEXP);
+    Rcpp::traits::input_parameter< std::vector<std::string> >::type tokens(tokensSEXP);
+    rcpp_result_gen = Rcpp::wrap(superCountMatrix(sent, tokens));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_superml_superSplit", (DL_FUNC) &_superml_superSplit, 2},
     {"_superml_superNgrams", (DL_FUNC) &_superml_superNgrams, 3},
     {"_superml_superTokenizer", (DL_FUNC) &_superml_superTokenizer, 1},
+    {"_superml_superCountMatrix", (DL_FUNC) &_superml_superCountMatrix, 2},
     {NULL, NULL, 0}
 };
 

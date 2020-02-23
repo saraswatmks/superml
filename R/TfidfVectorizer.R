@@ -31,8 +31,6 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     smooth_idf = TRUE,
     #' @field norm logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE
     norm = TRUE,
-    #' @field parallel speeds up ngrams computation using n-1 cores, defaults: TRUE
-    parallel = TRUE,
 
 
     #' @details
@@ -64,8 +62,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                           split,
                           lowercase,
                           smooth_idf,
-                          norm,
-                          parallel
+                          norm
                           ){
         super$initialize(min_df = min_df,
                          max_df = max_df,
@@ -74,8 +71,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
                          remove_stopwords = remove_stopwords,
                          regex = regex,
                          split = split,
-                         lowercase = lowercase,
-                         parallel = parallel)
+                         lowercase = lowercase)
         if (!(missing(min_df)))
             self$min_df <- min_df
         if (!(missing(max_df)))
