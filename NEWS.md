@@ -1,3 +1,10 @@
+# superml 0.5.2
+
+* Introduce rcpp and rewrite base functions in rcpp to create count/tfidf matrix
+* Much faster execution with core rcpp functions.
+* Deprecate `parallel` argument, since turned out to be slower than c++.
+* Fixed bugs.
+
 # superml 0.5.1
 
 * Fix bugs in CountVectorizer & TfidfVectorizer

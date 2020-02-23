@@ -77,8 +77,6 @@ tf_matrix <- tf$transform(new_sents)
 \item{\code{smooth_idf}}{logical, to prevent zero division, adds one to document frequencies, as if an extra document was seen containing every term in the collection exactly once}
 
 \item{\code{norm}}{logical, if TRUE, each output row will have unit norm ‘l2’: Sum of squares of vector elements is 1. if FALSE returns non-normalized vectors, default: TRUE}
-
-\item{\code{parallel}}{speeds up ngrams computation using n-1 cores, defaults: TRUE}
 }
 \if{html}{\out{</div>}}
 }
@@ -112,8 +110,7 @@ tf_matrix <- tf$transform(new_sents)
   split,
   lowercase,
   smooth_idf,
-  norm,
-  parallel
+  norm
 )}\if{html}{\out{</div>}}
 }
 
