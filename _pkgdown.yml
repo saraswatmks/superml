@@ -56,7 +56,7 @@ reference:
 - title: Helpers
   desc: ~
   contents:
-  - '`bm25`'
+  - '`bm_25`'
   - '`Counter`'
   - '`CountVectorizer`'
   - '`GridSearchCV`'
