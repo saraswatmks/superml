@@ -17,3 +17,55 @@ superCountMatrix <- function(sent, tokens) {
     .Call('_superml_superCountMatrix', PACKAGE = 'superml', sent, tokens)
 }
 
+dot <- function(a, b, norm = TRUE) {
+    .Call('_superml_dot', PACKAGE = 'superml', a, b, norm)
+}
+
+dotmat <- function(a, b, norm = TRUE) {
+    .Call('_superml_dotmat', PACKAGE = 'superml', a, b, norm)
+}
+
+sorted <- function(v, indexes = TRUE) {
+    .Call('_superml_sorted', PACKAGE = 'superml', v, indexes)
+}
+
+sort_index <- function(v, ascending = TRUE) {
+    .Call('_superml_sort_index', PACKAGE = 'superml', v, ascending)
+}
+
+normalize2d <- function(x, pnorm = 2L, axis = 0L) {
+    .Call('_superml_normalize2d', PACKAGE = 'superml', x, pnorm, axis)
+}
+
+normalize1d <- function(x) {
+    .Call('_superml_normalize1d', PACKAGE = 'superml', x)
+}
+
+avg_doc_len <- function(ss) {
+    .Call('_superml_avg_doc_len', PACKAGE = 'superml', ss)
+}
+
+idf <- function(q, corpus) {
+    .Call('_superml_idf', PACKAGE = 'superml', q, corpus)
+}
+
+sort_vector_with_names <- function(x) {
+    .Call('_superml_sort_vector_with_names', PACKAGE = 'superml', x)
+}
+
+#' @name bm_25
+#' @title BM25 Matching
+#' @description BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
+#' It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
+#' This implementation is based on c++ functions hence quite optimised as well.
+#'
+#' @param document a string for which to find similar documents
+#' @param corpus a vector of strings against which document is to be matched
+#' @param top_n top n similar documents to find
+#'
+#' @return a vector containing similar documents and their scores
+#' @export
+bm_25 <- function(document, corpus, top_n) {
+    .Call('_superml_bm_25', PACKAGE = 'superml', document, corpus, top_n)
+}
+

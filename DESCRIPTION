@@ -24,7 +24,10 @@ Imports:
     parallel,
     doParallel (>= 1.0),
     Metrics (>= 0.1)
-LinkingTo: Rcpp, BH
+LinkingTo: 
+    Rcpp, 
+    BH, 
+    RcppArmadillo
 Suggests:
     knitr,
     rlang,
