@@ -1,4 +1,4 @@
-#' Best Matching(BM25)
+#' Best Matching(BM25) - Deprecated
 #'
 #' Computer BM25 distance between sentences/documents.
 #'
@@ -6,8 +6,6 @@
 #' BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
 #' It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
 #' This implementation uses multiple cores for faster and parallel computation.
-#'
-#' @export
 
 bm25 <- R6::R6Class("bm25", public = list(
 
@@ -24,7 +22,7 @@ bm25 <- R6::R6Class("bm25", public = list(
     #'
     #' @return A `bm25` object.
     #'
-    #' @examples
+    #'
     #' example <- c('white audi 2.5 car','black shoes from office',
     #'              'new mobile iphone 7','audi tyres audi a3',
     #'              'nice audi bmw toyota corolla')
@@ -34,7 +32,7 @@ bm25 <- R6::R6Class("bm25", public = list(
         if (!(missing(corpus))) self$corpus <- private$transform(corpus)
         if (!(missing(use_parallel))) self$use_parallel <- use_parallel
 
-        if (isTRUE(self$use_parallel)){
+        if (isTRUE(self$use_parallel)) {
             message('Computation will be done parallelly using all CPU cores.')
         } else {
             message('to activate parallel computation, set use_parallel=TRUE')
@@ -50,7 +48,7 @@ bm25 <- R6::R6Class("bm25", public = list(
     #' @param topn integer, top n sentences to retrieve
     #' @return a vector of most similar documents
     #'
-    #' @examples
+    #'
     #' example <- c('white audi 2.5 car','black shoes from office',
     #'              'new mobile iphone 7','audi tyres audi a3',
     #'              'nice audi bmw toyota corolla')
@@ -81,7 +79,7 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     # tokenize the input
     transform = function(corpus){
-        return (vapply(corpus,
+        return(vapply(corpus,
                        function(x) strsplit(x, split = " "),
                        FUN.VALUE = list(1)))
     },
@@ -96,7 +94,7 @@ bm25 <- R6::R6Class("bm25", public = list(
         freq_q <- sum(document_from_corpus == q)
         doc_len <- length(document_from_corpus)
         mean_doc_len <- mean(vapply(corpus, length, FUN.VALUE = integer(1)))
-        return (private$calculate_idf(q, corpus) *
+        return(private$calculate_idf(q, corpus) *
                     ((freq_q * (k1 + 1)) /
                          ((freq_q + k1) *
                               (1 - b + b *
@@ -106,7 +104,7 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     compute = function(document, corpus, use_parallel){
 
-        if(isTRUE(self$use_parallel)){
+        if (isTRUE(self$use_parallel)){
             # devtools uses 2 cores max. to check parallel processes
             # but here removed parameters to set cores.
             cores <- parallel::detectCores()

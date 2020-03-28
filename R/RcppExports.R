@@ -17,28 +17,108 @@ superCountMatrix <- function(sent, tokens) {
     .Call('_superml_superCountMatrix', PACKAGE = 'superml', sent, tokens)
 }
 
+#' @name dot
+#' @title Dot product similarity in vectors
+#' @description Computes the dot product between two given vectors.
+#'
+#' @param a numeric vector
+#' @param b numeric vector
+#' @param norm logical, compute normalised dot product, default=True
+#'
+#' @return numeric vector containing sdot product score
+#' @export
+#'
+#' @examples
+#' a <- runif(5)
+#' b <- runif(5)
+#' s <- dot(a, b)
+#'
 dot <- function(a, b, norm = TRUE) {
     .Call('_superml_dot', PACKAGE = 'superml', a, b, norm)
 }
 
+#' @name dotmat
+#' @title Dot product similarity between a vector and matrix
+#' @description Computes the dot product between a vector and a given matrix.
+#' The vector returned has a dot product similarity value for each row in the matrix.
+#'
+#' @param a numeric vector
+#' @param b numeric matrix
+#' @param norm logical, compute normalised dot product, default=True
+#'
+#' @return numeric vector containing dot product scores
+#' @export
 dotmat <- function(a, b, norm = TRUE) {
     .Call('_superml_dotmat', PACKAGE = 'superml', a, b, norm)
 }
 
-sorted <- function(v, indexes = TRUE) {
-    .Call('_superml_sorted', PACKAGE = 'superml', v, indexes)
+sorted <- function(v) {
+    .Call('_superml_sorted', PACKAGE = 'superml', v)
 }
 
-sort_index <- function(v, ascending = TRUE) {
-    .Call('_superml_sort_index', PACKAGE = 'superml', v, ascending)
+#' @name sort_index
+#' @title sort_index
+#' @description For a given vector, return the indexes of the sorted array and
+#' not the sorted array itself.
+#'
+#' @param vec numeric vector
+#' @param ascending logical, order to return (ascending or descending), default = True
+#'
+#' @return numeric vector containing sorted indexes
+#' @export
+#'
+#' @examples
+#' v <- c(10,3,1,4)
+#' j <- sort_index(v)
+#'
+sort_index <- function(vec, ascending = TRUE) {
+    .Call('_superml_sort_index', PACKAGE = 'superml', vec, ascending)
 }
 
-normalize2d <- function(x, pnorm = 2L, axis = 0L) {
-    .Call('_superml_normalize2d', PACKAGE = 'superml', x, pnorm, axis)
+#' @name normalise2d
+#' @title normalise2d
+#' @description Normalises a matrix towards unit p norm row wise or column wise. By default, p = 2 is used.
+#' To normalise row wise, use axis=0. To normalise column wise, use axis=1.
+#' as the square root of sum of square of values in the given vector.
+#'
+#' @param mat numeric matrix
+#' @param pnorm integer value, default value=2
+#' @param axis integer (0 or 1), row wise = 0,  column wise = 1
+#'
+#' @return normalised numeric matrix
+#' @export
+#'
+#' @examples
+#' mat <- matrix(runif(12), 3, 4)
+#'
+#' ## normalise matrix row wise
+#' r <- normalise2d(mat, axis=0)
+#'
+#' ## normalise matrix column wise
+#' r <- normalise2d(mat, axis=1)
+#'
+normalise2d <- function(mat, pnorm = 2L, axis = 0L) {
+    .Call('_superml_normalise2d', PACKAGE = 'superml', mat, pnorm, axis)
 }
 
-normalize1d <- function(x) {
-    .Call('_superml_normalize1d', PACKAGE = 'superml', x)
+#' @name normalise1d
+#' @title normalise1d
+#' @description Normalises a 1 dimensional vector towards unit p norm. By default, p = 2 is used.
+#' For a given vector, eg: c(1,2,3), norm value is calculated as `x / |x|` where `|x|` is calculated
+#' as the square root of sum of square of values in the given vector.
+#'
+#' @param vec vector containing integers or numeric values.
+#' @param pnorm integer, default: 2
+#'
+#' @return a vector containing normalised values
+#' @export
+#'
+#' @examples
+#' val <- c(1,10,5,3,8)
+#' norm_val <- normalise1d(val)
+#'
+normalise1d <- function(vec, pnorm = 2L) {
+    .Call('_superml_normalise1d', PACKAGE = 'superml', vec, pnorm)
 }
 
 avg_doc_len <- function(ss) {
@@ -65,7 +145,48 @@ sort_vector_with_names <- function(x) {
 #'
 #' @return a vector containing similar documents and their scores
 #' @export
+#'
+#' @examples
+#' docs <- c("chimpanzees are found in jungle",
+#'           "chimps are jungle animals",
+#'           "Mercedes automobiles are best",
+#'           "merc is made in germany",
+#'           "chimps are intelligent animals")
+#'
+#' sentence <- "automobiles are"
+#' s <- bm_25(document=sentence, corpus=docs, top_n=2)
+#'
 bm_25 <- function(document, corpus, top_n) {
     .Call('_superml_bm_25', PACKAGE = 'superml', document, corpus, top_n)
+}
+
+#' @name supersvd
+#' @title Singular Value Decomposition (SVD)
+#' @description Performs dimensionality reduction using svd by factorizing a given matrix
+#' into a product of three matrics such that `A=UDV` where the columns of U and V are orthonormal
+#' and the matrixDis diagonal with positive real entries.
+#'
+#' @param mat matrix
+#' @param n_components desired dimensionality of output data. Must be strictly less than the number of features.
+#'
+#' @return list, contains the following attributes:
+#'         components: matrix
+#'         explained_variance_ratio: Percentage of variance explained by each of the selected components.
+#'         singular_values_array: The singular values corresponding to each of the selected components.
+#'                                The singular values are equal to the 2-norms of the n_components variables in the lower-dimensional space.
+#' @export
+#'
+#' @examples
+#' docs <- c("chimpanzees are found in jungle",
+#'           "chimps are jungle animals",
+#'           "Mercedes automobiles are best",
+#'           "merc is made in germany",
+#'           "chimps are intelligent animals")
+#'
+#' sentence <- "automobiles are"
+#' s <- bm_25(document=sentence, corpus=docs, top_n=2)
+#'
+supersvd <- function(mat, n_components) {
+    .Call('_superml_supersvd', PACKAGE = 'superml', mat, n_components)
 }
 

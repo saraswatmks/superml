@@ -2,7 +2,7 @@
 % Please edit documentation in R/bm25.R
 \name{bm25}
 \alias{bm25}
-\title{Best Matching(BM25)}
+\title{Best Matching(BM25) - Deprecated}
 \description{
 Computer BM25 distance between sentences/documents.
 }
@@ -10,28 +10,6 @@ Computer BM25 distance between sentences/documents.
 BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
 It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
 This implementation uses multiple cores for faster and parallel computation.
-}
-\examples{
-
-## ------------------------------------------------
-## Method `bm25$new`
-## ------------------------------------------------
-
-example <- c('white audi 2.5 car','black shoes from office',
-             'new mobile iphone 7','audi tyres audi a3',
-             'nice audi bmw toyota corolla')
-obj <- bm25$new(example, use_parallel=FALSE)
-
-## ------------------------------------------------
-## Method `bm25$most_similar`
-## ------------------------------------------------
-
-example <- c('white audi 2.5 car','black shoes from office',
-             'new mobile iphone 7','audi tyres audi a3',
-             'nice audi bmw toyota corolla')
-get_bm <- bm25$new(example, use_parallel=FALSE)
-input_document <- c('white toyota corolla')
-get_bm$most_similar(document = input_document, topn = 2)
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -72,18 +50,13 @@ Create a new `bm25` object.
 
 \subsection{Returns}{
 A `bm25` object.
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{example <- c('white audi 2.5 car','black shoes from office',
+
+
+example <- c('white audi 2.5 car','black shoes from office',
              'new mobile iphone 7','audi tyres audi a3',
              'nice audi bmw toyota corolla')
 obj <- bm25$new(example, use_parallel=FALSE)
 }
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-most_similar"></a>}}
@@ -107,20 +80,15 @@ Returns a list of the most similar sentence
 
 \subsection{Returns}{
 a vector of most similar documents
-}
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{example <- c('white audi 2.5 car','black shoes from office',
+
+
+example <- c('white audi 2.5 car','black shoes from office',
              'new mobile iphone 7','audi tyres audi a3',
              'nice audi bmw toyota corolla')
 get_bm <- bm25$new(example, use_parallel=FALSE)
 input_document <- c('white toyota corolla')
 get_bm$most_similar(document = input_document, topn = 2)
 }
-\if{html}{\out{</div>}}
-
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}

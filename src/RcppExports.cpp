@@ -81,50 +81,50 @@ BEGIN_RCPP
 END_RCPP
 }
 // sorted
-std::vector<double> sorted(NumericVector v, const bool indexes);
-RcppExport SEXP _superml_sorted(SEXP vSEXP, SEXP indexesSEXP) {
+std::vector<double> sorted(NumericVector v);
+RcppExport SEXP _superml_sorted(SEXP vSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
-    Rcpp::traits::input_parameter< const bool >::type indexes(indexesSEXP);
-    rcpp_result_gen = Rcpp::wrap(sorted(v, indexes));
+    rcpp_result_gen = Rcpp::wrap(sorted(v));
     return rcpp_result_gen;
 END_RCPP
 }
 // sort_index
-std::vector<int> sort_index(NumericVector v, const bool ascending);
-RcppExport SEXP _superml_sort_index(SEXP vSEXP, SEXP ascendingSEXP) {
+std::vector<int> sort_index(NumericVector vec, const bool ascending);
+RcppExport SEXP _superml_sort_index(SEXP vecSEXP, SEXP ascendingSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type v(vSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
     Rcpp::traits::input_parameter< const bool >::type ascending(ascendingSEXP);
-    rcpp_result_gen = Rcpp::wrap(sort_index(v, ascending));
+    rcpp_result_gen = Rcpp::wrap(sort_index(vec, ascending));
     return rcpp_result_gen;
 END_RCPP
 }
-// normalize2d
-arma::mat normalize2d(NumericMatrix x, int pnorm, int axis);
-RcppExport SEXP _superml_normalize2d(SEXP xSEXP, SEXP pnormSEXP, SEXP axisSEXP) {
+// normalise2d
+arma::mat normalise2d(NumericMatrix mat, const int pnorm, const int axis);
+RcppExport SEXP _superml_normalise2d(SEXP matSEXP, SEXP pnormSEXP, SEXP axisSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    Rcpp::traits::input_parameter< int >::type pnorm(pnormSEXP);
-    Rcpp::traits::input_parameter< int >::type axis(axisSEXP);
-    rcpp_result_gen = Rcpp::wrap(normalize2d(x, pnorm, axis));
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const int >::type pnorm(pnormSEXP);
+    Rcpp::traits::input_parameter< const int >::type axis(axisSEXP);
+    rcpp_result_gen = Rcpp::wrap(normalise2d(mat, pnorm, axis));
     return rcpp_result_gen;
 END_RCPP
 }
-// normalize1d
-std::vector<double> normalize1d(NumericVector x);
-RcppExport SEXP _superml_normalize1d(SEXP xSEXP) {
+// normalise1d
+std::vector<double> normalise1d(NumericVector vec, const int pnorm);
+RcppExport SEXP _superml_normalise1d(SEXP vecSEXP, SEXP pnormSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(normalize1d(x));
+    Rcpp::traits::input_parameter< NumericVector >::type vec(vecSEXP);
+    Rcpp::traits::input_parameter< const int >::type pnorm(pnormSEXP);
+    rcpp_result_gen = Rcpp::wrap(normalise1d(vec, pnorm));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -175,6 +175,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// supersvd
+List supersvd(NumericMatrix mat, const int n_components);
+RcppExport SEXP _superml_supersvd(SEXP matSEXP, SEXP n_componentsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_components(n_componentsSEXP);
+    rcpp_result_gen = Rcpp::wrap(supersvd(mat, n_components));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_superml_superSplit", (DL_FUNC) &_superml_superSplit, 2},
@@ -183,14 +195,15 @@ static const R_CallMethodDef CallEntries[] = {
     {"_superml_superCountMatrix", (DL_FUNC) &_superml_superCountMatrix, 2},
     {"_superml_dot", (DL_FUNC) &_superml_dot, 3},
     {"_superml_dotmat", (DL_FUNC) &_superml_dotmat, 3},
-    {"_superml_sorted", (DL_FUNC) &_superml_sorted, 2},
+    {"_superml_sorted", (DL_FUNC) &_superml_sorted, 1},
     {"_superml_sort_index", (DL_FUNC) &_superml_sort_index, 2},
-    {"_superml_normalize2d", (DL_FUNC) &_superml_normalize2d, 3},
-    {"_superml_normalize1d", (DL_FUNC) &_superml_normalize1d, 1},
+    {"_superml_normalise2d", (DL_FUNC) &_superml_normalise2d, 3},
+    {"_superml_normalise1d", (DL_FUNC) &_superml_normalise1d, 2},
     {"_superml_avg_doc_len", (DL_FUNC) &_superml_avg_doc_len, 1},
     {"_superml_idf", (DL_FUNC) &_superml_idf, 2},
     {"_superml_sort_vector_with_names", (DL_FUNC) &_superml_sort_vector_with_names, 1},
     {"_superml_bm_25", (DL_FUNC) &_superml_bm_25, 3},
+    {"_superml_supersvd", (DL_FUNC) &_superml_supersvd, 2},
     {NULL, NULL, 0}
 };
 

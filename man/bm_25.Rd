@@ -21,3 +21,14 @@ BM25 stands for Best Matching 25. It is widely using for ranking documents and a
 It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
 This implementation is based on c++ functions hence quite optimised as well.
 }
+\examples{
+docs <- c("chimpanzees are found in jungle",
+          "chimps are jungle animals",
+          "Mercedes automobiles are best",
+          "merc is made in germany",
+          "chimps are intelligent animals")
+
+sentence <- "automobiles are"
+s <- bm_25(document=sentence, corpus=docs, top_n=2)
+
+}

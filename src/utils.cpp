@@ -106,7 +106,22 @@ NumericMatrix superCountMatrix(std::vector<std::string> sent, std::vector<std::s
 
 }
 
-// Computes dot product between two vectors
+//' @name dot
+//' @title Dot product similarity in vectors
+//' @description Computes the dot product between two given vectors.
+//'
+//' @param a numeric vector
+//' @param b numeric vector
+//' @param norm logical, compute normalised dot product, default=True
+//'
+//' @return numeric vector containing sdot product score
+//' @export
+//'
+//' @examples
+//' a <- runif(5)
+//' b <- runif(5)
+//' s <- dot(a, b)
+//'
 // [[Rcpp::export]]
 float dot(NumericVector a, NumericVector b, bool norm=true){
 
@@ -119,7 +134,17 @@ float dot(NumericVector a, NumericVector b, bool norm=true){
 
 }
 
-// Computes dot product between a vector & matrix
+//' @name dotmat
+//' @title Dot product similarity between a vector and matrix
+//' @description Computes the dot product between a vector and a given matrix.
+//' The vector returned has a dot product similarity value for each row in the matrix.
+//'
+//' @param a numeric vector
+//' @param b numeric matrix
+//' @param norm logical, compute normalised dot product, default=True
+//'
+//' @return numeric vector containing dot product scores
+//' @export
 // [[Rcpp::export]]
 NumericVector dotmat(NumericVector a, NumericMatrix b, const bool norm=true){
 
@@ -145,7 +170,7 @@ NumericVector dotmat(NumericVector a, NumericMatrix b, const bool norm=true){
 
 // Sorts a vector
 // [[Rcpp::export]]
-std::vector<double> sorted(NumericVector v, const bool indexes=true){
+std::vector<double> sorted(NumericVector v){
 
     arma::vec vect = Rcpp::as<arma::vec>(v);
 
@@ -157,13 +182,27 @@ std::vector<double> sorted(NumericVector v, const bool indexes=true){
 
 }
 
-// Returns the indexes of a sorted array
+//' @name sort_index
+//' @title sort_index
+//' @description For a given vector, return the indexes of the sorted array and
+//' not the sorted array itself.
+//'
+//' @param vec numeric vector
+//' @param ascending logical, order to return (ascending or descending), default = True
+//'
+//' @return numeric vector containing sorted indexes
+//' @export
+//'
+//' @examples
+//' v <- c(10,3,1,4)
+//' j <- sort_index(v)
+//'
 // [[Rcpp::export]]
-std::vector<int> sort_index(NumericVector v, const bool ascending=true){
+std::vector<int> sort_index(NumericVector vec, const bool ascending=true){
 
     // buggy function, changes order of input v
     // Rcpp::NumericVector res = Rcpp::clone(v);
-    arma::vec vect = Rcpp::as<arma::vec>(v);
+    arma::vec vect = Rcpp::as<arma::vec>(vec);
     // add 1 because starts with 0
     if(ascending){
         return Rcpp::as<std::vector<int> >(wrap(stable_sort_index(vect, "ascend") + 1));
@@ -173,21 +212,59 @@ std::vector<int> sort_index(NumericVector v, const bool ascending=true){
 }
 
 
+//' @name normalise2d
+//' @title normalise2d
+//' @description Normalises a matrix towards unit p norm row wise or column wise. By default, p = 2 is used.
+//' To normalise row wise, use axis=0. To normalise column wise, use axis=1.
+//' as the square root of sum of square of values in the given vector.
+//'
+//' @param mat numeric matrix
+//' @param pnorm integer value, default value=2
+//' @param axis integer (0 or 1), row wise = 0,  column wise = 1
+//'
+//' @return normalised numeric matrix
+//' @export
+//'
+//' @examples
+//' mat <- matrix(runif(12), 3, 4)
+//'
+//' ## normalise matrix row wise
+//' r <- normalise2d(mat, axis=0)
+//'
+//' ## normalise matrix column wise
+//' r <- normalise2d(mat, axis=1)
+//'
 // [[Rcpp::export]]
-arma::mat normalize2d(NumericMatrix x, int pnorm=2, int axis=0){
+arma::mat normalise2d(NumericMatrix mat, const int pnorm=2, const int axis=0){
 
-    arma::mat mt = Rcpp::as<arma::mat>(x);
+    arma::mat mt = Rcpp::as<arma::mat>(mat);
 
     return arma::normalise(mt, pnorm, axis);
 
 }
 
+//' @name normalise1d
+//' @title normalise1d
+//' @description Normalises a 1 dimensional vector towards unit p norm. By default, p = 2 is used.
+//' For a given vector, eg: c(1,2,3), norm value is calculated as `x / |x|` where `|x|` is calculated
+//' as the square root of sum of square of values in the given vector.
+//'
+//' @param vec vector containing integers or numeric values.
+//' @param pnorm integer, default: 2
+//'
+//' @return a vector containing normalised values
+//' @export
+//'
+//' @examples
+//' val <- c(1,10,5,3,8)
+//' norm_val <- normalise1d(val)
+//'
 // [[Rcpp::export]]
-std::vector<double> normalize1d(NumericVector x){
+std::vector<double> normalise1d(NumericVector vec, const int pnorm=2){
 
-    arma::vec v = Rcpp::as<arma::vec>(x);
+    arma::vec v = Rcpp::as<arma::vec>(vec);
 
-    return Rcpp::as<std::vector<double>>(wrap(arma::normalise(v)));
+    return Rcpp::as<std::vector<double>>(wrap(arma::normalise(v, pnorm)));
 
 }
 
@@ -249,6 +326,17 @@ NumericVector sort_vector_with_names(NumericVector x) {
 //'
 //' @return a vector containing similar documents and their scores
 //' @export
+//'
+//' @examples
+//' docs <- c("chimpanzees are found in jungle",
+//'           "chimps are jungle animals",
+//'           "Mercedes automobiles are best",
+//'           "merc is made in germany",
+//'           "chimps are intelligent animals")
+//'
+//' sentence <- "automobiles are"
+//' s <- bm_25(document=sentence, corpus=docs, top_n=2)
+//'
 // [[Rcpp::export]]
 NumericVector bm_25(std::string document, std::vector<std::string> corpus, const int top_n){
     CharacterVector vec = superSplit(document);
@@ -287,3 +375,92 @@ NumericVector bm_25(std::string document, std::vector<std::string> corpus, const
     return sort_vector_with_names(scores);
 }
 
+
+// Slower than base R table (counter), don't export
+NumericVector counter(std::vector<std::string> vec, const bool sort=true, const bool ascending=true){
+
+    //std::vector<std::string> v = {"abc", "cab", "bca", "abc","cab","cab"};
+    std::map<std::string , int> mm;
+    for (auto str : vec) {
+        // cout << str << endl;
+        mm[str]++;
+    }
+
+    if(!sort){
+        return wrap(mm);
+    } else {
+        CharacterVector names;
+        NumericVector vals;
+
+        for(auto imap: mm){
+            names.push_back(imap.first);
+            vals.push_back(imap.second);
+        }
+        // std vector to numeric vector
+        NumericVector ixs = wrap(sort_index(vals, ascending));
+        NumericVector res = vals[ixs];
+        res.attr("names") =  names[ixs];
+
+        return res;
+
+    }
+
+}
+
+//' @name supersvd
+//' @title Singular Value Decomposition (SVD)
+//' @description Performs dimensionality reduction using svd by factorizing a given matrix
+//' into a product of three matrics such that `A=UDV` where the columns of U and V are orthonormal
+//' and the matrixDis diagonal with positive real entries.
+//'
+//' @param mat matrix
+//' @param n_components desired dimensionality of output data. Must be strictly less than the number of features.
+//'
+//' @return list, contains the following attributes:
+//'         components: matrix
+//'         explained_variance_ratio: Percentage of variance explained by each of the selected components.
+//'         singular_values_array: The singular values corresponding to each of the selected components.
+//'                                The singular values are equal to the 2-norms of the n_components variables in the lower-dimensional space.
+//' @export
+//'
+//' @examples
+//' docs <- c("chimpanzees are found in jungle",
+//'           "chimps are jungle animals",
+//'           "Mercedes automobiles are best",
+//'           "merc is made in germany",
+//'           "chimps are intelligent animals")
+//'
+//' sentence <- "automobiles are"
+//' s <- bm_25(document=sentence, corpus=docs, top_n=2)
+//'
+// [[Rcpp::export]]
+List supersvd(NumericMatrix mat, const int n_components){
+    arma::mat mt = Rcpp::as<arma::mat>(mat);
+
+    arma::mat U;
+    arma::vec s;
+    arma::mat V;
+
+    arma::svd(U,s,V,mt);
+
+    U = U.head_cols(n_components);
+    V = V.head_cols(n_components);
+
+    s = s.head(n_components);
+    List req;
+
+    arma::mat X_transformed = U.each_row() % s.t();
+
+    arma::mat explained_variance_ratio  = var(X_transformed);
+
+    float full_var = sum(var(mt));
+    explained_variance_ratio = explained_variance_ratio / full_var;
+
+    req["components"] = V; // there are the components
+    // req["U"] = U;
+    req["singular_values"] = Rcpp::as<std::vector<double> >(wrap(s));
+    req["explained_variance_ratio"] = Rcpp::as<std::vector<double> >(wrap(explained_variance_ratio));
+
+    return req;
+
+}
