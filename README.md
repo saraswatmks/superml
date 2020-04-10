@@ -47,6 +47,12 @@ In addition, there are other useful functions to support modeling tasks such as:
 -   kFoldMean: Target encoding
 -   smoothMean: Target encoding
 
+To compute text similarity, following functions are available:
+
+- bm_25: Computes bm25 distance
+- dot: Computes dot product between two vectors
+- dotmat: Computes dot product between vector & matrix
+
 Usage
 -----
 

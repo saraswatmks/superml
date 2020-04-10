@@ -1,3 +1,10 @@
+# superml 0.5.3
+
+* Update bm25 function
+* Add functions for dot product, svd, normalise matrix
+* Add documentation for rcpp functions
+* Fixed bugs.
+
 # superml 0.5.2
 
 * Introduce rcpp and rewrite base functions in rcpp to create count/tfidf matrix

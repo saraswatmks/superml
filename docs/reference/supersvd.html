@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Best Matching(BM25) - Deprecated — bm25 • SuperML</title>
+<title>Singular Value Decomposition (SVD) — supersvd • SuperML</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,10 @@
 
 
 
-<meta property="og:title" content="Best Matching(BM25) - Deprecated — bm25" />
-<meta property="og:description" content="Computer BM25 distance between sentences/documents." />
+<meta property="og:title" content="Singular Value Decomposition (SVD) — supersvd" />
+<meta property="og:description" content="Performs dimensionality reduction using svd by factorizing a given matrix
+into a product of three matrics such that `A=UDV` where the columns of U and V are orthonormal
+and the matrixDis diagonal with positive real entries." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -132,108 +134,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Best Matching(BM25) - Deprecated</h1>
-    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/bm25.R'><code>R/bm25.R</code></a></small>
-    <div class="hidden name"><code>bm25.Rd</code></div>
+    <h1>Singular Value Decomposition (SVD)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/saraswatmks/superml/blob/master/R/RcppExports.R'><code>R/RcppExports.R</code></a></small>
+    <div class="hidden name"><code>supersvd.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Computer BM25 distance between sentences/documents.</p>
+    <p>Performs dimensionality reduction using svd by factorizing a given matrix
+into a product of three matrics such that `A=UDV` where the columns of U and V are orthonormal
+and the matrixDis diagonal with positive real entries.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>supersvd</span>(<span class='no'>mat</span>, <span class='no'>n_components</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mat</th>
+      <td><p>matrix</p></td>
+    </tr>
+    <tr>
+      <th>n_components</th>
+      <td><p>desired dimensionality of output data. Must be strictly less than the number of features.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
-It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
-This implementation uses multiple cores for faster and parallel computation.</p>
-    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+    <p>list, contains the following attributes:
+        components: matrix
+        explained_variance_ratio: Percentage of variance explained by each of the selected components.
+        singular_values_array: The singular values corresponding to each of the selected components.
+                               The singular values are equal to the 2-norms of the n_components variables in the lower-dimensional space.</p>
 
-    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
-<dt><code>corpus</code></dt><dd><p>a list containing sentences</p></dd>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>docs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"chimpanzees are found in jungle"</span>,
+          <span class='st'>"chimps are jungle animals"</span>,
+          <span class='st'>"Mercedes automobiles are best"</span>,
+          <span class='st'>"merc is made in germany"</span>,
+          <span class='st'>"chimps are intelligent animals"</span>)
 
-<dt><code>use_parallel</code></dt><dd><p>enables parallel computation, defaults to FALSE</p></dd>
-
-</dl><p></div></p>
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
-
-    
-<h3>Public methods</h3>
-
-<ul>
-<li><p><a href='#method-new'><code>bm25$new()</code></a></p></li>
-<li><p><a href='#method-most_similar'><code>bm25$most_similar()</code></a></p></li>
-<li><p><a href='#method-clone'><code>bm25$clone()</code></a></p></li>
-</ul>
-<p><hr>
-<a id="method-new"></a></p><h3>Method <code>new()</code></h3>
-
-<h3>Usage</h3>
-<p><div class="r"></p><pre>bm25$new(corpus, use_parallel)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>corpus</code></dt><dd><p>list, a list containing sentences</p></dd>
-
-<dt><code>use_parallel</code></dt><dd><p>logical, enables parallel computation, defaults to FALSE. if TRUE uses n - 1 cores.</p></dd>
-
-</dl><p></div></p>
-<h3>Details</h3>
-<p>Create a new `bm25` object.</p>
-
-<h3>Returns</h3>
-<p>A `bm25` object.</p>
-
-<p>example &lt;- c('white audi 2.5 car','black shoes from office',
-             'new mobile iphone 7','audi tyres audi a3',
-             'nice audi bmw toyota corolla')
-obj &lt;- bm25$new(example, use_parallel=FALSE)</p>
-<p><hr>
-<a id="method-most_similar"></a></p><h3>Method <code>most_similar()</code></h3>
-
-<h3>Usage</h3>
-<p><div class="r"></p><pre>bm25$most_similar(document, topn = 1)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>document</code></dt><dd><p>character, for this value we find most similar sentences.</p></dd>
-
-<dt><code>topn</code></dt><dd><p>integer, top n sentences to retrieve</p></dd>
-
-</dl><p></div></p>
-<h3>Details</h3>
-<p>Returns a list of the most similar sentence</p>
-
-<h3>Returns</h3>
-<p>a vector of most similar documents</p>
-
-<p>example &lt;- c('white audi 2.5 car','black shoes from office',
-             'new mobile iphone 7','audi tyres audi a3',
-             'nice audi bmw toyota corolla')
-get_bm &lt;- bm25$new(example, use_parallel=FALSE)
-input_document &lt;- c('white toyota corolla')
-get_bm$most_similar(document = input_document, topn = 2)</p>
-<p><hr>
-<a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre>bm25$clone(deep = FALSE)</pre><p></div></p>
-
-<h3>Arguments</h3>
-<p><div class="arguments"></p><dl class='dl-horizontal'>
-<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
-
-</dl><p></div></p>
-
-
-
+<span class='no'>sentence</span> <span class='kw'>&lt;-</span> <span class='st'>"automobiles are"</span>
+<span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='bm_25.html'>bm_25</a></span>(<span class='kw'>document</span><span class='kw'>=</span><span class='no'>sentence</span>, <span class='kw'>corpus</span><span class='kw'>=</span><span class='no'>docs</span>, <span class='kw'>top_n</span><span class='kw'>=</span><span class='fl'>2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#details">Details</a></li>
-      <li><a href="#public-fields">Public fields</a></li>
-      <li><a href="#methods">Methods</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
