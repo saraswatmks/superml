@@ -405,35 +405,7 @@ NumericVector counter(std::vector<std::string> vec, const bool sort=true, const 
 
     }
 
-}
-
-//' @name supersvd
-//' @title Singular Value Decomposition (SVD)
-//' @description Performs dimensionality reduction using svd by factorizing a given matrix
-//' into a product of three matrics such that `A=UDV` where the columns of U and V are orthonormal
-//' and the matrixDis diagonal with positive real entries.
-//'
-//' @param mat matrix
-//' @param n_components desired dimensionality of output data. Must be strictly less than the number of features.
-//'
-//' @return list, contains the following attributes:
-//'         components: matrix
-//'         explained_variance_ratio: Percentage of variance explained by each of the selected components.
-//'         singular_values_array: The singular values corresponding to each of the selected components.
-//'                                The singular values are equal to the 2-norms of the n_components variables in the lower-dimensional space.
-//' @export
-//'
-//' @examples
-//' docs <- c("chimpanzees are found in jungle",
-//'           "chimps are jungle animals",
-//'           "Mercedes automobiles are best",
-//'           "merc is made in germany",
-//'           "chimps are intelligent animals")
-//'
-//' sentence <- "automobiles are"
-//' s <- bm_25(document=sentence, corpus=docs, top_n=2)
-//'
-// [[Rcpp::export]]
+// Bug in the output
 List supersvd(NumericMatrix mat, const int n_components){
     arma::mat mt = Rcpp::as<arma::mat>(mat);
 
