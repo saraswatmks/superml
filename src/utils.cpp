@@ -405,7 +405,10 @@ NumericVector counter(std::vector<std::string> vec, const bool sort=true, const 
 
     }
 
-// Bug in the output
+}
+
+
+// buggy - needs fixing
 List supersvd(NumericMatrix mat, const int n_components){
     arma::mat mt = Rcpp::as<arma::mat>(mat);
 

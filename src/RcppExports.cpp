@@ -175,18 +175,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// supersvd
-List supersvd(NumericMatrix mat, const int n_components);
-RcppExport SEXP _superml_supersvd(SEXP matSEXP, SEXP n_componentsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type mat(matSEXP);
-    Rcpp::traits::input_parameter< const int >::type n_components(n_componentsSEXP);
-    rcpp_result_gen = Rcpp::wrap(supersvd(mat, n_components));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_superml_superSplit", (DL_FUNC) &_superml_superSplit, 2},
@@ -203,7 +191,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_superml_idf", (DL_FUNC) &_superml_idf, 2},
     {"_superml_sort_vector_with_names", (DL_FUNC) &_superml_sort_vector_with_names, 1},
     {"_superml_bm_25", (DL_FUNC) &_superml_bm_25, 3},
-    {"_superml_supersvd", (DL_FUNC) &_superml_supersvd, 2},
     {NULL, NULL, 0}
 };
 
