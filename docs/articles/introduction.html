@@ -97,7 +97,7 @@
       <h1>Introduction to SuperML</h1>
                         <h4 class="author">Manish Saraswat</h4>
             
-            <h4 class="date">2020-04-10</h4>
+            <h4 class="date">2020-04-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -309,7 +309,7 @@
 <a class="sourceLine" id="cb6-3" data-line-number="3">probs &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">type =</span> <span class="st">'prob'</span>)</a>
 <a class="sourceLine" id="cb6-4" data-line-number="4">labels &lt;-<span class="st"> </span>knn<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">type=</span><span class="st">'raw'</span>)</a>
 <a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted=</span>labels)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [1] 57103.53</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [1] 50410.23</span></a></code></pre></div>
 <p><strong>SVM Regression</strong></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">svm &lt;-<span class="st"> </span>SVMTrainer<span class="op">$</span><span class="kw">new</span>()</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">svm<span class="op">$</span><span class="kw">fit</span>(xtrain, <span class="st">'SalePrice'</span>)</a>
@@ -325,110 +325,112 @@
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; Deviance Residuals: </span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; -281403   -13806     -828    12319   237292  </span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; -402163   -14979     -838    13150   229342  </span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; Coefficients:</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; Coefficients: (1 not defined because of singularities)</span></a>
 <a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; (Intercept)    1.354e+06  1.478e+06   0.916 0.359792    </span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; MSSubClass    -1.123e+02  4.430e+01  -2.536 0.011368 *  </span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; MSZoning      -9.529e+02  1.588e+03  -0.600 0.548599    </span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; LotFrontage    1.807e+01  3.131e+01   0.577 0.564023    </span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; LotArea        4.567e-01  1.152e-01   3.965 7.89e-05 ***</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; Street        -3.394e+04  1.445e+04  -2.349 0.019045 *  </span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; LotShape       6.848e+01  1.875e+03   0.037 0.970869    </span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; LandContour    1.291e+02  1.956e+03   0.066 0.947404    </span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; Utilities     -7.233e+04  3.111e+04  -2.325 0.020274 *  </span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; LotConfig      3.256e+02  1.010e+03   0.322 0.747220    </span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; LandSlope      9.655e+03  4.493e+03   2.149 0.031897 *  </span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; Neighborhood   1.939e+02  1.766e+02   1.098 0.272388    </span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; Condition1    -2.914e+03  7.971e+02  -3.656 0.000270 ***</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; Condition2     6.396e+02  3.831e+03   0.167 0.867438    </span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; BldgType      -1.907e+03  1.833e+03  -1.041 0.298288    </span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; HouseStyle     2.355e+02  7.763e+02   0.303 0.761711    </span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; OverallQual    1.417e+04  1.242e+03  11.412  &lt; 2e-16 ***</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; OverallCond    5.596e+03  1.106e+03   5.061 5.00e-07 ***</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; YearBuilt      3.826e+02  7.644e+01   5.005 6.66e-07 ***</span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; YearRemodAdd   1.378e+02  7.231e+01   1.906 0.056931 .  </span></a>
-<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; RoofStyle      5.618e+03  1.936e+03   2.902 0.003792 ** </span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; RoofMatl      -1.748e+04  2.619e+03  -6.675 4.21e-11 ***</span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; Exterior1st   -9.596e+02  6.594e+02  -1.455 0.145917    </span></a>
-<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; Exterior2nd    1.360e+03  6.515e+02   2.087 0.037165 *  </span></a>
-<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; MasVnrType     4.958e+03  1.516e+03   3.271 0.001110 ** </span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; MasVnrArea     4.247e+01  7.262e+00   5.848 6.83e-09 ***</span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; ExterQual      2.586e+03  2.254e+03   1.148 0.251454    </span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; ExterCond      2.129e+03  2.378e+03   0.895 0.370764    </span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; Foundation    -2.544e+03  1.355e+03  -1.878 0.060672 .  </span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; BsmtQual       5.728e+03  1.391e+03   4.118 4.16e-05 ***</span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; BsmtCond      -1.872e+02  1.396e+03  -0.134 0.893393    </span></a>
-<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt; BsmtExposure   1.563e+03  8.709e+02   1.795 0.072996 .  </span></a>
-<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; BsmtFinType1  -1.426e+03  7.341e+02  -1.942 0.052443 .  </span></a>
-<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; BsmtFinSF1     6.871e+00  5.414e+00   1.269 0.204662    </span></a>
-<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt; BsmtFinType2  -1.011e+03  9.522e+02  -1.062 0.288540    </span></a>
-<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; BsmtFinSF2     1.670e+01  8.536e+00   1.957 0.050670 .  </span></a>
-<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; BsmtUnfSF      7.817e+00  5.052e+00   1.547 0.122126    </span></a>
-<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; Heating       -1.415e+03  3.233e+03  -0.438 0.661646    </span></a>
-<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; HeatingQC     -2.174e+03  1.261e+03  -1.724 0.085116 .  </span></a>
-<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; CentralAir     4.035e+03  5.161e+03   0.782 0.434553    </span></a>
-<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt; Electrical     1.143e+03  1.870e+03   0.611 0.541047    </span></a>
-<a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt; `1stFlrSF`     6.249e+01  6.771e+00   9.229  &lt; 2e-16 ***</span></a>
-<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; `2ndFlrSF`     6.474e+01  5.464e+00  11.849  &lt; 2e-16 ***</span></a>
-<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt; LowQualFinSF   3.551e+01  1.867e+01   1.901 0.057554 .  </span></a>
-<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt; BsmtFullBath   1.296e+04  2.740e+03   4.729 2.60e-06 ***</span></a>
-<a class="sourceLine" id="cb8-59" data-line-number="59"><span class="co">#&gt; BsmtHalfBath   9.591e+03  4.125e+03   2.325 0.020279 *  </span></a>
-<a class="sourceLine" id="cb8-60" data-line-number="60"><span class="co">#&gt; FullBath       4.967e+03  2.915e+03   1.704 0.088781 .  </span></a>
-<a class="sourceLine" id="cb8-61" data-line-number="61"><span class="co">#&gt; HalfBath      -2.392e+03  2.764e+03  -0.866 0.386923    </span></a>
-<a class="sourceLine" id="cb8-62" data-line-number="62"><span class="co">#&gt; BedroomAbvGr  -4.366e+03  1.721e+03  -2.537 0.011336 *  </span></a>
-<a class="sourceLine" id="cb8-63" data-line-number="63"><span class="co">#&gt; KitchenAbvGr  -1.651e+04  5.877e+03  -2.809 0.005067 ** </span></a>
-<a class="sourceLine" id="cb8-64" data-line-number="64"><span class="co">#&gt; KitchenQual    6.087e+03  1.696e+03   3.588 0.000350 ***</span></a>
-<a class="sourceLine" id="cb8-65" data-line-number="65"><span class="co">#&gt; TotRmsAbvGrd  -1.194e+03  1.310e+03  -0.912 0.362190    </span></a>
-<a class="sourceLine" id="cb8-66" data-line-number="66"><span class="co">#&gt; Functional    -5.519e+03  1.375e+03  -4.013 6.47e-05 ***</span></a>
-<a class="sourceLine" id="cb8-67" data-line-number="67"><span class="co">#&gt; Fireplaces    -1.461e+03  2.390e+03  -0.611 0.541204    </span></a>
-<a class="sourceLine" id="cb8-68" data-line-number="68"><span class="co">#&gt; FireplaceQu    3.054e+03  1.161e+03   2.631 0.008641 ** </span></a>
-<a class="sourceLine" id="cb8-69" data-line-number="69"><span class="co">#&gt; GarageType     2.718e+02  1.172e+03   0.232 0.816607    </span></a>
-<a class="sourceLine" id="cb8-70" data-line-number="70"><span class="co">#&gt; GarageYrBlt   -3.351e-01  5.016e+00  -0.067 0.946755    </span></a>
-<a class="sourceLine" id="cb8-71" data-line-number="71"><span class="co">#&gt; GarageFinish   1.898e+03  1.366e+03   1.390 0.164950    </span></a>
-<a class="sourceLine" id="cb8-72" data-line-number="72"><span class="co">#&gt; GarageCars     1.105e+04  3.102e+03   3.564 0.000384 ***</span></a>
-<a class="sourceLine" id="cb8-73" data-line-number="73"><span class="co">#&gt; GarageArea     9.761e+00  1.059e+01   0.922 0.356912    </span></a>
-<a class="sourceLine" id="cb8-74" data-line-number="74"><span class="co">#&gt; GarageQual     5.062e+03  2.983e+03   1.697 0.090102 .  </span></a>
-<a class="sourceLine" id="cb8-75" data-line-number="75"><span class="co">#&gt; GarageCond    -3.679e+03  2.564e+03  -1.435 0.151654    </span></a>
-<a class="sourceLine" id="cb8-76" data-line-number="76"><span class="co">#&gt; PavedDrive    -2.438e+03  3.025e+03  -0.806 0.420578    </span></a>
-<a class="sourceLine" id="cb8-77" data-line-number="77"><span class="co">#&gt; WoodDeckSF     1.544e+01  8.407e+00   1.837 0.066544 .  </span></a>
-<a class="sourceLine" id="cb8-78" data-line-number="78"><span class="co">#&gt; OpenPorchSF    3.485e+01  1.720e+01   2.026 0.043036 *  </span></a>
-<a class="sourceLine" id="cb8-79" data-line-number="79"><span class="co">#&gt; EnclosedPorch  2.334e+01  1.754e+01   1.331 0.183578    </span></a>
-<a class="sourceLine" id="cb8-80" data-line-number="80"><span class="co">#&gt; `3SsnPorch`    3.429e+01  3.073e+01   1.116 0.264665    </span></a>
-<a class="sourceLine" id="cb8-81" data-line-number="81"><span class="co">#&gt; ScreenPorch    7.508e+01  1.808e+01   4.153 3.58e-05 ***</span></a>
-<a class="sourceLine" id="cb8-82" data-line-number="82"><span class="co">#&gt; PoolArea      -2.719e+02  3.707e+01  -7.335 4.76e-13 ***</span></a>
-<a class="sourceLine" id="cb8-83" data-line-number="83"><span class="co">#&gt; Fence         -4.912e+02  1.271e+03  -0.387 0.699192    </span></a>
-<a class="sourceLine" id="cb8-84" data-line-number="84"><span class="co">#&gt; MiscVal        2.231e+00  5.310e+00   0.420 0.674518    </span></a>
-<a class="sourceLine" id="cb8-85" data-line-number="85"><span class="co">#&gt; MoSold         1.197e+02  3.512e+02   0.341 0.733351    </span></a>
-<a class="sourceLine" id="cb8-86" data-line-number="86"><span class="co">#&gt; YrSold        -1.219e+03  7.360e+02  -1.656 0.098126 .  </span></a>
-<a class="sourceLine" id="cb8-87" data-line-number="87"><span class="co">#&gt; SaleType       2.810e+03  1.143e+03   2.459 0.014117 *  </span></a>
-<a class="sourceLine" id="cb8-88" data-line-number="88"><span class="co">#&gt; SaleCondition  9.974e-01  1.171e+03   0.001 0.999321    </span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; (Intercept)   -5.082e+05  1.624e+06  -0.313 0.754344    </span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; MSSubClass    -1.649e+02  4.527e+01  -3.642 0.000285 ***</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; MSZoning      -6.419e+02  1.520e+03  -0.422 0.672914    </span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; LotFrontage   -3.267e+01  3.328e+01  -0.981 0.326613    </span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; LotArea        4.586e-01  1.687e-01   2.719 0.006666 ** </span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; Street        -3.934e+04  1.522e+04  -2.585 0.009891 ** </span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; LotShape       1.256e+02  2.084e+03   0.060 0.951963    </span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; LandContour    1.354e+03  1.855e+03   0.730 0.465674    </span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt; Utilities             NA         NA      NA       NA    </span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; LotConfig      1.350e+03  1.095e+03   1.233 0.217780    </span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; LandSlope      9.795e+03  4.909e+03   1.995 0.046304 *  </span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; Neighborhood  -4.071e+01  1.942e+02  -0.210 0.834031    </span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; Condition1    -2.772e+03  7.903e+02  -3.507 0.000474 ***</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; Condition2    -1.304e+03  2.854e+03  -0.457 0.647958    </span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; BldgType      -5.240e+02  1.900e+03  -0.276 0.782738    </span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; HouseStyle     1.007e+03  9.881e+02   1.019 0.308234    </span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt; OverallQual    1.459e+04  1.413e+03  10.322  &lt; 2e-16 ***</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; OverallCond    6.114e+03  1.291e+03   4.734 2.53e-06 ***</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; YearBuilt      3.962e+02  8.487e+01   4.669 3.47e-06 ***</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt; YearRemodAdd   6.332e+01  8.297e+01   0.763 0.445558    </span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; RoofStyle      7.101e+03  2.089e+03   3.399 0.000705 ***</span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; RoofMatl      -1.506e+04  2.194e+03  -6.863 1.22e-11 ***</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt; Exterior1st   -7.392e+02  7.051e+02  -1.048 0.294756    </span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; Exterior2nd    4.543e+02  6.328e+02   0.718 0.472972    </span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; MasVnrType     2.805e+03  1.721e+03   1.630 0.103501    </span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt; MasVnrArea     3.094e+01  6.954e+00   4.449 9.66e-06 ***</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; ExterQual      1.248e+03  2.484e+03   0.502 0.615617    </span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; ExterCond     -3.188e+02  1.727e+03  -0.185 0.853582    </span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt; Foundation    -2.818e+03  1.879e+03  -1.500 0.133943    </span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; BsmtQual       9.209e+03  1.752e+03   5.258 1.80e-07 ***</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; BsmtCond      -1.861e+03  2.617e+03  -0.711 0.477176    </span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt; BsmtExposure   1.823e+03  1.013e+03   1.799 0.072373 .  </span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; BsmtFinType1  -1.016e+03  7.862e+02  -1.292 0.196766    </span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; BsmtFinSF1     7.788e+00  6.164e+00   1.263 0.206761    </span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt; BsmtFinType2  -1.417e+03  1.394e+03  -1.017 0.309608    </span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; BsmtFinSF2     1.392e+01  1.017e+01   1.369 0.171244    </span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; BsmtUnfSF      1.205e+00  5.976e+00   0.202 0.840256    </span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt; Heating       -3.625e+02  3.671e+03  -0.099 0.921371    </span></a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; HeatingQC     -2.654e+03  1.440e+03  -1.842 0.065740 .  </span></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; CentralAir     6.959e+02  5.711e+03   0.122 0.903044    </span></a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt; Electrical     2.555e+03  2.165e+03   1.181 0.238050    </span></a>
+<a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt; `1stFlrSF`     6.715e+01  7.206e+00   9.318  &lt; 2e-16 ***</span></a>
+<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; `2ndFlrSF`     6.801e+01  5.923e+00  11.482  &lt; 2e-16 ***</span></a>
+<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt; LowQualFinSF   1.639e+01  2.513e+01   0.652 0.514364    </span></a>
+<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt; BsmtFullBath   1.254e+04  2.966e+03   4.228 2.59e-05 ***</span></a>
+<a class="sourceLine" id="cb8-59" data-line-number="59"><span class="co">#&gt; BsmtHalfBath   5.086e+03  4.733e+03   1.075 0.282791    </span></a>
+<a class="sourceLine" id="cb8-60" data-line-number="60"><span class="co">#&gt; FullBath       9.227e+03  3.268e+03   2.823 0.004857 ** </span></a>
+<a class="sourceLine" id="cb8-61" data-line-number="61"><span class="co">#&gt; HalfBath      -3.536e+03  3.062e+03  -1.155 0.248557    </span></a>
+<a class="sourceLine" id="cb8-62" data-line-number="62"><span class="co">#&gt; BedroomAbvGr  -1.126e+04  1.982e+03  -5.682 1.77e-08 ***</span></a>
+<a class="sourceLine" id="cb8-63" data-line-number="63"><span class="co">#&gt; KitchenAbvGr  -2.299e+04  6.313e+03  -3.642 0.000286 ***</span></a>
+<a class="sourceLine" id="cb8-64" data-line-number="64"><span class="co">#&gt; KitchenQual    8.409e+03  1.846e+03   4.556 5.90e-06 ***</span></a>
+<a class="sourceLine" id="cb8-65" data-line-number="65"><span class="co">#&gt; TotRmsAbvGrd   1.813e+03  1.461e+03   1.241 0.214897    </span></a>
+<a class="sourceLine" id="cb8-66" data-line-number="66"><span class="co">#&gt; Functional    -5.849e+03  1.673e+03  -3.497 0.000492 ***</span></a>
+<a class="sourceLine" id="cb8-67" data-line-number="67"><span class="co">#&gt; Fireplaces    -5.257e+03  2.663e+03  -1.974 0.048644 *  </span></a>
+<a class="sourceLine" id="cb8-68" data-line-number="68"><span class="co">#&gt; FireplaceQu    4.729e+03  1.407e+03   3.361 0.000808 ***</span></a>
+<a class="sourceLine" id="cb8-69" data-line-number="69"><span class="co">#&gt; GarageType     1.548e+02  1.305e+03   0.119 0.905576    </span></a>
+<a class="sourceLine" id="cb8-70" data-line-number="70"><span class="co">#&gt; GarageYrBlt   -2.438e+00  5.698e+00  -0.428 0.668776    </span></a>
+<a class="sourceLine" id="cb8-71" data-line-number="71"><span class="co">#&gt; GarageFinish   1.123e+03  1.501e+03   0.748 0.454824    </span></a>
+<a class="sourceLine" id="cb8-72" data-line-number="72"><span class="co">#&gt; GarageCars     1.711e+04  3.430e+03   4.988 7.24e-07 ***</span></a>
+<a class="sourceLine" id="cb8-73" data-line-number="73"><span class="co">#&gt; GarageArea    -9.158e+00  1.153e+01  -0.794 0.427222    </span></a>
+<a class="sourceLine" id="cb8-74" data-line-number="74"><span class="co">#&gt; GarageQual     8.455e+03  3.779e+03   2.238 0.025481 *  </span></a>
+<a class="sourceLine" id="cb8-75" data-line-number="75"><span class="co">#&gt; GarageCond    -2.973e+03  3.479e+03  -0.855 0.392956    </span></a>
+<a class="sourceLine" id="cb8-76" data-line-number="76"><span class="co">#&gt; PavedDrive    -2.001e+03  3.052e+03  -0.656 0.512218    </span></a>
+<a class="sourceLine" id="cb8-77" data-line-number="77"><span class="co">#&gt; WoodDeckSF     1.920e+01  9.138e+00   2.101 0.035890 *  </span></a>
+<a class="sourceLine" id="cb8-78" data-line-number="78"><span class="co">#&gt; OpenPorchSF    1.156e+01  1.889e+01   0.612 0.540566    </span></a>
+<a class="sourceLine" id="cb8-79" data-line-number="79"><span class="co">#&gt; EnclosedPorch -1.067e+01  1.886e+01  -0.566 0.571531    </span></a>
+<a class="sourceLine" id="cb8-80" data-line-number="80"><span class="co">#&gt; `3SsnPorch`    8.778e+00  3.115e+01   0.282 0.778145    </span></a>
+<a class="sourceLine" id="cb8-81" data-line-number="81"><span class="co">#&gt; ScreenPorch    6.473e+01  1.914e+01   3.382 0.000750 ***</span></a>
+<a class="sourceLine" id="cb8-82" data-line-number="82"><span class="co">#&gt; PoolArea      -1.392e+01  2.622e+01  -0.531 0.595586    </span></a>
+<a class="sourceLine" id="cb8-83" data-line-number="83"><span class="co">#&gt; Fence         -1.496e+03  1.422e+03  -1.052 0.293081    </span></a>
+<a class="sourceLine" id="cb8-84" data-line-number="84"><span class="co">#&gt; MiscVal       -7.794e-01  1.867e+00  -0.417 0.676463    </span></a>
+<a class="sourceLine" id="cb8-85" data-line-number="85"><span class="co">#&gt; MoSold        -3.804e+01  3.839e+02  -0.099 0.921091    </span></a>
+<a class="sourceLine" id="cb8-86" data-line-number="86"><span class="co">#&gt; YrSold        -2.272e+02  8.053e+02  -0.282 0.777916    </span></a>
+<a class="sourceLine" id="cb8-87" data-line-number="87"><span class="co">#&gt; SaleType       1.894e+03  1.119e+03   1.692 0.090959 .  </span></a>
+<a class="sourceLine" id="cb8-88" data-line-number="88"><span class="co">#&gt; SaleCondition  1.734e+03  1.402e+03   1.237 0.216323    </span></a>
 <a class="sourceLine" id="cb8-89" data-line-number="89"><span class="co">#&gt; ---</span></a>
 <a class="sourceLine" id="cb8-90" data-line-number="90"><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></a>
 <a class="sourceLine" id="cb8-91" data-line-number="91"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-92" data-line-number="92"><span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 834699353)</span></a>
+<a class="sourceLine" id="cb8-92" data-line-number="92"><span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 1034146796)</span></a>
 <a class="sourceLine" id="cb8-93" data-line-number="93"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-94" data-line-number="94"><span class="co">#&gt;     Null deviance: 6.0151e+12  on 1023  degrees of freedom</span></a>
-<a class="sourceLine" id="cb8-95" data-line-number="95"><span class="co">#&gt; Residual deviance: 7.9213e+11  on  949  degrees of freedom</span></a>
-<a class="sourceLine" id="cb8-96" data-line-number="96"><span class="co">#&gt; AIC: 24016</span></a>
+<a class="sourceLine" id="cb8-94" data-line-number="94"><span class="co">#&gt;     Null deviance: 6.9506e+12  on 1023  degrees of freedom</span></a>
+<a class="sourceLine" id="cb8-95" data-line-number="95"><span class="co">#&gt; Residual deviance: 9.8244e+11  on  950  degrees of freedom</span></a>
+<a class="sourceLine" id="cb8-96" data-line-number="96"><span class="co">#&gt; AIC: 24234</span></a>
 <a class="sourceLine" id="cb8-97" data-line-number="97"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb8-98" data-line-number="98"><span class="co">#&gt; Number of Fisher Scoring iterations: 2</span></a>
 <a class="sourceLine" id="cb8-99" data-line-number="99">predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">df =</span> xtest)</a>
-<a class="sourceLine" id="cb8-100" data-line-number="100"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)</a>
-<a class="sourceLine" id="cb8-101" data-line-number="101"><span class="co">#&gt; [1] 44788.99</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-100" data-line-number="100"><span class="co">#&gt; Warning in predict.lm(object, newdata, se.fit, scale = 1, type = if (type == :</span></a>
+<a class="sourceLine" id="cb8-101" data-line-number="101"><span class="co">#&gt; prediction from a rank-deficient fit may be misleading</span></a>
+<a class="sourceLine" id="cb8-102" data-line-number="102"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)</a>
+<a class="sourceLine" id="cb8-103" data-line-number="103"><span class="co">#&gt; [1] 33915.34</span></a></code></pre></div>
 <p><strong>Lasso Regression</strong></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">lambda =</span> <span class="dv">1000</span>)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3">predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">df =</span> xtest)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; [1] 51961.9</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; [1] 37018.63</span></a></code></pre></div>
 <p><strong>Ridge Regression</strong></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>, <span class="dt">alpha=</span><span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">lf<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>)</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">predictions &lt;-<span class="st"> </span>lf<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">df =</span> xtest)</a>
 <a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> predictions)</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [1] 50594.94</span></a></code></pre></div>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; [1] 37186.15</span></a></code></pre></div>
 <p><strong>Logistic Regression with CV</strong></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">lf &lt;-<span class="st"> </span>LMTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">family =</span> <span class="st">"gaussian"</span>)</a>
 <a class="sourceLine" id="cb11-2" data-line-number="2">lf<span class="op">$</span><span class="kw">cv_model</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">'SalePrice'</span>, <span class="dt">nfolds =</span> <span class="dv">5</span>, <span class="dt">parallel =</span> <span class="ot">FALSE</span>)</a>
@@ -441,82 +443,82 @@
 <a class="sourceLine" id="cb12-3" data-line-number="3">pred &lt;-<span class="st"> </span>rf<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="dt">df =</span> xtest)</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">rf<span class="op">$</span><span class="kw">get_importance</span>()</a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt;               tmp.order.tmp..decreasing...TRUE..</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; OverallQual                         760120416925</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; GarageCars                          502873666858</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; GarageArea                          445299036001</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; 1stFlrSF                            383591923916</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; YearBuilt                           323708376115</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; FullBath                            284738635289</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; GarageYrBlt                         244595667345</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 2ndFlrSF                            239255909778</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; ExterQual                           207337193130</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; LotArea                             183519684506</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; MasVnrArea                          178130133618</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; TotRmsAbvGrd                        171981986690</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; BsmtFinSF1                          169486555791</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; YearRemodAdd                        165813125798</span></a>
-<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; OpenPorchSF                         130894400849</span></a>
-<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt; FireplaceQu                         116170976796</span></a>
-<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; Fireplaces                          113688376641</span></a>
-<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; Foundation                           96245977274</span></a>
-<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; KitchenQual                          95877061770</span></a>
-<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; LotFrontage                          93120610612</span></a>
-<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; BsmtQual                             79144086974</span></a>
-<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; BsmtUnfSF                            62078941401</span></a>
-<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; HeatingQC                            59641536495</span></a>
-<a class="sourceLine" id="cb12-29" data-line-number="29"><span class="co">#&gt; Neighborhood                         58216409243</span></a>
-<a class="sourceLine" id="cb12-30" data-line-number="30"><span class="co">#&gt; BsmtFinType1                         55898460884</span></a>
-<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="co">#&gt; WoodDeckSF                           55240490754</span></a>
-<a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt; GarageType                           50770412603</span></a>
-<a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt; MoSold                               44244435459</span></a>
-<a class="sourceLine" id="cb12-34" data-line-number="34"><span class="co">#&gt; BedroomAbvGr                         40455578315</span></a>
-<a class="sourceLine" id="cb12-35" data-line-number="35"><span class="co">#&gt; Exterior2nd                          39312519694</span></a>
-<a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt; MSSubClass                           38509011726</span></a>
-<a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt; HouseStyle                           36320453483</span></a>
-<a class="sourceLine" id="cb12-38" data-line-number="38"><span class="co">#&gt; OverallCond                          34600408552</span></a>
-<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; Exterior1st                          29250349292</span></a>
-<a class="sourceLine" id="cb12-40" data-line-number="40"><span class="co">#&gt; HalfBath                             26607477958</span></a>
-<a class="sourceLine" id="cb12-41" data-line-number="41"><span class="co">#&gt; BsmtFullBath                         25270174740</span></a>
-<a class="sourceLine" id="cb12-42" data-line-number="42"><span class="co">#&gt; RoofStyle                            24403989742</span></a>
-<a class="sourceLine" id="cb12-43" data-line-number="43"><span class="co">#&gt; BsmtExposure                         21908464096</span></a>
-<a class="sourceLine" id="cb12-44" data-line-number="44"><span class="co">#&gt; YrSold                               21138889048</span></a>
-<a class="sourceLine" id="cb12-45" data-line-number="45"><span class="co">#&gt; GarageFinish                         21029642932</span></a>
-<a class="sourceLine" id="cb12-46" data-line-number="46"><span class="co">#&gt; MSZoning                             19197538456</span></a>
-<a class="sourceLine" id="cb12-47" data-line-number="47"><span class="co">#&gt; SaleCondition                        18521999541</span></a>
-<a class="sourceLine" id="cb12-48" data-line-number="48"><span class="co">#&gt; RoofMatl                             17203888010</span></a>
-<a class="sourceLine" id="cb12-49" data-line-number="49"><span class="co">#&gt; LotShape                             16888000436</span></a>
-<a class="sourceLine" id="cb12-50" data-line-number="50"><span class="co">#&gt; ScreenPorch                          15213665264</span></a>
-<a class="sourceLine" id="cb12-51" data-line-number="51"><span class="co">#&gt; BldgType                             15185876956</span></a>
-<a class="sourceLine" id="cb12-52" data-line-number="52"><span class="co">#&gt; LandSlope                            15033359785</span></a>
-<a class="sourceLine" id="cb12-53" data-line-number="53"><span class="co">#&gt; SaleType                             14964791317</span></a>
-<a class="sourceLine" id="cb12-54" data-line-number="54"><span class="co">#&gt; MasVnrType                           14651408244</span></a>
-<a class="sourceLine" id="cb12-55" data-line-number="55"><span class="co">#&gt; GarageQual                           13907092493</span></a>
-<a class="sourceLine" id="cb12-56" data-line-number="56"><span class="co">#&gt; LotConfig                            13127741777</span></a>
-<a class="sourceLine" id="cb12-57" data-line-number="57"><span class="co">#&gt; LandContour                          12478724999</span></a>
-<a class="sourceLine" id="cb12-58" data-line-number="58"><span class="co">#&gt; BsmtHalfBath                         11226674609</span></a>
-<a class="sourceLine" id="cb12-59" data-line-number="59"><span class="co">#&gt; CentralAir                           10829321360</span></a>
-<a class="sourceLine" id="cb12-60" data-line-number="60"><span class="co">#&gt; GarageCond                           10509004572</span></a>
-<a class="sourceLine" id="cb12-61" data-line-number="61"><span class="co">#&gt; ExterCond                             9562776933</span></a>
-<a class="sourceLine" id="cb12-62" data-line-number="62"><span class="co">#&gt; Condition1                            8465686939</span></a>
-<a class="sourceLine" id="cb12-63" data-line-number="63"><span class="co">#&gt; EnclosedPorch                         7954126707</span></a>
-<a class="sourceLine" id="cb12-64" data-line-number="64"><span class="co">#&gt; KitchenAbvGr                          7560115218</span></a>
-<a class="sourceLine" id="cb12-65" data-line-number="65"><span class="co">#&gt; BsmtCond                              6964565522</span></a>
-<a class="sourceLine" id="cb12-66" data-line-number="66"><span class="co">#&gt; BsmtFinSF2                            6287676849</span></a>
-<a class="sourceLine" id="cb12-67" data-line-number="67"><span class="co">#&gt; Functional                            5735553893</span></a>
-<a class="sourceLine" id="cb12-68" data-line-number="68"><span class="co">#&gt; Fence                                 5654807155</span></a>
-<a class="sourceLine" id="cb12-69" data-line-number="69"><span class="co">#&gt; BsmtFinType2                          4491482858</span></a>
-<a class="sourceLine" id="cb12-70" data-line-number="70"><span class="co">#&gt; LowQualFinSF                          4301835007</span></a>
-<a class="sourceLine" id="cb12-71" data-line-number="71"><span class="co">#&gt; PavedDrive                            3580249169</span></a>
-<a class="sourceLine" id="cb12-72" data-line-number="72"><span class="co">#&gt; Heating                               3431015164</span></a>
-<a class="sourceLine" id="cb12-73" data-line-number="73"><span class="co">#&gt; Electrical                            2695184008</span></a>
-<a class="sourceLine" id="cb12-74" data-line-number="74"><span class="co">#&gt; MiscVal                               2323747259</span></a>
-<a class="sourceLine" id="cb12-75" data-line-number="75"><span class="co">#&gt; 3SsnPorch                             2011830776</span></a>
-<a class="sourceLine" id="cb12-76" data-line-number="76"><span class="co">#&gt; PoolArea                              1124779941</span></a>
-<a class="sourceLine" id="cb12-77" data-line-number="77"><span class="co">#&gt; Street                                 619056759</span></a>
-<a class="sourceLine" id="cb12-78" data-line-number="78"><span class="co">#&gt; Condition2                             277320581</span></a>
-<a class="sourceLine" id="cb12-79" data-line-number="79"><span class="co">#&gt; Utilities                               48526089</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; OverallQual                         912190681600</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; GarageCars                          589951564697</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; 1stFlrSF                            565628968522</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; GarageArea                          530847428319</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; YearBuilt                           366959744425</span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt; BsmtFinSF1                          312740139474</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt; FullBath                            307585090798</span></a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 2ndFlrSF                            273839354071</span></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; GarageYrBlt                         269360359607</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; LotArea                             228264316130</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; TotRmsAbvGrd                        203040018859</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; ExterQual                           195840986775</span></a>
+<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; MasVnrArea                          165090214791</span></a>
+<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; YearRemodAdd                        159234362106</span></a>
+<a class="sourceLine" id="cb12-20" data-line-number="20"><span class="co">#&gt; FireplaceQu                         152124005116</span></a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"><span class="co">#&gt; Fireplaces                          146339460267</span></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22"><span class="co">#&gt; KitchenQual                         126324615029</span></a>
+<a class="sourceLine" id="cb12-23" data-line-number="23"><span class="co">#&gt; BsmtQual                            123189677304</span></a>
+<a class="sourceLine" id="cb12-24" data-line-number="24"><span class="co">#&gt; OpenPorchSF                         108634945798</span></a>
+<a class="sourceLine" id="cb12-25" data-line-number="25"><span class="co">#&gt; Foundation                          106436456243</span></a>
+<a class="sourceLine" id="cb12-26" data-line-number="26"><span class="co">#&gt; LotFrontage                          96195880685</span></a>
+<a class="sourceLine" id="cb12-27" data-line-number="27"><span class="co">#&gt; BsmtUnfSF                            64774966133</span></a>
+<a class="sourceLine" id="cb12-28" data-line-number="28"><span class="co">#&gt; WoodDeckSF                           61426328374</span></a>
+<a class="sourceLine" id="cb12-29" data-line-number="29"><span class="co">#&gt; HeatingQC                            60113665780</span></a>
+<a class="sourceLine" id="cb12-30" data-line-number="30"><span class="co">#&gt; BsmtFinType1                         59401481765</span></a>
+<a class="sourceLine" id="cb12-31" data-line-number="31"><span class="co">#&gt; Neighborhood                         53173161825</span></a>
+<a class="sourceLine" id="cb12-32" data-line-number="32"><span class="co">#&gt; BedroomAbvGr                         47229591730</span></a>
+<a class="sourceLine" id="cb12-33" data-line-number="33"><span class="co">#&gt; Exterior2nd                          43090465386</span></a>
+<a class="sourceLine" id="cb12-34" data-line-number="34"><span class="co">#&gt; GarageType                           42419105428</span></a>
+<a class="sourceLine" id="cb12-35" data-line-number="35"><span class="co">#&gt; MoSold                               37434211505</span></a>
+<a class="sourceLine" id="cb12-36" data-line-number="36"><span class="co">#&gt; MSSubClass                           35690114889</span></a>
+<a class="sourceLine" id="cb12-37" data-line-number="37"><span class="co">#&gt; OverallCond                          35409657740</span></a>
+<a class="sourceLine" id="cb12-38" data-line-number="38"><span class="co">#&gt; RoofStyle                            31382754103</span></a>
+<a class="sourceLine" id="cb12-39" data-line-number="39"><span class="co">#&gt; HouseStyle                           30581887281</span></a>
+<a class="sourceLine" id="cb12-40" data-line-number="40"><span class="co">#&gt; Exterior1st                          28532244492</span></a>
+<a class="sourceLine" id="cb12-41" data-line-number="41"><span class="co">#&gt; HalfBath                             27909745697</span></a>
+<a class="sourceLine" id="cb12-42" data-line-number="42"><span class="co">#&gt; GarageFinish                         26124339976</span></a>
+<a class="sourceLine" id="cb12-43" data-line-number="43"><span class="co">#&gt; BsmtFullBath                         23358941321</span></a>
+<a class="sourceLine" id="cb12-44" data-line-number="44"><span class="co">#&gt; LotShape                             22796328052</span></a>
+<a class="sourceLine" id="cb12-45" data-line-number="45"><span class="co">#&gt; YrSold                               22430182419</span></a>
+<a class="sourceLine" id="cb12-46" data-line-number="46"><span class="co">#&gt; MSZoning                             21145524260</span></a>
+<a class="sourceLine" id="cb12-47" data-line-number="47"><span class="co">#&gt; SaleCondition                        18963428026</span></a>
+<a class="sourceLine" id="cb12-48" data-line-number="48"><span class="co">#&gt; BsmtExposure                         18549415864</span></a>
+<a class="sourceLine" id="cb12-49" data-line-number="49"><span class="co">#&gt; ScreenPorch                          17944170862</span></a>
+<a class="sourceLine" id="cb12-50" data-line-number="50"><span class="co">#&gt; LotConfig                            17328733660</span></a>
+<a class="sourceLine" id="cb12-51" data-line-number="51"><span class="co">#&gt; PoolArea                             17142929197</span></a>
+<a class="sourceLine" id="cb12-52" data-line-number="52"><span class="co">#&gt; LandContour                          16555944548</span></a>
+<a class="sourceLine" id="cb12-53" data-line-number="53"><span class="co">#&gt; MasVnrType                           15651601509</span></a>
+<a class="sourceLine" id="cb12-54" data-line-number="54"><span class="co">#&gt; SaleType                             14189117039</span></a>
+<a class="sourceLine" id="cb12-55" data-line-number="55"><span class="co">#&gt; RoofMatl                             13369222484</span></a>
+<a class="sourceLine" id="cb12-56" data-line-number="56"><span class="co">#&gt; BldgType                             11814206715</span></a>
+<a class="sourceLine" id="cb12-57" data-line-number="57"><span class="co">#&gt; GarageQual                           10935529778</span></a>
+<a class="sourceLine" id="cb12-58" data-line-number="58"><span class="co">#&gt; GarageCond                           10216725749</span></a>
+<a class="sourceLine" id="cb12-59" data-line-number="59"><span class="co">#&gt; EnclosedPorch                        10213243394</span></a>
+<a class="sourceLine" id="cb12-60" data-line-number="60"><span class="co">#&gt; BsmtHalfBath                          9667163804</span></a>
+<a class="sourceLine" id="cb12-61" data-line-number="61"><span class="co">#&gt; LandSlope                             9474987221</span></a>
+<a class="sourceLine" id="cb12-62" data-line-number="62"><span class="co">#&gt; Fence                                 9366456636</span></a>
+<a class="sourceLine" id="cb12-63" data-line-number="63"><span class="co">#&gt; BsmtCond                              7929548344</span></a>
+<a class="sourceLine" id="cb12-64" data-line-number="64"><span class="co">#&gt; ExterCond                             7729632844</span></a>
+<a class="sourceLine" id="cb12-65" data-line-number="65"><span class="co">#&gt; CentralAir                            7408950713</span></a>
+<a class="sourceLine" id="cb12-66" data-line-number="66"><span class="co">#&gt; Condition1                            7159561264</span></a>
+<a class="sourceLine" id="cb12-67" data-line-number="67"><span class="co">#&gt; BsmtFinSF2                            7044491942</span></a>
+<a class="sourceLine" id="cb12-68" data-line-number="68"><span class="co">#&gt; KitchenAbvGr                          6860957918</span></a>
+<a class="sourceLine" id="cb12-69" data-line-number="69"><span class="co">#&gt; Functional                            6833250076</span></a>
+<a class="sourceLine" id="cb12-70" data-line-number="70"><span class="co">#&gt; BsmtFinType2                          6199679784</span></a>
+<a class="sourceLine" id="cb12-71" data-line-number="71"><span class="co">#&gt; PavedDrive                            4389627683</span></a>
+<a class="sourceLine" id="cb12-72" data-line-number="72"><span class="co">#&gt; Electrical                            3636920148</span></a>
+<a class="sourceLine" id="cb12-73" data-line-number="73"><span class="co">#&gt; LowQualFinSF                          3330450476</span></a>
+<a class="sourceLine" id="cb12-74" data-line-number="74"><span class="co">#&gt; 3SsnPorch                             2576303797</span></a>
+<a class="sourceLine" id="cb12-75" data-line-number="75"><span class="co">#&gt; MiscVal                               1276657967</span></a>
+<a class="sourceLine" id="cb12-76" data-line-number="76"><span class="co">#&gt; Heating                               1261105529</span></a>
+<a class="sourceLine" id="cb12-77" data-line-number="77"><span class="co">#&gt; Condition2                             698765285</span></a>
+<a class="sourceLine" id="cb12-78" data-line-number="78"><span class="co">#&gt; Street                                 461682434</span></a>
+<a class="sourceLine" id="cb12-79" data-line-number="79"><span class="co">#&gt; Utilities                                      0</span></a>
 <a class="sourceLine" id="cb12-80" data-line-number="80"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)</a>
-<a class="sourceLine" id="cb12-81" data-line-number="81"><span class="co">#&gt; [1] 35772.7</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-81" data-line-number="81"><span class="co">#&gt; [1] 30421.7</span></a></code></pre></div>
 <p><strong>Xgboost</strong></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">xgb &lt;-<span class="st"> </span>XGBTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">objective =</span> <span class="st">"reg:linear"</span></a>
 <a class="sourceLine" id="cb13-2" data-line-number="2">                      , <span class="dt">n_estimators =</span> <span class="dv">500</span></a>
@@ -527,18 +529,16 @@
 <a class="sourceLine" id="cb13-7" data-line-number="7">xgb<span class="op">$</span><span class="kw">fit</span>(<span class="dt">X =</span> xtrain, <span class="dt">y =</span> <span class="st">"SalePrice"</span>, <span class="dt">valid =</span> xtest)</a>
 <a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; [1]  train-rmse:176719.062500    val-rmse:184225.078125 </span></a>
+<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; [1]  train-rmse:181204.531250    val-rmse:173261.671875 </span></a>
 <a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt; Multiple eval metrics are present. Will use val_rmse for early stopping.</span></a>
 <a class="sourceLine" id="cb13-12" data-line-number="12"><span class="co">#&gt; Will train until val_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb13-13" data-line-number="13"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt; [51] train-rmse:8651.335938  val-rmse:34056.570312 </span></a>
-<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt; [101]    train-rmse:5190.871094  val-rmse:33283.386719 </span></a>
-<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt; [151]    train-rmse:3371.378906  val-rmse:33308.726562 </span></a>
-<a class="sourceLine" id="cb13-17" data-line-number="17"><span class="co">#&gt; Stopping. Best iteration:</span></a>
-<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="co">#&gt; [110]    train-rmse:4740.712402  val-rmse:33261.378906</span></a>
-<a class="sourceLine" id="cb13-19" data-line-number="19">pred &lt;-<span class="st"> </span>xgb<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(xtest)</a>
-<a class="sourceLine" id="cb13-20" data-line-number="20"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)</a>
-<a class="sourceLine" id="cb13-21" data-line-number="21"><span class="co">#&gt; [1] 33261.37</span></a></code></pre></div>
+<a class="sourceLine" id="cb13-14" data-line-number="14"><span class="co">#&gt; [51] train-rmse:8590.242188  val-rmse:33441.925781 </span></a>
+<a class="sourceLine" id="cb13-15" data-line-number="15"><span class="co">#&gt; Stopping. Best iteration:</span></a>
+<a class="sourceLine" id="cb13-16" data-line-number="16"><span class="co">#&gt; [35] train-rmse:13002.348633 val-rmse:33122.906250</span></a>
+<a class="sourceLine" id="cb13-17" data-line-number="17">pred &lt;-<span class="st"> </span>xgb<span class="op">$</span><span class="kw"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(xtest)</a>
+<a class="sourceLine" id="cb13-18" data-line-number="18"><span class="kw"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html">rmse</a></span>(<span class="dt">actual =</span> xtest<span class="op">$</span>SalePrice, <span class="dt">predicted =</span> pred)</a>
+<a class="sourceLine" id="cb13-19" data-line-number="19"><span class="co">#&gt; [1] 33122.91</span></a></code></pre></div>
 <p><strong>Grid Search</strong></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">xgb &lt;-<span class="st"> </span>XGBTrainer<span class="op">$</span><span class="kw">new</span>(<span class="dt">objective =</span><span class="st">"reg:linear"</span>)</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"></a>
@@ -551,76 +551,76 @@
 <a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; [1] "In total, 4 models will be trained"</span></a>
 <a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; [1]  train-rmse:140235.984375 </span></a>
+<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; [1]  train-rmse:140199.921875 </span></a>
 <a class="sourceLine" id="cb14-13" data-line-number="13"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; [10] train-rmse:16360.304688</span></a>
+<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="co">#&gt; [10] train-rmse:15678.810547</span></a>
 <a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-17" data-line-number="17"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; [1]  train-rmse:140918.546875 </span></a>
+<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">#&gt; [1]  train-rmse:144940.562500 </span></a>
 <a class="sourceLine" id="cb14-19" data-line-number="19"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-20" data-line-number="20"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt; [10] train-rmse:16643.681641</span></a>
+<a class="sourceLine" id="cb14-21" data-line-number="21"><span class="co">#&gt; [10] train-rmse:16565.355469</span></a>
 <a class="sourceLine" id="cb14-22" data-line-number="22"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-23" data-line-number="23"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">#&gt; [1]  train-rmse:139841.500000 </span></a>
+<a class="sourceLine" id="cb14-24" data-line-number="24"><span class="co">#&gt; [1]  train-rmse:146564.625000 </span></a>
 <a class="sourceLine" id="cb14-25" data-line-number="25"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-26" data-line-number="26"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">#&gt; [10] train-rmse:16388.535156</span></a>
+<a class="sourceLine" id="cb14-27" data-line-number="27"><span class="co">#&gt; [10] train-rmse:15821.920898</span></a>
 <a class="sourceLine" id="cb14-28" data-line-number="28"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-29" data-line-number="29"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="co">#&gt; [1]  train-rmse:140235.984375 </span></a>
+<a class="sourceLine" id="cb14-30" data-line-number="30"><span class="co">#&gt; [1]  train-rmse:140199.921875 </span></a>
 <a class="sourceLine" id="cb14-31" data-line-number="31"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-32" data-line-number="32"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-33" data-line-number="33"><span class="co">#&gt; [50] train-rmse:4696.435547</span></a>
+<a class="sourceLine" id="cb14-33" data-line-number="33"><span class="co">#&gt; [50] train-rmse:4413.821289</span></a>
 <a class="sourceLine" id="cb14-34" data-line-number="34"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-35" data-line-number="35"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-36" data-line-number="36"><span class="co">#&gt; [1]  train-rmse:140918.546875 </span></a>
+<a class="sourceLine" id="cb14-36" data-line-number="36"><span class="co">#&gt; [1]  train-rmse:144940.562500 </span></a>
 <a class="sourceLine" id="cb14-37" data-line-number="37"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-38" data-line-number="38"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-39" data-line-number="39"><span class="co">#&gt; [50] train-rmse:4489.722168</span></a>
+<a class="sourceLine" id="cb14-39" data-line-number="39"><span class="co">#&gt; [50] train-rmse:4383.854980</span></a>
 <a class="sourceLine" id="cb14-40" data-line-number="40"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-41" data-line-number="41"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-42" data-line-number="42"><span class="co">#&gt; [1]  train-rmse:139841.500000 </span></a>
+<a class="sourceLine" id="cb14-42" data-line-number="42"><span class="co">#&gt; [1]  train-rmse:146564.625000 </span></a>
 <a class="sourceLine" id="cb14-43" data-line-number="43"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-44" data-line-number="44"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-45" data-line-number="45"><span class="co">#&gt; [50] train-rmse:3690.607910</span></a>
+<a class="sourceLine" id="cb14-45" data-line-number="45"><span class="co">#&gt; [50] train-rmse:3478.932373</span></a>
 <a class="sourceLine" id="cb14-46" data-line-number="46"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-47" data-line-number="47"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-48" data-line-number="48"><span class="co">#&gt; [1]  train-rmse:140829.750000 </span></a>
+<a class="sourceLine" id="cb14-48" data-line-number="48"><span class="co">#&gt; [1]  train-rmse:141078.062500 </span></a>
 <a class="sourceLine" id="cb14-49" data-line-number="49"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-50" data-line-number="50"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-51" data-line-number="51"><span class="co">#&gt; [10] train-rmse:29947.787109</span></a>
+<a class="sourceLine" id="cb14-51" data-line-number="51"><span class="co">#&gt; [10] train-rmse:30340.001953</span></a>
 <a class="sourceLine" id="cb14-52" data-line-number="52"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-53" data-line-number="53"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-54" data-line-number="54"><span class="co">#&gt; [1]  train-rmse:141814.312500 </span></a>
+<a class="sourceLine" id="cb14-54" data-line-number="54"><span class="co">#&gt; [1]  train-rmse:145683.921875 </span></a>
 <a class="sourceLine" id="cb14-55" data-line-number="55"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-56" data-line-number="56"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-57" data-line-number="57"><span class="co">#&gt; [10] train-rmse:29582.585938</span></a>
+<a class="sourceLine" id="cb14-57" data-line-number="57"><span class="co">#&gt; [10] train-rmse:28584.054688</span></a>
 <a class="sourceLine" id="cb14-58" data-line-number="58"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-59" data-line-number="59"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-60" data-line-number="60"><span class="co">#&gt; [1]  train-rmse:140687.203125 </span></a>
+<a class="sourceLine" id="cb14-60" data-line-number="60"><span class="co">#&gt; [1]  train-rmse:147735.281250 </span></a>
 <a class="sourceLine" id="cb14-61" data-line-number="61"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-62" data-line-number="62"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-63" data-line-number="63"><span class="co">#&gt; [10] train-rmse:28614.359375</span></a>
+<a class="sourceLine" id="cb14-63" data-line-number="63"><span class="co">#&gt; [10] train-rmse:30893.587891</span></a>
 <a class="sourceLine" id="cb14-64" data-line-number="64"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-65" data-line-number="65"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-66" data-line-number="66"><span class="co">#&gt; [1]  train-rmse:140829.750000 </span></a>
+<a class="sourceLine" id="cb14-66" data-line-number="66"><span class="co">#&gt; [1]  train-rmse:141078.062500 </span></a>
 <a class="sourceLine" id="cb14-67" data-line-number="67"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-68" data-line-number="68"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-69" data-line-number="69"><span class="co">#&gt; [50] train-rmse:17405.525391</span></a>
+<a class="sourceLine" id="cb14-69" data-line-number="69"><span class="co">#&gt; [50] train-rmse:17870.433594</span></a>
 <a class="sourceLine" id="cb14-70" data-line-number="70"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-71" data-line-number="71"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-72" data-line-number="72"><span class="co">#&gt; [1]  train-rmse:141814.312500 </span></a>
+<a class="sourceLine" id="cb14-72" data-line-number="72"><span class="co">#&gt; [1]  train-rmse:145683.921875 </span></a>
 <a class="sourceLine" id="cb14-73" data-line-number="73"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-74" data-line-number="74"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-75" data-line-number="75"><span class="co">#&gt; [50] train-rmse:16590.941406</span></a>
+<a class="sourceLine" id="cb14-75" data-line-number="75"><span class="co">#&gt; [50] train-rmse:15880.808594</span></a>
 <a class="sourceLine" id="cb14-76" data-line-number="76"><span class="co">#&gt; converting the data into xgboost format..</span></a>
 <a class="sourceLine" id="cb14-77" data-line-number="77"><span class="co">#&gt; starting with training...</span></a>
-<a class="sourceLine" id="cb14-78" data-line-number="78"><span class="co">#&gt; [1]  train-rmse:140687.203125 </span></a>
+<a class="sourceLine" id="cb14-78" data-line-number="78"><span class="co">#&gt; [1]  train-rmse:147735.281250 </span></a>
 <a class="sourceLine" id="cb14-79" data-line-number="79"><span class="co">#&gt; Will train until train_rmse hasn't improved in 50 rounds.</span></a>
 <a class="sourceLine" id="cb14-80" data-line-number="80"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb14-81" data-line-number="81"><span class="co">#&gt; [50] train-rmse:16176.662109</span></a>
+<a class="sourceLine" id="cb14-81" data-line-number="81"><span class="co">#&gt; [50] train-rmse:17236.404297</span></a>
 <a class="sourceLine" id="cb14-82" data-line-number="82">gst<span class="op">$</span><span class="kw">best_iteration</span>()</a>
 <a class="sourceLine" id="cb14-83" data-line-number="83"><span class="co">#&gt; $n_estimators</span></a>
 <a class="sourceLine" id="cb14-84" data-line-number="84"><span class="co">#&gt; [1] 10</span></a>
@@ -657,10 +657,10 @@
 <a class="sourceLine" id="cb15-15" data-line-number="15"><span class="co">#&gt; [1] 2</span></a>
 <a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-17" data-line-number="17"><span class="co">#&gt; $accuracy_avg</span></a>
-<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt; [1] 0.007820237</span></a>
+<a class="sourceLine" id="cb15-18" data-line-number="18"><span class="co">#&gt; [1] 0.01074996</span></a>
 <a class="sourceLine" id="cb15-19" data-line-number="19"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-20" data-line-number="20"><span class="co">#&gt; $accuracy_sd</span></a>
-<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; [1] 0.003416053</span></a>
+<a class="sourceLine" id="cb15-21" data-line-number="21"><span class="co">#&gt; [1] 0.003426022</span></a>
 <a class="sourceLine" id="cb15-22" data-line-number="22"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb15-23" data-line-number="23"><span class="co">#&gt; $auc_avg</span></a>
 <a class="sourceLine" id="cb15-24" data-line-number="24"><span class="co">#&gt; [1] NaN</span></a>
