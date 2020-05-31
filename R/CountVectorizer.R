@@ -179,7 +179,7 @@ CountVectorizer <- R6::R6Class(
             }
 
             # this function returns cleaned sentences
-            s <- gsub(regex, " ", sentences)
+            s <- gsub(regex, "", sentences)
             # trim whitespace
             s <- trimws(s)
             # convert to lowercase
