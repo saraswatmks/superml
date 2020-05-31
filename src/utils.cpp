@@ -15,7 +15,10 @@ CharacterVector superSplit(std::string str, char sep = ' ') {
     std::string item;
     CharacterVector elems;
     while (std::getline(ss, item, sep)) {
-        elems.push_back(std::move(item));
+       // fix to filter out empty spaces
+        if (item.length() > 1){
+            elems.push_back(std::move(item));
+        }
     }
     return elems;
 }
