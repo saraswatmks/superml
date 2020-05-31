@@ -4,7 +4,7 @@
 \alias{normalise2d}
 \title{normalise2d}
 \usage{
-normalise2d(mat, pnorm = 2L, axis = 0L)
+normalise2d(mat, pnorm = 2L, axis = 1L)
 }
 \arguments{
 \item{mat}{numeric matrix}

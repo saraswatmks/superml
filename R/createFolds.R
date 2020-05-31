@@ -16,7 +16,7 @@ createFolds <- function(y, k = 10, list = TRUE, returnTrain = FALSE)
             cuts <- 2
         if (cuts > 5)
             cuts <- 5
-        breaks <- unique(quantile(y, probs = seq(0, 1, length = cuts)))
+        breaks <- unique(stats::quantile(y, probs = seq(0, 1, length = cuts)))
         y <- cut(y, breaks, include.lowest = TRUE)
     }
     if (k < length(y)) {

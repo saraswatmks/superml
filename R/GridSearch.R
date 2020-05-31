@@ -141,7 +141,7 @@ GridSearchCV <- R6Class(
 
             # create folds
             set.seed(10)
-            mfolds <-  superml:::createFolds(y = X[[y]],
+            mfolds <- createFolds(y = X[[y]],
                                           k = self$n_folds,
                                           list = T)
 
