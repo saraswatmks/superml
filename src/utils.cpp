@@ -235,7 +235,7 @@ std::vector<int> sort_index(NumericVector vec, const bool ascending=true){
 //' r <- normalise2d(mat, axis=1)
 //'
 // [[Rcpp::export]]
-arma::mat normalise2d(NumericMatrix mat, const int pnorm=2, const int axis=0){
+arma::mat normalise2d(NumericMatrix mat, const int pnorm=2, const int axis=1){
 
     arma::mat mt = Rcpp::as<arma::mat>(mat);
 
@@ -437,5 +437,49 @@ List supersvd(NumericMatrix mat, const int n_components){
     req["explained_variance_ratio"] = Rcpp::as<std::vector<double> >(wrap(explained_variance_ratio));
 
     return req;
+
+}
+
+
+std::map<std::string, int> CountOccurences(std::vector<std::string>& vectors)
+{
+    std::map<std::string, int> result;
+
+    std::for_each(vectors.begin(), vectors.end(), [&result](std::string st) {
+        ++result[st];
+    });
+
+    return result;
+}
+
+// Function to convert a std::map<K,V> to std::multimap<V,K>
+template<typename K, typename V>
+std::multimap<V,K> invertMap(std::map<K,V> const &map)
+{
+    std::multimap<V,K> multimap;
+
+    for (auto const &pair: map) {
+        multimap.insert(std::make_pair(pair.second, pair.first));
+    }
+
+    return multimap;
+}
+
+// [[Rcpp::export]]
+std::vector<std::string> SortOccurence(std::vector<std::string>& vectors){
+
+    std::map<std::string, int> result;
+    result = CountOccurences(vectors);
+
+    std::multimap<int,std::string> multimap = invertMap(result);
+
+    std::vector<std::string> vints;
+    for ( auto pair: multimap){
+        vints.push_back(pair.second);
+    }
+
+    std::reverse(vints.begin(), vints.end());
+
+    return vints;
 
 }

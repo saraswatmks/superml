@@ -175,6 +175,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// SortOccurence
+std::vector<std::string> SortOccurence(std::vector<std::string>& vectors);
+RcppExport SEXP _superml_SortOccurence(SEXP vectorsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<std::string>& >::type vectors(vectorsSEXP);
+    rcpp_result_gen = Rcpp::wrap(SortOccurence(vectors));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_superml_superSplit", (DL_FUNC) &_superml_superSplit, 2},
@@ -191,6 +202,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_superml_idf", (DL_FUNC) &_superml_idf, 2},
     {"_superml_sort_vector_with_names", (DL_FUNC) &_superml_sort_vector_with_names, 1},
     {"_superml_bm_25", (DL_FUNC) &_superml_bm_25, 3},
+    {"_superml_SortOccurence", (DL_FUNC) &_superml_SortOccurence, 1},
     {NULL, NULL, 0}
 };
 

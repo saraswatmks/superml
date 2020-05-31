@@ -227,9 +227,10 @@ CountVectorizer <- R6::R6Class(
             }
 
             # sort the tokens by frequency
-            tokens_counter <- data.table(col = unlist(tokens_counter, use.names = FALSE))
+            # tokens_counter <- data.table(col = unlist(tokens_counter, use.names = FALSE))
             # radix sorting is faster
-            tokens_counter <- tokens_counter[,.N,keyby = col][order(N, decreasing = T)]$col
+            # tokens_counter <- tokens_counter[,.N,keyby = col][order(N, decreasing = T)]$col
+            tokens_counter <- superml:::SortOccurence(unlist(tokens_counter, use.names = FALSE))
 
             # check for default features
             if (is.null(max_features) & (max_df == 1) & (min_df == 1)) {

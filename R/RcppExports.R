@@ -97,7 +97,7 @@ sort_index <- function(vec, ascending = TRUE) {
 #' ## normalise matrix column wise
 #' r <- normalise2d(mat, axis=1)
 #'
-normalise2d <- function(mat, pnorm = 2L, axis = 0L) {
+normalise2d <- function(mat, pnorm = 2L, axis = 1L) {
     .Call('_superml_normalise2d', PACKAGE = 'superml', mat, pnorm, axis)
 }
 
@@ -158,5 +158,9 @@ sort_vector_with_names <- function(x) {
 #'
 bm_25 <- function(document, corpus, top_n) {
     .Call('_superml_bm_25', PACKAGE = 'superml', document, corpus, top_n)
+}
+
+SortOccurence <- function(vectors) {
+    .Call('_superml_SortOccurence', PACKAGE = 'superml', vectors)
 }
 

@@ -74,10 +74,10 @@ kFoldMean <- function(train_df, test_df, colname, target, n_fold = 5, seed=42){
 
     # create folds
     base::set.seed(seed)
-    mfolds <- caret::createFolds(y = train_df[[target]], k = n_fold, list = T)
+    mfolds <- superml:::createFolds(y = train_df[[target]], k = n_fold, list = T)
 
     # get values
-    for(f in mfolds){
+    for (f in mfolds){
 
         x_train <- train_df[-f, c(colname, target), with = F]
         x_valid <- train_df[f, c(colname, target), with = F]
