@@ -188,10 +188,13 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
             if (isTRUE(norm)) {
                 # normalize rows
                 # tfidf = Matrix::Diagonal(x = 1 / sqrt(Matrix::rowSums(tfidf^2))) %*% tfidf
-                tfidf = diag(x = 1 / sqrt(rowSums(tfidf^2))) %*% tfidf
-                if (any(is.na(tfidf))) {
-                    tfidf[is.na(tfidf)] <- 0
-                }
+                # tfidf = diag(x = 1 / sqrt(rowSums(tfidf^2))) %*% tfidf
+                # if (any(is.na(tfidf))) {
+                #     tfidf[is.na(tfidf)] <- 0
+                # }
+                tfnames <- colnames(tfidf)
+                tfidf = superml:::normalise2d(tfidf)
+                colnames(tfidf) <- tfnames
 
                 return(tfidf)
             }
