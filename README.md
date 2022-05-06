@@ -1,6 +1,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/superml)](https://cran.r-project.org/package=superml) [![Build Status](https://travis-ci.org/saraswatmks/superml.svg?branch=master)](https://travis-ci.org/saraswatmks/superml) 
 [![Downloads](http://cranlogs.r-pkg.org/badges/superml)](https://cran.r-project.org/package=superml)
 [![R-CMD-check](https://github.com/saraswatmks/superml/workflows/R-CMD-check/badge.svg)](https://github.com/saraswatmks/superml/actions)
+
 SuperML
 =======
 
