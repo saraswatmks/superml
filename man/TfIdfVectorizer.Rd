@@ -30,7 +30,7 @@ tf$fit(sents)
 ## Method `TfIdfVectorizer$fit_transform`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 sents <- c('i am alone in dark.','mother_mary a lot',
          'alone in the dark?', 'many mothers in the lot....')
 tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.1)
@@ -41,7 +41,7 @@ tf_matrix <- tf$fit_transform(sents)
 ## Method `TfIdfVectorizer$transform`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 sents = c('i am alone in dark.','mother_mary a lot',
           'alone in the dark?', 'many mothers in the lot....')
 new_sents <- c("dark at night",'mothers day')
@@ -213,7 +213,7 @@ a sparse matrix containing tf-idf score for tokens in each given sentence
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 sents <- c('i am alone in dark.','mother_mary a lot',
          'alone in the dark?', 'many mothers in the lot....')
 tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.1)
@@ -248,7 +248,7 @@ a sparse matrix containing tf-idf score for tokens in each given sentence
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 sents = c('i am alone in dark.','mother_mary a lot',
           'alone in the dark?', 'many mothers in the lot....')
 new_sents <- c("dark at night",'mothers day')

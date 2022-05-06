@@ -123,7 +123,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @return a sparse matrix containing tf-idf score for tokens in each given sentence
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' sents <- c('i am alone in dark.','mother_mary a lot',
     #'          'alone in the dark?', 'many mothers in the lot....')
     #' tf <- TfIdfVectorizer$new(smooth_idf = TRUE, min_df = 0.1)
@@ -146,7 +146,7 @@ TfIdfVectorizer <- R6Class("TfIdfVectorizer",
     #' @return a sparse matrix containing tf-idf score for tokens in each given sentence
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' sents = c('i am alone in dark.','mother_mary a lot',
     #'           'alone in the dark?', 'many mothers in the lot....')
     #' new_sents <- c("dark at night",'mothers day')
