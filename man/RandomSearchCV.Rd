@@ -66,6 +66,7 @@ rst$best_iteration()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandomSearchCV$new(
@@ -117,6 +118,7 @@ rst <-RandomSearchCV$new(trainer = rf,
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandomSearchCV$fit(X, y)}\if{html}{\out{</div>}}
@@ -158,6 +160,7 @@ rst$best_iteration()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

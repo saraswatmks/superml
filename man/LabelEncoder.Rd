@@ -3,7 +3,9 @@
 \name{LabelEncoder}
 \alias{LabelEncoder}
 \title{Label Encoder}
-\format{\code{\link{R6Class}} object.}
+\format{
+\code{\link{R6Class}} object.
+}
 \description{
 Encodes and decodes categorical variables into integer values and vice versa.
 This is a commonly performed task in data preparation during model training, because all machine learning models require
@@ -107,6 +109,7 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit(data_col)}\if{html}{\out{</div>}}
@@ -141,6 +144,7 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-fit_transform}{}}}
 \subsection{Method \code{fit_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit_transform(data_col)}\if{html}{\out{</div>}}
@@ -174,6 +178,7 @@ data_ex$Name <- lbl$fit_transform(data_ex$Name)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-transform}{}}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$transform(data_col)}\if{html}{\out{</div>}}
@@ -207,6 +212,7 @@ data_ex$Name <- lbl$transform(data_ex$Name)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-inverse_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-inverse_transform}{}}}
 \subsection{Method \code{inverse_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$inverse_transform(coded_col)}\if{html}{\out{</div>}}
@@ -241,6 +247,7 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

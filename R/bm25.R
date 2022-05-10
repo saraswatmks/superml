@@ -1,4 +1,4 @@
-#' Best Matching(BM25) - Deprecated
+#' Best Matching(BM25) - Deprecated 
 #'
 #' Computer BM25 distance between sentences/documents.
 #'
@@ -6,6 +6,7 @@
 #' BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
 #' It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
 #' This implementation uses multiple cores for faster and parallel computation.
+#' @keywords internal
 
 bm25 <- R6::R6Class("bm25", public = list(
 
@@ -22,11 +23,11 @@ bm25 <- R6::R6Class("bm25", public = list(
     #'
     #' @return A `bm25` object.
     #'
-    #'
     #' example <- c('white audi 2.5 car','black shoes from office',
     #'              'new mobile iphone 7','audi tyres audi a3',
     #'              'nice audi bmw toyota corolla')
     #' obj <- bm25$new(example, use_parallel=FALSE)
+    #' @keywords internal
 
     initialize = function(corpus, use_parallel){
         if (!(missing(corpus))) self$corpus <- private$transform(corpus)
@@ -55,6 +56,7 @@ bm25 <- R6::R6Class("bm25", public = list(
     #' get_bm <- bm25$new(example, use_parallel=FALSE)
     #' input_document <- c('white toyota corolla')
     #' get_bm$most_similar(document = input_document, topn = 2)
+    #' @keywords internal
 
     most_similar = function(document, topn=1){
         # sort the list by values
@@ -104,7 +106,7 @@ bm25 <- R6::R6Class("bm25", public = list(
 
     compute = function(document, corpus, use_parallel){
 
-        if (isTRUE(self$use_parallel)){
+        if (isTRUE(self$use_parallel)) {
             # devtools uses 2 cores max. to check parallel processes
             # but here removed parameters to set cores.
             cores <- parallel::detectCores()

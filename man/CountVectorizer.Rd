@@ -83,6 +83,7 @@ cv_count_matrix <- cv$transform(new_sents)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$new(
@@ -136,6 +137,7 @@ A `CountVectorizer` object.
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$fit(sentences)}\if{html}{\out{</div>}}
@@ -169,6 +171,7 @@ cv$fit(sents)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-fit_transform}{}}}
 \subsection{Method \code{fit_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$fit_transform(sentences)}\if{html}{\out{</div>}}
@@ -202,6 +205,7 @@ cv_count_matrix <- cv$fit_transform(sents)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-transform}{}}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CountVectorizer$transform(sentences)}\if{html}{\out{</div>}}
@@ -237,6 +241,7 @@ cv_count_matrix <- cv$transform(new_sents)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

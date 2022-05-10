@@ -34,6 +34,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 ## Method `XGBTrainer$cross_val`
 ## ------------------------------------------------
 
+\dontrun{
 library(data.table)
 df <- copy(iris)
 
@@ -49,6 +50,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 
 # do cross validation to find optimal value for n_estimators
 xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+}
 
 ## ------------------------------------------------
 ## Method `XGBTrainer$fit`
@@ -93,6 +95,7 @@ preds <- xgb$predict(as.matrix(iris[,1:4]))
 ## Method `XGBTrainer$show_importance`
 ## ------------------------------------------------
 
+\dontrun{
 library(data.table)
 df <- copy(iris)
 
@@ -107,6 +110,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
                       n_estimators = 2)
 xgb$fit(df, 'Species')
 xgb$show_importance()
+}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -186,6 +190,7 @@ xgb$show_importance()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$new(
@@ -307,6 +312,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cross_val"></a>}}
+\if{latex}{\out{\hypertarget{method-cross_val}{}}}
 \subsection{Method \code{cross_val()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$cross_val(X, y, nfolds = 5, stratified = TRUE, folds = NULL)}\if{html}{\out{</div>}}
@@ -336,7 +342,8 @@ NULL, trains a model and saves it in memory
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{library(data.table)
+\preformatted{\dontrun{
+library(data.table)
 df <- copy(iris)
 
 # convert characters/factors to numeric
@@ -352,6 +359,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 # do cross validation to find optimal value for n_estimators
 xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 }
+}
 \if{html}{\out{</div>}}
 
 }
@@ -359,6 +367,7 @@ xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$fit(X, y, valid = NULL)}\if{html}{\out{</div>}}
@@ -405,6 +414,7 @@ xgb$fit(df, 'Species')
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$predict(df)}\if{html}{\out{</div>}}
@@ -450,6 +460,7 @@ preds <- xgb$predict(as.matrix(iris[,1:4]))
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-show_importance"></a>}}
+\if{latex}{\out{\hypertarget{method-show_importance}{}}}
 \subsection{Method \code{show_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$show_importance(type = "plot", topn = 10)}\if{html}{\out{</div>}}
@@ -473,7 +484,8 @@ a table or a plot of feature importance
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{library(data.table)
+\preformatted{\dontrun{
+library(data.table)
 df <- copy(iris)
 
 # convert characters/factors to numeric
@@ -488,6 +500,7 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 xgb$fit(df, 'Species')
 xgb$show_importance()
 }
+}
 \if{html}{\out{</div>}}
 
 }
@@ -495,6 +508,7 @@ xgb$show_importance()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -61,6 +61,7 @@ If present, the probabilities should be specified in the order of the factor lev
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$new(prior, laplace, usekernel)}\if{html}{\out{</div>}}
@@ -98,6 +99,7 @@ nb <- NBTrainer$new()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$fit(X, y)}\if{html}{\out{</div>}}
@@ -132,6 +134,7 @@ nb$fit(iris, 'Species')
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$predict(X, type = "class")}\if{html}{\out{</div>}}
@@ -167,6 +170,7 @@ y <- nb$predict(iris)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

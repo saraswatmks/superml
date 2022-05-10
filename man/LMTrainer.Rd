@@ -140,6 +140,7 @@ coefs <- lf$get_importance()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$new(family, weights, alpha, lambda, standardize.response)}\if{html}{\out{</div>}}
@@ -185,6 +186,7 @@ lf <- LMTrainer$new(family = 'gaussian', alpha=1)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$fit(X, y)}\if{html}{\out{</div>}}
@@ -225,6 +227,7 @@ lf$fit(X = housing, y = 'MEDV')
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$predict(df, lambda = NULL)}\if{html}{\out{</div>}}
@@ -266,6 +269,7 @@ predictions <- lf$cv_predict(df = housing)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cv_model"></a>}}
+\if{latex}{\out{\hypertarget{method-cv_model}{}}}
 \subsection{Method \code{cv_model()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$cv_model(X, y, nfolds, parallel, type.measure = "deviance")}\if{html}{\out{</div>}}
@@ -312,6 +316,7 @@ lf$cv_model(X = housing, y = 'MEDV', nfolds = 5, parallel = FALSE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-cv_predict"></a>}}
+\if{latex}{\out{\hypertarget{method-cv_predict}{}}}
 \subsection{Method \code{cv_predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$cv_predict(df, lambda = NULL)}\if{html}{\out{</div>}}
@@ -353,6 +358,7 @@ predictions <- lf$cv_predict(df = housing)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_importance"></a>}}
+\if{latex}{\out{\hypertarget{method-get_importance}{}}}
 \subsection{Method \code{get_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LMTrainer$get_importance()}\if{html}{\out{</div>}}
@@ -386,6 +392,7 @@ coefs <- lf$get_importance()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
