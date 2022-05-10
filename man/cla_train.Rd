@@ -4,7 +4,9 @@
 \name{cla_train}
 \alias{cla_train}
 \title{cla_train}
-\format{An object of class \code{data.table} (inherits from \code{data.frame}) with 891 rows and 12 columns.}
+\format{
+An object of class \code{data.table} (inherits from \code{data.frame}) with 891 rows and 12 columns.
+}
 \source{
 \url{https://www.kaggle.com/c/titanic/data}
 }

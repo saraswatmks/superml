@@ -86,6 +86,7 @@ predictions <- km_model$predict(data)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$new(
@@ -157,6 +158,7 @@ km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$fit(X, y = NULL, find_optimal = FALSE)}\if{html}{\out{</div>}}
@@ -195,6 +197,7 @@ km_model$fit(data, find_optimal = FALSE)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$predict(X)}\if{html}{\out{</div>}}
@@ -230,6 +233,7 @@ predictions <- km_model$predict(data)
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

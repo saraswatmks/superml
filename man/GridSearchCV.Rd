@@ -77,6 +77,7 @@ gst$best_iteration()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$new(trainer = NA, parameters = NA, n_folds = NA, scoring = NA)}\if{html}{\out{</div>}}
@@ -119,6 +120,7 @@ gst <-GridSearchCV$new(trainer = rf,
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$fit(X, y)}\if{html}{\out{</div>}}
@@ -158,6 +160,7 @@ gst$fit(iris, "Species")
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-best_iteration"></a>}}
+\if{latex}{\out{\hypertarget{method-best_iteration}{}}}
 \subsection{Method \code{best_iteration()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$best_iteration(metric = NULL)}\if{html}{\out{</div>}}
@@ -196,6 +199,7 @@ gst$best_iteration()
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

@@ -39,5 +39,5 @@ Suggests:
     xgboost(>= 0.6),
     glmnet(>= 2.0),
     e1071(>= 1.7)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
