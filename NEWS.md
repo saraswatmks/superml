@@ -1,3 +1,9 @@
+# superml 0.5.4
+
+* Configure github actions
+* Fix build issue due to dontrun decorator
+* Removed from cran, republish.
+
 # superml 0.5.3
 
 * Update bm25 function

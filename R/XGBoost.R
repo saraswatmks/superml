@@ -192,6 +192,7 @@ XGBTrainer <- R6Class(
         #' @return NULL, trains a model and saves it in memory
         #'
         #' @examples
+        #' \dontrun{
         #' library(data.table)
         #' df <- copy(iris)
         #'
@@ -207,6 +208,7 @@ XGBTrainer <- R6Class(
         #'
         #' # do cross validation to find optimal value for n_estimators
         #' xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+        #' }
 
         cross_val = function(X,
                              y,
@@ -372,6 +374,7 @@ XGBTrainer <- R6Class(
         #' @return a table or a plot of feature importance
         #'
         #' @examples
+        #' \dontrun{
         #' library(data.table)
         #' df <- copy(iris)
         #'
@@ -386,6 +389,7 @@ XGBTrainer <- R6Class(
         #'                       n_estimators = 2)
         #' xgb$fit(df, 'Species')
         #' xgb$show_importance()
+        #' }
 
         show_importance = function(type="plot", topn=10){
 
@@ -413,20 +417,20 @@ XGBTrainer <- R6Class(
                 stop(strwrap("The dependent variable y is not available
                      in the data set."))
 
-            if(any(!(vapply(X, is.numeric, FUN.VALUE = logical(1)))))
+            if (any(!(vapply(X, is.numeric, FUN.VALUE = logical(1)))))
                 stop(strwrap("The data contains character or categorical variable.
                      Please convert it to numeric or integer"))
 
-            if(!(is.numeric(X[[y]])))
+            if (!(is.numeric(X[[y]])))
                 stop("The dependent variable is not numeric.")
 
-            if(!(is.null(valid))){
+            if (!(is.null(valid))) {
 
-                if(ncol(valid) != ncol(X))
+                if (ncol(valid) != ncol(X))
                     stop("The validation and train data set have
                          unequal number of columns.")
 
-                if(!all(colnames(X) %in% colnames(valid)))
+                if (!all(colnames(X) %in% colnames(valid)))
                     stop(strwrap("Train and validation data has some issue
                          in column names.Make sure they are same."))
             }
@@ -434,19 +438,19 @@ XGBTrainer <- R6Class(
             message("converting the data into xgboost format..")
 
             X <- as.data.table(X)
-            if(!(is.null(valid))){
+            if (!(is.null(valid))) {
                 valid <- as.data.table(valid)
-                dtrain <- xgboost::xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y), with=FALSE]),
+                dtrain <- xgboost::xgb.DMatrix(data = as.matrix(X[, setdiff(names(X), y), with = FALSE]),
                                       label = X[[y]])
-                dvalid <- xgboost::xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y), with=FALSE]),
+                dvalid <- xgboost::xgb.DMatrix(data = as.matrix(valid[, setdiff(names(valid), y), with = FALSE]),
                                       label = valid[[y]])
-                return (list(train = dtrain,
+                return(list(train = dtrain,
                              val = dvalid))
 
             } else {
                 dtrain <- xgboost::xgb.DMatrix(data = as.matrix(
-                    X[, setdiff(names(X), y), with=FALSE]), label = X[[y]])
-                return (list(train = dtrain))
+                    X[, setdiff(names(X), y), with = FALSE]), label = X[[y]])
+                return(list(train = dtrain))
             }
 
         }

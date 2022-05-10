@@ -45,7 +45,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return A `LMTrainer` object.
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -79,7 +79,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return NULL, train the model and saves internally
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -130,7 +130,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return vector, a vector containing predictions
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -170,7 +170,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return NULL, trains the model and saves it in memory
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -221,7 +221,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return vector a vector containing predicted values
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -252,7 +252,7 @@ LMTrainer <- R6Class("LMTrainer", public = list(
     #' @return a matrix containing feature coefficients
     #'
     #' @examples
-    #' \donttest{
+    #' \dontrun{
     #' LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
     #' housing <- read.table(LINK)
     #' names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",

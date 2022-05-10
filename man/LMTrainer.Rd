@@ -16,7 +16,7 @@ This class provides fit, predict, cross valdidation functions.
 ## Method `LMTrainer$new`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -29,7 +29,7 @@ lf <- LMTrainer$new(family = 'gaussian', alpha=1)
 ## Method `LMTrainer$fit`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -43,7 +43,7 @@ lf$fit(X = housing, y = 'MEDV')
 ## Method `LMTrainer$predict`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -58,7 +58,7 @@ predictions <- lf$cv_predict(df = housing)
 ## Method `LMTrainer$cv_model`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -72,7 +72,7 @@ lf$cv_model(X = housing, y = 'MEDV', nfolds = 5, parallel = FALSE)
 ## Method `LMTrainer$cv_predict`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -87,7 +87,7 @@ predictions <- lf$cv_predict(df = housing)
 ## Method `LMTrainer$get_importance`
 ## ------------------------------------------------
 
-\donttest{
+\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -169,7 +169,7 @@ A `LMTrainer` object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -208,7 +208,7 @@ NULL, train the model and saves internally
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -248,7 +248,7 @@ vector, a vector containing predictions
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -295,7 +295,7 @@ NULL, trains the model and saves it in memory
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -335,7 +335,7 @@ vector a vector containing predicted values
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
@@ -367,7 +367,7 @@ a matrix containing feature coefficients
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{\donttest{
+\preformatted{\dontrun{
 LINK <- "http://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data"
 housing <- read.table(LINK)
 names <- c("CRIM","ZN","INDUS","CHAS","NOX","RM","AGE","DIS",
