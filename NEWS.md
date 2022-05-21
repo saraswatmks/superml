@@ -1,3 +1,7 @@
+# superml 0.5.5
+
+* Fix xgboost float precision error
+
 # superml 0.5.4
 
 * Configure github actions

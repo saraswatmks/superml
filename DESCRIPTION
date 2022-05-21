@@ -1,7 +1,7 @@
 Package: superml
 Type: Package
 Title: Build Machine Learning Models Like Using Python's Scikit-Learn Library in R
-Version: 0.5.4
+Version: 0.5.5
 Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
           role = c("aut", "cre"))
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
