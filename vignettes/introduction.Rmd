@@ -167,7 +167,7 @@ rmse(actual = xtest$SalePrice, predicted = pred)
 ```
 
 **Xgboost**
-```{r}
+```{r, eval=FALSE}
 xgb <- XGBTrainer$new(objective = "reg:linear"
                       , n_estimators = 500
                       , eval_metric = "rmse"
@@ -180,7 +180,7 @@ rmse(actual = xtest$SalePrice, predicted = pred)
 ```
 
 **Grid Search**
-```{r}
+```{r, eval=FALSE}
 xgb <- XGBTrainer$new(objective = "reg:linear")
 
 gst <- GridSearchCV$new(trainer = xgb,
@@ -311,7 +311,7 @@ auc(actual = xtest$Survived, predicted = pred)
 ```
 
 **Xgboost**
-```{r}
+```{r, eval=FALSE}
 xgb <- XGBTrainer$new(objective = "binary:logistic"
                       , n_estimators = 500
                       , eval_metric = "auc"
@@ -325,7 +325,7 @@ auc(actual = xtest$Survived, predicted = pred)
 ```
 
 **Grid Search**
-```{r}
+```{r, eval=FALSE}
 xgb <- XGBTrainer$new(objective="binary:logistic")
 gst <-GridSearchCV$new(trainer = xgb,
                              parameters = list(n_estimators = c(10,50),
