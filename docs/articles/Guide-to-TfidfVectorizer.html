@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
       <h1 data-toc-skip>How to use TfidfVectorizer in R ?</h1>
                         <h4 data-toc-skip class="author">Manish Saraswat</h4>
             
-            <h4 data-toc-skip class="date">2022-05-10</h4>
+            <h4 data-toc-skip class="date">2022-05-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/HEAD/vignettes/Guide-to-TfidfVectorizer.Rmd" class="external-link"><code>vignettes/Guide-to-TfidfVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-TfidfVectorizer.Rmd</code></div>
@@ -221,10 +221,10 @@
 <span class="co">#&gt; 3:            how does it work      0</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                                     text target</span>
-<span class="co">#&gt; 1: transform your work and go work again      0</span>
-<span class="co">#&gt; 2:                      how does it work      1</span>
-<span class="co">#&gt; 3:              i am going home and home      0</span></code></pre></div>
+<span class="co">#&gt;                                 text target</span>
+<span class="co">#&gt; 1:                  how does it work      0</span>
+<span class="co">#&gt; 2: home is where you go from to work      1</span>
+<span class="co">#&gt; 3:       where are you going.? ////       0</span></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># initialise the class</span>
@@ -257,14 +257,18 @@
 <span class="co">#&gt; [3,] 0.0000000</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_tf_features</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;           work      home you where   it work        it how does it  how does</span>
-<span class="co">#&gt; [1,] 0.7151500 0.0000000   0     0 0.0000000 0.0000000   0.0000000 0.0000000</span>
-<span class="co">#&gt; [2,] 0.2478085 0.0000000   0     0 0.3425257 0.3425257   0.3425257 0.3425257</span>
-<span class="co">#&gt; [3,] 0.0000000 0.8164966   0     0 0.0000000 0.0000000   0.0000000 0.0000000</span>
-<span class="co">#&gt;            how     going        go does it work   does it      does       and</span>
-<span class="co">#&gt; [1,] 0.0000000 0.0000000 0.4942471    0.0000000 0.0000000 0.0000000 0.4942471</span>
-<span class="co">#&gt; [2,] 0.3425257 0.0000000 0.0000000    0.3425257 0.3425257 0.3425257 0.0000000</span>
-<span class="co">#&gt; [3,] 0.0000000 0.4082483 0.0000000    0.0000000 0.0000000 0.0000000 0.4082483</span></code></pre></div>
+<span class="co">#&gt;           work      home       you     where   it work        it how does it</span>
+<span class="co">#&gt; [1,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span>
+<span class="co">#&gt; [2,] 0.3401651 0.4701829 0.4701829 0.4701829 0.0000000 0.0000000   0.0000000</span>
+<span class="co">#&gt; [3,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span>
+<span class="co">#&gt;       how does       how     going        go does it work   does it      does</span>
+<span class="co">#&gt; [1,] 0.3425257 0.3425257 0.0000000 0.0000000    0.3425257 0.3425257 0.3425257</span>
+<span class="co">#&gt; [2,] 0.0000000 0.0000000 0.0000000 0.4701829    0.0000000 0.0000000 0.0000000</span>
+<span class="co">#&gt; [3,] 0.0000000 0.0000000 0.5773503 0.0000000    0.0000000 0.0000000 0.0000000</span>
+<span class="co">#&gt;      and</span>
+<span class="co">#&gt; [1,]   0</span>
+<span class="co">#&gt; [2,]   0</span>
+<span class="co">#&gt; [3,]   0</span></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply do:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -277,7 +281,7 @@
 <span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">x_train</span>, <span class="st">"target"</span><span class="op">)</span>
 <span class="co">#&gt; converting the data into xgboost format..</span>
 <span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [09:18:41] WARNING: amalgamation/../src/learner.cc:627: </span>
+<span class="co">#&gt; [19:44:03] WARNING: amalgamation/../src/learner.cc:627: </span>
 <span class="co">#&gt; Parameters: { "nrounds" } might not be used.</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   This could be a false alarm, with some parameters getting used by language bindings but</span>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
       </span>
     </div>
 
@@ -440,21 +440,24 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>\dontrun{
+library(data.table)
+df &lt;- copy(iris)
 
-<span class="co"># convert characters/factors to numeric</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
 
-<span class="co"># initialise model</span>
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,
-                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,
-                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,
-                      num_class<span class="op">=</span><span class="fl">3</span>,
-                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
 
-<span class="co"># do cross validation to find optimal value for n_estimators</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span>X <span class="op">=</span> <span class="va">df</span>, y <span class="op">=</span> <span class="st">'Species'</span>,nfolds <span class="op">=</span> <span class="fl">3</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+# do cross validation to find optimal value for n_estimators
+xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
+}
+</code></pre></div><p></p></div>
 </div>
 
 
@@ -586,20 +589,23 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 </div>
 <div class="section">
 <h4 id="examples-4">Examples<a class="anchor" aria-label="anchor" href="#examples-4"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code>\dontrun{
+library(data.table)
+df &lt;- copy(iris)
 
-<span class="co"># convert characters/factors to numeric</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
+# convert characters/factors to numeric
+df$Species &lt;- as.numeric(as.factor(df$Species))-1
 
-<span class="co"># initialise model</span>
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,
-                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,
-                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,
-                      num_class<span class="op">=</span><span class="fl">3</span>,
-                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+# initialise model
+xgb &lt;- XGBTrainer$new(objective = 'multi:softmax',
+                      maximize = FALSE,
+                      eval_metric = 'merror',
+                      num_class=3,
+                      n_estimators = 2)
+xgb$fit(df, 'Species')
+xgb$show_importance()
+}
+</code></pre></div><p></p></div>
 </div>
 
 
@@ -647,6 +653,7 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in"><span class="co">## Method `XGBTrainer$cross_val`</span></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -662,13 +669,7 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># do cross validation to find optimal value for n_estimators</span></span>
 <span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span>X <span class="op">=</span> <span class="va">df</span>, y <span class="op">=</span> <span class="st">'Species'</span>,nfolds <span class="op">=</span> <span class="fl">3</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> starting with cv training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]	train-merror:0.013334+0.004714	test-merror:0.040272+0.032662 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple eval metrics are present. Will use test_merror for early stopping.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Will train until test_merror hasn't improved in 50 rounds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2]	train-merror:0.016701+0.004809	test-merror:0.033605+0.025020 </span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"><span class="co">## Method `XGBTrainer$fit`</span></span>
@@ -689,7 +690,7 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> starting with training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [09:18:29] WARNING: amalgamation/../src/learner.cc:627: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19:43:51] WARNING: amalgamation/../src/learner.cc:627: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: { "nrounds" } might not be used.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   This could be a false alarm, with some parameters getting used by language bindings but</span>
@@ -721,7 +722,7 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> starting with training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [09:18:29] WARNING: amalgamation/../src/learner.cc:627: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19:43:51] WARNING: amalgamation/../src/learner.cc:627: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: { "nrounds" } might not be used.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   This could be a false alarm, with some parameters getting used by language bindings but</span>
@@ -741,6 +742,7 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in"><span class="co">## Method `XGBTrainer$show_importance`</span></span>
 <span class="r-in"><span class="co">## ------------------------------------------------</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -754,22 +756,8 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
 <span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> starting with training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [09:18:29] WARNING: amalgamation/../src/learner.cc:627: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: { "nrounds" } might not be used.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   This could be a false alarm, with some parameters getting used by language bindings but</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   then being mistakenly passed down to XGBoost core, or some parameter actually being used</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   but getting flagged wrongly here. Please open an issue if you find any such cases.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1]	train-merror:0.020000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Will train until train_merror hasn't improved in 50 rounds.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2]	train-merror:0.026667 </span>
 <span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-plt img"><img src="XGBTrainer-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>
