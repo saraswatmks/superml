@@ -216,8 +216,8 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;                           text target</span>
 <span class="co">#&gt; 1:            how does it work      0</span>
-<span class="co">#&gt; 2: where are you going.? ////       1</span>
-<span class="co">#&gt; 3:    i am going home and home      0</span></code></pre></div>
+<span class="co">#&gt; 2:            how does it work      1</span>
+<span class="co">#&gt; 3: where are you going.? ////       0</span></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># initialise the class</span>
@@ -248,11 +248,11 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_cf_features</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt;      work home you where it work it how does it how does how going go</span>
 <span class="co">#&gt; [1,]    1    0   0     0       1  1           1        1   1     0  0</span>
-<span class="co">#&gt; [2,]    0    0   1     1       0  0           0        0   0     1  0</span>
-<span class="co">#&gt; [3,]    0    2   0     0       0  0           0        0   0     1  0</span>
+<span class="co">#&gt; [2,]    1    0   0     0       1  1           1        1   1     0  0</span>
+<span class="co">#&gt; [3,]    0    0   1     1       0  0           0        0   0     1  0</span>
 <span class="co">#&gt;      does it work</span>
 <span class="co">#&gt; [1,]            1</span>
-<span class="co">#&gt; [2,]            0</span>
+<span class="co">#&gt; [2,]            1</span>
 <span class="co">#&gt; [3,]            0</span></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply do:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -267,7 +267,7 @@
 
 <span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span>
 <span class="va">predictions</span>
-<span class="co">#&gt; [1] 1 1 0 1 1 1</span>
+<span class="co">#&gt; [1] 1 1 1 0 1 1</span>
 <span class="co">#&gt; Levels: 0 1</span></code></pre></div>
 </div>
 <div class="section level2">
