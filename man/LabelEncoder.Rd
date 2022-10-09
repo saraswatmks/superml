@@ -100,16 +100,16 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-fit}{\code{LabelEncoder$fit()}}
-\item \href{#method-fit_transform}{\code{LabelEncoder$fit_transform()}}
-\item \href{#method-transform}{\code{LabelEncoder$transform()}}
-\item \href{#method-inverse_transform}{\code{LabelEncoder$inverse_transform()}}
-\item \href{#method-clone}{\code{LabelEncoder$clone()}}
+\item \href{#method-LabelEncoder-fit}{\code{LabelEncoder$fit()}}
+\item \href{#method-LabelEncoder-fit_transform}{\code{LabelEncoder$fit_transform()}}
+\item \href{#method-LabelEncoder-transform}{\code{LabelEncoder$transform()}}
+\item \href{#method-LabelEncoder-inverse_transform}{\code{LabelEncoder$inverse_transform()}}
+\item \href{#method-LabelEncoder-clone}{\code{LabelEncoder$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-LabelEncoder-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelEncoder-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit(data_col)}\if{html}{\out{</div>}}
@@ -143,8 +143,8 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit_transform"></a>}}
-\if{latex}{\out{\hypertarget{method-fit_transform}{}}}
+\if{html}{\out{<a id="method-LabelEncoder-fit_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelEncoder-fit_transform}{}}}
 \subsection{Method \code{fit_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$fit_transform(data_col)}\if{html}{\out{</div>}}
@@ -177,8 +177,8 @@ data_ex$Name <- lbl$fit_transform(data_ex$Name)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-transform"></a>}}
-\if{latex}{\out{\hypertarget{method-transform}{}}}
+\if{html}{\out{<a id="method-LabelEncoder-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelEncoder-transform}{}}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$transform(data_col)}\if{html}{\out{</div>}}
@@ -211,8 +211,8 @@ data_ex$Name <- lbl$transform(data_ex$Name)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-inverse_transform"></a>}}
-\if{latex}{\out{\hypertarget{method-inverse_transform}{}}}
+\if{html}{\out{<a id="method-LabelEncoder-inverse_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelEncoder-inverse_transform}{}}}
 \subsection{Method \code{inverse_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{LabelEncoder$inverse_transform(coded_col)}\if{html}{\out{</div>}}
@@ -246,8 +246,8 @@ decode_names <- lbl$inverse_transform(data_ex$Name)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-LabelEncoder-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-LabelEncoder-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

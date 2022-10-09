@@ -97,16 +97,16 @@ is a measure of gini index. For regression, the \code{variance} of responses is 
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{RFTrainer$new()}}
-\item \href{#method-fit}{\code{RFTrainer$fit()}}
-\item \href{#method-predict}{\code{RFTrainer$predict()}}
-\item \href{#method-get_importance}{\code{RFTrainer$get_importance()}}
-\item \href{#method-clone}{\code{RFTrainer$clone()}}
+\item \href{#method-RFTrainer-new}{\code{RFTrainer$new()}}
+\item \href{#method-RFTrainer-fit}{\code{RFTrainer$fit()}}
+\item \href{#method-RFTrainer-predict}{\code{RFTrainer$predict()}}
+\item \href{#method-RFTrainer-get_importance}{\code{RFTrainer$get_importance()}}
+\item \href{#method-RFTrainer-clone}{\code{RFTrainer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-RFTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-RFTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$new(
@@ -177,8 +177,8 @@ bst <- RFTrainer$new(n_estimators=10,
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-RFTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-RFTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$fit(X, y)}\if{html}{\out{</div>}}
@@ -216,8 +216,8 @@ bst$fit(iris, 'Species')
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-RFTrainer-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-RFTrainer-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$predict(df)}\if{html}{\out{</div>}}
@@ -254,8 +254,8 @@ predictions <- bst$predict(iris)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_importance"></a>}}
-\if{latex}{\out{\hypertarget{method-get_importance}{}}}
+\if{html}{\out{<a id="method-RFTrainer-get_importance"></a>}}
+\if{latex}{\out{\hypertarget{method-RFTrainer-get_importance}{}}}
 \subsection{Method \code{get_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RFTrainer$get_importance()}\if{html}{\out{</div>}}
@@ -286,8 +286,8 @@ bst$get_importance()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-RFTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-RFTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

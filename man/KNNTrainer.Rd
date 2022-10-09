@@ -113,15 +113,15 @@ pred <- bst$predict(type="raw")
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{KNNTrainer$new()}}
-\item \href{#method-fit}{\code{KNNTrainer$fit()}}
-\item \href{#method-predict}{\code{KNNTrainer$predict()}}
-\item \href{#method-clone}{\code{KNNTrainer$clone()}}
+\item \href{#method-KNNTrainer-new}{\code{KNNTrainer$new()}}
+\item \href{#method-KNNTrainer-fit}{\code{KNNTrainer$fit()}}
+\item \href{#method-KNNTrainer-predict}{\code{KNNTrainer$predict()}}
+\item \href{#method-KNNTrainer-clone}{\code{KNNTrainer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-KNNTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-KNNTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$new(k, prob, algorithm, type)}\if{html}{\out{</div>}}
@@ -166,8 +166,8 @@ pred <- bst$predict(type="raw")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-KNNTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-KNNTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$fit(train, test, y)}\if{html}{\out{</div>}}
@@ -209,8 +209,8 @@ bst$fit(xtrain, xtest, 'Species')
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-KNNTrainer-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-KNNTrainer-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KNNTrainer$predict(type = "raw")}\if{html}{\out{</div>}}
@@ -249,8 +249,8 @@ pred <- bst$predict(type="raw")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-KNNTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-KNNTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

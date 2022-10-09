@@ -180,17 +180,17 @@ xgb$show_importance()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{XGBTrainer$new()}}
-\item \href{#method-cross_val}{\code{XGBTrainer$cross_val()}}
-\item \href{#method-fit}{\code{XGBTrainer$fit()}}
-\item \href{#method-predict}{\code{XGBTrainer$predict()}}
-\item \href{#method-show_importance}{\code{XGBTrainer$show_importance()}}
-\item \href{#method-clone}{\code{XGBTrainer$clone()}}
+\item \href{#method-XGBTrainer-new}{\code{XGBTrainer$new()}}
+\item \href{#method-XGBTrainer-cross_val}{\code{XGBTrainer$cross_val()}}
+\item \href{#method-XGBTrainer-fit}{\code{XGBTrainer$fit()}}
+\item \href{#method-XGBTrainer-predict}{\code{XGBTrainer$predict()}}
+\item \href{#method-XGBTrainer-show_importance}{\code{XGBTrainer$show_importance()}}
+\item \href{#method-XGBTrainer-clone}{\code{XGBTrainer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$new(
@@ -311,8 +311,8 @@ xgb <- XGBTrainer$new(objective = 'multi:softmax',
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-cross_val"></a>}}
-\if{latex}{\out{\hypertarget{method-cross_val}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-cross_val"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-cross_val}{}}}
 \subsection{Method \code{cross_val()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$cross_val(X, y, nfolds = 5, stratified = TRUE, folds = NULL)}\if{html}{\out{</div>}}
@@ -366,8 +366,8 @@ xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$fit(X, y, valid = NULL)}\if{html}{\out{</div>}}
@@ -413,8 +413,8 @@ xgb$fit(df, 'Species')
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$predict(df)}\if{html}{\out{</div>}}
@@ -459,8 +459,8 @@ preds <- xgb$predict(as.matrix(iris[,1:4]))
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-show_importance"></a>}}
-\if{latex}{\out{\hypertarget{method-show_importance}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-show_importance"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-show_importance}{}}}
 \subsection{Method \code{show_importance()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{XGBTrainer$show_importance(type = "plot", topn = 10)}\if{html}{\out{</div>}}
@@ -507,8 +507,8 @@ xgb$show_importance()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-XGBTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-XGBTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

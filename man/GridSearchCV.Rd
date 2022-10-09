@@ -69,15 +69,15 @@ gst$best_iteration()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{GridSearchCV$new()}}
-\item \href{#method-fit}{\code{GridSearchCV$fit()}}
-\item \href{#method-best_iteration}{\code{GridSearchCV$best_iteration()}}
-\item \href{#method-clone}{\code{GridSearchCV$clone()}}
+\item \href{#method-GridSearchCV-new}{\code{GridSearchCV$new()}}
+\item \href{#method-GridSearchCV-fit}{\code{GridSearchCV$fit()}}
+\item \href{#method-GridSearchCV-best_iteration}{\code{GridSearchCV$best_iteration()}}
+\item \href{#method-GridSearchCV-clone}{\code{GridSearchCV$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-GridSearchCV-new"></a>}}
+\if{latex}{\out{\hypertarget{method-GridSearchCV-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$new(trainer = NA, parameters = NA, n_folds = NA, scoring = NA)}\if{html}{\out{</div>}}
@@ -119,8 +119,8 @@ gst <-GridSearchCV$new(trainer = rf,
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-GridSearchCV-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-GridSearchCV-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$fit(X, y)}\if{html}{\out{</div>}}
@@ -159,8 +159,8 @@ gst$fit(iris, "Species")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-best_iteration"></a>}}
-\if{latex}{\out{\hypertarget{method-best_iteration}{}}}
+\if{html}{\out{<a id="method-GridSearchCV-best_iteration"></a>}}
+\if{latex}{\out{\hypertarget{method-GridSearchCV-best_iteration}{}}}
 \subsection{Method \code{best_iteration()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GridSearchCV$best_iteration(metric = NULL)}\if{html}{\out{</div>}}
@@ -198,8 +198,8 @@ gst$best_iteration()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-GridSearchCV-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-GridSearchCV-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

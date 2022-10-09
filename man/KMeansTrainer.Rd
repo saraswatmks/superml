@@ -78,15 +78,15 @@ predictions <- km_model$predict(data)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{KMeansTrainer$new()}}
-\item \href{#method-fit}{\code{KMeansTrainer$fit()}}
-\item \href{#method-predict}{\code{KMeansTrainer$predict()}}
-\item \href{#method-clone}{\code{KMeansTrainer$clone()}}
+\item \href{#method-KMeansTrainer-new}{\code{KMeansTrainer$new()}}
+\item \href{#method-KMeansTrainer-fit}{\code{KMeansTrainer$fit()}}
+\item \href{#method-KMeansTrainer-predict}{\code{KMeansTrainer$predict()}}
+\item \href{#method-KMeansTrainer-clone}{\code{KMeansTrainer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-KMeansTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-KMeansTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$new(
@@ -157,8 +157,8 @@ km_model <- KMeansTrainer$new(clusters=2, batch_size=30, max_clusters=6)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-KMeansTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-KMeansTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$fit(X, y = NULL, find_optimal = FALSE)}\if{html}{\out{</div>}}
@@ -196,8 +196,8 @@ km_model$fit(data, find_optimal = FALSE)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-KMeansTrainer-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-KMeansTrainer-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{KMeansTrainer$predict(X)}\if{html}{\out{</div>}}
@@ -232,8 +232,8 @@ predictions <- km_model$predict(data)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-KMeansTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-KMeansTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
