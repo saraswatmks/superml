@@ -53,15 +53,15 @@ If present, the probabilities should be specified in the order of the factor lev
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{NBTrainer$new()}}
-\item \href{#method-fit}{\code{NBTrainer$fit()}}
-\item \href{#method-predict}{\code{NBTrainer$predict()}}
-\item \href{#method-clone}{\code{NBTrainer$clone()}}
+\item \href{#method-NBTrainer-new}{\code{NBTrainer$new()}}
+\item \href{#method-NBTrainer-fit}{\code{NBTrainer$fit()}}
+\item \href{#method-NBTrainer-predict}{\code{NBTrainer$predict()}}
+\item \href{#method-NBTrainer-clone}{\code{NBTrainer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-NBTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-NBTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$new(prior, laplace, usekernel)}\if{html}{\out{</div>}}
@@ -98,8 +98,8 @@ nb <- NBTrainer$new()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-NBTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-NBTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$fit(X, y)}\if{html}{\out{</div>}}
@@ -133,8 +133,8 @@ nb$fit(iris, 'Species')
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-predict"></a>}}
-\if{latex}{\out{\hypertarget{method-predict}{}}}
+\if{html}{\out{<a id="method-NBTrainer-predict"></a>}}
+\if{latex}{\out{\hypertarget{method-NBTrainer-predict}{}}}
 \subsection{Method \code{predict()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{NBTrainer$predict(X, type = "class")}\if{html}{\out{</div>}}
@@ -169,8 +169,8 @@ y <- nb$predict(iris)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-NBTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-NBTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

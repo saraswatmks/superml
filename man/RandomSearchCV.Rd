@@ -52,21 +52,21 @@ rst$best_iteration()
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{RandomSearchCV$new()}}
-\item \href{#method-fit}{\code{RandomSearchCV$fit()}}
-\item \href{#method-clone}{\code{RandomSearchCV$clone()}}
+\item \href{#method-RandomSearchTrainer-new}{\code{RandomSearchCV$new()}}
+\item \href{#method-RandomSearchTrainer-fit}{\code{RandomSearchCV$fit()}}
+\item \href{#method-RandomSearchTrainer-clone}{\code{RandomSearchCV$clone()}}
 }
 }
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="superml" data-topic="GridSearchCV" data-id="best_iteration">}\href{../../superml/html/GridSearchCV.html#method-best_iteration}{\code{superml::GridSearchCV$best_iteration()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details open><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="superml" data-topic="GridSearchCV" data-id="best_iteration"><a href='../../superml/html/GridSearchCV.html#method-GridSearchCV-best_iteration'><code>superml::GridSearchCV$best_iteration()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-RandomSearchTrainer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-RandomSearchTrainer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandomSearchCV$new(
@@ -117,8 +117,8 @@ rst <-RandomSearchCV$new(trainer = rf,
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-RandomSearchTrainer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-RandomSearchTrainer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{RandomSearchCV$fit(X, y)}\if{html}{\out{</div>}}
@@ -159,8 +159,8 @@ rst$best_iteration()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-RandomSearchTrainer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-RandomSearchTrainer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

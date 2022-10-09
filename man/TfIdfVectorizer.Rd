@@ -83,22 +83,16 @@ tf_matrix <- tf$transform(new_sents)
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{TfIdfVectorizer$new()}}
-\item \href{#method-fit}{\code{TfIdfVectorizer$fit()}}
-\item \href{#method-fit_transform}{\code{TfIdfVectorizer$fit_transform()}}
-\item \href{#method-transform}{\code{TfIdfVectorizer$transform()}}
-\item \href{#method-clone}{\code{TfIdfVectorizer$clone()}}
+\item \href{#method-TfIdfVectorizer-new}{\code{TfIdfVectorizer$new()}}
+\item \href{#method-TfIdfVectorizer-fit}{\code{TfIdfVectorizer$fit()}}
+\item \href{#method-TfIdfVectorizer-fit_transform}{\code{TfIdfVectorizer$fit_transform()}}
+\item \href{#method-TfIdfVectorizer-transform}{\code{TfIdfVectorizer$transform()}}
+\item \href{#method-TfIdfVectorizer-clone}{\code{TfIdfVectorizer$clone()}}
 }
-}
-\if{html}{
-\out{<details open ><summary>Inherited methods</summary>}
-\itemize{
-}
-\out{</details>}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-TfIdfVectorizer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-TfIdfVectorizer-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$new(
@@ -159,8 +153,8 @@ A `TfIdfVectorizer` object.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit"></a>}}
-\if{latex}{\out{\hypertarget{method-fit}{}}}
+\if{html}{\out{<a id="method-TfIdfVectorizer-fit"></a>}}
+\if{latex}{\out{\hypertarget{method-TfIdfVectorizer-fit}{}}}
 \subsection{Method \code{fit()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$fit(sentences)}\if{html}{\out{</div>}}
@@ -193,8 +187,8 @@ tf$fit(sents)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fit_transform"></a>}}
-\if{latex}{\out{\hypertarget{method-fit_transform}{}}}
+\if{html}{\out{<a id="method-TfIdfVectorizer-fit_transform"></a>}}
+\if{latex}{\out{\hypertarget{method-TfIdfVectorizer-fit_transform}{}}}
 \subsection{Method \code{fit_transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$fit_transform(sentences)}\if{html}{\out{</div>}}
@@ -229,8 +223,8 @@ tf_matrix <- tf$fit_transform(sents)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-transform"></a>}}
-\if{latex}{\out{\hypertarget{method-transform}{}}}
+\if{html}{\out{<a id="method-TfIdfVectorizer-transform"></a>}}
+\if{latex}{\out{\hypertarget{method-TfIdfVectorizer-transform}{}}}
 \subsection{Method \code{transform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{TfIdfVectorizer$transform(sentences)}\if{html}{\out{</div>}}
@@ -267,8 +261,8 @@ tf_matrix <- tf$transform(new_sents)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-TfIdfVectorizer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-TfIdfVectorizer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
