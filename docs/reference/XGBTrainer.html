@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -217,46 +217,46 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>XGBTrainer$new()</code></a></p></li>
-<li><p><a href="#method-cross_val"><code>XGBTrainer$cross_val()</code></a></p></li>
-<li><p><a href="#method-fit"><code>XGBTrainer$fit()</code></a></p></li>
-<li><p><a href="#method-predict"><code>XGBTrainer$predict()</code></a></p></li>
-<li><p><a href="#method-show_importance"><code>XGBTrainer$show_importance()</code></a></p></li>
-<li><p><a href="#method-clone"><code>XGBTrainer$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-XGBTrainer-new"><code>XGBTrainer$new()</code></a></p></li>
+<li><p><a href="#method-XGBTrainer-cross_val"><code>XGBTrainer$cross_val()</code></a></p></li>
+<li><p><a href="#method-XGBTrainer-fit"><code>XGBTrainer$fit()</code></a></p></li>
+<li><p><a href="#method-XGBTrainer-predict"><code>XGBTrainer$predict()</code></a></p></li>
+<li><p><a href="#method-XGBTrainer-show_importance"><code>XGBTrainer$show_importance()</code></a></p></li>
+<li><p><a href="#method-XGBTrainer-clone"><code>XGBTrainer$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-XGBTrainer-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 
 <div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  <span class="va">booster</span>,
-  <span class="va">objective</span>,
-  <span class="va">nthread</span>,
-  <span class="va">silent</span>,
-  <span class="va">n_estimators</span>,
-  <span class="va">learning_rate</span>,
-  <span class="va">gamma</span>,
-  <span class="va">max_depth</span>,
-  <span class="va">min_child_weight</span>,
-  <span class="va">subsample</span>,
-  <span class="va">colsample_bytree</span>,
-  <span class="va">lambda</span>,
-  <span class="va">alpha</span>,
-  <span class="va">eval_metric</span>,
-  <span class="va">print_every</span>,
-  <span class="va">feval</span>,
-  <span class="va">early_stopping</span>,
-  <span class="va">maximize</span>,
-  <span class="va">custom_objective</span>,
-  <span class="va">save_period</span>,
-  <span class="va">save_name</span>,
-  <span class="va">xgb_model</span>,
-  <span class="va">callbacks</span>,
-  <span class="va">verbose</span>,
-  <span class="va">num_class</span>,
-  <span class="va">weight</span>,
-  <span class="va">na_missing</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  <span class="va">booster</span>,</span>
+<span>  <span class="va">objective</span>,</span>
+<span>  <span class="va">nthread</span>,</span>
+<span>  <span class="va">silent</span>,</span>
+<span>  <span class="va">n_estimators</span>,</span>
+<span>  <span class="va">learning_rate</span>,</span>
+<span>  <span class="va">gamma</span>,</span>
+<span>  <span class="va">max_depth</span>,</span>
+<span>  <span class="va">min_child_weight</span>,</span>
+<span>  <span class="va">subsample</span>,</span>
+<span>  <span class="va">colsample_bytree</span>,</span>
+<span>  <span class="va">lambda</span>,</span>
+<span>  <span class="va">alpha</span>,</span>
+<span>  <span class="va">eval_metric</span>,</span>
+<span>  <span class="va">print_every</span>,</span>
+<span>  <span class="va">feval</span>,</span>
+<span>  <span class="va">early_stopping</span>,</span>
+<span>  <span class="va">maximize</span>,</span>
+<span>  <span class="va">custom_objective</span>,</span>
+<span>  <span class="va">save_period</span>,</span>
+<span>  <span class="va">save_name</span>,</span>
+<span>  <span class="va">xgb_model</span>,</span>
+<span>  <span class="va">callbacks</span>,</span>
+<span>  <span class="va">verbose</span>,</span>
+<span>  <span class="va">num_class</span>,</span>
+<span>  <span class="va">weight</span>,</span>
+<span>  <span class="va">na_missing</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -382,27 +382,27 @@ R package, you can find the documentation here: <a href="http://xgboost.readthed
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-
-<span class="co"># convert characters/factors to numeric</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
-
-<span class="co"># initialise model</span>
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,
-                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,
-                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,
-                      num_class<span class="op">=</span><span class="fl">3</span>,
-                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># convert characters/factors to numeric</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
+<span></span>
+<span><span class="co"># initialise model</span></span>
+<span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
+<span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
+<span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
+<span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-cross_val"></a><div class="section">
+</div><p></p><hr><a id="method-XGBTrainer-cross_val"></a><div class="section">
 <h3 id="method-cross-val-">Method <code>cross_val()</code><a class="anchor" aria-label="anchor" href="#method-cross-val-"></a></h3>
 
 <div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span>, folds <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span>, folds <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -461,12 +461,12 @@ xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 </div>
 
 
-</div><p></p><hr><a id="method-fit"></a><div class="section">
+</div><p></p><hr><a id="method-XGBTrainer-fit"></a><div class="section">
 <h3 id="method-fit-">Method <code>fit()</code><a class="anchor" aria-label="anchor" href="#method-fit-"></a></h3>
 
 <div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, valid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, valid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -496,28 +496,28 @@ xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-
-<span class="co"># convert characters/factors to numeric</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
-
-<span class="co"># initialise model</span>
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,
-                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,
-                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,
-                      num_class<span class="op">=</span><span class="fl">3</span>,
-                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># convert characters/factors to numeric</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
+<span></span>
+<span><span class="co"># initialise model</span></span>
+<span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
+<span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
+<span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
+<span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-predict"></a><div class="section">
+</div><p></p><hr><a id="method-XGBTrainer-predict"></a><div class="section">
 <h3 id="method-predict-">Method <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code><a class="anchor" aria-label="anchor" href="#method-predict-"></a></h3>
 
 <div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -539,31 +539,31 @@ xgb$cross_val(X = df, y = 'Species',nfolds = 3, stratified = TRUE)
 </div>
 <div class="section">
 <h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="co">#' library(data.table)</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-
-<span class="co"># convert characters/factors to numeric</span>
-<span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span>
-
-<span class="co"># initialise model</span>
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,
-                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,
-                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,
-                      num_class<span class="op">=</span><span class="fl">3</span>,
-                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span>
-
-<span class="co"># make predictions</span>
-<span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="co">#' library(data.table)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># convert characters/factors to numeric</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
+<span></span>
+<span><span class="co"># initialise model</span></span>
+<span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
+<span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
+<span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
+<span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># make predictions</span></span>
+<span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-show_importance"></a><div class="section">
+</div><p></p><hr><a id="method-XGBTrainer-show_importance"></a><div class="section">
 <h3 id="method-show-importance-">Method <code>show_importance()</code><a class="anchor" aria-label="anchor" href="#method-show-importance-"></a></h3>
 
 <div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"plot"</span>, topn <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"plot"</span>, topn <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -609,11 +609,11 @@ xgb$show_importance()
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-XGBTrainer-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -631,66 +631,66 @@ xgb$show_importance()
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `XGBTrainer$new`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert characters/factors to numeric</span></span>
-<span class="r-in"><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise model</span></span>
-<span class="r-in"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
-<span class="r-in">                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
-<span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
-<span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `XGBTrainer$cross_val`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert characters/factors to numeric</span></span>
-<span class="r-in"><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise model</span></span>
-<span class="r-in"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
-<span class="r-in">                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
-<span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
-<span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># do cross validation to find optimal value for n_estimators</span></span>
-<span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span>X <span class="op">=</span> <span class="va">df</span>, y <span class="op">=</span> <span class="st">'Species'</span>,nfolds <span class="op">=</span> <span class="fl">3</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `XGBTrainer$fit`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert characters/factors to numeric</span></span>
-<span class="r-in"><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise model</span></span>
-<span class="r-in"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
-<span class="r-in">                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
-<span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
-<span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `XGBTrainer$new`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert characters/factors to numeric</span></span></span>
+<span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise model</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span></span>
+<span class="r-in"><span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span></span>
+<span class="r-in"><span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `XGBTrainer$cross_val`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert characters/factors to numeric</span></span></span>
+<span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise model</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span></span>
+<span class="r-in"><span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span></span>
+<span class="r-in"><span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># do cross validation to find optimal value for n_estimators</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span><span class="op">$</span><span class="fu">cross_val</span><span class="op">(</span>X <span class="op">=</span> <span class="va">df</span>, y <span class="op">=</span> <span class="st">'Species'</span>,nfolds <span class="op">=</span> <span class="fl">3</span>, stratified <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `XGBTrainer$fit`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert characters/factors to numeric</span></span></span>
+<span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise model</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span></span>
+<span class="r-in"><span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span></span>
+<span class="r-in"><span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> starting with training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19:43:51] WARNING: amalgamation/../src/learner.cc:627: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10:48:34] WARNING: amalgamation/../src/learner.cc:627: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: { "nrounds" } might not be used.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   This could be a false alarm, with some parameters getting used by language bindings but</span>
@@ -702,27 +702,27 @@ xgb$show_importance()
 <span class="r-out co"><span class="r-pr">#&gt;</span> Will train until train_merror hasn't improved in 50 rounds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2]	train-merror:0.026667 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `XGBTrainer$predict`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#' library(data.table)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert characters/factors to numeric</span></span>
-<span class="r-in"><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise model</span></span>
-<span class="r-in"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
-<span class="r-in">                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
-<span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
-<span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `XGBTrainer$predict`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#' library(data.table)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert characters/factors to numeric</span></span></span>
+<span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise model</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span></span>
+<span class="r-in"><span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span></span>
+<span class="r-in"><span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> converting the data into xgboost format..</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> starting with training...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19:43:51] WARNING: amalgamation/../src/learner.cc:627: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10:48:34] WARNING: amalgamation/../src/learner.cc:627: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters: { "nrounds" } might not be used.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   This could be a false alarm, with some parameters getting used by language bindings but</span>
@@ -734,30 +734,30 @@ xgb$show_importance()
 <span class="r-out co"><span class="r-pr">#&gt;</span> Will train until train_merror hasn't improved in 50 rounds.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2]	train-merror:0.026667 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># make predictions</span></span>
-<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/as.matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `XGBTrainer$show_importance`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># convert characters/factors to numeric</span></span>
-<span class="r-in"><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># initialise model</span></span>
-<span class="r-in"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span>
-<span class="r-in">                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span>
-<span class="r-in">                      num_class<span class="op">=</span><span class="fl">3</span>,</span>
-<span class="r-in">                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">xgb</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># make predictions</span></span></span>
+<span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `XGBTrainer$show_importance`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/copy.html" class="external-link">copy</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># convert characters/factors to numeric</span></span></span>
+<span class="r-in"><span><span class="va">df</span><span class="op">$</span><span class="va">Species</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span><span class="op">-</span><span class="fl">1</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># initialise model</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va">XGBTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">'multi:softmax'</span>,</span></span>
+<span class="r-in"><span>                      maximize <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                      eval_metric <span class="op">=</span> <span class="st">'merror'</span>,</span></span>
+<span class="r-in"><span>                      num_class<span class="op">=</span><span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                      n_estimators <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">df</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">xgb</span><span class="op">$</span><span class="fu">show_importance</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -772,7 +772,7 @@ xgb$show_importance()
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

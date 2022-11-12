@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -97,9 +97,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to use TfidfVectorizer in R ?</h1>
-                        <h4 data-toc-skip class="author">Manish Saraswat</h4>
+                        <h4 data-toc-skip class="author">Manish
+Saraswat</h4>
             
-            <h4 data-toc-skip class="date">2022-05-21</h4>
+            <h4 data-toc-skip class="date">2022-11-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/HEAD/vignettes/Guide-to-TfidfVectorizer.Rmd" class="external-link"><code>vignettes/Guide-to-TfidfVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-TfidfVectorizer.Rmd</code></div>
@@ -108,200 +109,223 @@
 
     
     
-<p>In this tutorial, we’ll look at how to create tfidf feature matrix in R in two simple steps with superml. Superml borrows speed gains using parallel computation and optimised functions from data.table R package. Tfidf matrix can be used to as features for a machine learning model. Also, we can use tdidf features as an embedding to represent the given texts.</p>
+<p>In this tutorial, we’ll look at how to create tfidf feature matrix in
+R in two simple steps with superml. Superml borrows speed gains using
+parallel computation and optimised functions from data.table R package.
+Tfidf matrix can be used to as features for a machine learning model.
+Also, we can use tdidf features as an embedding to represent the given
+texts.</p>
 <div class="section level2">
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
 <p>You can install latest cran version using (recommended):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span></code></pre></div>
-<p>You can install the developmemt version directly from github using:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the developmemt version directly from github
+using:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="caveats-on-superml-installation">Caveats on superml installation<a class="anchor" aria-label="anchor" href="#caveats-on-superml-installation"></a>
 </h2>
-<p>For machine learning, superml is based on the existing R packages. Hence, while installing the package, we don’t install all the dependencies. However, while training any model, superml will automatically install the package if its not found. Still, if you want to install all dependencies at once, you can simply do:</p>
+<p>For machine learning, superml is based on the existing R packages.
+Hence, while installing the package, we don’t install all the
+dependencies. However, while training any model, superml will
+automatically install the package if its not found. Still, if you want
+to install all dependencies at once, you can simply do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="sample-data">Sample Data<a class="anchor" aria-label="anchor" href="#sample-data"></a>
 </h2>
-<p>First, we’ll create a sample data. Feel free to run it alongside in your laptop and check the results.</p>
+<p>First, we’ll create a sample data. Feel free to run it alongside in
+your laptop and check the results.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: R6</span>
-
-<span class="co"># should be a vector of texts</span>
-<span class="va">sents</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'i am going home and home'</span>,
-          <span class="st">'where are you going.? //// '</span>,
-          <span class="st">'how does it work'</span>,
-          <span class="st">'transform your work and go work again'</span>,
-          <span class="st">'home is where you go from to work'</span><span class="op">)</span>
-
-<span class="co"># generate more sentences</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="va">sents</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sents</span>, <span class="va">n</span><span class="op">)</span> 
-<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>
-<span class="co">#&gt; [1] 50</span></code></pre></div>
-<p>For sample, we’ve generated 50 documents. Let’s create the features now. For ease, superml uses the similar API layout as python scikit-learn.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: R6</span></span>
+<span></span>
+<span><span class="co"># should be a vector of texts</span></span>
+<span><span class="va">sents</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'i am going home and home'</span>,</span>
+<span>          <span class="st">'where are you going.? //// '</span>,</span>
+<span>          <span class="st">'how does it work'</span>,</span>
+<span>          <span class="st">'transform your work and go work again'</span>,</span>
+<span>          <span class="st">'home is where you go from to work'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># generate more sentences</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">sents</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">sents</span>, <span class="va">n</span><span class="op">)</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 50</span></span></code></pre></div>
+<p>For sample, we’ve generated 50 documents. Let’s create the features
+now. For ease, superml uses the similar API layout as python
+scikit-learn.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># initialise the class</span>
-<span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>max_features <span class="op">=</span> <span class="fl">10</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># generate the matrix</span>
-<span class="va">tf_mat</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">fit_transform</span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tf_mat</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;      work      home       you     where     going go       and your transform</span>
-<span class="co">#&gt; [1,]    0 0.8164966 0.0000000 0.0000000 0.4082483  0 0.4082483    0         0</span>
-<span class="co">#&gt; [2,]    0 0.0000000 0.5773503 0.5773503 0.5773503  0 0.0000000    0         0</span>
-<span class="co">#&gt; [3,]    1 0.0000000 0.0000000 0.0000000 0.0000000  0 0.0000000    0         0</span>
-<span class="co">#&gt;      to</span>
-<span class="co">#&gt; [1,]  0</span>
-<span class="co">#&gt; [2,]  0</span>
-<span class="co">#&gt; [3,]  0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># initialise the class</span></span>
+<span><span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>max_features <span class="op">=</span> <span class="fl">10</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># generate the matrix</span></span>
+<span><span class="va">tf_mat</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">fit_transform</span><span class="op">(</span><span class="va">sents</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tf_mat</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      work      home       you     where     going go       and your transform</span></span>
+<span><span class="co">#&gt; [1,]    0 0.8164966 0.0000000 0.0000000 0.4082483  0 0.4082483    0         0</span></span>
+<span><span class="co">#&gt; [2,]    0 0.0000000 0.5773503 0.5773503 0.5773503  0 0.0000000    0         0</span></span>
+<span><span class="co">#&gt; [3,]    1 0.0000000 0.0000000 0.0000000 0.0000000  0 0.0000000    0         0</span></span>
+<span><span class="co">#&gt;      to</span></span>
+<span><span class="co">#&gt; [1,]  0</span></span>
+<span><span class="co">#&gt; [2,]  0</span></span>
+<span><span class="co">#&gt; [3,]  0</span></span></code></pre></div>
 <p><strong>Few observations:</strong></p>
 <ul>
 <li>
-<code>remove_stopwords = FALSE</code> defaults to <code>TRUE</code>. We set it to <code>FALSE</code> since most of the words in our dummy <code>sents</code> are stopwords.</li>
+<code>remove_stopwords = FALSE</code> defaults to <code>TRUE</code>.
+We set it to <code>FALSE</code> since most of the words in our dummy
+<code>sents</code> are stopwords.</li>
 <li>
-<code>max_features = 10</code> select the top 10 features (tokens) based on frequency.</li>
-<li>The returned matrix is normalised by default, <code>norm = TRUE</code> is set by default.</li>
+<code>max_features = 10</code> select the top 10 features (tokens)
+based on frequency.</li>
+<li>The returned matrix is normalised by default,
+<code>norm = TRUE</code> is set by default.</li>
 </ul>
-<p>Now, let’s generate the matrix using its <code>ngram_range</code> features.</p>
+<p>Now, let’s generate the matrix using its <code>ngram_range</code>
+features.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># initialise the class</span>
-<span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>min_df <span class="op">=</span> <span class="fl">0.4</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span>, ngram_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># generate the matrix</span>
-<span class="va">tf_mat</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">fit_transform</span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tf_mat</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;      work      home       you     where     going go       and</span>
-<span class="co">#&gt; [1,]    0 0.8164966 0.0000000 0.0000000 0.4082483  0 0.4082483</span>
-<span class="co">#&gt; [2,]    0 0.0000000 0.5773503 0.5773503 0.5773503  0 0.0000000</span>
-<span class="co">#&gt; [3,]    1 0.0000000 0.0000000 0.0000000 0.0000000  0 0.0000000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># initialise the class</span></span>
+<span><span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>min_df <span class="op">=</span> <span class="fl">0.4</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span>, ngram_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># generate the matrix</span></span>
+<span><span class="va">tf_mat</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">fit_transform</span><span class="op">(</span><span class="va">sents</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">tf_mat</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      work      home       you     where     going go       and</span></span>
+<span><span class="co">#&gt; [1,]    0 0.8164966 0.0000000 0.0000000 0.4082483  0 0.4082483</span></span>
+<span><span class="co">#&gt; [2,]    0 0.0000000 0.5773503 0.5773503 0.5773503  0 0.0000000</span></span>
+<span><span class="co">#&gt; [3,]    1 0.0000000 0.0000000 0.0000000 0.0000000  0 0.0000000</span></span></code></pre></div>
 <p><strong>Few observations:</strong></p>
 <ul>
 <li>
-<code>ngram_range = c(1,3)</code> set the lower and higher range respectively of the resulting ngram tokens.</li>
+<code>ngram_range = c(1,3)</code> set the lower and higher range
+respectively of the resulting ngram tokens.</li>
 <li>
-<code>min_df = 0.4</code> says to keep the tokens which occurs in atleast 40% &amp; above of the documents.</li>
+<code>min_df = 0.4</code> says to keep the tokens which occurs in
+atleast 40% &amp; above of the documents.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="usage-for-a-machine-learning-model">Usage for a Machine Learning Model<a class="anchor" aria-label="anchor" href="#usage-for-a-machine-learning-model"></a>
 </h2>
-<p>In order to use Tfidf Vectorizer for a machine learning model, sometimes it gets confusing as to which method <code>fit_transform</code>, <code>fit</code>, <code>transform</code> should be used to generate tfidf features for the given data. Here’s a way to do:</p>
+<p>In order to use Tfidf Vectorizer for a machine learning model,
+sometimes it gets confusing as to which method
+<code>fit_transform</code>, <code>fit</code>, <code>transform</code>
+should be used to generate tfidf features for the given data. Here’s a
+way to do:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span>
-
-<span class="co"># use sents from above</span>
-<span class="va">sents</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'i am going home and home'</span>,
-          <span class="st">'where are you going.? //// '</span>,
-          <span class="st">'how does it work'</span>,
-          <span class="st">'transform your work and go work again'</span>,
-          <span class="st">'home is where you go from to work'</span>,
-          <span class="st">'how does it work'</span><span class="op">)</span>
-
-<span class="co"># create dummy data</span>
-<span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sents</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># use sents from above</span></span>
+<span><span class="va">sents</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'i am going home and home'</span>,</span>
+<span>          <span class="st">'where are you going.? //// '</span>,</span>
+<span>          <span class="st">'how does it work'</span>,</span>
+<span>          <span class="st">'transform your work and go work again'</span>,</span>
+<span>          <span class="st">'home is where you go from to work'</span>,</span>
+<span>          <span class="st">'how does it work'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create dummy data</span></span>
+<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sents</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s see how the data looks like:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">train</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                           text target</span>
-<span class="co">#&gt; 1:    i am going home and home      0</span>
-<span class="co">#&gt; 2: where are you going.? ////       1</span>
-<span class="co">#&gt; 3:            how does it work      0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">train</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                           text target</span></span>
+<span><span class="co">#&gt; 1:    i am going home and home      0</span></span>
+<span><span class="co">#&gt; 2: where are you going.? ////       1</span></span>
+<span><span class="co">#&gt; 3:            how does it work      0</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;                                 text target</span>
-<span class="co">#&gt; 1:                  how does it work      0</span>
-<span class="co">#&gt; 2: home is where you go from to work      1</span>
-<span class="co">#&gt; 3:       where are you going.? ////       0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                        text target</span></span>
+<span><span class="co">#&gt; 1: i am going home and home      0</span></span>
+<span><span class="co">#&gt; 2:         how does it work      1</span></span>
+<span><span class="co">#&gt; 3:         how does it work      0</span></span></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># initialise the class</span>
-<span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>min_df <span class="op">=</span> <span class="fl">0.3</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span>, ngram_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># we fit on train data</span>
-<span class="va">tfv</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">train</span><span class="op">$</span><span class="va">text</span><span class="op">)</span>
-
-<span class="va">train_tf_features</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">train</span><span class="op">$</span><span class="va">text</span><span class="op">)</span>
-<span class="va">test_tf_features</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">text</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">train_tf_features</span><span class="op">)</span>
-<span class="co">#&gt; [1]  6 15</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span>
-<span class="co">#&gt; [1]  6 15</span></code></pre></div>
-<p>We generate 15 features for each of the given data. Let’s see how they look:</p>
+<code class="sourceCode R"><span><span class="co"># initialise the class</span></span>
+<span><span class="va">tfv</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/TfIdfVectorizer.html">TfIdfVectorizer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>min_df <span class="op">=</span> <span class="fl">0.3</span>, remove_stopwords <span class="op">=</span> <span class="cn">FALSE</span>, ngram_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># we fit on train data</span></span>
+<span><span class="va">tfv</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">train</span><span class="op">$</span><span class="va">text</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">train_tf_features</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">train</span><span class="op">$</span><span class="va">text</span><span class="op">)</span></span>
+<span><span class="va">test_tf_features</span> <span class="op">&lt;-</span> <span class="va">tfv</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">test</span><span class="op">$</span><span class="va">text</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">train_tf_features</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  6 15</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  6 15</span></span></code></pre></div>
+<p>We generate 15 features for each of the given data. Let’s see how
+they look:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">train_tf_features</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;           work      home       you     where   it work        it how does it</span>
-<span class="co">#&gt; [1,] 0.0000000 0.8164966 0.0000000 0.0000000 0.0000000 0.0000000   0.0000000</span>
-<span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span>
-<span class="co">#&gt; [3,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span>
-<span class="co">#&gt;       how does       how     going go does it work   does it      does</span>
-<span class="co">#&gt; [1,] 0.0000000 0.0000000 0.4082483  0    0.0000000 0.0000000 0.0000000</span>
-<span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503  0    0.0000000 0.0000000 0.0000000</span>
-<span class="co">#&gt; [3,] 0.3425257 0.3425257 0.0000000  0    0.3425257 0.3425257 0.3425257</span>
-<span class="co">#&gt;            and</span>
-<span class="co">#&gt; [1,] 0.4082483</span>
-<span class="co">#&gt; [2,] 0.0000000</span>
-<span class="co">#&gt; [3,] 0.0000000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">train_tf_features</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           work      home       you     where   it work        it how does it</span></span>
+<span><span class="co">#&gt; [1,] 0.0000000 0.8164966 0.0000000 0.0000000 0.0000000 0.0000000   0.0000000</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span></span>
+<span><span class="co">#&gt;       how does       how     going go does it work   does it      does</span></span>
+<span><span class="co">#&gt; [1,] 0.0000000 0.0000000 0.4082483  0    0.0000000 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503  0    0.0000000 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.3425257 0.3425257 0.0000000  0    0.3425257 0.3425257 0.3425257</span></span>
+<span><span class="co">#&gt;            and</span></span>
+<span><span class="co">#&gt; [1,] 0.4082483</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.0000000</span></span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_tf_features</span>, <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;           work      home       you     where   it work        it how does it</span>
-<span class="co">#&gt; [1,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span>
-<span class="co">#&gt; [2,] 0.3401651 0.4701829 0.4701829 0.4701829 0.0000000 0.0000000   0.0000000</span>
-<span class="co">#&gt; [3,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span>
-<span class="co">#&gt;       how does       how     going        go does it work   does it      does</span>
-<span class="co">#&gt; [1,] 0.3425257 0.3425257 0.0000000 0.0000000    0.3425257 0.3425257 0.3425257</span>
-<span class="co">#&gt; [2,] 0.0000000 0.0000000 0.0000000 0.4701829    0.0000000 0.0000000 0.0000000</span>
-<span class="co">#&gt; [3,] 0.0000000 0.0000000 0.5773503 0.0000000    0.0000000 0.0000000 0.0000000</span>
-<span class="co">#&gt;      and</span>
-<span class="co">#&gt; [1,]   0</span>
-<span class="co">#&gt; [2,]   0</span>
-<span class="co">#&gt; [3,]   0</span></code></pre></div>
-<p>Finally, to train a machine learning model on this, you can simply do:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_tf_features</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           work      home you where   it work        it how does it  how does</span></span>
+<span><span class="co">#&gt; [1,] 0.0000000 0.8164966   0     0 0.0000000 0.0000000   0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; [2,] 0.2478085 0.0000000   0     0 0.3425257 0.3425257   0.3425257 0.3425257</span></span>
+<span><span class="co">#&gt; [3,] 0.2478085 0.0000000   0     0 0.3425257 0.3425257   0.3425257 0.3425257</span></span>
+<span><span class="co">#&gt;            how     going go does it work   does it      does       and</span></span>
+<span><span class="co">#&gt; [1,] 0.0000000 0.4082483  0    0.0000000 0.0000000 0.0000000 0.4082483</span></span>
+<span><span class="co">#&gt; [2,] 0.3425257 0.0000000  0    0.3425257 0.3425257 0.3425257 0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.3425257 0.0000000  0    0.3425257 0.3425257 0.3425257 0.0000000</span></span></code></pre></div>
+<p>Finally, to train a machine learning model on this, you can simply
+do:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="co"># ensure the input to classifier is a data.table or data.frame object</span>
-<span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">train_tf_features</span>, target <span class="op">=</span> <span class="va">train</span><span class="op">$</span><span class="va">target</span><span class="op">)</span><span class="op">)</span>
-<span class="va">x_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span>
-
-
-<span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">10</span>, objective <span class="op">=</span> <span class="st">"binary:logistic"</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">x_train</span>, <span class="st">"target"</span><span class="op">)</span>
-<span class="co">#&gt; converting the data into xgboost format..</span>
-<span class="co">#&gt; starting with training...</span>
-<span class="co">#&gt; [19:44:03] WARNING: amalgamation/../src/learner.cc:627: </span>
-<span class="co">#&gt; Parameters: { "nrounds" } might not be used.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   This could be a false alarm, with some parameters getting used by language bindings but</span>
-<span class="co">#&gt;   then being mistakenly passed down to XGBoost core, or some parameter actually being used</span>
-<span class="co">#&gt;   but getting flagged wrongly here. Please open an issue if you find any such cases.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [1]  train-logloss:0.693147 </span>
-<span class="co">#&gt; Will train until train_logloss hasn't improved in 50 rounds.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [10] train-logloss:0.693147</span>
-
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span>
-<span class="va">predictions</span>
-<span class="co">#&gt; [1] 0.5 0.5 0.5 0.5 0.5 0.5</span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># ensure the input to classifier is a data.table or data.frame object</span></span>
+<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">train_tf_features</span>, target <span class="op">=</span> <span class="va">train</span><span class="op">$</span><span class="va">target</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">10</span>, objective <span class="op">=</span> <span class="st">"binary:logistic"</span><span class="op">)</span></span>
+<span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">x_train</span>, <span class="st">"target"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; converting the data into xgboost format..</span></span>
+<span><span class="co">#&gt; starting with training...</span></span>
+<span><span class="co">#&gt; [10:48:48] WARNING: amalgamation/../src/learner.cc:627: </span></span>
+<span><span class="co">#&gt; Parameters: { "nrounds" } might not be used.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   This could be a false alarm, with some parameters getting used by language bindings but</span></span>
+<span><span class="co">#&gt;   then being mistakenly passed down to XGBoost core, or some parameter actually being used</span></span>
+<span><span class="co">#&gt;   but getting flagged wrongly here. Please open an issue if you find any such cases.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1]  train-logloss:0.693147 </span></span>
+<span><span class="co">#&gt; Will train until train_logloss hasn't improved in 50 rounds.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [10] train-logloss:0.693147</span></span>
+<span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">x_test</span><span class="op">)</span></span>
+<span><span class="va">predictions</span></span>
+<span><span class="co">#&gt; [1] 0.5 0.5 0.5 0.5 0.5 0.5</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>In this tutorial, we discussed how to use superml’s tfidfvectorizer to create tfidf matrix and train a machine learning model on it.</p>
+<p>In this tutorial, we discussed how to use superml’s tfidfvectorizer
+to create tfidf matrix and train a machine learning model on it.</p>
 </div>
   </div>
 
@@ -322,7 +346,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

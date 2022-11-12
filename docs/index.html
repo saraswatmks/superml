@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -109,12 +109,12 @@
 </h2>
 <p>You can install latest stable cran version using (recommended):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># to install all dependencies at once</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="co"># to install all dependencies at once</span></span></code></pre></div>
 <p>You can install superml from github with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="description">Description<a class="anchor" aria-label="anchor" href="#description"></a>
@@ -151,13 +151,13 @@
 </h2>
 <p>Any machine learning model can be trained using the following steps:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span>
-
-<span class="co"># random forest</span>
-<span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># random forest</span></span>
+<span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
@@ -165,7 +165,7 @@
 <p>The documentation can be found here: <a href="https://saraswatmks.github.io/superml/">SuperML Documentation</a></p>
 </div>
 <div class="section level2">
-<h2 id="contributions-support">Contributions &amp; Support<a class="anchor" aria-label="anchor" href="#contributions-support"></a>
+<h2 id="contributions--support">Contributions &amp; Support<a class="anchor" aria-label="anchor" href="#contributions--support"></a>
 </h2>
 <p>SuperML is my ambitious effort to help people train machine learning models in R as easily as they do in python. I encourage you to use this library, post bugs and feature suggestions in the issues above.</p>
 </div>
@@ -192,12 +192,6 @@
 </ul>
 </div>
 
-<div class="community">
-<h2 data-toc-skip>Community</h2>
-<ul class="list-unstyled">
-<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
-</ul>
-</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -233,7 +227,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
