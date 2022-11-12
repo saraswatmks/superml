@@ -20,7 +20,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -87,48 +87,61 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">kFoldMean</span><span class="op">(</span><span class="va">train_df</span>, <span class="va">test_df</span>, <span class="va">colname</span>, <span class="va">target</span>, n_fold <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">42</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">kFoldMean</span><span class="op">(</span><span class="va">train_df</span>, <span class="va">test_df</span>, <span class="va">colname</span>, <span class="va">target</span>, n_fold <span class="op">=</span> <span class="fl">5</span>, seed <span class="op">=</span> <span class="fl">42</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>train_df</dt>
 <dd><p>train dataset</p></dd>
+
+
 <dt>test_df</dt>
 <dd><p>test dataset</p></dd>
+
+
 <dt>colname</dt>
 <dd><p>name of categorical column</p></dd>
+
+
 <dt>target</dt>
 <dd><p>the target or dependent variable, should be a string.</p></dd>
+
+
 <dt>n_fold</dt>
 <dd><p>the number of folds to use for doing kfold computation, default=5</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>the seed value, to ensure reproducibility,
 it could be any positive value, default=42</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a train and test data table with out-of-fold mean value
+    
+
+<p>a train and test data table with out-of-fold mean value
         of the target for the given categorical variable</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'pune'</span>,<span class="st">'guj'</span>,<span class="st">'del'</span><span class="op">)</span>,</span>
-<span class="r-in">                    win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'rcb'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'guj'</span>,<span class="st">'pune'</span>,<span class="st">'csk'</span>,<span class="st">'kol'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">train_result</span> <span class="op">&lt;-</span> <span class="fu">kFoldMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span>
-<span class="r-in">                          test_df <span class="op">=</span> <span class="va">test</span>,</span>
-<span class="r-in">                          colname <span class="op">=</span> <span class="st">'region'</span>,</span>
-<span class="r-in">                          target <span class="op">=</span> <span class="st">'win'</span>,</span>
-<span class="r-in">                          seed <span class="op">=</span> <span class="fl">1220</span><span class="op">)</span><span class="op">$</span><span class="va">train</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'pune'</span>,<span class="st">'guj'</span>,<span class="st">'del'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'rcb'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'guj'</span>,<span class="st">'pune'</span>,<span class="st">'csk'</span>,<span class="st">'kol'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">train_result</span> <span class="op">&lt;-</span> <span class="fu">kFoldMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span></span>
+<span class="r-in"><span>                          test_df <span class="op">=</span> <span class="va">test</span>,</span></span>
+<span class="r-in"><span>                          colname <span class="op">=</span> <span class="st">'region'</span>,</span></span>
+<span class="r-in"><span>                          target <span class="op">=</span> <span class="st">'win'</span>,</span></span>
+<span class="r-in"><span>                          seed <span class="op">=</span> <span class="fl">1220</span><span class="op">)</span><span class="op">$</span><span class="va">train</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This method is experimental. If the results you get are unexpected,please report them in github issues.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">test_result</span> <span class="op">&lt;-</span> <span class="fu">kFoldMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span>
-<span class="r-in">                         test_df <span class="op">=</span> <span class="va">test</span>,</span>
-<span class="r-in">                         colname <span class="op">=</span> <span class="st">'region'</span>,</span>
-<span class="r-in">                         target <span class="op">=</span> <span class="st">'win'</span>,</span>
-<span class="r-in">                         seed <span class="op">=</span> <span class="fl">1220</span><span class="op">)</span><span class="op">$</span><span class="va">test</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">test_result</span> <span class="op">&lt;-</span> <span class="fu">kFoldMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span></span>
+<span class="r-in"><span>                         test_df <span class="op">=</span> <span class="va">test</span>,</span></span>
+<span class="r-in"><span>                         colname <span class="op">=</span> <span class="st">'region'</span>,</span></span>
+<span class="r-in"><span>                         target <span class="op">=</span> <span class="st">'win'</span>,</span></span>
+<span class="r-in"><span>                         seed <span class="op">=</span> <span class="fl">1220</span><span class="op">)</span><span class="op">$</span><span class="va">test</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>This method is experimental. If the results you get are unexpected,please report them in github issues.</span>
 </code></pre></div>
     </div>
@@ -144,7 +157,7 @@ it could be any positive value, default=42</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

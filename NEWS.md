@@ -1,3 +1,7 @@
+# superml 0.5.6
+
+* Removed from cran, republish.
+
 # superml 0.5.5
 
 * Fix xgboost float precision error

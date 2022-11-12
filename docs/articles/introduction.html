@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -97,9 +97,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to SuperML</h1>
-                        <h4 data-toc-skip class="author">Manish Saraswat</h4>
+                        <h4 data-toc-skip class="author">Manish
+Saraswat</h4>
             
-            <h4 data-toc-skip class="date">2022-05-21</h4>
+            <h4 data-toc-skip class="date">2022-11-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -108,715 +109,734 @@
 
     
     
-<p>SuperML R package is designed to unify the model training process in R like Python. Generally, it’s seen that people spend lot of time in searching for packages, figuring out the syntax for training machine learning models in R. This behaviour is highly apparent in users who frequently switch between R and Python. This package provides a python´s scikit-learn interface (<code>fit</code>, <code>predict</code>) to train models faster.</p>
-<p>In addition to building machine learning models, there are handy functionalities to do feature engineering</p>
-<p>This ambitious package is my ongoing effort to help the r-community build ML models easily and faster in R.</p>
+<p>SuperML R package is designed to unify the model training process in
+R like Python. Generally, it’s seen that people spend lot of time in
+searching for packages, figuring out the syntax for training machine
+learning models in R. This behaviour is highly apparent in users who
+frequently switch between R and Python. This package provides a python´s
+scikit-learn interface (<code>fit</code>, <code>predict</code>) to train
+models faster.</p>
+<p>In addition to building machine learning models, there are handy
+functionalities to do feature engineering</p>
+<p>This ambitious package is my ongoing effort to help the r-community
+build ML models easily and faster in R.</p>
 <div class="section level2">
 <h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
 </h2>
 <p>You can install latest cran version using (recommended):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span></code></pre></div>
-<p>You can install the developmemt version directly from github using:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the developmemt version directly from github
+using:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"saraswatmks/superml"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="caveats-on-superml-installation">Caveats on superml installation<a class="anchor" aria-label="anchor" href="#caveats-on-superml-installation"></a>
 </h2>
-<p>For machine learning, superml is based on the existing R packages. Hence, while installing the package, we don’t install all the dependencies. However, while training any model, superml will automatically install the package if its not found. Still, if you want to install all dependencies at once, you can simply do:</p>
+<p>For machine learning, superml is based on the existing R packages.
+Hence, while installing the package, we don’t install all the
+dependencies. However, while training any model, superml will
+automatically install the package if its not found. Still, if you want
+to install all dependencies at once, you can simply do:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"superml"</span>, dependencies<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples---machine-learning-models">Examples - Machine Learning Models<a class="anchor" aria-label="anchor" href="#examples---machine-learning-models"></a>
 </h2>
-<p>This package uses existing r-packages to build machine learning model. In this tutorial, we’ll use data.table R package to do all tasks related to data manipulation.</p>
+<p>This package uses existing r-packages to build machine learning
+model. In this tutorial, we’ll use data.table R package to do all tasks
+related to data manipulation.</p>
 <div class="section level3">
 <h3 id="regression-data">Regression Data<a class="anchor" aria-label="anchor" href="#regression-data"></a>
 </h3>
-<p>We’ll quickly prepare the data set to be ready to served for model training.</p>
+<p>We’ll quickly prepare the data set to be ready to served for model
+training.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"../data/reg_train.rda"</span><span class="op">)</span>
-<span class="co"># if the above doesn't work, you can try: load("reg_train.rda")</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: ggplot2</span>
-<span class="co">#&gt; Loading required package: lattice</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span>
-<span class="co">#&gt; Loading required package: R6</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mfrasco/Metrics" class="external-link">Metrics</a></span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'Metrics'</span>
-<span class="co">#&gt; The following objects are masked from 'package:caret':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     precision, recall</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">reg_train</span><span class="op">)</span>
-<span class="co">#&gt;    Id MSSubClass MSZoning LotFrontage LotArea Street Alley LotShape LandContour</span>
-<span class="co">#&gt; 1:  1         60       RL          65    8450   Pave  &lt;NA&gt;      Reg         Lvl</span>
-<span class="co">#&gt; 2:  2         20       RL          80    9600   Pave  &lt;NA&gt;      Reg         Lvl</span>
-<span class="co">#&gt; 3:  3         60       RL          68   11250   Pave  &lt;NA&gt;      IR1         Lvl</span>
-<span class="co">#&gt; 4:  4         70       RL          60    9550   Pave  &lt;NA&gt;      IR1         Lvl</span>
-<span class="co">#&gt; 5:  5         60       RL          84   14260   Pave  &lt;NA&gt;      IR1         Lvl</span>
-<span class="co">#&gt; 6:  6         50       RL          85   14115   Pave  &lt;NA&gt;      IR1         Lvl</span>
-<span class="co">#&gt;    Utilities LotConfig LandSlope Neighborhood Condition1 Condition2 BldgType</span>
-<span class="co">#&gt; 1:    AllPub    Inside       Gtl      CollgCr       Norm       Norm     1Fam</span>
-<span class="co">#&gt; 2:    AllPub       FR2       Gtl      Veenker      Feedr       Norm     1Fam</span>
-<span class="co">#&gt; 3:    AllPub    Inside       Gtl      CollgCr       Norm       Norm     1Fam</span>
-<span class="co">#&gt; 4:    AllPub    Corner       Gtl      Crawfor       Norm       Norm     1Fam</span>
-<span class="co">#&gt; 5:    AllPub       FR2       Gtl      NoRidge       Norm       Norm     1Fam</span>
-<span class="co">#&gt; 6:    AllPub    Inside       Gtl      Mitchel       Norm       Norm     1Fam</span>
-<span class="co">#&gt;    HouseStyle OverallQual OverallCond YearBuilt YearRemodAdd RoofStyle RoofMatl</span>
-<span class="co">#&gt; 1:     2Story           7           5      2003         2003     Gable  CompShg</span>
-<span class="co">#&gt; 2:     1Story           6           8      1976         1976     Gable  CompShg</span>
-<span class="co">#&gt; 3:     2Story           7           5      2001         2002     Gable  CompShg</span>
-<span class="co">#&gt; 4:     2Story           7           5      1915         1970     Gable  CompShg</span>
-<span class="co">#&gt; 5:     2Story           8           5      2000         2000     Gable  CompShg</span>
-<span class="co">#&gt; 6:     1.5Fin           5           5      1993         1995     Gable  CompShg</span>
-<span class="co">#&gt;    Exterior1st Exterior2nd MasVnrType MasVnrArea ExterQual ExterCond Foundation</span>
-<span class="co">#&gt; 1:     VinylSd     VinylSd    BrkFace        196        Gd        TA      PConc</span>
-<span class="co">#&gt; 2:     MetalSd     MetalSd       None          0        TA        TA     CBlock</span>
-<span class="co">#&gt; 3:     VinylSd     VinylSd    BrkFace        162        Gd        TA      PConc</span>
-<span class="co">#&gt; 4:     Wd Sdng     Wd Shng       None          0        TA        TA     BrkTil</span>
-<span class="co">#&gt; 5:     VinylSd     VinylSd    BrkFace        350        Gd        TA      PConc</span>
-<span class="co">#&gt; 6:     VinylSd     VinylSd       None          0        TA        TA       Wood</span>
-<span class="co">#&gt;    BsmtQual BsmtCond BsmtExposure BsmtFinType1 BsmtFinSF1 BsmtFinType2</span>
-<span class="co">#&gt; 1:       Gd       TA           No          GLQ        706          Unf</span>
-<span class="co">#&gt; 2:       Gd       TA           Gd          ALQ        978          Unf</span>
-<span class="co">#&gt; 3:       Gd       TA           Mn          GLQ        486          Unf</span>
-<span class="co">#&gt; 4:       TA       Gd           No          ALQ        216          Unf</span>
-<span class="co">#&gt; 5:       Gd       TA           Av          GLQ        655          Unf</span>
-<span class="co">#&gt; 6:       Gd       TA           No          GLQ        732          Unf</span>
-<span class="co">#&gt;    BsmtFinSF2 BsmtUnfSF TotalBsmtSF Heating HeatingQC CentralAir Electrical</span>
-<span class="co">#&gt; 1:          0       150         856    GasA        Ex          Y      SBrkr</span>
-<span class="co">#&gt; 2:          0       284        1262    GasA        Ex          Y      SBrkr</span>
-<span class="co">#&gt; 3:          0       434         920    GasA        Ex          Y      SBrkr</span>
-<span class="co">#&gt; 4:          0       540         756    GasA        Gd          Y      SBrkr</span>
-<span class="co">#&gt; 5:          0       490        1145    GasA        Ex          Y      SBrkr</span>
-<span class="co">#&gt; 6:          0        64         796    GasA        Ex          Y      SBrkr</span>
-<span class="co">#&gt;    1stFlrSF 2ndFlrSF LowQualFinSF GrLivArea BsmtFullBath BsmtHalfBath FullBath</span>
-<span class="co">#&gt; 1:      856      854            0      1710            1            0        2</span>
-<span class="co">#&gt; 2:     1262        0            0      1262            0            1        2</span>
-<span class="co">#&gt; 3:      920      866            0      1786            1            0        2</span>
-<span class="co">#&gt; 4:      961      756            0      1717            1            0        1</span>
-<span class="co">#&gt; 5:     1145     1053            0      2198            1            0        2</span>
-<span class="co">#&gt; 6:      796      566            0      1362            1            0        1</span>
-<span class="co">#&gt;    HalfBath BedroomAbvGr KitchenAbvGr KitchenQual TotRmsAbvGrd Functional</span>
-<span class="co">#&gt; 1:        1            3            1          Gd            8        Typ</span>
-<span class="co">#&gt; 2:        0            3            1          TA            6        Typ</span>
-<span class="co">#&gt; 3:        1            3            1          Gd            6        Typ</span>
-<span class="co">#&gt; 4:        0            3            1          Gd            7        Typ</span>
-<span class="co">#&gt; 5:        1            4            1          Gd            9        Typ</span>
-<span class="co">#&gt; 6:        1            1            1          TA            5        Typ</span>
-<span class="co">#&gt;    Fireplaces FireplaceQu GarageType GarageYrBlt GarageFinish GarageCars</span>
-<span class="co">#&gt; 1:          0        &lt;NA&gt;     Attchd        2003          RFn          2</span>
-<span class="co">#&gt; 2:          1          TA     Attchd        1976          RFn          2</span>
-<span class="co">#&gt; 3:          1          TA     Attchd        2001          RFn          2</span>
-<span class="co">#&gt; 4:          1          Gd     Detchd        1998          Unf          3</span>
-<span class="co">#&gt; 5:          1          TA     Attchd        2000          RFn          3</span>
-<span class="co">#&gt; 6:          0        &lt;NA&gt;     Attchd        1993          Unf          2</span>
-<span class="co">#&gt;    GarageArea GarageQual GarageCond PavedDrive WoodDeckSF OpenPorchSF</span>
-<span class="co">#&gt; 1:        548         TA         TA          Y          0          61</span>
-<span class="co">#&gt; 2:        460         TA         TA          Y        298           0</span>
-<span class="co">#&gt; 3:        608         TA         TA          Y          0          42</span>
-<span class="co">#&gt; 4:        642         TA         TA          Y          0          35</span>
-<span class="co">#&gt; 5:        836         TA         TA          Y        192          84</span>
-<span class="co">#&gt; 6:        480         TA         TA          Y         40          30</span>
-<span class="co">#&gt;    EnclosedPorch 3SsnPorch ScreenPorch PoolArea PoolQC Fence MiscFeature</span>
-<span class="co">#&gt; 1:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span>
-<span class="co">#&gt; 2:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span>
-<span class="co">#&gt; 3:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span>
-<span class="co">#&gt; 4:           272         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span>
-<span class="co">#&gt; 5:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span>
-<span class="co">#&gt; 6:             0       320           0        0   &lt;NA&gt; MnPrv        Shed</span>
-<span class="co">#&gt;    MiscVal MoSold YrSold SaleType SaleCondition SalePrice</span>
-<span class="co">#&gt; 1:       0      2   2008       WD        Normal    208500</span>
-<span class="co">#&gt; 2:       0      5   2007       WD        Normal    181500</span>
-<span class="co">#&gt; 3:       0      9   2008       WD        Normal    223500</span>
-<span class="co">#&gt; 4:       0      2   2006       WD       Abnorml    140000</span>
-<span class="co">#&gt; 5:       0     12   2008       WD        Normal    250000</span>
-<span class="co">#&gt; 6:     700     10   2009       WD        Normal    143000</span>
-
-<span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createDataPartition</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">reg_train</span><span class="op">$</span><span class="va">SalePrice</span>, p <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-<span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">reg_train</span><span class="op">[</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span>
-<span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">reg_train</span><span class="op">[</span><span class="op">!</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">"../data/reg_train.rda"</span><span class="op">)</span></span>
+<span><span class="co"># if the above doesn't work, you can try: load("reg_train.rda")</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/topepo/caret/" class="external-link">caret</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
+<span><span class="co">#&gt; Loading required package: lattice</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/saraswatmks/superml" class="external-link">superml</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: R6</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mfrasco/Metrics" class="external-link">Metrics</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'Metrics'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:caret':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     precision, recall</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">reg_train</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    Id MSSubClass MSZoning LotFrontage LotArea Street Alley LotShape LandContour</span></span>
+<span><span class="co">#&gt; 1:  1         60       RL          65    8450   Pave  &lt;NA&gt;      Reg         Lvl</span></span>
+<span><span class="co">#&gt; 2:  2         20       RL          80    9600   Pave  &lt;NA&gt;      Reg         Lvl</span></span>
+<span><span class="co">#&gt; 3:  3         60       RL          68   11250   Pave  &lt;NA&gt;      IR1         Lvl</span></span>
+<span><span class="co">#&gt; 4:  4         70       RL          60    9550   Pave  &lt;NA&gt;      IR1         Lvl</span></span>
+<span><span class="co">#&gt; 5:  5         60       RL          84   14260   Pave  &lt;NA&gt;      IR1         Lvl</span></span>
+<span><span class="co">#&gt; 6:  6         50       RL          85   14115   Pave  &lt;NA&gt;      IR1         Lvl</span></span>
+<span><span class="co">#&gt;    Utilities LotConfig LandSlope Neighborhood Condition1 Condition2 BldgType</span></span>
+<span><span class="co">#&gt; 1:    AllPub    Inside       Gtl      CollgCr       Norm       Norm     1Fam</span></span>
+<span><span class="co">#&gt; 2:    AllPub       FR2       Gtl      Veenker      Feedr       Norm     1Fam</span></span>
+<span><span class="co">#&gt; 3:    AllPub    Inside       Gtl      CollgCr       Norm       Norm     1Fam</span></span>
+<span><span class="co">#&gt; 4:    AllPub    Corner       Gtl      Crawfor       Norm       Norm     1Fam</span></span>
+<span><span class="co">#&gt; 5:    AllPub       FR2       Gtl      NoRidge       Norm       Norm     1Fam</span></span>
+<span><span class="co">#&gt; 6:    AllPub    Inside       Gtl      Mitchel       Norm       Norm     1Fam</span></span>
+<span><span class="co">#&gt;    HouseStyle OverallQual OverallCond YearBuilt YearRemodAdd RoofStyle RoofMatl</span></span>
+<span><span class="co">#&gt; 1:     2Story           7           5      2003         2003     Gable  CompShg</span></span>
+<span><span class="co">#&gt; 2:     1Story           6           8      1976         1976     Gable  CompShg</span></span>
+<span><span class="co">#&gt; 3:     2Story           7           5      2001         2002     Gable  CompShg</span></span>
+<span><span class="co">#&gt; 4:     2Story           7           5      1915         1970     Gable  CompShg</span></span>
+<span><span class="co">#&gt; 5:     2Story           8           5      2000         2000     Gable  CompShg</span></span>
+<span><span class="co">#&gt; 6:     1.5Fin           5           5      1993         1995     Gable  CompShg</span></span>
+<span><span class="co">#&gt;    Exterior1st Exterior2nd MasVnrType MasVnrArea ExterQual ExterCond Foundation</span></span>
+<span><span class="co">#&gt; 1:     VinylSd     VinylSd    BrkFace        196        Gd        TA      PConc</span></span>
+<span><span class="co">#&gt; 2:     MetalSd     MetalSd       None          0        TA        TA     CBlock</span></span>
+<span><span class="co">#&gt; 3:     VinylSd     VinylSd    BrkFace        162        Gd        TA      PConc</span></span>
+<span><span class="co">#&gt; 4:     Wd Sdng     Wd Shng       None          0        TA        TA     BrkTil</span></span>
+<span><span class="co">#&gt; 5:     VinylSd     VinylSd    BrkFace        350        Gd        TA      PConc</span></span>
+<span><span class="co">#&gt; 6:     VinylSd     VinylSd       None          0        TA        TA       Wood</span></span>
+<span><span class="co">#&gt;    BsmtQual BsmtCond BsmtExposure BsmtFinType1 BsmtFinSF1 BsmtFinType2</span></span>
+<span><span class="co">#&gt; 1:       Gd       TA           No          GLQ        706          Unf</span></span>
+<span><span class="co">#&gt; 2:       Gd       TA           Gd          ALQ        978          Unf</span></span>
+<span><span class="co">#&gt; 3:       Gd       TA           Mn          GLQ        486          Unf</span></span>
+<span><span class="co">#&gt; 4:       TA       Gd           No          ALQ        216          Unf</span></span>
+<span><span class="co">#&gt; 5:       Gd       TA           Av          GLQ        655          Unf</span></span>
+<span><span class="co">#&gt; 6:       Gd       TA           No          GLQ        732          Unf</span></span>
+<span><span class="co">#&gt;    BsmtFinSF2 BsmtUnfSF TotalBsmtSF Heating HeatingQC CentralAir Electrical</span></span>
+<span><span class="co">#&gt; 1:          0       150         856    GasA        Ex          Y      SBrkr</span></span>
+<span><span class="co">#&gt; 2:          0       284        1262    GasA        Ex          Y      SBrkr</span></span>
+<span><span class="co">#&gt; 3:          0       434         920    GasA        Ex          Y      SBrkr</span></span>
+<span><span class="co">#&gt; 4:          0       540         756    GasA        Gd          Y      SBrkr</span></span>
+<span><span class="co">#&gt; 5:          0       490        1145    GasA        Ex          Y      SBrkr</span></span>
+<span><span class="co">#&gt; 6:          0        64         796    GasA        Ex          Y      SBrkr</span></span>
+<span><span class="co">#&gt;    1stFlrSF 2ndFlrSF LowQualFinSF GrLivArea BsmtFullBath BsmtHalfBath FullBath</span></span>
+<span><span class="co">#&gt; 1:      856      854            0      1710            1            0        2</span></span>
+<span><span class="co">#&gt; 2:     1262        0            0      1262            0            1        2</span></span>
+<span><span class="co">#&gt; 3:      920      866            0      1786            1            0        2</span></span>
+<span><span class="co">#&gt; 4:      961      756            0      1717            1            0        1</span></span>
+<span><span class="co">#&gt; 5:     1145     1053            0      2198            1            0        2</span></span>
+<span><span class="co">#&gt; 6:      796      566            0      1362            1            0        1</span></span>
+<span><span class="co">#&gt;    HalfBath BedroomAbvGr KitchenAbvGr KitchenQual TotRmsAbvGrd Functional</span></span>
+<span><span class="co">#&gt; 1:        1            3            1          Gd            8        Typ</span></span>
+<span><span class="co">#&gt; 2:        0            3            1          TA            6        Typ</span></span>
+<span><span class="co">#&gt; 3:        1            3            1          Gd            6        Typ</span></span>
+<span><span class="co">#&gt; 4:        0            3            1          Gd            7        Typ</span></span>
+<span><span class="co">#&gt; 5:        1            4            1          Gd            9        Typ</span></span>
+<span><span class="co">#&gt; 6:        1            1            1          TA            5        Typ</span></span>
+<span><span class="co">#&gt;    Fireplaces FireplaceQu GarageType GarageYrBlt GarageFinish GarageCars</span></span>
+<span><span class="co">#&gt; 1:          0        &lt;NA&gt;     Attchd        2003          RFn          2</span></span>
+<span><span class="co">#&gt; 2:          1          TA     Attchd        1976          RFn          2</span></span>
+<span><span class="co">#&gt; 3:          1          TA     Attchd        2001          RFn          2</span></span>
+<span><span class="co">#&gt; 4:          1          Gd     Detchd        1998          Unf          3</span></span>
+<span><span class="co">#&gt; 5:          1          TA     Attchd        2000          RFn          3</span></span>
+<span><span class="co">#&gt; 6:          0        &lt;NA&gt;     Attchd        1993          Unf          2</span></span>
+<span><span class="co">#&gt;    GarageArea GarageQual GarageCond PavedDrive WoodDeckSF OpenPorchSF</span></span>
+<span><span class="co">#&gt; 1:        548         TA         TA          Y          0          61</span></span>
+<span><span class="co">#&gt; 2:        460         TA         TA          Y        298           0</span></span>
+<span><span class="co">#&gt; 3:        608         TA         TA          Y          0          42</span></span>
+<span><span class="co">#&gt; 4:        642         TA         TA          Y          0          35</span></span>
+<span><span class="co">#&gt; 5:        836         TA         TA          Y        192          84</span></span>
+<span><span class="co">#&gt; 6:        480         TA         TA          Y         40          30</span></span>
+<span><span class="co">#&gt;    EnclosedPorch 3SsnPorch ScreenPorch PoolArea PoolQC Fence MiscFeature</span></span>
+<span><span class="co">#&gt; 1:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4:           272         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5:             0         0           0        0   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 6:             0       320           0        0   &lt;NA&gt; MnPrv        Shed</span></span>
+<span><span class="co">#&gt;    MiscVal MoSold YrSold SaleType SaleCondition SalePrice</span></span>
+<span><span class="co">#&gt; 1:       0      2   2008       WD        Normal    208500</span></span>
+<span><span class="co">#&gt; 2:       0      5   2007       WD        Normal    181500</span></span>
+<span><span class="co">#&gt; 3:       0      9   2008       WD        Normal    223500</span></span>
+<span><span class="co">#&gt; 4:       0      2   2006       WD       Abnorml    140000</span></span>
+<span><span class="co">#&gt; 5:       0     12   2008       WD        Normal    250000</span></span>
+<span><span class="co">#&gt; 6:     700     10   2009       WD        Normal    143000</span></span>
+<span></span>
+<span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createDataPartition</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">reg_train</span><span class="op">$</span><span class="va">SalePrice</span>, p <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">reg_train</span><span class="op">[</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span></span>
+<span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">reg_train</span><span class="op">[</span><span class="op">!</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># remove features with 90% or more missing values</span>
-<span class="co"># we will also remove the Id column because it doesn't contain</span>
-<span class="co"># any useful information</span>
-<span class="va">na_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span>
-<span class="va">na_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">na_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">na_cols</span> <span class="op">&gt;</span> <span class="fl">0.9</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
-
-<span class="va">xtrain</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">na_cols</span>, <span class="st">"Id"</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span>
-<span class="va">xtest</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">na_cols</span>, <span class="st">"Id"</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span>
-
-<span class="co"># encode categorical variables</span>
-<span class="va">cat_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">xtrain</span>, <span class="va">is.character</span><span class="op">)</span><span class="op">]</span>
-
-<span class="kw">for</span><span class="op">(</span><span class="va">c</span> <span class="kw">in</span> <span class="va">cat_cols</span><span class="op">)</span><span class="op">{</span>
-    <span class="va">lbl</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LabelEncoder.html">LabelEncoder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-    <span class="va">lbl</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span>, <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span>
-<span class="co">#&gt; The data contains NA values. Imputing NA with 'NA'</span>
-
-<span class="co"># removing noise column</span>
-<span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'GrLivArea'</span>,<span class="st">'TotalBsmtSF'</span><span class="op">)</span>
-
-<span class="va">xtrain</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">noise</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span>
-<span class="va">xtest</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">noise</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span>
-
-<span class="co"># fill missing value with  -1</span>
-<span class="va">xtrain</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span>
-<span class="va">xtest</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># remove features with 90% or more missing values</span></span>
+<span><span class="co"># we will also remove the Id column because it doesn't contain</span></span>
+<span><span class="co"># any useful information</span></span>
+<span><span class="va">na_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span></span>
+<span><span class="va">na_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">na_cols</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">na_cols</span> <span class="op">&gt;</span> <span class="fl">0.9</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xtrain</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">na_cols</span>, <span class="st">"Id"</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span><span class="va">xtest</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">na_cols</span>, <span class="st">"Id"</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># encode categorical variables</span></span>
+<span><span class="va">cat_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">xtrain</span>, <span class="va">is.character</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">c</span> <span class="kw">in</span> <span class="va">cat_cols</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">lbl</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LabelEncoder.html">LabelEncoder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">lbl</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span>, <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains NA values. Imputing NA with 'NA'</span></span>
+<span></span>
+<span><span class="co"># removing noise column</span></span>
+<span><span class="va">noise</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'GrLivArea'</span>,<span class="st">'TotalBsmtSF'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xtrain</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">noise</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span><span class="va">xtest</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">noise</span><span class="op">)</span> <span class="op">:=</span> <span class="cn">NULL</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># fill missing value with  -1</span></span>
+<span><span class="va">xtrain</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></span>
+<span><span class="va">xtest</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span></span></code></pre></div>
 <p><strong>KNN Regression</strong></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">knn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KNNTrainer.html">KNNTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>k <span class="op">=</span> <span class="fl">2</span>,prob <span class="op">=</span> <span class="cn">T</span>,type <span class="op">=</span> <span class="st">'reg'</span><span class="op">)</span>
-<span class="va">knn</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>train <span class="op">=</span> <span class="va">xtrain</span>, test <span class="op">=</span> <span class="va">xtest</span>, y <span class="op">=</span> <span class="st">'SalePrice'</span><span class="op">)</span>
-<span class="va">probs</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'prob'</span><span class="op">)</span>
-<span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type<span class="op">=</span><span class="st">'raw'</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted<span class="op">=</span><span class="va">labels</span><span class="op">)</span>
-<span class="co">#&gt; [1] 57995.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">knn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KNNTrainer.html">KNNTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>k <span class="op">=</span> <span class="fl">2</span>,prob <span class="op">=</span> <span class="cn">T</span>,type <span class="op">=</span> <span class="st">'reg'</span><span class="op">)</span></span>
+<span><span class="va">knn</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>train <span class="op">=</span> <span class="va">xtrain</span>, test <span class="op">=</span> <span class="va">xtest</span>, y <span class="op">=</span> <span class="st">'SalePrice'</span><span class="op">)</span></span>
+<span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'prob'</span><span class="op">)</span></span>
+<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type<span class="op">=</span><span class="st">'raw'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted<span class="op">=</span><span class="va">labels</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 43343.59</span></span></code></pre></div>
 <p><strong>SVM Regression</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">svm</span> <span class="op">&lt;-</span> <span class="va">SVMTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">svm</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'SalePrice'</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">svm</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">svm</span> <span class="op">&lt;-</span> <span class="va">SVMTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">svm</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'SalePrice'</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">svm</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Simple Regresison</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"gaussian"</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lf</span><span class="op">$</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; stats::glm(formula = f, family = self$family, data = X, weights = self$weights)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Deviance Residuals: </span>
-<span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span>
-<span class="co">#&gt; -313941   -14588     -917    12793   206749  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)    8.658e+05  1.589e+06   0.545 0.585924    </span>
-<span class="co">#&gt; MSSubClass    -9.729e+01  6.554e+01  -1.484 0.138056    </span>
-<span class="co">#&gt; MSZoning       1.060e+02  1.497e+03   0.071 0.943571    </span>
-<span class="co">#&gt; LotFrontage   -4.337e+01  3.287e+01  -1.320 0.187281    </span>
-<span class="co">#&gt; LotArea        4.416e-01  1.111e-01   3.974 7.61e-05 ***</span>
-<span class="co">#&gt; Street        -4.313e+04  1.725e+04  -2.501 0.012553 *  </span>
-<span class="co">#&gt; LotShape       2.123e+03  2.139e+03   0.993 0.321119    </span>
-<span class="co">#&gt; LandContour   -2.085e+03  2.303e+03  -0.905 0.365574    </span>
-<span class="co">#&gt; Utilities     -6.862e+04  3.406e+04  -2.015 0.044195 *  </span>
-<span class="co">#&gt; LotConfig      9.874e+02  1.075e+03   0.918 0.358742    </span>
-<span class="co">#&gt; LandSlope      9.032e+03  3.287e+03   2.748 0.006112 ** </span>
-<span class="co">#&gt; Neighborhood  -4.372e+01  2.025e+02  -0.216 0.829084    </span>
-<span class="co">#&gt; Condition1    -2.268e+03  8.092e+02  -2.803 0.005166 ** </span>
-<span class="co">#&gt; Condition2    -1.900e+04  3.962e+03  -4.795 1.89e-06 ***</span>
-<span class="co">#&gt; BldgType      -1.676e+03  2.660e+03  -0.630 0.528738    </span>
-<span class="co">#&gt; HouseStyle     4.408e+02  1.049e+03   0.420 0.674314    </span>
-<span class="co">#&gt; OverallQual    1.389e+04  1.402e+03   9.907  &lt; 2e-16 ***</span>
-<span class="co">#&gt; OverallCond    5.683e+03  1.292e+03   4.401 1.20e-05 ***</span>
-<span class="co">#&gt; YearBuilt      2.859e+02  8.752e+01   3.266 0.001128 ** </span>
-<span class="co">#&gt; YearRemodAdd   1.360e+02  8.147e+01   1.669 0.095390 .  </span>
-<span class="co">#&gt; RoofStyle      8.614e+03  2.047e+03   4.208 2.82e-05 ***</span>
-<span class="co">#&gt; RoofMatl      -1.236e+04  2.803e+03  -4.411 1.14e-05 ***</span>
-<span class="co">#&gt; Exterior1st   -2.444e+02  7.388e+02  -0.331 0.740861    </span>
-<span class="co">#&gt; Exterior2nd    1.529e+02  7.019e+02   0.218 0.827636    </span>
-<span class="co">#&gt; MasVnrType     5.459e+03  1.703e+03   3.206 0.001390 ** </span>
-<span class="co">#&gt; MasVnrArea     3.644e+01  7.605e+00   4.792 1.92e-06 ***</span>
-<span class="co">#&gt; ExterQual     -1.913e+03  2.524e+03  -0.758 0.448638    </span>
-<span class="co">#&gt; ExterCond      2.266e+03  1.770e+03   1.280 0.200823    </span>
-<span class="co">#&gt; Foundation    -2.639e+03  1.553e+03  -1.700 0.089511 .  </span>
-<span class="co">#&gt; BsmtQual       6.663e+03  1.580e+03   4.216 2.72e-05 ***</span>
-<span class="co">#&gt; BsmtCond      -1.920e+03  1.670e+03  -1.149 0.250747    </span>
-<span class="co">#&gt; BsmtExposure   1.968e+03  9.548e+02   2.061 0.039600 *  </span>
-<span class="co">#&gt; BsmtFinType1  -1.497e+03  7.846e+02  -1.908 0.056712 .  </span>
-<span class="co">#&gt; BsmtFinSF1     1.252e+01  5.958e+00   2.101 0.035947 *  </span>
-<span class="co">#&gt; BsmtFinType2  -1.890e+02  1.490e+03  -0.127 0.899061    </span>
-<span class="co">#&gt; BsmtFinSF2     2.167e+01  1.131e+01   1.916 0.055612 .  </span>
-<span class="co">#&gt; BsmtUnfSF      1.122e+01  5.652e+00   1.986 0.047339 *  </span>
-<span class="co">#&gt; Heating       -2.325e+03  3.718e+03  -0.625 0.531824    </span>
-<span class="co">#&gt; HeatingQC     -1.051e+03  1.026e+03  -1.025 0.305856    </span>
-<span class="co">#&gt; CentralAir    -2.316e+03  5.857e+03  -0.395 0.692653    </span>
-<span class="co">#&gt; Electrical     5.159e+03  2.984e+03   1.729 0.084090 .  </span>
-<span class="co">#&gt; `1stFlrSF`     3.154e+01  7.448e+00   4.234 2.51e-05 ***</span>
-<span class="co">#&gt; `2ndFlrSF`     3.239e+01  6.115e+00   5.296 1.47e-07 ***</span>
-<span class="co">#&gt; LowQualFinSF   9.647e+00  2.202e+01   0.438 0.661439    </span>
-<span class="co">#&gt; BsmtFullBath   9.783e+03  3.038e+03   3.220 0.001325 ** </span>
-<span class="co">#&gt; BsmtHalfBath  -1.825e+03  4.528e+03  -0.403 0.687021    </span>
-<span class="co">#&gt; FullBath       1.018e+04  3.245e+03   3.135 0.001770 ** </span>
-<span class="co">#&gt; HalfBath       2.373e+03  3.043e+03   0.780 0.435670    </span>
-<span class="co">#&gt; BedroomAbvGr  -5.911e+03  1.938e+03  -3.050 0.002355 ** </span>
-<span class="co">#&gt; KitchenAbvGr  -1.564e+04  6.461e+03  -2.420 0.015695 *  </span>
-<span class="co">#&gt; KitchenQual    7.831e+03  1.900e+03   4.121 4.10e-05 ***</span>
-<span class="co">#&gt; TotRmsAbvGrd   5.273e+03  1.417e+03   3.720 0.000211 ***</span>
-<span class="co">#&gt; Functional    -5.095e+03  1.600e+03  -3.184 0.001499 ** </span>
-<span class="co">#&gt; Fireplaces     2.931e+03  2.733e+03   1.072 0.283898    </span>
-<span class="co">#&gt; FireplaceQu    2.312e+03  1.397e+03   1.655 0.098291 .  </span>
-<span class="co">#&gt; GarageType     2.541e+02  1.352e+03   0.188 0.850954    </span>
-<span class="co">#&gt; GarageYrBlt   -2.952e+00  6.201e+00  -0.476 0.634184    </span>
-<span class="co">#&gt; GarageFinish   8.986e+02  1.491e+03   0.602 0.546991    </span>
-<span class="co">#&gt; GarageCars     1.714e+04  3.346e+03   5.124 3.63e-07 ***</span>
-<span class="co">#&gt; GarageArea     2.505e+00  1.124e+01   0.223 0.823643    </span>
-<span class="co">#&gt; GarageQual     9.291e+03  2.936e+03   3.164 0.001605 ** </span>
-<span class="co">#&gt; GarageCond    -9.592e+02  3.679e+03  -0.261 0.794331    </span>
-<span class="co">#&gt; PavedDrive    -3.447e+03  3.283e+03  -1.050 0.293988    </span>
-<span class="co">#&gt; WoodDeckSF     2.239e+01  9.243e+00   2.423 0.015585 *  </span>
-<span class="co">#&gt; OpenPorchSF    3.013e+01  1.777e+01   1.695 0.090402 .  </span>
-<span class="co">#&gt; EnclosedPorch  1.386e+01  1.974e+01   0.702 0.482827    </span>
-<span class="co">#&gt; `3SsnPorch`    1.697e+01  3.219e+01   0.527 0.598169    </span>
-<span class="co">#&gt; ScreenPorch    7.911e+01  1.907e+01   4.148 3.65e-05 ***</span>
-<span class="co">#&gt; PoolArea      -8.822e+01  2.646e+01  -3.334 0.000889 ***</span>
-<span class="co">#&gt; Fence         -9.219e+01  1.438e+03  -0.064 0.948890    </span>
-<span class="co">#&gt; MiscVal        4.329e+00  3.934e+00   1.100 0.271540    </span>
-<span class="co">#&gt; MoSold        -1.443e+02  3.827e+02  -0.377 0.706175    </span>
-<span class="co">#&gt; YrSold        -8.786e+02  7.879e+02  -1.115 0.265103    </span>
-<span class="co">#&gt; SaleType       3.634e+03  1.292e+03   2.813 0.005011 ** </span>
-<span class="co">#&gt; SaleCondition -3.675e+03  1.516e+03  -2.424 0.015532 *  </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 1000907491)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     Null deviance: 6.0754e+12  on 1023  degrees of freedom</span>
-<span class="co">#&gt; Residual deviance: 9.4986e+11  on  949  degrees of freedom</span>
-<span class="co">#&gt; AIC: 24202</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of Fisher Scoring iterations: 2</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span>
-<span class="co">#&gt; [1] 38336.51</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"gaussian"</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lf</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stats::glm(formula = f, family = self$family, data = X, weights = self$weights)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Deviance Residuals: </span></span>
+<span><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></span>
+<span><span class="co">#&gt; -364148   -14978    -1563    14119   275341  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span><span class="co">#&gt; (Intercept)    1.888e+05  1.699e+06   0.111 0.911565    </span></span>
+<span><span class="co">#&gt; MSSubClass    -2.600e+02  6.904e+01  -3.766 0.000176 ***</span></span>
+<span><span class="co">#&gt; MSZoning      -5.623e+02  1.882e+03  -0.299 0.765141    </span></span>
+<span><span class="co">#&gt; LotFrontage   -7.255e+00  3.602e+01  -0.201 0.840407    </span></span>
+<span><span class="co">#&gt; LotArea        2.612e-01  1.285e-01   2.033 0.042336 *  </span></span>
+<span><span class="co">#&gt; Street        -3.948e+04  1.876e+04  -2.105 0.035595 *  </span></span>
+<span><span class="co">#&gt; LotShape       2.578e+03  2.241e+03   1.150 0.250245    </span></span>
+<span><span class="co">#&gt; LandContour    5.433e+02  2.353e+03   0.231 0.817477    </span></span>
+<span><span class="co">#&gt; Utilities     -7.064e+04  3.647e+04  -1.937 0.053066 .  </span></span>
+<span><span class="co">#&gt; LotConfig      1.401e+03  1.174e+03   1.194 0.232780    </span></span>
+<span><span class="co">#&gt; LandSlope      1.204e+04  5.486e+03   2.196 0.028366 *  </span></span>
+<span><span class="co">#&gt; Neighborhood   1.061e+02  2.059e+02   0.516 0.606262    </span></span>
+<span><span class="co">#&gt; Condition1    -4.813e+03  1.063e+03  -4.526 6.76e-06 ***</span></span>
+<span><span class="co">#&gt; Condition2    -2.350e+04  6.590e+03  -3.566 0.000380 ***</span></span>
+<span><span class="co">#&gt; BldgType       3.006e+03  2.849e+03   1.055 0.291571    </span></span>
+<span><span class="co">#&gt; HouseStyle     2.096e+03  9.981e+02   2.100 0.036013 *  </span></span>
+<span><span class="co">#&gt; OverallQual    1.586e+04  1.495e+03  10.609  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; OverallCond    6.405e+03  1.313e+03   4.879 1.25e-06 ***</span></span>
+<span><span class="co">#&gt; YearBuilt      2.703e+02  8.903e+01   3.036 0.002466 ** </span></span>
+<span><span class="co">#&gt; YearRemodAdd   2.021e+02  8.744e+01   2.312 0.021005 *  </span></span>
+<span><span class="co">#&gt; RoofStyle      4.510e+03  2.229e+03   2.023 0.043348 *  </span></span>
+<span><span class="co">#&gt; RoofMatl      -1.136e+04  2.377e+03  -4.777 2.06e-06 ***</span></span>
+<span><span class="co">#&gt; Exterior1st   -8.005e+02  5.848e+02  -1.369 0.171387    </span></span>
+<span><span class="co">#&gt; Exterior2nd    6.632e+02  5.115e+02   1.297 0.195078    </span></span>
+<span><span class="co">#&gt; MasVnrType     2.882e+03  1.752e+03   1.645 0.100265    </span></span>
+<span><span class="co">#&gt; MasVnrArea     3.275e+01  7.942e+00   4.123 4.07e-05 ***</span></span>
+<span><span class="co">#&gt; ExterQual      5.747e+02  2.551e+03   0.225 0.821784    </span></span>
+<span><span class="co">#&gt; ExterCond      1.672e+03  2.677e+03   0.624 0.532508    </span></span>
+<span><span class="co">#&gt; Foundation    -3.433e+03  2.011e+03  -1.707 0.088133 .  </span></span>
+<span><span class="co">#&gt; BsmtQual       6.071e+03  1.568e+03   3.871 0.000116 ***</span></span>
+<span><span class="co">#&gt; BsmtCond      -3.050e+03  2.109e+03  -1.446 0.148473    </span></span>
+<span><span class="co">#&gt; BsmtExposure   1.218e+03  9.786e+02   1.244 0.213654    </span></span>
+<span><span class="co">#&gt; BsmtFinType1  -9.457e+02  7.540e+02  -1.254 0.210109    </span></span>
+<span><span class="co">#&gt; BsmtFinSF1     8.958e+00  6.150e+00   1.457 0.145543    </span></span>
+<span><span class="co">#&gt; BsmtFinType2  -1.720e+03  1.404e+03  -1.225 0.220811    </span></span>
+<span><span class="co">#&gt; BsmtFinSF2     2.037e+01  1.194e+01   1.706 0.088243 .  </span></span>
+<span><span class="co">#&gt; BsmtUnfSF      2.187e+00  5.858e+00   0.373 0.708977    </span></span>
+<span><span class="co">#&gt; Heating        6.077e+03  4.809e+03   1.264 0.206639    </span></span>
+<span><span class="co">#&gt; HeatingQC     -2.847e+03  1.558e+03  -1.827 0.068024 .  </span></span>
+<span><span class="co">#&gt; CentralAir     2.633e+03  5.683e+03   0.463 0.643300    </span></span>
+<span><span class="co">#&gt; Electrical     2.720e+03  1.577e+03   1.725 0.084836 .  </span></span>
+<span><span class="co">#&gt; `1stFlrSF`     5.067e+01  7.396e+00   6.852 1.31e-11 ***</span></span>
+<span><span class="co">#&gt; `2ndFlrSF`     5.679e+01  6.419e+00   8.848  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; LowQualFinSF   5.411e+01  2.526e+01   2.142 0.032449 *  </span></span>
+<span><span class="co">#&gt; BsmtFullBath   1.143e+04  3.328e+03   3.435 0.000619 ***</span></span>
+<span><span class="co">#&gt; BsmtHalfBath   4.301e+03  4.830e+03   0.891 0.373401    </span></span>
+<span><span class="co">#&gt; FullBath       9.536e+03  3.595e+03   2.652 0.008127 ** </span></span>
+<span><span class="co">#&gt; HalfBath      -7.362e+01  3.264e+03  -0.023 0.982008    </span></span>
+<span><span class="co">#&gt; BedroomAbvGr  -6.066e+03  2.114e+03  -2.869 0.004208 ** </span></span>
+<span><span class="co">#&gt; KitchenAbvGr  -1.718e+04  6.530e+03  -2.631 0.008642 ** </span></span>
+<span><span class="co">#&gt; KitchenQual    9.137e+03  2.012e+03   4.542 6.28e-06 ***</span></span>
+<span><span class="co">#&gt; TotRmsAbvGrd   2.167e+03  1.525e+03   1.421 0.155661    </span></span>
+<span><span class="co">#&gt; Functional    -4.019e+03  1.537e+03  -2.615 0.009062 ** </span></span>
+<span><span class="co">#&gt; Fireplaces    -2.614e+03  2.784e+03  -0.939 0.347976    </span></span>
+<span><span class="co">#&gt; FireplaceQu    4.065e+03  1.444e+03   2.815 0.004971 ** </span></span>
+<span><span class="co">#&gt; GarageType    -1.152e+03  1.219e+03  -0.945 0.344867    </span></span>
+<span><span class="co">#&gt; GarageYrBlt   -7.813e+00  4.635e+00  -1.686 0.092172 .  </span></span>
+<span><span class="co">#&gt; GarageFinish   1.228e+03  1.571e+03   0.781 0.434888    </span></span>
+<span><span class="co">#&gt; GarageCars     1.522e+04  3.679e+03   4.136 3.85e-05 ***</span></span>
+<span><span class="co">#&gt; GarageArea     2.705e+00  1.211e+01   0.223 0.823273    </span></span>
+<span><span class="co">#&gt; GarageQual     5.214e+03  2.510e+03   2.077 0.038066 *  </span></span>
+<span><span class="co">#&gt; GarageCond    -4.059e+03  2.514e+03  -1.615 0.106692    </span></span>
+<span><span class="co">#&gt; PavedDrive    -2.392e+03  3.531e+03  -0.677 0.498373    </span></span>
+<span><span class="co">#&gt; WoodDeckSF     2.770e+01  9.862e+00   2.809 0.005076 ** </span></span>
+<span><span class="co">#&gt; OpenPorchSF    4.027e-01  1.821e+01   0.022 0.982365    </span></span>
+<span><span class="co">#&gt; EnclosedPorch  1.718e+01  2.012e+01   0.854 0.393527    </span></span>
+<span><span class="co">#&gt; `3SsnPorch`    2.146e+01  3.481e+01   0.617 0.537626    </span></span>
+<span><span class="co">#&gt; ScreenPorch    5.179e+01  2.055e+01   2.520 0.011906 *  </span></span>
+<span><span class="co">#&gt; PoolArea      -4.865e+01  3.316e+01  -1.467 0.142635    </span></span>
+<span><span class="co">#&gt; Fence         -2.237e+03  1.461e+03  -1.532 0.125958    </span></span>
+<span><span class="co">#&gt; MiscVal       -5.616e-01  2.129e+00  -0.264 0.791964    </span></span>
+<span><span class="co">#&gt; MoSold         1.543e+01  4.139e+02   0.037 0.970262    </span></span>
+<span><span class="co">#&gt; YrSold        -5.887e+02  8.479e+02  -0.694 0.487643    </span></span>
+<span><span class="co">#&gt; SaleType       2.424e+03  1.372e+03   1.767 0.077557 .  </span></span>
+<span><span class="co">#&gt; SaleCondition  1.885e+02  1.417e+03   0.133 0.894166    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; (Dispersion parameter for gaussian family taken to be 1159889712)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     Null deviance: 6.7241e+12  on 1023  degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual deviance: 1.1007e+12  on  949  degrees of freedom</span></span>
+<span><span class="co">#&gt; AIC: 24353</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of Fisher Scoring iterations: 2</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 32614.51</span></span></code></pre></div>
 <p><strong>Lasso Regression</strong></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span>, alpha <span class="op">=</span> <span class="fl">1</span>, lambda <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span>
-<span class="co">#&gt; [1] 42546.52</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span>, alpha <span class="op">=</span> <span class="fl">1</span>, lambda <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 34648.74</span></span></code></pre></div>
 <p><strong>Ridge Regression</strong></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span>, alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span>
-<span class="co">#&gt; [1] 43148.94</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span>, alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 34613.02</span></span></code></pre></div>
 <p><strong>Logistic Regression with CV</strong></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">'SalePrice'</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="va">coefs</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">'SalePrice'</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="va">coefs</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Random Forest</strong></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;               tmp.order.tmp..decreasing...TRUE..</span>
-<span class="co">#&gt; OverallQual                         759408619320</span>
-<span class="co">#&gt; GarageCars                          527951659420</span>
-<span class="co">#&gt; GarageArea                          471842790646</span>
-<span class="co">#&gt; 1stFlrSF                            413458064592</span>
-<span class="co">#&gt; YearBuilt                           330154687357</span>
-<span class="co">#&gt; FullBath                            295412938994</span>
-<span class="co">#&gt; GarageYrBlt                         230584086787</span>
-<span class="co">#&gt; BsmtFinSF1                          215500359212</span>
-<span class="co">#&gt; TotRmsAbvGrd                        189518974674</span>
-<span class="co">#&gt; LotArea                             186720941450</span>
-<span class="co">#&gt; ExterQual                           177938388794</span>
-<span class="co">#&gt; Fireplaces                          164955645973</span>
-<span class="co">#&gt; MasVnrArea                          153801890071</span>
-<span class="co">#&gt; BsmtQual                            151257534508</span>
-<span class="co">#&gt; YearRemodAdd                        148763816005</span>
-<span class="co">#&gt; FireplaceQu                         135759443245</span>
-<span class="co">#&gt; 2ndFlrSF                            135560415953</span>
-<span class="co">#&gt; KitchenQual                         118491850721</span>
-<span class="co">#&gt; OpenPorchSF                          97388521368</span>
-<span class="co">#&gt; Foundation                           81721923795</span>
-<span class="co">#&gt; LotFrontage                          80997866854</span>
-<span class="co">#&gt; BsmtUnfSF                            67683851987</span>
-<span class="co">#&gt; WoodDeckSF                           63590930315</span>
-<span class="co">#&gt; GarageType                           56868609944</span>
-<span class="co">#&gt; BsmtFinType1                         56011866096</span>
-<span class="co">#&gt; RoofStyle                            45839703169</span>
-<span class="co">#&gt; BedroomAbvGr                         44513320599</span>
-<span class="co">#&gt; Neighborhood                         43445632074</span>
-<span class="co">#&gt; HeatingQC                            40079414077</span>
-<span class="co">#&gt; Exterior2nd                          36627385419</span>
-<span class="co">#&gt; MoSold                               36450350116</span>
-<span class="co">#&gt; MSSubClass                           35438682599</span>
-<span class="co">#&gt; Exterior1st                          33770637870</span>
-<span class="co">#&gt; OverallCond                          30661906931</span>
-<span class="co">#&gt; HalfBath                             26379189323</span>
-<span class="co">#&gt; HouseStyle                           25936474988</span>
-<span class="co">#&gt; BsmtFullBath                         24092992600</span>
-<span class="co">#&gt; GarageFinish                         23186658645</span>
-<span class="co">#&gt; LotShape                             22419075454</span>
-<span class="co">#&gt; BsmtExposure                         21678431914</span>
-<span class="co">#&gt; MasVnrType                           21418692950</span>
-<span class="co">#&gt; MSZoning                             19588104273</span>
-<span class="co">#&gt; ScreenPorch                          19173024001</span>
-<span class="co">#&gt; YrSold                               18380036398</span>
-<span class="co">#&gt; LotConfig                            14384517830</span>
-<span class="co">#&gt; LandContour                          14280221544</span>
-<span class="co">#&gt; SaleType                             13894153722</span>
-<span class="co">#&gt; CentralAir                           13311609790</span>
-<span class="co">#&gt; GarageQual                           12096136200</span>
-<span class="co">#&gt; BldgType                             11826129550</span>
-<span class="co">#&gt; SaleCondition                        11464859356</span>
-<span class="co">#&gt; EnclosedPorch                        10507533571</span>
-<span class="co">#&gt; BsmtFinType2                         10241918841</span>
-<span class="co">#&gt; ExterCond                             9966398545</span>
-<span class="co">#&gt; Condition1                            9640993159</span>
-<span class="co">#&gt; BsmtFinSF2                            9505082693</span>
-<span class="co">#&gt; GarageCond                            7866264923</span>
-<span class="co">#&gt; LandSlope                             7480952728</span>
-<span class="co">#&gt; RoofMatl                              6800839375</span>
-<span class="co">#&gt; BsmtCond                              6339334046</span>
-<span class="co">#&gt; Fence                                 6068642929</span>
-<span class="co">#&gt; KitchenAbvGr                          5145537381</span>
-<span class="co">#&gt; Functional                            5005336167</span>
-<span class="co">#&gt; LowQualFinSF                          4543176181</span>
-<span class="co">#&gt; PavedDrive                            4088500733</span>
-<span class="co">#&gt; Electrical                            3505252791</span>
-<span class="co">#&gt; Heating                               3141616350</span>
-<span class="co">#&gt; BsmtHalfBath                          2673075400</span>
-<span class="co">#&gt; MiscVal                               2507534381</span>
-<span class="co">#&gt; PoolArea                              2238190250</span>
-<span class="co">#&gt; Condition2                            2117723444</span>
-<span class="co">#&gt; Street                                1298009549</span>
-<span class="co">#&gt; 3SsnPorch                             1231666732</span>
-<span class="co">#&gt; Utilities                               31222823</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>
-<span class="co">#&gt; [1] 34938.23</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               tmp.order.tmp..decreasing...TRUE..</span></span>
+<span><span class="co">#&gt; OverallQual                         844737289071</span></span>
+<span><span class="co">#&gt; GarageCars                          519341354161</span></span>
+<span><span class="co">#&gt; GarageArea                          469350341639</span></span>
+<span><span class="co">#&gt; 1stFlrSF                            464828647849</span></span>
+<span><span class="co">#&gt; YearBuilt                           350171916777</span></span>
+<span><span class="co">#&gt; BsmtFinSF1                          349347376479</span></span>
+<span><span class="co">#&gt; FullBath                            278331177914</span></span>
+<span><span class="co">#&gt; 2ndFlrSF                            270448721224</span></span>
+<span><span class="co">#&gt; GarageYrBlt                         258897020738</span></span>
+<span><span class="co">#&gt; TotRmsAbvGrd                        210969968426</span></span>
+<span><span class="co">#&gt; LotArea                             195978890087</span></span>
+<span><span class="co">#&gt; ExterQual                           195576344093</span></span>
+<span><span class="co">#&gt; YearRemodAdd                        183031820680</span></span>
+<span><span class="co">#&gt; MasVnrArea                          180322788352</span></span>
+<span><span class="co">#&gt; KitchenQual                         133568555304</span></span>
+<span><span class="co">#&gt; FireplaceQu                         124804980078</span></span>
+<span><span class="co">#&gt; Fireplaces                          123094397261</span></span>
+<span><span class="co">#&gt; Foundation                           96858243861</span></span>
+<span><span class="co">#&gt; OpenPorchSF                          95731351066</span></span>
+<span><span class="co">#&gt; BsmtQual                             90675977573</span></span>
+<span><span class="co">#&gt; LotFrontage                          87866509903</span></span>
+<span><span class="co">#&gt; Neighborhood                         74956170518</span></span>
+<span><span class="co">#&gt; WoodDeckSF                           74632794732</span></span>
+<span><span class="co">#&gt; BsmtUnfSF                            73012722415</span></span>
+<span><span class="co">#&gt; BsmtFinType1                         56543231903</span></span>
+<span><span class="co">#&gt; Exterior2nd                          52642308152</span></span>
+<span><span class="co">#&gt; HeatingQC                            49350276110</span></span>
+<span><span class="co">#&gt; BedroomAbvGr                         43892140856</span></span>
+<span><span class="co">#&gt; GarageType                           43585164217</span></span>
+<span><span class="co">#&gt; HalfBath                             38717126668</span></span>
+<span><span class="co">#&gt; MoSold                               38711422395</span></span>
+<span><span class="co">#&gt; OverallCond                          37162748231</span></span>
+<span><span class="co">#&gt; MSSubClass                           36665510934</span></span>
+<span><span class="co">#&gt; BsmtFullBath                         34874984280</span></span>
+<span><span class="co">#&gt; HouseStyle                           29848424083</span></span>
+<span><span class="co">#&gt; RoofStyle                            28956911465</span></span>
+<span><span class="co">#&gt; YrSold                               26846018256</span></span>
+<span><span class="co">#&gt; LotShape                             26371507898</span></span>
+<span><span class="co">#&gt; GarageFinish                         26023355141</span></span>
+<span><span class="co">#&gt; Exterior1st                          24326657737</span></span>
+<span><span class="co">#&gt; PoolArea                             24147348890</span></span>
+<span><span class="co">#&gt; BsmtExposure                         19732168164</span></span>
+<span><span class="co">#&gt; SaleCondition                        18951670570</span></span>
+<span><span class="co">#&gt; MSZoning                             18503791949</span></span>
+<span><span class="co">#&gt; MasVnrType                           17644070801</span></span>
+<span><span class="co">#&gt; RoofMatl                             17617779523</span></span>
+<span><span class="co">#&gt; LotConfig                            16496716294</span></span>
+<span><span class="co">#&gt; Condition1                           15808322329</span></span>
+<span><span class="co">#&gt; LandContour                          15129046563</span></span>
+<span><span class="co">#&gt; GarageQual                           15026531772</span></span>
+<span><span class="co">#&gt; SaleType                             13751102319</span></span>
+<span><span class="co">#&gt; BldgType                             12597027423</span></span>
+<span><span class="co">#&gt; CentralAir                           12113387004</span></span>
+<span><span class="co">#&gt; ScreenPorch                          12074760453</span></span>
+<span><span class="co">#&gt; BsmtHalfBath                         11804212877</span></span>
+<span><span class="co">#&gt; BsmtCond                             11740155587</span></span>
+<span><span class="co">#&gt; Fence                                11714793223</span></span>
+<span><span class="co">#&gt; EnclosedPorch                        10988408338</span></span>
+<span><span class="co">#&gt; GarageCond                           10480563104</span></span>
+<span><span class="co">#&gt; LandSlope                            10132278734</span></span>
+<span><span class="co">#&gt; ExterCond                             8304403921</span></span>
+<span><span class="co">#&gt; BsmtFinSF2                            8200377445</span></span>
+<span><span class="co">#&gt; KitchenAbvGr                          7184142301</span></span>
+<span><span class="co">#&gt; Functional                            6695275114</span></span>
+<span><span class="co">#&gt; BsmtFinType2                          5872905374</span></span>
+<span><span class="co">#&gt; PavedDrive                            4906483821</span></span>
+<span><span class="co">#&gt; Heating                               3766850640</span></span>
+<span><span class="co">#&gt; Electrical                            3559343728</span></span>
+<span><span class="co">#&gt; LowQualFinSF                          3193993875</span></span>
+<span><span class="co">#&gt; Condition2                            3112224580</span></span>
+<span><span class="co">#&gt; 3SsnPorch                             2831952962</span></span>
+<span><span class="co">#&gt; MiscVal                               1748256797</span></span>
+<span><span class="co">#&gt; Street                                 426528686</span></span>
+<span><span class="co">#&gt; Utilities                                8546882</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 26422.94</span></span></code></pre></div>
 <p><strong>Xgboost</strong></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"reg:linear"</span>
-                      , n_estimators <span class="op">=</span> <span class="fl">500</span>
-                      , eval_metric <span class="op">=</span> <span class="st">"rmse"</span>
-                      , maximize <span class="op">=</span> <span class="cn">F</span>
-                      , learning_rate <span class="op">=</span> <span class="fl">0.1</span>
-                      ,max_depth <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span>, valid <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"reg:linear"</span></span>
+<span>                      , n_estimators <span class="op">=</span> <span class="fl">500</span></span>
+<span>                      , eval_metric <span class="op">=</span> <span class="st">"rmse"</span></span>
+<span>                      , maximize <span class="op">=</span> <span class="cn">F</span></span>
+<span>                      , learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>                      ,max_depth <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"SalePrice"</span>, valid <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/rmse.html" class="external-link">rmse</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">SalePrice</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Grid Search</strong></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"reg:linear"</span><span class="op">)</span>
-
-<span class="va">gst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">xgb</span>,
-                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>, max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-                             n_folds <span class="op">=</span> <span class="fl">3</span>,
-                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"reg:linear"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">xgb</span>,</span>
+<span>                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>, max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                             n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Random Search</strong></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">rst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RandomSearchCV.html">RandomSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,
-                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span><span class="op">)</span>,
-                             max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-                             n_folds <span class="op">=</span> <span class="fl">3</span>,
-                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span>,
-                             n_iter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">rst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"SalePrice"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "In total, 3 models will be trained"</span>
-<span class="va">rst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; $n_estimators</span>
-<span class="co">#&gt; [1] 10</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $max_depth</span>
-<span class="co">#&gt; [1] 5</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $accuracy_avg</span>
-<span class="co">#&gt; [1] 0.01074134</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $accuracy_sd</span>
-<span class="co">#&gt; [1] 0.006106005</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $auc_avg</span>
-<span class="co">#&gt; [1] NaN</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $auc_sd</span>
-<span class="co">#&gt; [1] NA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">rst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RandomSearchCV.html">RandomSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
+<span>                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span><span class="op">)</span>,</span>
+<span>                             max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                             n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span>,</span>
+<span>                             n_iter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">rst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"SalePrice"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "In total, 3 models will be trained"</span></span>
+<span><span class="va">rst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $n_estimators</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $max_depth</span></span>
+<span><span class="co">#&gt; [1] 5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $accuracy_avg</span></span>
+<span><span class="co">#&gt; [1] 0.01463718</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $accuracy_sd</span></span>
+<span><span class="co">#&gt; [1] 0.005035033</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $auc_avg</span></span>
+<span><span class="co">#&gt; [1] NaN</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $auc_sd</span></span>
+<span><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="binary-classification-data">Binary Classification Data<a class="anchor" aria-label="anchor" href="#binary-classification-data"></a>
 </h3>
-<p>Here, we will solve a simple binary classification problem (predict people who survived on titanic ship). The idea here is to demonstrate how to use this package to solve classification problems.</p>
+<p>Here, we will solve a simple binary classification problem (predict
+people who survived on titanic ship). The idea here is to demonstrate
+how to use this package to solve classification problems.</p>
 <p><strong>Data Preparation</strong></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load class</span>
-<span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">'../data/cla_train.rda'</span><span class="op">)</span>
-<span class="co"># if the above doesn't work, you can try: load("cla_train.rda")</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cla_train</span><span class="op">)</span>
-<span class="co">#&gt;    PassengerId Survived Pclass</span>
-<span class="co">#&gt; 1:           1        0      3</span>
-<span class="co">#&gt; 2:           2        1      1</span>
-<span class="co">#&gt; 3:           3        1      3</span>
-<span class="co">#&gt; 4:           4        1      1</span>
-<span class="co">#&gt; 5:           5        0      3</span>
-<span class="co">#&gt; 6:           6        0      3</span>
-<span class="co">#&gt;                                                   Name    Sex Age SibSp Parch</span>
-<span class="co">#&gt; 1:                             Braund, Mr. Owen Harris   male  22     1     0</span>
-<span class="co">#&gt; 2: Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1     0</span>
-<span class="co">#&gt; 3:                              Heikkinen, Miss. Laina female  26     0     0</span>
-<span class="co">#&gt; 4:        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1     0</span>
-<span class="co">#&gt; 5:                            Allen, Mr. William Henry   male  35     0     0</span>
-<span class="co">#&gt; 6:                                    Moran, Mr. James   male  NA     0     0</span>
-<span class="co">#&gt;              Ticket    Fare Cabin Embarked</span>
-<span class="co">#&gt; 1:        A/5 21171  7.2500              S</span>
-<span class="co">#&gt; 2:         PC 17599 71.2833   C85        C</span>
-<span class="co">#&gt; 3: STON/O2. 3101282  7.9250              S</span>
-<span class="co">#&gt; 4:           113803 53.1000  C123        S</span>
-<span class="co">#&gt; 5:           373450  8.0500              S</span>
-<span class="co">#&gt; 6:           330877  8.4583              Q</span>
-
-<span class="co"># split the data</span>
-<span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createDataPartition</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">cla_train</span><span class="op">$</span><span class="va">Survived</span>,p <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>
-<span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">cla_train</span><span class="op">[</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span>
-<span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">cla_train</span><span class="op">[</span><span class="op">!</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span>
-
-<span class="co"># encode categorical variables - shorter way</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">c</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Embarked'</span>,<span class="st">'Sex'</span>,<span class="st">'Cabin'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-    <span class="va">lbl</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LabelEncoder.html">LabelEncoder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-    <span class="va">lbl</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span>, <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-    <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span>
-<span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span>
-<span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span>
-<span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span>
-<span class="co">#&gt; The data contains blank values. Imputing them with 'NA'</span>
-
-<span class="co"># impute missing values</span>
-<span class="va">xtrain</span><span class="op">[</span>, <span class="va">Age</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Age</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
-<span class="va">xtest</span><span class="op">[</span>, <span class="va">Age</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Age</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
-
-<span class="co"># drop these features</span>
-<span class="va">to_drop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'PassengerId'</span>,<span class="st">'Ticket'</span>,<span class="st">'Name'</span><span class="op">)</span>
-
-<span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">xtrain</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">to_drop</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">F</span><span class="op">]</span>
-<span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">xtest</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">to_drop</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">F</span><span class="op">]</span></code></pre></div>
-<p>Now, our data is ready to be served for model training. Let’s do it.</p>
+<code class="sourceCode R"><span><span class="co"># load class</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="st">'../data/cla_train.rda'</span><span class="op">)</span></span>
+<span><span class="co"># if the above doesn't work, you can try: load("cla_train.rda")</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">cla_train</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    PassengerId Survived Pclass</span></span>
+<span><span class="co">#&gt; 1:           1        0      3</span></span>
+<span><span class="co">#&gt; 2:           2        1      1</span></span>
+<span><span class="co">#&gt; 3:           3        1      3</span></span>
+<span><span class="co">#&gt; 4:           4        1      1</span></span>
+<span><span class="co">#&gt; 5:           5        0      3</span></span>
+<span><span class="co">#&gt; 6:           6        0      3</span></span>
+<span><span class="co">#&gt;                                                   Name    Sex Age SibSp Parch</span></span>
+<span><span class="co">#&gt; 1:                             Braund, Mr. Owen Harris   male  22     1     0</span></span>
+<span><span class="co">#&gt; 2: Cumings, Mrs. John Bradley (Florence Briggs Thayer) female  38     1     0</span></span>
+<span><span class="co">#&gt; 3:                              Heikkinen, Miss. Laina female  26     0     0</span></span>
+<span><span class="co">#&gt; 4:        Futrelle, Mrs. Jacques Heath (Lily May Peel) female  35     1     0</span></span>
+<span><span class="co">#&gt; 5:                            Allen, Mr. William Henry   male  35     0     0</span></span>
+<span><span class="co">#&gt; 6:                                    Moran, Mr. James   male  NA     0     0</span></span>
+<span><span class="co">#&gt;              Ticket    Fare Cabin Embarked</span></span>
+<span><span class="co">#&gt; 1:        A/5 21171  7.2500              S</span></span>
+<span><span class="co">#&gt; 2:         PC 17599 71.2833   C85        C</span></span>
+<span><span class="co">#&gt; 3: STON/O2. 3101282  7.9250              S</span></span>
+<span><span class="co">#&gt; 4:           113803 53.1000  C123        S</span></span>
+<span><span class="co">#&gt; 5:           373450  8.0500              S</span></span>
+<span><span class="co">#&gt; 6:           330877  8.4583              Q</span></span>
+<span></span>
+<span><span class="co"># split the data</span></span>
+<span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createDataPartition</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">cla_train</span><span class="op">$</span><span class="va">Survived</span>,p <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span></span>
+<span><span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">cla_train</span><span class="op">[</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span></span>
+<span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">cla_train</span><span class="op">[</span><span class="op">!</span><span class="va">split</span><span class="op">$</span><span class="va">Resample1</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># encode categorical variables - shorter way</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">c</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Embarked'</span>,<span class="st">'Sex'</span>,<span class="st">'Cabin'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">lbl</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LabelEncoder.html">LabelEncoder</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">lbl</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span>, <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtrain</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">lbl</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">xtest</span><span class="op">[[</span><span class="va">c</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains blank values. Imputing them with 'NA' </span></span>
+<span><span class="co">#&gt; The data contains blank values. Imputing them with 'NA'</span></span>
+<span></span>
+<span><span class="co"># impute missing values</span></span>
+<span><span class="va">xtrain</span><span class="op">[</span>, <span class="va">Age</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Age</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">xtest</span><span class="op">[</span>, <span class="va">Age</span> <span class="op">:=</span> <span class="fu"><a href="https://rdrr.io/r/base/replace.html" class="external-link">replace</a></span><span class="op">(</span><span class="va">Age</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Age</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># drop these features</span></span>
+<span><span class="va">to_drop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'PassengerId'</span>,<span class="st">'Ticket'</span>,<span class="st">'Name'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">xtrain</span> <span class="op">&lt;-</span> <span class="va">xtrain</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">to_drop</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span>
+<span><span class="va">xtest</span> <span class="op">&lt;-</span> <span class="va">xtest</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">to_drop</span><span class="op">)</span>, with<span class="op">=</span><span class="cn">F</span><span class="op">]</span></span></code></pre></div>
+<p>Now, our data is ready to be served for model training. Let’s do
+it.</p>
 <p><strong>KNN Classification</strong></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">knn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KNNTrainer.html">KNNTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>k <span class="op">=</span> <span class="fl">2</span>,prob <span class="op">=</span> <span class="cn">T</span>,type <span class="op">=</span> <span class="st">'class'</span><span class="op">)</span>
-<span class="va">knn</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>train <span class="op">=</span> <span class="va">xtrain</span>, test <span class="op">=</span> <span class="va">xtest</span>, y <span class="op">=</span> <span class="st">'Survived'</span><span class="op">)</span>
-<span class="va">probs</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'prob'</span><span class="op">)</span>
-<span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'raw'</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">labels</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.6385027</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">knn</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/KNNTrainer.html">KNNTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>k <span class="op">=</span> <span class="fl">2</span>,prob <span class="op">=</span> <span class="cn">T</span>,type <span class="op">=</span> <span class="st">'class'</span><span class="op">)</span></span>
+<span><span class="va">knn</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>train <span class="op">=</span> <span class="va">xtrain</span>, test <span class="op">=</span> <span class="va">xtest</span>, y <span class="op">=</span> <span class="st">'Survived'</span><span class="op">)</span></span>
+<span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'prob'</span><span class="op">)</span></span>
+<span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="va">knn</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>type <span class="op">=</span> <span class="st">'raw'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">labels</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.6385027</span></span></code></pre></div>
 <p><strong>Naive Bayes Classification</strong></p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/NBTrainer.html">NBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">nb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'Survived'</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">nb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span>
-<span class="co">#&gt; Warning: predict.naive_bayes(): more features in the newdata are provided as</span>
-<span class="co">#&gt; there are probability tables in the object. Calculation is performed based on</span>
-<span class="co">#&gt; features to be found in the tables.</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.7771836</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/NBTrainer.html">NBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">nb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'Survived'</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">nb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: predict.naive_bayes(): more features in the newdata are provided as</span></span>
+<span><span class="co">#&gt; there are probability tables in the object. Calculation is performed based on</span></span>
+<span><span class="co">#&gt; features to be found in the tables.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7771836</span></span></code></pre></div>
 <p><strong>SVM Classification</strong></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#predicts labels</span>
-<span class="va">svm</span> <span class="op">&lt;-</span> <span class="va">SVMTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">svm</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'Survived'</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">svm</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted<span class="op">=</span><span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#predicts labels</span></span>
+<span><span class="va">svm</span> <span class="op">&lt;-</span> <span class="va">SVMTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">svm</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">'Survived'</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">svm</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted<span class="op">=</span><span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Logistic Regression</strong></p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lf</span><span class="op">$</span><span class="va">model</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Call:</span>
-<span class="co">#&gt; stats::glm(formula = f, family = self$family, data = X, weights = self$weights)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Deviance Residuals: </span>
-<span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span>
-<span class="co">#&gt; -2.6102  -0.6018  -0.4367   0.7038   2.4493  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Coefficients:</span>
-<span class="co">#&gt;              Estimate Std. Error z value Pr(&gt;|z|)    </span>
-<span class="co">#&gt; (Intercept)  1.830070   0.616894   2.967  0.00301 ** </span>
-<span class="co">#&gt; Pclass      -0.980785   0.192493  -5.095 3.48e-07 ***</span>
-<span class="co">#&gt; Sex          2.508241   0.230374  10.888  &lt; 2e-16 ***</span>
-<span class="co">#&gt; Age         -0.041034   0.009309  -4.408 1.04e-05 ***</span>
-<span class="co">#&gt; SibSp       -0.235520   0.117715  -2.001  0.04542 *  </span>
-<span class="co">#&gt; Parch       -0.098742   0.137791  -0.717  0.47361    </span>
-<span class="co">#&gt; Fare         0.001281   0.002842   0.451  0.65230    </span>
-<span class="co">#&gt; Cabin        0.008408   0.004786   1.757  0.07899 .  </span>
-<span class="co">#&gt; Embarked     0.248088   0.166616   1.489  0.13649    </span>
-<span class="co">#&gt; ---</span>
-<span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     Null deviance: 831.52  on 623  degrees of freedom</span>
-<span class="co">#&gt; Residual deviance: 564.76  on 615  degrees of freedom</span>
-<span class="co">#&gt; AIC: 582.76</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Number of Fisher Scoring iterations: 5</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.8832145</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">lf</span><span class="op">$</span><span class="va">model</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Call:</span></span>
+<span><span class="co">#&gt; stats::glm(formula = f, family = self$family, data = X, weights = self$weights)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Deviance Residuals: </span></span>
+<span><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></span>
+<span><span class="co">#&gt; -2.6102  -0.6018  -0.4367   0.7038   2.4493  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Coefficients:</span></span>
+<span><span class="co">#&gt;              Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span><span class="co">#&gt; (Intercept)  1.830070   0.616894   2.967  0.00301 ** </span></span>
+<span><span class="co">#&gt; Pclass      -0.980785   0.192493  -5.095 3.48e-07 ***</span></span>
+<span><span class="co">#&gt; Sex          2.508241   0.230374  10.888  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; Age         -0.041034   0.009309  -4.408 1.04e-05 ***</span></span>
+<span><span class="co">#&gt; SibSp       -0.235520   0.117715  -2.001  0.04542 *  </span></span>
+<span><span class="co">#&gt; Parch       -0.098742   0.137791  -0.717  0.47361    </span></span>
+<span><span class="co">#&gt; Fare         0.001281   0.002842   0.451  0.65230    </span></span>
+<span><span class="co">#&gt; Cabin        0.008408   0.004786   1.757  0.07899 .  </span></span>
+<span><span class="co">#&gt; Embarked     0.248088   0.166616   1.489  0.13649    </span></span>
+<span><span class="co">#&gt; ---</span></span>
+<span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     Null deviance: 831.52  on 623  degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual deviance: 564.76  on 615  degrees of freedom</span></span>
+<span><span class="co">#&gt; AIC: 582.76</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Number of Fisher Scoring iterations: 5</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">predictions</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8832145</span></span></code></pre></div>
 <p><strong>Lasso Logistic Regression</strong></p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Ridge Logistic Regression</strong></p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span>
-<span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/LMTrainer.html">LMTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>family<span class="op">=</span><span class="st">"binomial"</span>, alpha<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">lf</span><span class="op">$</span><span class="fu">cv_model</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, nfolds <span class="op">=</span> <span class="fl">5</span>, parallel <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">lf</span><span class="op">$</span><span class="fu">cv_predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Random Forest</strong></p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">1</span>, max_features <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span>
-
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;          tmp.order.tmp..decreasing...TRUE..</span>
-<span class="co">#&gt; Sex                                67.80128</span>
-<span class="co">#&gt; Fare                               57.97193</span>
-<span class="co">#&gt; Age                                48.37045</span>
-<span class="co">#&gt; Pclass                             24.64915</span>
-<span class="co">#&gt; Cabin                              21.45972</span>
-<span class="co">#&gt; SibSp                              13.51637</span>
-<span class="co">#&gt; Parch                              10.45743</span>
-<span class="co">#&gt; Embarked                           10.23844</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.7976827</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">1</span>, max_features <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          tmp.order.tmp..decreasing...TRUE..</span></span>
+<span><span class="co">#&gt; Sex                                67.80128</span></span>
+<span><span class="co">#&gt; Fare                               57.97193</span></span>
+<span><span class="co">#&gt; Age                                48.37045</span></span>
+<span><span class="co">#&gt; Pclass                             24.64915</span></span>
+<span><span class="co">#&gt; Cabin                              21.45972</span></span>
+<span><span class="co">#&gt; SibSp                              13.51637</span></span>
+<span><span class="co">#&gt; Parch                              10.45743</span></span>
+<span><span class="co">#&gt; Embarked                           10.23844</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.7976827</span></span></code></pre></div>
 <p><strong>Xgboost</strong></p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"binary:logistic"</span>
-                      , n_estimators <span class="op">=</span> <span class="fl">500</span>
-                      , eval_metric <span class="op">=</span> <span class="st">"auc"</span>
-                      , maximize <span class="op">=</span> <span class="cn">T</span>
-                      , learning_rate <span class="op">=</span> <span class="fl">0.1</span>
-                      ,max_depth <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>
-<span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, valid <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective <span class="op">=</span> <span class="st">"binary:logistic"</span></span>
+<span>                      , n_estimators <span class="op">=</span> <span class="fl">500</span></span>
+<span>                      , eval_metric <span class="op">=</span> <span class="st">"auc"</span></span>
+<span>                      , maximize <span class="op">=</span> <span class="cn">T</span></span>
+<span>                      , learning_rate <span class="op">=</span> <span class="fl">0.1</span></span>
+<span>                      ,max_depth <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span>, valid <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">xgb</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Grid Search</strong></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective<span class="op">=</span><span class="st">"binary:logistic"</span><span class="op">)</span>
-<span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">xgb</span>,
-                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>,
-                             max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-                             n_folds <span class="op">=</span> <span class="fl">3</span>,
-                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"Survived"</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>objective<span class="op">=</span><span class="st">"binary:logistic"</span><span class="op">)</span></span>
+<span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">xgb</span>,</span>
+<span>                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>,</span>
+<span>                             max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                             n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"Survived"</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Random Search</strong></p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">rst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RandomSearchCV.html">RandomSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,
-                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>, max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,
-                             n_folds <span class="op">=</span> <span class="fl">3</span>,
-                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span>,
-                             n_iter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="va">rst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"Survived"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "In total, 3 models will be trained"</span>
-<span class="va">rst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; $n_estimators</span>
-<span class="co">#&gt; [1] 50</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $max_depth</span>
-<span class="co">#&gt; [1] 5</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $accuracy_avg</span>
-<span class="co">#&gt; [1] 0.7964744</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $accuracy_sd</span>
-<span class="co">#&gt; [1] 0.03090914</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $auc_avg</span>
-<span class="co">#&gt; [1] 0.7729436</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $auc_sd</span>
-<span class="co">#&gt; [1] 0.04283084</span></code></pre></div>
-<p>Let’s create some new feature based on target variable using target encoding and test a model.</p>
+<code class="sourceCode R"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">rst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RandomSearchCV.html">RandomSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
+<span>                             parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">50</span><span class="op">)</span>, max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                             n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                             scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span>,</span>
+<span>                             n_iter <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">rst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">xtrain</span>, <span class="st">"Survived"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "In total, 3 models will be trained"</span></span>
+<span><span class="va">rst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $n_estimators</span></span>
+<span><span class="co">#&gt; [1] 50</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $max_depth</span></span>
+<span><span class="co">#&gt; [1] 5</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $accuracy_avg</span></span>
+<span><span class="co">#&gt; [1] 0.7964744</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $accuracy_sd</span></span>
+<span><span class="co">#&gt; [1] 0.03090914</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $auc_avg</span></span>
+<span><span class="co">#&gt; [1] 0.7729436</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $auc_sd</span></span>
+<span><span class="co">#&gt; [1] 0.04283084</span></span></code></pre></div>
+<p>Let’s create some new feature based on target variable using target
+encoding and test a model.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># add target encoding features</span>
-<span class="va">xtrain</span><span class="op">[</span>, <span class="va">feat_01</span> <span class="op">:=</span> <span class="fu"><a href="../reference/smoothMean.html">smoothMean</a></span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">xtrain</span>,
-                        test_df <span class="op">=</span> <span class="va">xtest</span>,
-                        colname <span class="op">=</span> <span class="st">"Embarked"</span>,
-                        target <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span><span class="op">$</span><span class="va">train</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>
-<span class="va">xtest</span><span class="op">[</span>, <span class="va">feat_01</span> <span class="op">:=</span> <span class="fu"><a href="../reference/smoothMean.html">smoothMean</a></span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">xtrain</span>,
-                               test_df <span class="op">=</span> <span class="va">xtest</span>,
-                               colname <span class="op">=</span> <span class="st">"Embarked"</span>,
-                               target <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span><span class="op">$</span><span class="va">test</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span>
-
-<span class="co"># train a random forest</span>
-<span class="co"># Random Forest</span>
-<span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">1</span>, max_features <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span>
-<span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span>
-<span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;          tmp.order.tmp..decreasing...TRUE..</span>
-<span class="co">#&gt; Sex                               69.787235</span>
-<span class="co">#&gt; Fare                              60.832089</span>
-<span class="co">#&gt; Age                               52.982604</span>
-<span class="co">#&gt; Pclass                            24.419818</span>
-<span class="co">#&gt; Cabin                             21.419274</span>
-<span class="co">#&gt; SibSp                             13.112177</span>
-<span class="co">#&gt; Parch                             10.175269</span>
-<span class="co">#&gt; feat_01                            6.675399</span>
-<span class="co">#&gt; Embarked                           6.450819</span>
-
-<span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>
-<span class="co">#&gt; [1] 0.8018717</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># add target encoding features</span></span>
+<span><span class="va">xtrain</span><span class="op">[</span>, <span class="va">feat_01</span> <span class="op">:=</span> <span class="fu"><a href="../reference/smoothMean.html">smoothMean</a></span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">xtrain</span>,</span>
+<span>                        test_df <span class="op">=</span> <span class="va">xtest</span>,</span>
+<span>                        colname <span class="op">=</span> <span class="st">"Embarked"</span>,</span>
+<span>                        target <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span><span class="op">$</span><span class="va">train</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="va">xtest</span><span class="op">[</span>, <span class="va">feat_01</span> <span class="op">:=</span> <span class="fu"><a href="../reference/smoothMean.html">smoothMean</a></span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">xtrain</span>,</span>
+<span>                               test_df <span class="op">=</span> <span class="va">xtest</span>,</span>
+<span>                               colname <span class="op">=</span> <span class="st">"Embarked"</span>,</span>
+<span>                               target <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span><span class="op">$</span><span class="va">test</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># train a random forest</span></span>
+<span><span class="co"># Random Forest</span></span>
+<span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">500</span>,classification <span class="op">=</span> <span class="fl">1</span>, max_features <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span>X <span class="op">=</span> <span class="va">xtrain</span>, y <span class="op">=</span> <span class="st">"Survived"</span><span class="op">)</span></span>
+<span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="va">rf</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span>df <span class="op">=</span> <span class="va">xtest</span><span class="op">)</span></span>
+<span><span class="va">rf</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          tmp.order.tmp..decreasing...TRUE..</span></span>
+<span><span class="co">#&gt; Sex                               69.787235</span></span>
+<span><span class="co">#&gt; Fare                              60.832089</span></span>
+<span><span class="co">#&gt; Age                               52.982604</span></span>
+<span><span class="co">#&gt; Pclass                            24.419818</span></span>
+<span><span class="co">#&gt; Cabin                             21.419274</span></span>
+<span><span class="co">#&gt; SibSp                             13.112177</span></span>
+<span><span class="co">#&gt; Parch                             10.175269</span></span>
+<span><span class="co">#&gt; feat_01                            6.675399</span></span>
+<span><span class="co">#&gt; Embarked                           6.450819</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/Metrics/man/auc.html" class="external-link">auc</a></span><span class="op">(</span>actual <span class="op">=</span> <span class="va">xtest</span><span class="op">$</span><span class="va">Survived</span>, predicted <span class="op">=</span> <span class="va">pred</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.8018717</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -838,7 +858,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

@@ -19,7 +19,7 @@ This implementation is based on c++ functions hence quite optimised as well."><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -85,34 +85,41 @@ This implementation is based on c++ functions hence quite optimised as well.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bm_25</span><span class="op">(</span><span class="va">document</span>, <span class="va">corpus</span>, <span class="va">top_n</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bm_25</span><span class="op">(</span><span class="va">document</span>, <span class="va">corpus</span>, <span class="va">top_n</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>document</dt>
 <dd><p>a string for which to find similar documents</p></dd>
+
+
 <dt>corpus</dt>
 <dd><p>a vector of strings against which document is to be matched</p></dd>
+
+
 <dt>top_n</dt>
 <dd><p>top n similar documents to find</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a vector containing similar documents and their scores</p>
+    
+
+<p>a vector containing similar documents and their scores</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">docs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chimpanzees are found in jungle"</span>,</span>
-<span class="r-in">          <span class="st">"chimps are jungle animals"</span>,</span>
-<span class="r-in">          <span class="st">"Mercedes automobiles are best"</span>,</span>
-<span class="r-in">          <span class="st">"merc is made in germany"</span>,</span>
-<span class="r-in">          <span class="st">"chimps are intelligent animals"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">sentence</span> <span class="op">&lt;-</span> <span class="st">"automobiles are"</span></span>
-<span class="r-in"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">bm_25</span><span class="op">(</span>document<span class="op">=</span><span class="va">sentence</span>, corpus<span class="op">=</span><span class="va">docs</span>, top_n<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">docs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chimpanzees are found in jungle"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"chimps are jungle animals"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"Mercedes automobiles are best"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"merc is made in germany"</span>,</span></span>
+<span class="r-in"><span>          <span class="st">"chimps are intelligent animals"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sentence</span> <span class="op">&lt;-</span> <span class="st">"automobiles are"</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu">bm_25</span><span class="op">(</span>document<span class="op">=</span><span class="va">sentence</span>, corpus<span class="op">=</span><span class="va">docs</span>, top_n<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -127,7 +134,7 @@ This implementation is based on c++ functions hence quite optimised as well.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

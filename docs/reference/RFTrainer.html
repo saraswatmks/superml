@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -145,29 +145,29 @@ is a measure of gini index. For regression, the <code>variance</code> of respons
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>RFTrainer$new()</code></a></p></li>
-<li><p><a href="#method-fit"><code>RFTrainer$fit()</code></a></p></li>
-<li><p><a href="#method-predict"><code>RFTrainer$predict()</code></a></p></li>
-<li><p><a href="#method-get_importance"><code>RFTrainer$get_importance()</code></a></p></li>
-<li><p><a href="#method-clone"><code>RFTrainer$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-RFTrainer-new"><code>RFTrainer$new()</code></a></p></li>
+<li><p><a href="#method-RFTrainer-fit"><code>RFTrainer$fit()</code></a></p></li>
+<li><p><a href="#method-RFTrainer-predict"><code>RFTrainer$predict()</code></a></p></li>
+<li><p><a href="#method-RFTrainer-get_importance"><code>RFTrainer$get_importance()</code></a></p></li>
+<li><p><a href="#method-RFTrainer-clone"><code>RFTrainer$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-RFTrainer-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 
 <div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-  <span class="va">n_estimators</span>,
-  <span class="va">max_depth</span>,
-  <span class="va">max_features</span>,
-  <span class="va">min_node_size</span>,
-  <span class="va">classification</span>,
-  <span class="va">class_weights</span>,
-  <span class="va">always_split</span>,
-  <span class="va">verbose</span>,
-  <span class="va">save_model</span>,
-  <span class="va">seed</span>,
-  <span class="va">importance</span>
-<span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span></span>
+<span>  <span class="va">n_estimators</span>,</span>
+<span>  <span class="va">max_depth</span>,</span>
+<span>  <span class="va">max_features</span>,</span>
+<span>  <span class="va">min_node_size</span>,</span>
+<span>  <span class="va">classification</span>,</span>
+<span>  <span class="va">class_weights</span>,</span>
+<span>  <span class="va">always_split</span>,</span>
+<span>  <span class="va">verbose</span>,</span>
+<span>  <span class="va">save_model</span>,</span>
+<span>  <span class="va">seed</span>,</span>
+<span>  <span class="va">importance</span></span>
+<span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -233,21 +233,21 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,
-                     max_depth<span class="op">=</span><span class="fl">4</span>,
-                     classification<span class="op">=</span><span class="fl">1</span>,
-                     seed<span class="op">=</span><span class="fl">42</span>,
-                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
+<span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
+<span>                     classification<span class="op">=</span><span class="fl">1</span>,</span>
+<span>                     seed<span class="op">=</span><span class="fl">42</span>,</span>
+<span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-fit"></a><div class="section">
+</div><p></p><hr><a id="method-RFTrainer-fit"></a><div class="section">
 <h3 id="method-fit-">Method <code>fit()</code><a class="anchor" aria-label="anchor" href="#method-fit-"></a></h3>
 
 <div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -273,22 +273,22 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,
-                     max_depth<span class="op">=</span><span class="fl">4</span>,
-                     classification<span class="op">=</span><span class="fl">1</span>,
-                     seed<span class="op">=</span><span class="fl">42</span>,
-                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
+<span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
+<span>                     classification<span class="op">=</span><span class="fl">1</span>,</span>
+<span>                     seed<span class="op">=</span><span class="fl">42</span>,</span>
+<span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-predict"></a><div class="section">
+</div><p></p><hr><a id="method-RFTrainer-predict"></a><div class="section">
 <h3 id="method-predict-">Method <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code><a class="anchor" aria-label="anchor" href="#method-predict-"></a></h3>
 
 <div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -310,23 +310,23 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,
-                     max_depth<span class="op">=</span><span class="fl">4</span>,
-                     classification<span class="op">=</span><span class="fl">1</span>,
-                     seed<span class="op">=</span><span class="fl">42</span>,
-                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
+<span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
+<span>                     classification<span class="op">=</span><span class="fl">1</span>,</span>
+<span>                     seed<span class="op">=</span><span class="fl">42</span>,</span>
+<span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-get_importance"></a><div class="section">
+</div><p></p><hr><a id="method-RFTrainer-get_importance"></a><div class="section">
 <h3 id="method-get-importance-">Method <code>get_importance()</code><a class="anchor" aria-label="anchor" href="#method-get-importance-"></a></h3>
 
 <div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -340,23 +340,23 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 </div>
 <div class="section">
 <h4 id="examples-3">Examples<a class="anchor" aria-label="anchor" href="#examples-3"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">50</span>,
-                     max_depth<span class="op">=</span><span class="fl">4</span>,
-                     classification<span class="op">=</span><span class="fl">1</span>,
-                     seed<span class="op">=</span><span class="fl">42</span>,
-                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span>
-<span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
-<span class="va">bst</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">50</span>,</span>
+<span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
+<span>                     classification<span class="op">=</span><span class="fl">1</span>,</span>
+<span>                     seed<span class="op">=</span><span class="fl">42</span>,</span>
+<span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span>
+<span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
+<span><span class="va">bst</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-RFTrainer-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">RFTrainer</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -374,56 +374,56 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `RFTrainer$new`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
-<span class="r-in">                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
-<span class="r-in">                     classification<span class="op">=</span><span class="fl">1</span>,</span>
-<span class="r-in">                     seed<span class="op">=</span><span class="fl">42</span>,</span>
-<span class="r-in">                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `RFTrainer$fit`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
-<span class="r-in">                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
-<span class="r-in">                     classification<span class="op">=</span><span class="fl">1</span>,</span>
-<span class="r-in">                     seed<span class="op">=</span><span class="fl">42</span>,</span>
-<span class="r-in">                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `RFTrainer$predict`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span>
-<span class="r-in">                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
-<span class="r-in">                     classification<span class="op">=</span><span class="fl">1</span>,</span>
-<span class="r-in">                     seed<span class="op">=</span><span class="fl">42</span>,</span>
-<span class="r-in">                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `RFTrainer$get_importance`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">50</span>,</span>
-<span class="r-in">                     max_depth<span class="op">=</span><span class="fl">4</span>,</span>
-<span class="r-in">                     classification<span class="op">=</span><span class="fl">1</span>,</span>
-<span class="r-in">                     seed<span class="op">=</span><span class="fl">42</span>,</span>
-<span class="r-in">                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">bst</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `RFTrainer$new`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                     classification<span class="op">=</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                     seed<span class="op">=</span><span class="fl">42</span>,</span></span>
+<span class="r-in"><span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `RFTrainer$fit`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                     classification<span class="op">=</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                     seed<span class="op">=</span><span class="fl">42</span>,</span></span>
+<span class="r-in"><span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `RFTrainer$predict`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">10</span>,</span></span>
+<span class="r-in"><span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                     classification<span class="op">=</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                     seed<span class="op">=</span><span class="fl">42</span>,</span></span>
+<span class="r-in"><span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `RFTrainer$get_importance`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span> <span class="op">&lt;-</span> <span class="va">RFTrainer</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators<span class="op">=</span><span class="fl">50</span>,</span></span>
+<span class="r-in"><span>                     max_depth<span class="op">=</span><span class="fl">4</span>,</span></span>
+<span class="r-in"><span>                     classification<span class="op">=</span><span class="fl">1</span>,</span></span>
+<span class="r-in"><span>                     seed<span class="op">=</span><span class="fl">42</span>,</span></span>
+<span class="r-in"><span>                     verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">'Species'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">bst</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">bst</span><span class="op">$</span><span class="fu">get_importance</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              tmp.order.tmp..decreasing...TRUE..</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Width                           49.401250</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Petal.Length                          39.462297</span>
@@ -443,7 +443,7 @@ Possible values are <code>auto(default)</code> takes sqrt(num_of_features),
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

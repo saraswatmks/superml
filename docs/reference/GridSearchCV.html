@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -117,16 +117,16 @@ It creates an exhaustive set of hyperparameter combinations and train model on e
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
 
-<ul><li><p><a href="#method-new"><code>GridSearchCV$new()</code></a></p></li>
-<li><p><a href="#method-fit"><code>GridSearchCV$fit()</code></a></p></li>
-<li><p><a href="#method-best_iteration"><code>GridSearchCV$best_iteration()</code></a></p></li>
-<li><p><a href="#method-clone"><code>GridSearchCV$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-new"></a><div class="section">
+<ul><li><p><a href="#method-GridSearchCV-new"><code>GridSearchCV$new()</code></a></p></li>
+<li><p><a href="#method-GridSearchCV-fit"><code>GridSearchCV$fit()</code></a></p></li>
+<li><p><a href="#method-GridSearchCV-best_iteration"><code>GridSearchCV$best_iteration()</code></a></p></li>
+<li><p><a href="#method-GridSearchCV-clone"><code>GridSearchCV$clone()</code></a></p></li>
+</ul></div><p></p><hr><a id="method-GridSearchCV-new"></a><div class="section">
 <h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
 
 <div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="cn">NA</span>, parameters <span class="op">=</span> <span class="cn">NA</span>, n_folds <span class="op">=</span> <span class="cn">NA</span>, scoring <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="cn">NA</span>, parameters <span class="op">=</span> <span class="cn">NA</span>, n_folds <span class="op">=</span> <span class="cn">NA</span>, scoring <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -161,21 +161,21 @@ currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recal
 </div>
 <div class="section">
 <h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,
-                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
-                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,
-                                        n_folds <span class="op">=</span> <span class="fl">3</span>,
-                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
+<span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-fit"></a><div class="section">
+</div><p></p><hr><a id="method-GridSearchCV-fit"></a><div class="section">
 <h3 id="method-fit-">Method <code>fit()</code><a class="anchor" aria-label="anchor" href="#method-fit-"></a></h3>
 
 <div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -201,23 +201,23 @@ currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recal
 </div>
 <div class="section">
 <h4 id="examples-1">Examples<a class="anchor" aria-label="anchor" href="#examples-1"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,
-                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
-                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,
-                                        n_folds <span class="op">=</span> <span class="fl">3</span>,
-                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
+<span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-best_iteration"></a><div class="section">
+</div><p></p><hr><a id="method-GridSearchCV-best_iteration"></a><div class="section">
 <h3 id="method-best-iteration-">Method <code>best_iteration()</code><a class="anchor" aria-label="anchor" href="#method-best-iteration-"></a></h3>
 
 <div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span>metric <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span>metric <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -239,23 +239,23 @@ currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recal
 </div>
 <div class="section">
 <h4 id="examples-2">Examples<a class="anchor" aria-label="anchor" href="#examples-2"></a></h4>
-<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span>
-<span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,
-                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,
-                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,
-                                        n_folds <span class="op">=</span> <span class="fl">3</span>,
-                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span>
-<span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va"><a href="../reference/GridSearchCV.html">GridSearchCV</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
+<span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+<span><span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 
-</div><p></p><hr><a id="method-clone"></a><div class="section">
+</div><p></p><hr><a id="method-GridSearchCV-clone"></a><div class="section">
 <h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
-<p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div><p></p></div>
+<p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
 </div>
 
 <div class="section">
@@ -273,48 +273,48 @@ currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recal
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `GridSearchCV$new`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
-<span class="r-in">                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `GridSearchCV$fit`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
-<span class="r-in">                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `GridSearchCV$new`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span></span>
+<span class="r-in"><span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `GridSearchCV$fit`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span></span>
+<span class="r-in"><span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "entering grid search"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "In total, 3 models will be trained"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"><span class="co">## Method `GridSearchCV$best_iteration`</span></span>
-<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span>
-<span class="r-in">                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
-<span class="r-in">                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
-<span class="r-in">                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span>
-<span class="r-in">                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span><span class="co">## Method `GridSearchCV$best_iteration`</span></span></span>
+<span class="r-in"><span><span class="co">## ------------------------------------------------</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">rf</span> <span class="op">&lt;-</span> <span class="va"><a href="RFTrainer.html">RFTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gst</span> <span class="op">&lt;-</span><span class="va">GridSearchCV</span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>trainer <span class="op">=</span> <span class="va">rf</span>,</span></span>
+<span class="r-in"><span>                      parameters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                                        n_folds <span class="op">=</span> <span class="fl">3</span>,</span></span>
+<span class="r-in"><span>                                        scoring <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'accuracy'</span>,<span class="st">'auc'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"iris"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gst</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Species"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "entering grid search"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "In total, 3 models will be trained"</span>
-<span class="r-in"><span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">gst</span><span class="op">$</span><span class="fu">best_iteration</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $n_estimators</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 100</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -347,7 +347,7 @@ currently supports: auc, accuracy, mse, rmse, logloss, mae, f1, precision, recal
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

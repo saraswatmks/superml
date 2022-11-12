@@ -18,7 +18,7 @@ This approach is more robust to possibility of leakage and avoid overfitting."><
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
@@ -83,53 +83,68 @@ This approach is more robust to possibility of leakage and avoid overfitting.</p
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">smoothMean</span><span class="op">(</span>
-  <span class="va">train_df</span>,
-  <span class="va">test_df</span>,
-  <span class="va">colname</span>,
-  <span class="va">target</span>,
-  min_samples_leaf <span class="op">=</span> <span class="fl">1</span>,
-  smoothing <span class="op">=</span> <span class="fl">1</span>,
-  noise_level <span class="op">=</span> <span class="fl">0</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">smoothMean</span><span class="op">(</span></span>
+<span>  <span class="va">train_df</span>,</span>
+<span>  <span class="va">test_df</span>,</span>
+<span>  <span class="va">colname</span>,</span>
+<span>  <span class="va">target</span>,</span>
+<span>  min_samples_leaf <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  smoothing <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  noise_level <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>train_df</dt>
 <dd><p>train dataset</p></dd>
+
+
 <dt>test_df</dt>
 <dd><p>test dataset</p></dd>
+
+
 <dt>colname</dt>
 <dd><p>name of categorical column</p></dd>
+
+
 <dt>target</dt>
 <dd><p>name of target column</p></dd>
+
+
 <dt>min_samples_leaf</dt>
 <dd><p>minimum samples to take category average into account</p></dd>
+
+
 <dt>smoothing</dt>
 <dd><p>smoothing effect to balance categorical average vs prior</p></dd>
+
+
 <dt>noise_level</dt>
 <dd><p>random noise to add, optional</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a train and test data table with mean encodings
+    
+
+<p>a train and test data table with mean encodings
         of the target for the given categorical variable</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'pune'</span>,<span class="st">'guj'</span>,<span class="st">'del'</span><span class="op">)</span>,</span>
-<span class="r-in">                    win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'rcb'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'guj'</span>,<span class="st">'pune'</span>,<span class="st">'csk'</span>,<span class="st">'kol'</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># calculate encodings</span></span>
-<span class="r-in"><span class="va">all_means</span> <span class="op">&lt;-</span> <span class="fu">smoothMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span>
-<span class="r-in">                         test_df <span class="op">=</span> <span class="va">test</span>,</span>
-<span class="r-in">                         colname <span class="op">=</span> <span class="st">'region'</span>,</span>
-<span class="r-in">                         target <span class="op">=</span> <span class="st">'win'</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">train_mean</span> <span class="op">&lt;-</span> <span class="va">all_means</span><span class="op">$</span><span class="va">train</span></span>
-<span class="r-in"><span class="va">test_mean</span> <span class="op">&lt;-</span> <span class="va">all_means</span><span class="op">$</span><span class="va">test</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'csk'</span>,<span class="st">'pune'</span>,<span class="st">'guj'</span>,<span class="st">'del'</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    win <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>region<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'rcb'</span>,<span class="st">'csk'</span>,<span class="st">'rcb'</span>,<span class="st">'del'</span>,<span class="st">'guj'</span>,<span class="st">'pune'</span>,<span class="st">'csk'</span>,<span class="st">'kol'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># calculate encodings</span></span></span>
+<span class="r-in"><span><span class="va">all_means</span> <span class="op">&lt;-</span> <span class="fu">smoothMean</span><span class="op">(</span>train_df <span class="op">=</span> <span class="va">train</span>,</span></span>
+<span class="r-in"><span>                         test_df <span class="op">=</span> <span class="va">test</span>,</span></span>
+<span class="r-in"><span>                         colname <span class="op">=</span> <span class="st">'region'</span>,</span></span>
+<span class="r-in"><span>                         target <span class="op">=</span> <span class="st">'win'</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">train_mean</span> <span class="op">&lt;-</span> <span class="va">all_means</span><span class="op">$</span><span class="va">train</span></span></span>
+<span class="r-in"><span><span class="va">test_mean</span> <span class="op">&lt;-</span> <span class="va">all_means</span><span class="op">$</span><span class="va">test</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -144,7 +159,7 @@ This approach is more robust to possibility of leakage and avoid overfitting.</p
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
