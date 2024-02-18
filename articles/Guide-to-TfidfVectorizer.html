@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.7</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@
                         <h4 data-toc-skip class="author">Manish
 Saraswat</h4>
             
-            <h4 data-toc-skip class="date">2022-11-12</h4>
+            <h4 data-toc-skip class="date">2024-02-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/saraswatmks/superml/blob/HEAD/vignettes/Guide-to-TfidfVectorizer.Rmd" class="external-link"><code>vignettes/Guide-to-TfidfVectorizer.Rmd</code></a></small>
       <div class="hidden name"><code>Guide-to-TfidfVectorizer.Rmd</code></div>
@@ -235,21 +235,23 @@ way to do:</p>
 <span>          <span class="st">'how does it work'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create dummy data</span></span>
-<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sents</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="va">sents</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="va">sents</span><span class="op">)</span>, target <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s see how the data looks like:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">train</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                           text target</span></span>
+<span><span class="co">#&gt;                         &lt;char&gt;  &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1:    i am going home and home      0</span></span>
 <span><span class="co">#&gt; 2: where are you going.? ////       1</span></span>
 <span><span class="co">#&gt; 3:            how does it work      0</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                                 text target</span></span>
+<span><span class="co">#&gt;                               &lt;char&gt;  &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1: home is where you go from to work      0</span></span>
-<span><span class="co">#&gt; 2:       where are you going.? ////       1</span></span>
-<span><span class="co">#&gt; 3:                  how does it work      0</span></span></code></pre></div>
+<span><span class="co">#&gt; 2:                  how does it work      1</span></span>
+<span><span class="co">#&gt; 3:          i am going home and home      0</span></span></code></pre></div>
 <p>Now, we generate features for train-test data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># initialise the class</span></span>
@@ -285,36 +287,31 @@ they look:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">test_tf_features</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;           work      home       you     where   it work        it how does it</span></span>
 <span><span class="co">#&gt; [1,] 0.3401651 0.4701829 0.4701829 0.4701829 0.0000000 0.0000000   0.0000000</span></span>
-<span><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.5773503 0.0000000 0.0000000   0.0000000</span></span>
-<span><span class="co">#&gt; [3,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span></span>
+<span><span class="co">#&gt; [2,] 0.2478085 0.0000000 0.0000000 0.0000000 0.3425257 0.3425257   0.3425257</span></span>
+<span><span class="co">#&gt; [3,] 0.0000000 0.8164966 0.0000000 0.0000000 0.0000000 0.0000000   0.0000000</span></span>
 <span><span class="co">#&gt;       how does       how     going        go does it work   does it      does</span></span>
 <span><span class="co">#&gt; [1,] 0.0000000 0.0000000 0.0000000 0.4701829    0.0000000 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [2,] 0.0000000 0.0000000 0.5773503 0.0000000    0.0000000 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [3,] 0.3425257 0.3425257 0.0000000 0.0000000    0.3425257 0.3425257 0.3425257</span></span>
-<span><span class="co">#&gt;      and</span></span>
-<span><span class="co">#&gt; [1,]   0</span></span>
-<span><span class="co">#&gt; [2,]   0</span></span>
-<span><span class="co">#&gt; [3,]   0</span></span></code></pre></div>
+<span><span class="co">#&gt; [2,] 0.3425257 0.3425257 0.0000000 0.0000000    0.3425257 0.3425257 0.3425257</span></span>
+<span><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.4082483 0.0000000    0.0000000 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt;            and</span></span>
+<span><span class="co">#&gt; [1,] 0.0000000</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.4082483</span></span></code></pre></div>
 <p>Finally, to train a machine learning model on this, you can simply
 do:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># ensure the input to classifier is a data.table or data.frame object</span></span>
-<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">train_tf_features</span>, target <span class="op">=</span> <span class="va">train</span><span class="op">$</span><span class="va">target</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span></span>
+<span><span class="va">x_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">train_tf_features</span>, target <span class="op">=</span> <span class="va">train</span><span class="op">$</span><span class="va">target</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/data.table.html" class="external-link">data.table</a></span><span class="op">(</span><span class="va">test_tf_features</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">xgb</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/XGBTrainer.html">XGBTrainer</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>n_estimators <span class="op">=</span> <span class="fl">10</span>, objective <span class="op">=</span> <span class="st">"binary:logistic"</span><span class="op">)</span></span>
 <span><span class="va">xgb</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">x_train</span>, <span class="st">"target"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; converting the data into xgboost format..</span></span>
 <span><span class="co">#&gt; starting with training...</span></span>
-<span><span class="co">#&gt; [12:10:37] WARNING: amalgamation/../src/learner.cc:627: </span></span>
-<span><span class="co">#&gt; Parameters: { "nrounds" } might not be used.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   This could be a false alarm, with some parameters getting used by language bindings but</span></span>
-<span><span class="co">#&gt;   then being mistakenly passed down to XGBoost core, or some parameter actually being used</span></span>
-<span><span class="co">#&gt;   but getting flagged wrongly here. Please open an issue if you find any such cases.</span></span>
-<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [14:17:20] WARNING: src/learner.cc:767: </span></span>
+<span><span class="co">#&gt; Parameters: { "nrounds" } are not used.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; [1]  train-logloss:0.693147 </span></span>
 <span><span class="co">#&gt; Will train until train_logloss hasn't improved in 50 rounds.</span></span>
@@ -350,7 +347,7 @@ to create tfidf matrix and train a machine learning model on it.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

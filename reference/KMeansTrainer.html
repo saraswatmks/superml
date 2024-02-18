@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">SuperML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.7</span>
       </span>
     </div>
 
@@ -385,6 +385,12 @@ ClusterR package written in c++, hence it is quite fast.</p>
 <span class="r-in"><span><span class="va">km_model</span><span class="op">$</span><span class="fu">fit</span><span class="op">(</span><span class="va">data</span>, find_optimal <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using 2 clusters to learn from data</span>
 <span class="r-in"><span><span class="va">predictions</span> <span class="op">&lt;-</span> <span class="va">km_model</span><span class="op">$</span><span class="fu">predict</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`predict_MBatchKMeans()` was deprecated in ClusterR 1.3.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Beginning from version 1.4.0, if the fuzzy parameter is TRUE the function</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   'predict_MBatchKMeans' will return only the probabilities, whereas currently</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   it also returns the hard clusters</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">superml</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/saraswatmks/superml/issues&gt;</span>.</span>
 </code></pre></div>
     </div>
   </div>
@@ -399,7 +405,7 @@ ClusterR package written in c++, hence it is quite fast.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

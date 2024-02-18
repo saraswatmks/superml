@@ -1,11 +1,11 @@
 pandoc: 2.19.2
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Guide-to-CountVectorizer: Guide-to-CountVectorizer.html
   Guide-to-TfidfVectorizer: Guide-to-TfidfVectorizer.html
   introduction: introduction.html
-last_built: 2022-11-12T12:10Z
+last_built: 2024-02-18T14:17Z
 urls:
   reference: https://saraswatmks.github.io/superml/reference
   article: https://saraswatmks.github.io/superml/articles
