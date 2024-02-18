@@ -7,7 +7,7 @@
 check_package(pkg)
 }
 \arguments{
-\item{X}{should be a string containing package name}
+\item{pkg}{should be a string containing package name}
 }
 \value{
 null

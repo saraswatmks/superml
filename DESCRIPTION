@@ -1,7 +1,7 @@
 Package: superml
 Type: Package
 Title: Build Machine Learning Models Like Using Python's Scikit-Learn Library in R
-Version: 0.5.6
+Version: 0.5.7
 Authors@R: person("Manish", "Saraswat", email = "manish06saraswat@gmail.com",
           role = c("aut", "cre"))
 Maintainer: Manish Saraswat <manish06saraswat@gmail.com>
@@ -15,7 +15,7 @@ LazyData: true
 URL: https://github.com/saraswatmks/superml
 BugReports: https://github.com/saraswatmks/superml/issues
 Depends:
-    R(>= 3.5),
+    R(>= 3.6),
     R6(>= 2.2)
 Imports:
     data.table (>= 1.10),
@@ -39,5 +39,5 @@ Suggests:
     xgboost(>= 0.6),
     glmnet(>= 2.0),
     e1071(>= 1.7)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr
