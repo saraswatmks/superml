@@ -1,11 +1,13 @@
-#' Best Matching(BM25) - Deprecated 
+#' Best Matching(BM25) - Deprecated
 #'
 #' Computer BM25 distance between sentences/documents.
 #'
 #' @details
-#' BM25 stands for Best Matching 25. It is widely using for ranking documents and a preferred method than TF*IDF scores.
-#' It is used to find the similar documents from a corpus, given a new document. It is popularly used in information retrieval systems.
-#' This implementation uses multiple cores for faster and parallel computation.
+#' BM25 stands for Best Matching 25. It is widely using for ranking documents
+#' and a preferred method than TF*IDF scores. It is used to find the similar
+#' documents from a corpus, given a new document. It is popularly used in
+#' information retrieval systems. This implementation uses multiple cores for
+#' faster and parallel computation.
 #' @keywords internal
 
 bm25 <- R6::R6Class("bm25", public = list(

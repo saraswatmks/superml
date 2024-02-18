@@ -47,15 +47,8 @@ CountVectorizer <- R6::R6Class(
         #' @examples
         #' cv = CountVectorizer$new(min_df=0.1)
 
-        initialize = function(min_df,
-                              max_df,
-                              max_features,
-                              ngram_range,
-                              regex,
-                              remove_stopwords,
-                              split,
-                              lowercase
-                              ) {
+        initialize = function(min_df, max_df, max_features, ngram_range, regex,
+                              remove_stopwords, split, lowercase){
             if (!(missing(max_df)))
                 self$max_df <- max_df
             if (!(missing(min_df)))
