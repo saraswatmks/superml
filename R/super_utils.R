@@ -69,7 +69,7 @@ testdata <- function(X, y, model=NA){
 #' @name check_package
 #' @title Internal function
 #' @description Used to check the package is installed
-#' @param X should be a string containing package name
+#' @param pkg should be a string containing package name
 #'
 #' @return null
 #' @keywords internal

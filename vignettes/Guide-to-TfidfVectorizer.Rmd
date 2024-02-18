@@ -4,7 +4,7 @@ author: "Manish Saraswat"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Guide to TfidfVectorizer}
+  %\VignetteIndexEntry{How to use TfidfVectorizer in R ?}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

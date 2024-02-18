@@ -36,8 +36,8 @@ GridSearchCV <- R6Class(
         #' @examples
         #' rf <- RFTrainer$new()
         #' gst <-GridSearchCV$new(trainer = rf,
-        #'                       parameters = list(n_estimators = c(100),
-        #'                                         max_depth = c(5,2,10)),
+        #'                       parameters = list(n_estimators = c(10),
+        #'                                         max_depth = c(5,2)),
         #'                                         n_folds = 3,
         #'                                         scoring = c('accuracy','auc'))
 
@@ -61,8 +61,8 @@ GridSearchCV <- R6Class(
         #' @examples
         #' rf <- RFTrainer$new()
         #' gst <-GridSearchCV$new(trainer = rf,
-        #'                       parameters = list(n_estimators = c(100),
-        #'                                         max_depth = c(5,2,10)),
+        #'                       parameters = list(n_estimators = c(10),
+        #'                                         max_depth = c(5,2)),
         #'                                         n_folds = 3,
         #'                                         scoring = c('accuracy','auc'))
         #' data("iris")
@@ -105,8 +105,8 @@ GridSearchCV <- R6Class(
         #' @examples
         #' rf <- RFTrainer$new()
         #' gst <-GridSearchCV$new(trainer = rf,
-        #'                       parameters = list(n_estimators = c(100),
-        #'                                         max_depth = c(5,2,10)),
+        #'                       parameters = list(n_estimators = c(10),
+        #'                                         max_depth = c(5,2)),
         #'                                         n_folds = 3,
         #'                                         scoring = c('accuracy','auc'))
         #' data("iris")

@@ -1,3 +1,8 @@
+# superml 0.5.7
+
+* Dropped support for R 3.5 version
+* Fixed NOTES occurring due to C++ version and incorrect function documentation
+
 # superml 0.5.6
 
 * Removed from cran, republish.

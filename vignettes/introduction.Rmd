@@ -61,7 +61,7 @@ We'll quickly prepare the data set to be ready to served for model training.
 ```{r}
 load("../data/reg_train.rda")
 # if the above doesn't work, you can try: load("reg_train.rda")
-
+# superml::check_package("caret")
 library(data.table)
 library(caret)
 library(superml)
